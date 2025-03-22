@@ -20,9 +20,9 @@ class LoginController extends AbstractController
         #[CurrentUser]
         ?User $user = null,
     ): Response {
-//        if ($user !== null) {
-//            return $this->redirectToRoute(\App\Controller\App\RouteCollection::DASHBOARD->prefixed());
-//        }
+        //        if ($user !== null) {
+        //            return $this->redirectToRoute(\App\Controller\App\RouteCollection::DASHBOARD->prefixed());
+        //        }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();

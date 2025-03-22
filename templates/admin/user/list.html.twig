@@ -56,6 +56,11 @@
                 <a class="action-icon text-secondary" href="{{ path('admin_dashboard', {_switch_user: object.email}) }}">
                     <i class="ri-shield-user-fill"></i>
                 </a>
+
+                {% include 'components/modal/delete.html.twig' with {
+                    id: object.id,
+                    button_link: path('admin_user_delete', {id: object.id}),
+                } %}
             </td>
         {% endblock %}
     </twig:list:list>

@@ -55,6 +55,10 @@ modal:
         description: "En cliquant sur ce bouton, vous acceptez de supprimer l'élément sélectionné."
         action: 'Valider'
 
+blameable:
+    created: "Crée le %date% par %user%"
+    updated: "Dernière modification le %date% par %user%"
+    
 sidebar:
     categories:
         navigation: 'Navigation'

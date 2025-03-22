@@ -10,11 +10,31 @@
 
             <div class="card-body">
                 {% block content '' %}
+            </div>
+
+            <div class="card-footer">
 
                 <hr>
 
                 <div class="row justify-content-end">
-                    <div class="col-md-6 col-md-offset-3 d-flex flex-row justify-content-end">
+                    {% if entity is defined and entity is not null %}
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-sm-10 col-md-12">
+                                    {% set createdDate = entity.createdAt ? entity.createdAt|date('d/m/Y H:i') : '-' %}
+                                    {{ 'blameable.created'|trans({'%date%': createdDate, '%user%':  entity.createdBy|default('-')}) }}
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-sm-10 col-md-12">
+                                    {% set updatedDate = entity.updatedAt ? entity.updatedAt|date('d/m/Y H:i') : '-' %}
+                                    {{ 'blameable.updated'|trans({'%date%': updatedDate, '%user%':  entity.updatedBy|default('-')}) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="h-25 col-md-6 col-md-offset-3 d-flex flex-row justify-content-end">
                         <a class="btn btn-outline-danger me-2" href="{{ cancelLink }}">
                             {{ 'action.cancel'|trans }}
                         </a>
@@ -29,3 +49,4 @@
         {{ form_end(form) }}
     </div>
 </div>
+
