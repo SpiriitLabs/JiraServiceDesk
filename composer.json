@@ -18,7 +18,7 @@
         "gedmo/doctrine-extensions": "^3.19",
         "pagerfanta/doctrine-dbal-adapter": "^4.7",
         "pagerfanta/doctrine-orm-adapter": "^4.7",
-        "pagerfanta/pagerfanta": "^4.7.1",
+        "pagerfanta/pagerfanta": "^2.0",
         "pagerfanta/twig": "*",
         "runtime/frankenphp-symfony": "^0.2.0",
         "spiriitlabs/form-filter-bundle": ">=11.0.6",

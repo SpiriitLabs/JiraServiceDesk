@@ -28,10 +28,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-      "@popperjs/core": "^2.11.8",
-      "bootstrap": "^5.3.3",
-      "jquery": "^3.7.1",
-      "simplebar": "^6.2.7",
-      "tom-select": "^2.4.1"
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.3",
+        "jquery": "^3.7.1",
+        "simplebar": "^6.2.7",
+        "tom-select": "^2.4.1"
     }
 }
