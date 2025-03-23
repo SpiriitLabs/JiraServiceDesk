@@ -13,8 +13,8 @@ final class Role
     public static function getList(): array
     {
         return [
-            'admin' => self::ROLE_ADMIN,
-            'user' => self::ROLE_USER,
+            'user.roles.role_admin' => self::ROLE_ADMIN,
+            'user.roles.role_user' => self::ROLE_USER,
         ];
     }
 }
