@@ -1,0 +1,56 @@
+{% extends 'admin/project/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'project.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+
+{% block action %}
+    <a href="{{ path('admin_project_create') }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'action.create'|trans }}
+    </a>
+{% endblock %}
+
+{% block content %}
+    <twig:list:list>
+        {% trans_default_domain 'app' %}
+
+        {% block tableTh %}
+            {% trans_default_domain 'app' %}
+
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'project.name.label'|trans,
+                    'property': 'name',
+                } %}
+            </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'project.jiraKey.label'|trans,
+                    'property': 'jiraKey',
+                } %}
+            </th>
+            <th class="min"></th>
+        {% endblock %}
+
+        {% block tableTd %}
+            <td>{{ object.name }}</td>
+            <td>{{ object.jiraKey }}</td>
+            <td class="d-flex flex-row" data-cancel-redirect>
+                <a class="action-icon text-secondary" href="{{ path('admin_project_edit', {id: object.id}) }}">
+                    <i class="mdi mdi-pencil"></i>
+                </a>
+
+                {% include 'components/modal/delete.html.twig' with {
+                    id: object.id,
+                    button_link: path('admin_project_delete', {id: object.id}),
+                } %}
+            </td>
+        {% endblock %}
+    </twig:list:list>
+{% endblock %}

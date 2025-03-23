@@ -6,6 +6,8 @@ use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Repository\UserRepository;
 use App\Service\UserNameService;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation\Loggable;
@@ -78,11 +80,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Versioned]
     public Theme $preferredTheme = Theme::AUTO;
 
+    /**
+     * @var Collection<int, Project>
+     */
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'users')]
+    private Collection $projects;
+
     public function __construct(?string $email, ?string $firstName, ?string $lastName)
     {
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,5 +166,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->lastName,
             $this->email,
         );
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (! $this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            $project->removeUser($this);
+        }
+
+        return $this;
     }
 }

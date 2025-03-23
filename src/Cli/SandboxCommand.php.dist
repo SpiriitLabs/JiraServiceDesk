@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Cli;
+
+use JiraCloud\Project\ProjectService;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+#[AsCommand('app:sandbox')]
+class SandboxCommand extends Command
+{
+
+    public function __construct(
+    ) {
+        parent::__construct();
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        return self::SUCCESS;
+    }
+
+}

@@ -2,7 +2,7 @@
 
 {% trans_default_domain 'app' %}
 
-{% block pageTitle 'user.title.create'|trans() %}
+{% block pageTitle 'project.create.title'|trans() %}
 {% set breadcrumb = [
     {
         label: 'action.create',
@@ -12,10 +12,10 @@
 {% block content %}
     <twig:form
         form="{{ form }}"
-        cancelLink="{{ path('admin_user_list') }}"
+        cancelLink="{{ path('admin_project_list') }}"
     >
         <twig:block name="content">
-            {% include 'admin/user/_form_content.html.twig' %}
+            {% include 'admin/project/_form_content.html.twig' %}
         </twig:block>
     </twig:form>
 {% endblock %}

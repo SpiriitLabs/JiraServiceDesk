@@ -75,6 +75,9 @@ dashboard:
 
 user:
     label: 'Utilisateur(s)'
+    title:
+        create: "Création d'un utilisateur"
+        edit: "Édition de l'utilisateur '%email%'"
     email:
         label: 'Identifiant'
     password:
@@ -92,6 +95,22 @@ user:
         label: 'Langue préférée'
     preferedTheme:
         label: 'Theme de couleur préférée'
+
+project:
+    label: 'Projet(s)'
+    title:
+        create: "Création d'un project à partir de Jira"
+        edit: "Édition du projet '%key%'"
+    name:
+        label: 'Nom'
+    jiraKey:
+        label: 'Clé Jira'
+    jiraId:
+        label: 'Identifiant Jira'
+    avatarUrl:
+        label: "URL de l'avatar"
+    users:
+        label: 'Utilisateur(s) reliée'
 
 security:
     login:

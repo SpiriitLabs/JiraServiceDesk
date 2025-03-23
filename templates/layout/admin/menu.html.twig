@@ -75,6 +75,14 @@
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
                                 />
 
+                                <twig:nav:item-single
+                                    path="admin_project"
+                                    trans="project.label"
+                                    icon="uil-briefcase"
+                                    href="{{ path('admin_project_list') }}"
+                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
                                 <div class="help-box text-white text-center">
                                     <h5 class="mt-1">{{ 'title.all'|trans }}</h5>
                                     <p class="mb-0">V{{ project_version }}</p>

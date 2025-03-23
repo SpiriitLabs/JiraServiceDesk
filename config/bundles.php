@@ -51,4 +51,7 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => [
         'dev' => true,
     ],
+    Symfony\UX\Autocomplete\AutocompleteBundle::class => [
+        'all' => true,
+    ],
 ];
