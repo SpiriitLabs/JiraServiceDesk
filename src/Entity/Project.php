@@ -37,7 +37,7 @@ class Project
     public ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    public ?string $avatarUrl = null;
+    public ?string $description = null;
 
     /**
      * @var Collection<int, User>
@@ -49,12 +49,12 @@ class Project
         string $name,
         int $jiraId,
         string $jiraKey,
-        ?string $avatarUrl = null,
+        ?string $description = null,
     ) {
         $this->name = $name;
         $this->jiraId = $jiraId;
         $this->jiraKey = $jiraKey;
-        $this->avatarUrl = $avatarUrl;
+        $this->description = $description;
 
         $this->users = new ArrayCollection();
     }

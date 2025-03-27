@@ -29,6 +29,7 @@
         "symfony/flex": "^2.5",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
+        "symfony/http-client": "7.2.*",
         "symfony/messenger": "7.2.*",
         "symfony/options-resolver": "7.2.*",
         "symfony/runtime": "7.2.*",

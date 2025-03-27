@@ -24,10 +24,8 @@ readonly class EditProjectHandler
             return null;
         }
 
-        $avatarsUrlsArray = get_object_vars($jiraProject->avatarUrls);
         $project->name = $jiraProject->name;
         $project->jiraId = $jiraProject->id;
-        $project->avatarUrl = array_shift($avatarsUrlsArray);
 
         foreach ($project->getUsers() as $projectUser) {
             $project->removeUser($projectUser);

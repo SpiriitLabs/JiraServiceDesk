@@ -71,7 +71,8 @@ filter:
 dashboard:
     label: 'Tableau de bord'
     welcome: 'Bonjour %name% !'
-
+    admin: "Tableau d'administration"
+    app: "Tableau d'application"
 
 user:
     label: 'Utilisateur(s)'
@@ -113,11 +114,35 @@ project:
         label: 'Clé Jira'
     jiraId:
         label: 'Identifiant Jira'
-    avatarUrl:
-        label: "URL de l'avatar"
+    description:
+        label: "Description"
     users:
         label: 'Utilisateur(s) reliée'
+    lead:
+        label: 'Responsable'
+    category:
+        label: 'Catégorie de projet'
+    boards:
+        label: 'Tableaux'
+    board:
+        label: 'Tableau'
 
+issue:
+    label: 'Ticket(s)'
+    assignee:
+        label: 'Assignée à'
+        not_assignee: 'Non assignée'
+    status:
+        label: 'Statut'
+    priority:
+        label: 'Prioritée'
+    description:
+        label: 'Description'
+    comment:
+        label: 'Commentaire(s)'
+    attachment:
+        label: 'Pièce(s) Jointe(s)'
+        
 security:
     login:
         label: 'Connexion'

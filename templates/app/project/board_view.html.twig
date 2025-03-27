@@ -1,0 +1,45 @@
+{% extends 'app/project/base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'project.board.label'|trans ~ ' ' ~ entity.name %}
+{% set breadcrumb = [
+    {
+        label: entity.name,
+        href: path('app_project_view', {id: entity.id}),
+    },
+    {
+        label: 'project.board.label'
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="board">
+            {% for issueStatus in kanbanIssues %}
+                {% if issueStatus.name is defined %}
+                    <div class="tasks">
+                        <h5 class="mt-0 task-header text-uppercase">{{ issueStatus.name }} (<span class="fst-italic">{{ issueStatus.issues|length }}</span>)</h5>
+
+                        <div id="task-list-two" class="task-list-items">
+
+                            {% for issue in issueStatus.issues %}
+                                <twig:app:kanban:item_card
+                                    issue="{{ issue }}"
+                                />
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

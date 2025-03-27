@@ -25,12 +25,11 @@ readonly class CreateProjectHandler
             return null;
         }
 
-        $avatarsUrlsArray = get_object_vars($jiraProject->avatarUrls);
         $project = new Project(
             name: $jiraProject->name,
             jiraId: $jiraProject->id,
             jiraKey: $jiraProject->key,
-            avatarUrl: array_shift($avatarsUrlsArray)
+            description: $jiraProject->description,
         );
 
         foreach ($command->users as $user) {

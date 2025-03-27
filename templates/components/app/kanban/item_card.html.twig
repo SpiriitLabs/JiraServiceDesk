@@ -1,0 +1,54 @@
+{% trans_default_domain 'app' %}
+
+{% if issue is not null %}
+<div class="card mb-0">
+    <div class="card-body p-3">
+        <small class="float-end text-muted">{{ issue.fields.created|date('d/m/Y H:i') }}</small>
+        <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>
+
+        <h5 class="mt-2 mb-2">
+            <a href="{{ path('app_issue_view', {key: issue.key}) }}" data-bs-toggle="modal" data-bs-target="#task-detail-modal" class="text-body">{{ issue.fields.summary }}</a>
+        </h5>
+
+        <p class="mb-1">
+            <a href="{{ path('app_issue_view', {key: issue.key}) }}" class="pe-2 text-nowrap text-muted mb-2 d-inline-block">
+                <i class="mdi mdi-briefcase-outline text-muted"></i>
+                {{ issue.key }}
+            </a>
+            {% if issue.fields.timeestimate is not null and issue.fields.timeestimate != 0 %}
+                <span class="text-nowrap mb-2 d-inline-block">
+                    <i class="mdi mdi-timer text-muted"></i>
+                    {{ issue.fields.timeestimate / 3600 }}
+                </span>
+            {% endif %}
+        </p>
+
+        <div class="dropdown float-end">
+            <a href="#" class="dropdown-toggle text-muted arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="mdi mdi-dots-vertical font-18"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end">
+                <a href="{{ path('app_issue_view', {key: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
+                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a>
+                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-plus-circle-outline me-1"></i>Add People</a>
+                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-exit-to-app me-1"></i>Leave</a>
+            </div>
+        </div>
+
+            <p class="mb-0">
+                {% if issue.fields.assignee is not null %}
+                    <span class="align-middle">
+                        {% if issue.fields.assignee.accountId == jira_account_id %}
+                            {{ app.user.fullName }}
+                        {% else %}
+                            <img src="{{ issue.fields.assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                            {{ issue.fields.assignee.displayName }}
+                        {% endif %}
+                    </span>
+                {% else %}
+                    <span class="fst-italic">{{ 'issue.assignee.not_assignee'|trans }}</span>
+                {% endif %}
+            </p>
+    </div>
+</div>
+{% endif %}

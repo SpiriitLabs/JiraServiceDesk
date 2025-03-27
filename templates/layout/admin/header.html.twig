@@ -73,6 +73,13 @@
                         </a>
                     {% endif %}
 
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('app_dashboard') }}" class="dropdown-item bg-info text-white">
+                            <i class="uil-briefcase"></i>
+                            <span>{{ 'dashboard.app'|trans }}</span>
+                        </a>
+                    {% endif %}
+
                     <a href="{{ path('security_logout') }}" class="dropdown-item">
                         <i class="mdi mdi-logout"></i>
                         <span>{{ 'action.logout'|trans }}</span>

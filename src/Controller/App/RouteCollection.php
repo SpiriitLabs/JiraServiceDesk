@@ -13,4 +13,6 @@ enum RouteCollection: string implements RouteCollectionInterface
     case LOCALE_EN = 'locale_en';
     case THEME_DARK = 'theme_dark';
     case THEME_LIGHT = 'theme_light';
+
+    case DASHBOARD = 'dashboard';
 }

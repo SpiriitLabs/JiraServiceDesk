@@ -1,0 +1,10 @@
+{% trans_default_domain 'app' %}
+
+{% if is_granted(role) %}
+<li class="nav-item {{ this.currentRoute starts with path ? 'active' }}">
+    <a class="nav-link d-inline-flex align-items-center" href="{{ href }}">
+        <i class="{{ icon }}"></i>
+        <span>{{ trans|trans }}</span>
+    </a>
+</li>
+{% endif %}
