@@ -2,16 +2,17 @@
 
 namespace App\Controller\App\Issue;
 
+use App\Controller\Common\GetControllerTrait;
+use App\Entity\User;
 use App\Form\App\Issue\IssueCommentFormType;
-use App\Formatter\Jira\IssueAttachmentFormatter;
 use App\Message\Command\App\Issue\CreateComment;
-use App\Repository\Jira\IssueRepository;
-use DH\Adf\Exporter\Html\Block\DocumentExporter;
-use DH\Adf\Node\Block\Document;
+use App\Message\Query\App\Issue\GetCommentsIssue;
+use App\Message\Query\App\Issue\GetFullIssue;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
     path: '/issue/{key}',
@@ -20,25 +21,37 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class ViewController extends AbstractController
 {
-
-    public function __construct(
-        private readonly IssueRepository $issueRepository,
-        private readonly IssueAttachmentFormatter $issueAttachmentFormatter,
-    ) {
-    }
+    use GetControllerTrait;
 
     public function __invoke(
         string $key,
         Request $request,
+        #[CurrentUser]
+        User $user,
     ): Response {
-        $issue = $this->issueRepository->getFull($key);
-        $issue = $this->issueAttachmentFormatter->format($issue);
-        $comments = $this->issueRepository->getCommentForIssue($key);
+        $issue = $this->handle(
+            new GetFullIssue($key),
+        );
+        $comments = $this->handle(
+            new GetCommentsIssue($key),
+        );
 
-        $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', []));
+        $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+            $this->handle($form->getData());
+
+            $this->addFlash(
+                type: 'success',
+                message: 'flash.created',
+            );
+
+            return $this->redirectToRoute(
+                route: RouteCollection::VIEW->prefixed(),
+                parameters: [
+                    'key' => $key,
+                ],
+            );
         }
 
         return $this->render(
@@ -51,5 +64,4 @@ class ViewController extends AbstractController
             ]
         );
     }
-
 }

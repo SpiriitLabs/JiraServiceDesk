@@ -11,7 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IssueCommentFormType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -21,7 +20,7 @@ class IssueCommentFormType extends AbstractType
             ->add('attachments', FileType::class, [
                 'required' => false,
                 'multiple' => true,
-                'label' => 'issue.attachment.label'
+                'label' => 'issue.attachment.label',
             ])
         ;
     }

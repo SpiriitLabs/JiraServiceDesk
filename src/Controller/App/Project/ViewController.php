@@ -18,7 +18,6 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class ViewController extends AbstractController
 {
-
     public function __construct(
         private readonly ProjectRepository $jiraProjectRepository,
         private readonly BoardRepository $jiraBoardRepository,
@@ -26,9 +25,11 @@ class ViewController extends AbstractController
     }
 
     public function __invoke(
-        #[MapEntity(mapping: ['id' => 'id'])] Project $project,
-    ): Response
-    {
+        #[MapEntity(mapping: [
+            'id' => 'id',
+        ])]
+        Project $project,
+    ): Response {
         return $this->render(
             view: 'app/project/view.html.twig',
             parameters: [
@@ -38,5 +39,4 @@ class ViewController extends AbstractController
             ],
         );
     }
-
 }

@@ -10,7 +10,9 @@ use Symfony\Component\Filesystem\Filesystem;
 class IssueAttachmentFormatter
 {
     public const ISSUE_ATTACHMENT_FOLDER = 'issue_attachments';
+
     private AttachmentService $service;
+
     private string $issueAttachmentDirectory;
 
     public function __construct(
@@ -23,25 +25,29 @@ class IssueAttachmentFormatter
     }
 
     /**
-     * Download and return a list of attachment in array
+     * Download and return a list of attachment in array.
      */
     public function format(Issue $issue): Issue
     {
         $issueAttachment = [];
         foreach ($issue->fields->attachment as $attachment) {
             $attachmentPath = sprintf('%s/%s', $this->issueAttachmentDirectory, $attachment->id);
-            if (false === $this->filesystem->exists($attachmentPath)){
+            if ($this->filesystem->exists($attachmentPath) === false) {
                 $this->service->get($attachment->id, $this->issueAttachmentDirectory);
             }
 
             $thumbnailPath = sprintf('%s/preview-%s', $this->issueAttachmentDirectory, $attachment->id);
-            if (false === $this->filesystem->exists($thumbnailPath)) {
-                $thumbnailUrl = str_replace($attachment->id, sprintf('thumbnail/%d', $attachment->id), $attachment->self);
+            if ($this->filesystem->exists($thumbnailPath) === false) {
+                $thumbnailUrl = str_replace(
+                    $attachment->id,
+                    sprintf('thumbnail/%d', $attachment->id),
+                    $attachment->self
+                );
 
                 $this->service->download(
                     url: $thumbnailUrl,
                     outDir: $this->issueAttachmentDirectory,
-                    file: sprintf('preview-%s' , $attachment->id)
+                    file: sprintf('preview-%s', $attachment->id)
                 );
             }
 
@@ -50,12 +56,15 @@ class IssueAttachmentFormatter
                 'name' => $attachment->filename,
                 'author' => $attachment->author->displayName,
                 'url' => sprintf('/%s', strstr($attachmentPath, 'uploads/')),
-                'thumbnailUrl' => sprintf('/%s', strstr(sprintf('%s/preview-%s', $this->issueAttachmentDirectory, $attachment->id), 'uploads/')),
+                'thumbnailUrl' => sprintf(
+                    '/%s',
+                    strstr(sprintf('%s/preview-%s', $this->issueAttachmentDirectory, $attachment->id), 'uploads/')
+                ),
             ];
         }
 
         $issue->customAttachments = $issueAttachment;
+
         return $issue;
     }
-
 }

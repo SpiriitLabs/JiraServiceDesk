@@ -16,11 +16,10 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 )]
 class ListController extends AbstractController
 {
-
     public function __invoke(
-        #[CurrentUser] User $user,
-    ): Response
-    {
+        #[CurrentUser]
+        User $user,
+    ): Response {
         return $this->render(
             view: 'app/project/list.html.twig',
             parameters: [
@@ -28,5 +27,4 @@ class ListController extends AbstractController
             ]
         );
     }
-
 }

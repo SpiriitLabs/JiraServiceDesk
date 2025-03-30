@@ -14,12 +14,10 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class DashboardController extends AbstractController
 {
-
     public function __invoke(): Response
     {
         return $this->render(
             view: 'app/dashboard.html.twig',
         );
     }
-
 }

@@ -6,9 +6,9 @@ use JiraCloud\Issue\Issue;
 
 class IssueKanbanFormatter
 {
-
     /**
      * @param array<Issue> $issues
+     *
      * @return array<Issue>
      */
     public function format(array $issues): array
@@ -17,8 +17,7 @@ class IssueKanbanFormatter
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
-
-            if (!isset($result[$issue->fields->status->id])) {
+            if (! isset($result[$issue->fields->status->id])) {
                 $result[$issue->fields->status->id] = [
                     'name' => $issue->fields->status->name,
                     'description' => $issue->fields->status->description,
@@ -32,5 +31,4 @@ class IssueKanbanFormatter
 
         return $result;
     }
-
 }

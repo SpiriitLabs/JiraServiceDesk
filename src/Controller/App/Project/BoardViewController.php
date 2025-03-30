@@ -2,10 +2,9 @@
 
 namespace App\Controller\App\Project;
 
+use App\Controller\Common\GetControllerTrait;
 use App\Entity\Project;
-use App\Formatter\Jira\IssueKanbanFormatter;
-use App\Repository\Jira\BoardRepository;
-use JiraCloud\Issue\JqlQuery;
+use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,38 +18,17 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class BoardViewController extends AbstractController
 {
-
-    public function __construct(
-        private readonly BoardRepository $boardRepository,
-        private readonly IssueKanbanFormatter $kanbanFormatter,
-    ) {
-    }
+    use GetControllerTrait;
 
     public function __invoke(
-        #[MapEntity(mapping: ['idProject' => 'id'])] Project $project,
+        #[MapEntity(mapping: [
+            'idProject' => 'id',
+        ])]
+        Project $project,
         string $idBoard,
     ): Response {
-        $kanbanIssuesFormatted = $this->kanbanFormatter->format(
-            $this->boardRepository->getBoardIssuesById(
-                id: $idBoard,
-                parameters: [
-                    'maxResults' => 500,
-                    'jql' => new JqlQuery()->addInExpression(JqlQuery::FIELD_LABELS, [ 'from-client' ])->getQuery(),
-                    'fields' => [
-                        'description',
-                        'id',
-                        'key',
-                        'flagged',
-                        'assignee',
-                        'status',
-                        'priority',
-                        'summary',
-                        'created',
-                        'updated',
-                        'timeestimate',
-                    ],
-                ],
-            )
+        $kanbanIssuesFormatted = $this->handle(
+            new GetKanbanIssueByBoardId($idBoard),
         );
 
         return $this->render(
@@ -62,5 +40,4 @@ class BoardViewController extends AbstractController
             ],
         );
     }
-
 }

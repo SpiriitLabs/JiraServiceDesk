@@ -2,10 +2,7 @@
 
 namespace App\Repository\Jira;
 
-use App\Entity\Project;
-use App\Message\Command\App\Issue\CreateComment;
-use JiraCloud\Board\Board;
-use JiraCloud\Board\BoardService;
+use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueService;
@@ -13,10 +10,10 @@ use JiraCloud\JiraException;
 
 class IssueRepository
 {
-
     private IssueService $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->service = new IssueService();
     }
 
@@ -26,7 +23,7 @@ class IssueRepository
             return $this->service->get(
                 issueIdOrKey: $issueId,
                 paramArray: [
-                    'expand' => 'renderedFields,transitions'
+                    'expand' => 'renderedFields,transitions',
                 ]
             );
         } catch (JiraException $e) {
@@ -41,7 +38,7 @@ class IssueRepository
                 issueIdOrKey: $issueId,
                 paramArray: [
                     'startAt' => 0,
-                    'expand' => 'renderedBody'
+                    'expand' => 'renderedBody',
                 ],
             );
         } catch (JiraException $e) {
@@ -58,6 +55,9 @@ class IssueRepository
         }
     }
 
+    /**
+     * @return array|Attachment[]
+     */
     public function createAttachment(string $id, string $filePath): array
     {
         try {

@@ -2,16 +2,14 @@
 
 namespace App\Message\Command\App\Issue;
 
-use App\Entity\User;
 use JiraCloud\Issue\Issue;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreateComment
+class AddAttachment
 {
     public function __construct(
         public Issue $issue,
-        public string $comment,
-        public array $attachments,
-        public User $user,
+        public UploadedFile $file,
     ) {
     }
 }
