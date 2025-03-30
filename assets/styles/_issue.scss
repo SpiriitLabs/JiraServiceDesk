@@ -1,13 +1,15 @@
 .status {
     &-yellow {
-        background-color: #FFC107;
+        background-color: #FFC107 !important;
         color: white !important;
     }
     &-blue-gray {
-        background-color: lightgray;
+        background-color: lightgray !important;
+        color: white !important;
     }
     &-green {
-        background-color: #36cf5c;
+        background-color: #36cf5c !important;
+        color: white !important;
     }
 }
 

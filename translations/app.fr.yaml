@@ -142,6 +142,9 @@ issue:
         label: 'Commentaire(s)'
     attachment:
         label: 'Pièce(s) Jointe(s)'
+    transition:
+        label: 'Transition'
+        to: 'Passer à'
         
 security:
     login:

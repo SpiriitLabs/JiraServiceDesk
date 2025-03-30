@@ -6,6 +6,7 @@ use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueService;
+use JiraCloud\Issue\Transition;
 use JiraCloud\JiraException;
 
 class IssueRepository
@@ -64,6 +65,21 @@ class IssueRepository
             return $this->service->addAttachments($id, $filePath);
         } catch (JiraException $e) {
             return [];
+        }
+    }
+
+    public function transitionTo(string $id, string $transitionId): void
+    {
+        try {
+            $transition = new Transition();
+            $transition->setTransitionId($transitionId);
+
+            $this->service->transition(
+                issueIdOrKey: $id,
+                transition: $transition,
+            );
+        } catch (JiraException $e) {
+            return;
         }
     }
 }

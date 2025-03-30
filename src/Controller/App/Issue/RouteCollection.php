@@ -8,6 +8,7 @@ use App\Controller\Traits\AppRouteCollectionTrait;
 enum RouteCollection: string implements RouteCollectionInterface
 {
     use AppRouteCollectionTrait;
-    case LIST = 'issue_list';
+
     case VIEW = 'issue_view';
+    case TRANSITION_TO = 'issue_transition_to';
 }
