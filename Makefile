@@ -34,7 +34,7 @@ stop: ## Stop project
 
 .PHONY: up
 up: build
-	@SERVER_NAME=:80 $(DC) up --pull always -d
+	@SERVER_NAME=:80 $(DC) up -d --remove-orphans
 
 .PHONY: build
 build:
