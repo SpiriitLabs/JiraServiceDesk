@@ -3,8 +3,6 @@
 namespace App\Subscriber;
 
 use App\Entity\User;
-use App\Enum\User\Locale;
-use App\Enum\User\Theme;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;

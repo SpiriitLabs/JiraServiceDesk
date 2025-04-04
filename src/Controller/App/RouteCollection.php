@@ -14,5 +14,7 @@ enum RouteCollection: string implements RouteCollectionInterface
     case THEME_DARK = 'theme_dark';
     case THEME_LIGHT = 'theme_light';
 
+    case REDIRECT_AFTER_LOGIN = 'redirect_after_login';
+
     case DASHBOARD = 'dashboard';
 }
