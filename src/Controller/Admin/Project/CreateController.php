@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Exception\Project\ProjectAlreadyExistException;
 use App\Form\Admin\Project\ProjectFormType;
 use App\Message\Command\Admin\Project\CreateProject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +27,18 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $projectCreated = $this->handle($form->getData());
+            try {
+                $projectCreated = $this->handle($form->getData());
+            } catch (\Exception $exception) {
+                if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
+                    $this->addFlash(
+                        type: 'danger',
+                        message: 'project.flashes.alreadyExist'
+                    );
+
+                    return $this->redirectToRoute(RouteCollection::CREATE->prefixed());
+                }
+            }
 
             if ($projectCreated !== null) {
                 $this->addFlash(

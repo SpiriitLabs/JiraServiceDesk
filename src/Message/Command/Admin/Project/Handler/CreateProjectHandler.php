@@ -3,8 +3,10 @@
 namespace App\Message\Command\Admin\Project\Handler;
 
 use App\Entity\Project;
+use App\Exception\Project\ProjectAlreadyExistException;
 use App\Message\Command\Admin\Project\CreateProject;
 use App\Repository\Jira\ProjectRepository;
+use App\Repository\ProjectRepository as AppProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -12,14 +14,21 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class CreateProjectHandler
 {
     public function __construct(
-        private ProjectRepository $projectRepository,
+        private AppProjectRepository $appProjectRepository,
+        private ProjectRepository $jiraProjectRepository,
         private EntityManagerInterface $entityManager,
     ) {
     }
 
     public function __invoke(CreateProject $command): ?Project
     {
-        $jiraProject = $this->projectRepository->get($command->jiraKey);
+        if ($this->appProjectRepository->findOneBy([
+            'jiraKey' => $command->jiraKey,
+        ]) !== null) {
+            throw new ProjectAlreadyExistException();
+        }
+
+        $jiraProject = $this->jiraProjectRepository->get($command->jiraKey);
 
         if ($jiraProject === null) {
             return null;

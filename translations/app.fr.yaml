@@ -126,6 +126,8 @@ project:
         label: 'Tableaux'
     board:
         label: 'Tableau'
+    flashes:
+        alreadyExist: "Cette clé de projet est déjà existante sur l'outil"
 
 issue:
     label: 'Ticket(s)'
