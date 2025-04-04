@@ -22,11 +22,11 @@ class UserLocaleSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
 
         $this->requestStack->getSession()
-            ->set('_locale', Locale::FR->value)
+            ->set('_locale', $user->preferredLocale->value)
         ;
 
         $this->requestStack->getSession()
-            ->set('_theme', Theme::DARK->value)
+            ->set('_theme', $user->preferredTheme->value)
         ;
     }
 
