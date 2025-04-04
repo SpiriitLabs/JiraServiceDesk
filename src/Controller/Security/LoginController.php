@@ -2,6 +2,7 @@
 
 namespace App\Controller\Security;
 
+use App\Controller\App\RouteCollection as AppRouteCollection;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,9 +21,9 @@ class LoginController extends AbstractController
         #[CurrentUser]
         ?User $user = null,
     ): Response {
-        //        if ($user !== null) {
-        //            return $this->redirectToRoute(\App\Controller\App\RouteCollection::DASHBOARD->prefixed());
-        //        }
+        if ($user !== null) {
+            return $this->redirectToRoute(AppRouteCollection::REDIRECT_AFTER_LOGIN->prefixed());
+        }
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
