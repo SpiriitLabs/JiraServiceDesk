@@ -59,18 +59,9 @@
                             <!-- assignee -->
                             <p class="mt-2 mb-1 text-muted fw-bold font-12 text-uppercase">{{ 'issue.assignee.label'|trans }}</p>
                             <div class="d-flex">
-                                {% if issue.fields.assignee is not null %}
-                                    <span class="align-middle">
-                                        {% if issue.fields.assignee.accountId == jira_account_id %}
-                                            {{ app.user.fullName }}
-                                        {% else %}
-                                            <img src="{{ issue.fields.assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
-                                            {{ issue.fields.assignee.displayName }}
-                                        {% endif %}
-                                    </span>
-                                {% else %}
-                                    <span class="fst-italic">{{ 'issue.assignee.not_assignee'|trans }}</span>
-                                {% endif %}
+                                <twig:app:issue:assignee
+                                    reporter="{{ issue.fields.assignee }}"
+                                />
                             </div>
                         </div>
 
@@ -119,9 +110,14 @@
                         {% if comment.visibility is null %}
                             {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
                             <div class="d-flex mt-3 mb-2">
-                                <img class="me-2 rounded-circle" src="{{ avatarUrl }}" alt="Generic placeholder image" height="32">
                                 <div class="w-100">
-                                    <h5 class="mt-0">{{ comment.author.displayName }} <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small></h5>
+                                    <h5 class="mt-0">
+                                        <twig:app:issue:assignee
+                                            reporter="{{ comment.author }}"
+                                        />
+
+                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
+                                    </h5>
                                     {{ comment.renderedBody|raw }}
 
                                     <br>
@@ -160,42 +156,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title mb-3">{{ 'issue.attachment.label'|trans }}</h5>
-
-                        <form action="/" method="post" class="dropzone dz-clickable" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews" data-upload-preview-template="#uploadPreviewTemplate">
-
-
-                            <div class="dz-message needsclick">
-                                <i class="h3 text-muted ri-upload-cloud-2-line"></i>
-                                <h4>Drop files here or click to upload.</h4>
-                            </div>
-                        </form>
-
-                        <!-- Preview -->
-                        <div class="dropzone-previews mt-3" id="file-previews"></div>
-
-                        <!-- file preview template -->
-                            <div class="d-none" id="uploadPreviewTemplate">
-                                <div class="card mt-1 mb-0 shadow-none border">
-                                    <div class="p-2">
-                                        <div class="row align-items-center">
-                                            <div class="col-auto">
-                                                <img data-dz-thumbnail="" src="#" class="avatar-sm rounded bg-light" alt="">
-                                            </div>
-                                            <div class="col ps-0">
-                                                <a href="javascript:void(0);" class="text-muted fw-bold" data-dz-name=""></a>
-                                                <p class="mb-0" data-dz-size=""></p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <!-- Button -->
-                                                <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove="">
-                                                    <i class="ri-close-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
 
                         {% for attachment in issue.customAttachments %}
                             <div class="card my-1 shadow-none border">

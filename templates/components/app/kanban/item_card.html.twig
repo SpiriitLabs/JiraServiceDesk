@@ -36,18 +36,9 @@
         </div>
 
             <p class="mb-0">
-                {% if issue.fields.assignee is not null %}
-                    <span class="align-middle">
-                        {% if issue.fields.assignee.accountId == jira_account_id %}
-                            {{ app.user.fullName }}
-                        {% else %}
-                            <img src="{{ issue.fields.assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
-                            {{ issue.fields.assignee.displayName }}
-                        {% endif %}
-                    </span>
-                {% else %}
-                    <span class="fst-italic">{{ 'issue.assignee.not_assignee'|trans }}</span>
-                {% endif %}
+                <twig:app:issue:assignee
+                    reporter="{{ issue.fields.assignee }}"
+                />
             </p>
     </div>
 </div>
