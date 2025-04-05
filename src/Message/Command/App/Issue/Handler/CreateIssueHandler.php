@@ -2,6 +2,8 @@
 
 namespace App\Message\Command\App\Issue\Handler;
 
+use App\Controller\Common\CreateControllerTrait;
+use App\Message\Command\App\Issue\AddAttachment;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\Jira\IssueRepository;
 use DH\Adf\Node\Block\Document;
@@ -9,13 +11,16 @@ use JiraCloud\ADF\AtlassianDocumentFormat;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class CreateIssueHandler
+class CreateIssueHandler
 {
+    use CreateControllerTrait;
+
     public function __construct(
-        private IssueRepository $issueRepository,
+        private readonly IssueRepository $issueRepository,
     ) {
     }
 
@@ -44,6 +49,18 @@ readonly class CreateIssueHandler
             ->addLabelAsString('from-client')
         ;
 
-        return $this->issueRepository->create($issue);
+        $jiraIssue = $this->issueRepository->create($issue);
+
+        foreach ($command->attachments as $attachment) {
+            /** @var UploadedFile $attachment */
+            $this->handle(
+                new AddAttachment(
+                    $jiraIssue,
+                    $attachment,
+                )
+            );
+        }
+
+        return $jiraIssue;
     }
 }
