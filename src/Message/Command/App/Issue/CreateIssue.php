@@ -11,6 +11,7 @@ class CreateIssue extends AbstractIssueDTO
         public Project $project,
         public User $creator,
         public array $attachments = [],
+        public ?string $description = null,
     ) {
         parent::__construct(
             summary: '',

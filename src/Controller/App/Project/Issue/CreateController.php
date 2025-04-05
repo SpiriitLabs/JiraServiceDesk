@@ -6,7 +6,7 @@ use App\Controller\App\Project\RouteCollection as AppProjectRouteCollection;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\Project;
 use App\Entity\User;
-use App\Form\App\Issue\IssueFormType;
+use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,7 +34,7 @@ class CreateController extends AbstractController
         User $user,
     ): Response {
         $form = $this->createForm(
-            type: IssueFormType::class,
+            type: CreateIssueFormType::class,
             data: new CreateIssue(
                 project: $project,
                 creator: $user,

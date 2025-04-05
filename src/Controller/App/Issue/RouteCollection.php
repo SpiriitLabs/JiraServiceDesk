@@ -10,6 +10,6 @@ enum RouteCollection: string implements RouteCollectionInterface
     use AppRouteCollectionTrait;
 
     case VIEW = 'issue_view';
-    case CREATE = 'issue_create';
+    case EDIT = 'issue_edit';
     case TRANSITION_TO = 'issue_transition_to';
 }

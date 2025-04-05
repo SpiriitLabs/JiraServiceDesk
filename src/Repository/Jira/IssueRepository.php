@@ -80,6 +80,8 @@ class IssueRepository
                 transition: $transition,
             );
         } catch (JiraException $e) {
+            dd($e);
+
             return;
         }
     }
@@ -88,6 +90,15 @@ class IssueRepository
     {
         try {
             return $this->service->create($issueField);
+        } catch (JiraException $e) {
+            return null;
+        }
+    }
+
+    public function update(Issue $issue, IssueField $issueField): ?string
+    {
+        try {
+            return $this->service->update($issue->key, $issueField);
         } catch (JiraException $e) {
             return null;
         }

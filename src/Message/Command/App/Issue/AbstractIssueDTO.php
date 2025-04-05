@@ -11,7 +11,6 @@ class AbstractIssueDTO
         public string $summary,
         public Priority $priority = Priority::NORMAL,
         public ?IssueType $type = null,
-        public ?string $description = null,
     ) {
     }
 }
