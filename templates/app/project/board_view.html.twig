@@ -5,7 +5,7 @@
 {% set breadcrumb = [
     {
         label: entity.name,
-        href: path('app_project_view', {id: entity.id}),
+        href: path('app_project_view', {key: entity.jiraKey}),
     },
     {
         label: 'project.board.label'

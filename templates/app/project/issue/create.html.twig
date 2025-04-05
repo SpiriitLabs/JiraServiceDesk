@@ -1,0 +1,20 @@
+{% extends 'app/project/issue/base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'issue.titles.create'|trans() %}
+{% set breadcrumb = [
+    {
+        label: 'action.create',
+    }
+] %}
+
+{% block content %}
+    <twig:form
+        form="{{ form }}"
+        cancelLink="{{ path('app_project_view', {key: project.jiraKey}) }}"
+    >
+        <twig:block name="content">
+            {% include 'app/project/issue/_form_content.html.twig' %}
+        </twig:block>
+    </twig:form>
+{% endblock %}

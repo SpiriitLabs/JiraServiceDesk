@@ -45,6 +45,12 @@ class Project
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projects')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, IssueType>
+     */
+    #[ORM\OneToMany(targetEntity: IssueType::class, mappedBy: 'project', orphanRemoval: true)]
+    private Collection $issuesTypes;
+
     public function __construct(
         string $name,
         int $jiraId,
@@ -57,6 +63,7 @@ class Project
         $this->description = $description;
 
         $this->users = new ArrayCollection();
+        $this->issuesTypes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,6 +91,35 @@ class Project
     public function removeUser(User $user): static
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IssueType>
+     */
+    public function getIssuesTypes(): Collection
+    {
+        return $this->issuesTypes;
+    }
+
+    public function addIssuesType(IssueType $issuesType): static
+    {
+        if (! $this->issuesTypes->contains($issuesType)) {
+            $this->issuesTypes->add($issuesType);
+            $issuesType->project = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeIssuesType(IssueType $issuesType): static
+    {
+        if ($this->issuesTypes->removeElement($issuesType)) {
+            if ($issuesType->project === $this) {
+                $issuesType->project = null;
+            }
+        }
 
         return $this;
     }

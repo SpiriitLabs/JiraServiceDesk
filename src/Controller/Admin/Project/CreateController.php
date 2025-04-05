@@ -9,6 +9,7 @@ use App\Message\Command\Admin\Project\CreateProject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
@@ -29,15 +30,17 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $projectCreated = $this->handle($form->getData());
-            } catch (\Exception $exception) {
+            } catch (HandlerFailedException $exception) {
                 if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
                     $this->addFlash(
                         type: 'danger',
-                        message: 'project.flashes.alreadyExist'
+                        message: $exception->getMessage(),
                     );
 
                     return $this->redirectToRoute(RouteCollection::CREATE->prefixed());
                 }
+
+                throw $exception;
             }
 
             if ($projectCreated !== null) {

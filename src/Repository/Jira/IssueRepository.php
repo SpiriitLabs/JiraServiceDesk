@@ -5,6 +5,7 @@ namespace App\Repository\Jira;
 use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
 use JiraCloud\Issue\Issue;
+use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueService;
 use JiraCloud\Issue\Transition;
 use JiraCloud\JiraException;
@@ -80,6 +81,15 @@ class IssueRepository
             );
         } catch (JiraException $e) {
             return;
+        }
+    }
+
+    public function create(IssueField $issueField): ?Issue
+    {
+        try {
+            return $this->service->create($issueField);
+        } catch (JiraException $e) {
+            return null;
         }
     }
 }

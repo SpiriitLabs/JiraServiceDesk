@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
-    path: '/project/{id}',
+    path: '/project/{key}',
     name: RouteCollection::VIEW->value,
     methods: [Request::METHOD_GET],
 )]
@@ -26,7 +26,7 @@ class ViewController extends AbstractController
 
     public function __invoke(
         #[MapEntity(mapping: [
-            'id' => 'id',
+            'key' => 'jiraKey',
         ])]
         Project $project,
     ): Response {

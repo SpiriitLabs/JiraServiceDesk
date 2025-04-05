@@ -6,12 +6,19 @@
 {% set breadcrumb = [
     {
         label: entity.name,
-        href: path('app_project_view', {id: entity.id}),
+        href: path('app_project_view', {key: entity.jiraKey}),
     },
     {
         label: 'action.view',
     }
 ] %}
+
+{% block action %}
+    <a href="{{ path('app_project_issue_create', {projectKey: entity.jiraKey}) }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'issue.action.create'|trans }}
+    </a>
+{% endblock %}
 
 {% block content %}
     <div class="row justify-content-between">

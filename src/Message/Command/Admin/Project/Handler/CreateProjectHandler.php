@@ -2,6 +2,7 @@
 
 namespace App\Message\Command\Admin\Project\Handler;
 
+use App\Entity\IssueType;
 use App\Entity\Project;
 use App\Exception\Project\ProjectAlreadyExistException;
 use App\Message\Command\Admin\Project\CreateProject;
@@ -43,6 +44,18 @@ readonly class CreateProjectHandler
 
         foreach ($command->users as $user) {
             $project->addUser($user);
+        }
+
+        foreach ($jiraProject->issueTypes as $issueType) {
+            $issueType = new IssueType(
+                jiraId: $issueType->id,
+                name: $issueType->name,
+                description: $issueType->description,
+                iconUrl: $issueType->iconUrl,
+            );
+
+            $this->entityManager->persist($issueType);
+            $project = $project->addIssuesType($issueType);
         }
 
         $this->entityManager->persist($project);

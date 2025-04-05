@@ -131,6 +131,10 @@ project:
 
 issue:
     label: 'Ticket(s)'
+    action:
+        create: 'Crée un ticket'
+    titles:
+        create: "Crée un ticket"
     assignee:
         label: 'Assignée à'
         not_assignee: 'Non assignée'
@@ -138,8 +142,18 @@ issue:
         label: 'Statut'
     priority:
         label: 'Prioritée'
+        lowest: 'Très bas'
+        low: 'Bas'
+        medium: 'Normal'
+        high: 'Haut'
+        highest: 'Immédiat'
+    summary:
+        label: 'Titre'
+    type:
+        label: 'Type'
     description:
         label: 'Description'
+        notice: '💡 Votre NOM et Prénom sera rajouter au ticket afin de faciliter le travail des chef(ffe)s de projet'
     comment:
         label: 'Commentaire(s)'
     attachment:
