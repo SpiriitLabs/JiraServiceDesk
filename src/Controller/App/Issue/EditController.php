@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\App\Issue\EditIssueFormType;
 use App\Message\Command\App\Issue\EditIssue;
 use App\Message\Query\App\Issue\GetFullIssue;
+use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use App\Repository\IssueTypeRepository;
 use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
@@ -57,6 +58,7 @@ class EditController extends AbstractController
         $project = $this->projectRepository->findOneBy([
             'jiraKey' => $issue->fields->project->key,
         ]);
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers($issue, $project));
 
         $form = $this->createForm(
             type: EditIssueFormType::class,
@@ -70,10 +72,12 @@ class EditController extends AbstractController
                     'jiraId' => $issue->fields->priority->id,
                 ]),
                 transition: $issueTransitionIdCurrentStatusIssue,
+                assignee: $issue->fields->assignee->accountId ?? 'null',
             ),
             options: [
                 'projectId' => $project?->getId() ?? null,
                 'transitions' => $issueTransitions,
+                'assignees' => $assignableUsers,
             ]
         );
         $form->handleRequest($request);

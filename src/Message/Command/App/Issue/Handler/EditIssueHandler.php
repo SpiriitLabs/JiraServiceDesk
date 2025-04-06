@@ -35,6 +35,12 @@ class EditIssueHandler
             ->addLabelAsString('from-client')
         ;
 
+        if ($command->assignee !== 'null') {
+            $issueField->setAssigneeAccountId($command->assignee);
+        } else {
+            $issueField->setAssigneeToUnassigned();
+        }
+
         $jiraIssueKey = $this->issueRepository->update($command->issue, $issueField);
 
         if ($jiraIssueKey == null) {
