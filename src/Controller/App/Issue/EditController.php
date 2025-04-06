@@ -8,6 +8,7 @@ use App\Form\App\Issue\EditIssueFormType;
 use App\Message\Command\App\Issue\EditIssue;
 use App\Message\Query\App\Issue\GetFullIssue;
 use App\Repository\IssueTypeRepository;
+use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
 use JiraCloud\Issue\Issue;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,6 +28,7 @@ class EditController extends AbstractController
 
     public function __construct(
         private readonly IssueTypeRepository $issueTypeRepository,
+        private readonly PriorityRepository $priorityRepository,
         private readonly ProjectRepository $projectRepository,
     ) {
     }
@@ -63,6 +65,9 @@ class EditController extends AbstractController
                 issue: $issue,
                 issueType: $this->issueTypeRepository->findOneBy([
                     'jiraId' => $issue->fields->issuetype->id,
+                ]),
+                priority: $this->priorityRepository->findOneBy([
+                    'jiraId' => $issue->fields->priority->id,
                 ]),
                 transition: $issueTransitionIdCurrentStatusIssue,
             ),

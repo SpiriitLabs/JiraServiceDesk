@@ -13,6 +13,7 @@ action:
     remove: 'Supprimer'
     download: 'Télécharger'
     return: 'Retour'
+    generate: 'Générer'
 
 locale:
     label: 'Langue'
@@ -54,6 +55,10 @@ modal:
     delete:
         title: 'Suppression'
         description: "En cliquant sur ce bouton, vous acceptez de supprimer l'élément sélectionné."
+        action: 'Valider'
+    warning:
+        title: 'Attention'
+        description: "En cliquant sur ce bouton, vous acceptez d'effectuer le processus sélectionné."
         action: 'Valider'
 
 blameable:
@@ -143,11 +148,6 @@ issue:
         label: 'Statut'
     priority:
         label: 'Prioritée'
-        lowest: 'Très bas'
-        low: 'Bas'
-        medium: 'Normal'
-        high: 'Haut'
-        highest: 'Immédiat'
     summary:
         label: 'Titre'
     type:
@@ -162,6 +162,19 @@ issue:
     transition:
         label: 'Transition'
         to: 'Passer à'
+      
+priority:
+    label: 'Prioritée(s)'
+    name:
+        label: 'Nom'
+    description:
+        label: 'Description'
+    iconUrl:
+        label: 'Icone'
+    statusColor:
+        label: 'Couleur'
+    flashes:
+        generated: 'Les éléments ont bien était récupérer.'
         
 security:
     login:

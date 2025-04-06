@@ -3,12 +3,11 @@
 namespace App\Form\App\Issue;
 
 use App\Entity\IssueType;
-use App\Enum\Issue\Priority;
+use App\Entity\Priority;
 use App\Message\Command\App\Issue\AbstractIssueDTO;
 use App\Repository\IssueTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,12 +34,10 @@ class AbstractIssueFormType extends AbstractType
                     ;
                 },
             ])
-            ->add('priority', EnumType::class, [
+            ->add('priority', EntityType::class, [
                 'required' => true,
                 'class' => Priority::class,
-                'choice_label' => fn (Priority $priority) => $priority->label(),
-                'constraints' => [new NotBlank()],
-                'empty_data' => Priority::NORMAL,
+                'choice_label' => 'name',
             ])
         ;
     }

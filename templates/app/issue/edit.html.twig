@@ -6,7 +6,7 @@
 {% set breadcrumb = [
     {
         label: '#' ~ key,
-        href: path('app_issue_view', {key: key}),
+        href: path('app_issue_view', {keyIssue: key}),
     },
     {
         label: 'action.edit',
@@ -18,7 +18,7 @@
         <div class="col-xxl-8 col-xl-7">
             <twig:form
                 form="{{ form }}"
-                cancelLink="{{ path('app_issue_view', {key: key}) }}"
+                cancelLink="{{ path('app_issue_view', {keyIssue: key}) }}"
             >
                 <twig:block name="content">
                     {% include 'app/issue/_form_content.html.twig' %}

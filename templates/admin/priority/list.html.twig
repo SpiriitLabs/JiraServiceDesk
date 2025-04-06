@@ -1,0 +1,67 @@
+{% extends 'admin/priority/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'priority.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+
+{% block action %}
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#warning-alert-modal-priorities-generate-modal">
+        <i class="mdi mdi-plus"></i>
+        {{ 'action.generate'|trans }}
+    </button>
+
+    {% include 'components/modal/warning.html.twig' with {
+        'id': 'priorities-generate-modal',
+        'title': 'modal.warning.title'|trans,
+        'description': 'modal.warning.description'|trans,
+        'button_label': 'modal.warning.action'|trans,
+        'button_link': path('admin_priority_generate')
+    } %}
+{% endblock %}
+
+{% block content %}
+    <twig:list:list>
+        {% trans_default_domain 'app' %}
+
+        {% block tableTh %}
+            {% trans_default_domain 'app' %}
+
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'priority.iconUrl.label'|trans,
+                    'property': 'iconUrl',
+                } %}
+            </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'priority.name.label'|trans,
+                    'property': 'name',
+                } %}
+            </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'priority.description.label'|trans,
+                    'property': 'description',
+                } %}
+            </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'priority.statusColor.label'|trans,
+                    'property': 'statusColor',
+                } %}
+            </th>
+        {% endblock %}
+
+        {% block tableTd %}
+            <td><img src="{{ object.iconUrl }}" alt="{{ object.iconUrl }}" width="25px"></td>
+            <td>{{ object.name }}</td>
+            <td>{{ object.description }}</td>
+            <td style="color: {{ object.statusColor }}">{{ object.statusColor }}</td>
+        {% endblock %}
+    </twig:list:list>
+{% endblock %}

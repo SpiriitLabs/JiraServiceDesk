@@ -3,13 +3,13 @@
 namespace App\Message\Command\App\Issue;
 
 use App\Entity\IssueType;
-use App\Enum\Issue\Priority;
+use App\Entity\Priority;
 
 class AbstractIssueDTO
 {
     public function __construct(
         public string $summary,
-        public Priority $priority = Priority::NORMAL,
+        public ?Priority $priority = null,
         public ?IssueType $type = null,
     ) {
     }

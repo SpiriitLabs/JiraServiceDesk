@@ -98,12 +98,6 @@
             "allow-contrib": false,
             "require": "7.2.*",
             "docker": true
-        },
-        "patches": {
-            "lesstif/jira-cloud-restapi": {
-                "AtlassianDocumentFormat allow string into constructor": "https://patch-diff.githubusercontent.com/raw/lesstif/php-JiraCloud-RESTAPI/pull/95.patch",
-                "Adding an function to get the column board configuration": "https://patch-diff.githubusercontent.com/raw/lesstif/php-JiraCloud-RESTAPI/pull/94.patch"
-            }
         }
     },
     "require-dev": {
