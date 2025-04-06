@@ -8,6 +8,7 @@ use App\Form\App\Issue\IssueCommentFormType;
 use App\Message\Command\App\Issue\CreateComment;
 use App\Message\Query\App\Issue\GetCommentsIssue;
 use App\Message\Query\App\Issue\GetFullIssue;
+use App\Message\Query\App\Project\GetProjectByJiraKey;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
-    path: '/issue/{key}',
+    path: '/issue/{keyIssue}',
     name: RouteCollection::VIEW->value,
+    methods: [Request::METHOD_GET, Request::METHOD_POST],
+)]
+#[Route(
+    path: '/project/{keyProject}/issue/{keyIssue}',
+    name: RouteCollection::PROJECT_VIEW->value,
     methods: [Request::METHOD_GET, Request::METHOD_POST],
 )]
 class ViewController extends AbstractController
@@ -24,17 +30,20 @@ class ViewController extends AbstractController
     use GetControllerTrait;
 
     public function __invoke(
-        string $key,
+        string $keyIssue,
         Request $request,
         #[CurrentUser]
         User $user,
+        ?string $keyProject = null,
     ): Response {
         $issue = $this->handle(
-            new GetFullIssue($key),
+            new GetFullIssue($keyIssue),
         );
         $comments = $this->handle(
-            new GetCommentsIssue($key),
+            new GetCommentsIssue($keyIssue),
         );
+        $project = $keyProject !== null ? $this->handle(new GetProjectByJiraKey(jiraKey: $keyProject)) : null;
+        $refererUrl = $request->headers->get('referer');
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);
@@ -49,7 +58,7 @@ class ViewController extends AbstractController
             return $this->redirectToRoute(
                 route: RouteCollection::VIEW->prefixed(),
                 parameters: [
-                    'key' => $key,
+                    'key' => $keyIssue,
                 ],
             );
         }
@@ -57,10 +66,12 @@ class ViewController extends AbstractController
         return $this->render(
             view: 'app/issue/view.html.twig',
             parameters: [
-                'key' => $key,
+                'key' => $keyIssue,
                 'issue' => $issue,
+                'project' => $project,
                 'comments' => $comments->comments,
                 'commentForm' => $form->createView(),
+                'refererUrl' => $refererUrl,
             ]
         );
     }

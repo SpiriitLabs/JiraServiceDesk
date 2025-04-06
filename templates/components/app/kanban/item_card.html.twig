@@ -7,11 +7,11 @@
         <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>
 
         <h5 class="mt-2 mb-2">
-            <a href="{{ path('app_issue_view', {key: issue.key}) }}" data-bs-toggle="modal" data-bs-target="#task-detail-modal" class="text-body">{{ issue.fields.summary }}</a>
+            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" data-bs-toggle="modal" data-bs-target="#task-detail-modal" class="text-body">{{ issue.fields.summary }}</a>
         </h5>
 
         <p class="mb-1">
-            <a href="{{ path('app_issue_view', {key: issue.key}) }}" class="pe-2 text-nowrap text-muted mb-2 d-inline-block">
+            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="pe-2 text-nowrap text-muted mb-2 d-inline-block">
                 <i class="mdi mdi-briefcase-outline text-muted"></i>
                 {{ issue.key }}
             </a>
@@ -28,10 +28,7 @@
                 <i class="mdi mdi-dots-vertical font-18"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end">
-                <a href="{{ path('app_issue_view', {key: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
-                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-delete me-1"></i>Delete</a>
-                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-plus-circle-outline me-1"></i>Add People</a>
-                <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-exit-to-app me-1"></i>Leave</a>
+                <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
             </div>
         </div>
 

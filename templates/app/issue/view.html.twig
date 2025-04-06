@@ -6,17 +6,23 @@
 {% set breadcrumb = [
     {
         label: '#' ~ key,
-        href: path('app_issue_view', {key: key}),
+        href: path('app_issue_view', {keyIssue: key}),
     },
     {
         label: 'action.view',
     }
 ] %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-xxl-8 col-xl-7">
+{% block action %}
+    <a href="{{ refererUrl }}" class="btn btn-outline-secondary">
+        <i class="mdi mdi-keyboard-return"></i>
+        {{ 'action.return'|trans }}
+    </a>
+{% endblock %}
 
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-xxl-8 col-xl-7">
 
             <twig:app:issue:content
                 issue="{{ issue }}"

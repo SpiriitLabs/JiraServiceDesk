@@ -12,6 +12,7 @@ action:
     add: 'Ajouter'
     remove: 'Supprimer'
     download: 'Télécharger'
+    return: 'Retour'
 
 locale:
     label: 'Langue'
