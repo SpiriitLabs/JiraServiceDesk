@@ -31,7 +31,7 @@ class EditIssueHandler
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
-            ->setPriorityNameAsString($command->priority->value)
+            ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
 

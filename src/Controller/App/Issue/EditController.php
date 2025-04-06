@@ -89,7 +89,7 @@ class EditController extends AbstractController
                 return $this->redirectToRoute(
                     route: RouteCollection::VIEW->prefixed(),
                     parameters: [
-                        'key' => $key,
+                        'keyIssue' => $key,
                     ],
                 );
             }

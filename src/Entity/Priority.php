@@ -29,8 +29,13 @@ class Priority
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $statusColor = null;
 
-    public function __construct(?string $name, ?string $description, ?int $jiraId, ?string $iconUrl, ?string $statusColor)
-    {
+    public function __construct(
+        ?string $name,
+        ?string $description,
+        ?int $jiraId,
+        ?string $iconUrl,
+        ?string $statusColor
+    ) {
         $this->name = $name;
         $this->description = $description;
         $this->jiraId = $jiraId;
