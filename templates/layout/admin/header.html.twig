@@ -41,9 +41,11 @@
             </li>
 
             <li class="d-sm-inline-block">
-                <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ 'header.themeMode'|trans }}">
-                    <i class="ri-moon-line font-22"></i>
-                </div>
+                <a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
+                    <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
+                        <i class="ri-moon-line font-22"></i>
+                    </div>
+                </a>
             </li>
 
             <li class="dropdown">

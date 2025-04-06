@@ -42,6 +42,7 @@ readonly class GetKanbanIssueByBoardIdHandler
                     'updated',
                     'timeestimate',
                 ],
+                'expand' => 'transitions',
             ],
         );
 
