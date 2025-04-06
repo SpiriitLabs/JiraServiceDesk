@@ -29,6 +29,9 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end">
                 <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
+                <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>{{ 'action.edit'|trans }}</a>
+
+                <div class="dropdown-divider mb-1 mt-0"></div>
 
                 {% for transition in issue.transitions %}
                     <form action="{{ path('app_issue_transition_to', {'issueId': issue.id, 'transitionId': transition.id}) }}" method="POST">
