@@ -20,14 +20,14 @@
     <div class="row">
 
         <div class="board">
-            {% for issueStatus in kanbanIssues %}
-                {% if issueStatus.name is defined %}
+            {% for columnName , columnValues in kanbanIssues %}
+                {% if columnValues.issues|length > 0 %}
                     <div class="tasks">
-                        <h5 class="mt-0 task-header text-uppercase">{{ issueStatus.name }} (<span class="fst-italic">{{ issueStatus.issues|length }}</span>)</h5>
+                        <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
 
                         <div id="task-list-two" class="task-list-items">
 
-                            {% for issue in issueStatus.issues %}
+                            {% for issue in columnValues.issues %}
                                 <twig:app:kanban:item_card
                                     issue="{{ issue }}"
                                 />

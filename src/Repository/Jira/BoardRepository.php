@@ -52,4 +52,13 @@ class BoardRepository
             return [];
         }
     }
+
+    public function getBoardConfigurationById(string $id, array $parameters = []): ?\JiraCloud\Board\BoardColumnConfig
+    {
+        try {
+            return $this->service->getBoardColumnConfiguration($id, $parameters);
+        } catch (JiraException $jiraException) {
+            return null;
+        }
+    }
 }

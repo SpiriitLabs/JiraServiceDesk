@@ -19,6 +19,10 @@ readonly class GetKanbanIssueByBoardIdHandler
 
     public function __invoke(GetKanbanIssueByBoardId $query): array
     {
+        $boardColumnConfiguration = $this->boardRepository->getBoardConfigurationById(
+            id: $query->boardId
+        );
+
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
             parameters: [
@@ -41,6 +45,6 @@ readonly class GetKanbanIssueByBoardIdHandler
             ],
         );
 
-        return $this->formatter->format($boardIssues);
+        return $this->formatter->format($boardIssues, $boardColumnConfiguration);
     }
 }
