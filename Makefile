@@ -29,8 +29,6 @@ start: build up vendor assets  ## Start project
 .PHONY: stop
 stop: ## Stop project
 	@$(DC) down --remove-orphans
-	@rm -rf vendor
-	@rm -rf node_modules
 
 .PHONY: up
 up: build
