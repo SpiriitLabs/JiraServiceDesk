@@ -25,6 +25,18 @@ readonly class EditUserHandler
         $user->preferredLocale = $command->preferedLocale;
         $user->preferredTheme = $command->preferedTheme;
 
+        if (
+            count(array_diff($user->getProjects()->toArray(), $command->projects)) > 0
+            || count(array_diff($command->projects, $user->getProjects()->toArray())) > 0
+        ) {
+            $user->clearProjects();
+
+
+            foreach ($command->projects as $project) {
+                $user->addProject($project);
+            }
+        }
+
         if ($command->plainPassword !== null) {
             $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
             $user->setPassword($password);

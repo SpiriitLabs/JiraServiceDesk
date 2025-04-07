@@ -24,7 +24,7 @@ class EditController extends AbstractController
         Request $request,
         User $user,
     ): Response {
-        $form = $this->createForm(AdminUserFormType::class, new EditUser($user));
+        $form = $this->createForm(AdminUserFormType::class, new EditUser(user: $user));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
