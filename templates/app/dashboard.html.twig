@@ -23,52 +23,7 @@
         {% endfor %}
     </div>
 
-    <twig:list:data-list
-        :datas="searchIssuesResult.issues"
-        :totalDatas="searchIssuesResult.total"
-    >
-        {% trans_default_domain 'app' %}
-
-        {% block tableTh %}
-            {% trans_default_domain 'app' %}
-
-            <th>
-                {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'issue.summary.label'|trans,
-                    'property': 'summary',
-                } %}
-            </th>
-            <th>
-                {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'issue.assignee.label'|trans,
-                    'property': 'assignee',
-                } %}
-            </th>
-            <th>
-                {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'issue.status.label'|trans,
-                    'property': 'status',
-                } %}
-            </th>
-            <th>
-                {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'issue.priority.label'|trans,
-                    'property': 'priority',
-                } %}
-            </th>
-            <th class="min"></th>
-        {% endblock %}
-
-        {% block tableTd %}
-            <td>{{ object.fields.summary }}</td>
-            <td>{% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}</td>
-            <td><div class="badge status-{{ object.fields.status.statuscategory.colorName }}"><p class="m-0 p-1 font-14">{{ object.fields.status.name }}</p></div></td>
-            <td><div class="d-flex align-items-center gap-1"><img src="{{ object.fields.priority.iconUrl }}" width="15px" alt="{{ object.fields.priority.id }}"><h5 class="mt-1 font-14">{{ object.fields.priority.name }}</h5></div></td>
-            <td>
-                <a class="action-icon text-secondary" href="{{ path('app_issue_view', {keyIssue: object.key}) }}">
-                    <i class="mdi mdi-eye"></i>
-                </a>
-            </td>
-        {% endblock %}
-    </twig:list:data-list>
+    {% include 'app/issue/_list_content.html.twig' with {
+        searchIssuesResult: searchIssuesResult,
+    } %}
 {% endblock %}
