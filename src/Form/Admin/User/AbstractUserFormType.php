@@ -8,6 +8,7 @@ use App\Message\Command\User\AbstractUserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,7 +38,7 @@ abstract class AbstractUserFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('plainPassword', TextType::class, [
+            ->add('plainPassword', PasswordType::class, [
                 'label' => 'user.password.label',
                 'required' => $options['creating'],
             ])
