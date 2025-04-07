@@ -30,7 +30,14 @@ class ProfilController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+            $this->handle($form->getData());
+
+            $this->addFlash(
+                type: 'success',
+                message: 'flash.edited',
+            );
+
+            return $this->redirectToRoute(route: RouteCollection::PROFIL->prefixed());
         }
 
         return $this->render(
