@@ -26,7 +26,7 @@ class IssueType
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     public ?string $iconUrl = null;
 
-    #[ORM\ManyToOne(inversedBy: 'IssuesTypes')]
+    #[ORM\ManyToOne(inversedBy: 'issuesTypes')]
     #[ORM\JoinColumn(nullable: false)]
     public ?Project $project = null;
 
