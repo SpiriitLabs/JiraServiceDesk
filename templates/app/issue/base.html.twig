@@ -2,6 +2,9 @@
 {% extends 'app/layout.html.twig' %}
 {% block title 'issue.label'|trans %}
 
-{% set breadcrumb = [{
-    label: 'issue.label'|trans,
-}]|merge(breadcrumb|default([])) %}
+{% set breadcrumb = [
+    {
+        label: 'issue.label'|trans,
+        href: path('app_issue_list')
+    }
+]|merge(breadcrumb|default([])) %}
