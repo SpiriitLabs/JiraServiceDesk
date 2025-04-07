@@ -30,7 +30,7 @@ export default class extends Controller {
       const issueId = element.dataset.issueId;
 
       try {
-        const response = await fetch(`/app/issue/${issueId}/transition/${transitionId}`, {
+        const response = await fetch(`/app/api/issue/${issueId}/transition/${transitionId}`, {
           method: 'POST',
         });
 

@@ -71,8 +71,8 @@ class IssueKanbanFormatter
         $result[$issueColumnName]['issues'][] = $issue;
 
         if (
-            $issueStatusId !== null &&
-            !isset($result[$issueColumnName]['transitionId'])
+            $issueStatusId !== null
+            && ! isset($result[$issueColumnName]['transitionId'])
         ) {
             $result[$issueColumnName]['transitionId'] = $this->findTransitionId($issue, $issueStatusId);
         }
@@ -84,7 +84,7 @@ class IssueKanbanFormatter
     {
         $statusName = $issue->fields->status->name;
 
-        if (!isset($result[$statusName])) {
+        if (! isset($result[$statusName])) {
             $result[$statusName] = [
                 'min' => 0,
                 'max' => 0,

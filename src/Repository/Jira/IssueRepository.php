@@ -71,19 +71,13 @@ class IssueRepository
 
     public function transitionTo(string $id, string $transitionId): void
     {
-        try {
-            $transition = new Transition();
-            $transition->setTransitionId($transitionId);
+        $transition = new Transition();
+        $transition->setTransitionId($transitionId);
 
-            $this->service->transition(
-                issueIdOrKey: $id,
-                transition: $transition,
-            );
-        } catch (JiraException $e) {
-            dd($e);
-
-            return;
-        }
+        $this->service->transition(
+            issueIdOrKey: $id,
+            transition: $transition,
+        );
     }
 
     public function create(IssueField $issueField): ?Issue
