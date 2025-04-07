@@ -107,7 +107,6 @@ profile:
     label: 'Profil'
     view:
         title: 'Mon profil utilisateur'
-        edit: 'Éditer mon profil'
         
 project:
     label: 'Projet(s)'

@@ -1,0 +1,33 @@
+{% trans_default_domain 'app' %}
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.firstName) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.lastName) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.email) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.plainPassword, {
+            row_attr: {
+                class: 'mb-0'
+            }
+        }) }}
+        <p class="fst-italic text-muted">{{ 'user.password.notice'|trans }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.preferedLocale) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.preferedTheme) }}
+    </div>
+</div>

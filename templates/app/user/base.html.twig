@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+{% extends 'app/layout.html.twig' %}
+{% block title 'user.label'|trans %}
+
+{% set breadcrumb = [{
+    href: path('app_profil'),
+    label: 'user.label'|trans,
+}]|merge(breadcrumb|default([])) %}
