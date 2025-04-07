@@ -7,7 +7,7 @@
         <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>
 
         <h5 class="mt-2 mb-2">
-            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" data-bs-toggle="modal" data-bs-target="#task-detail-modal" class="text-body">{{ issue.fields.summary }}</a>
+            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="text-body">{{ issue.fields.summary }}</a>
         </h5>
 
         <p class="mb-1">
