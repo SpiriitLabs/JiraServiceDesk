@@ -35,12 +35,18 @@
                     'property': 'jiraKey',
                 } %}
             </th>
+            <th class="d-none d-md-table-cell">{{ 'project.users.label'|trans }}</th>
             <th class="min"></th>
         {% endblock %}
 
         {% block tableTd %}
             <td>{{ object.name }}</td>
             <td>{{ object.jiraKey }}</td>
+            <td class="d-none d-md-table-cell">
+                {% for user in object.users %}
+                    {{ user.fullName }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_project_edit', {id: object.id}) }}">
                     <i class="mdi mdi-pencil"></i>

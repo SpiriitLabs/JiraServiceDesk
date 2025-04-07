@@ -1,0 +1,13 @@
+{% trans_default_domain 'app' %}
+{% extends 'app/project/base.html.twig' %}
+{% block title 'issue.label'|trans %}
+
+{% set breadcrumb = [
+    {
+        href: path('app_project_view', {key: project.jiraKey}),
+        label: project.name,
+    },
+    {
+        label: 'issue.label'|trans
+    }
+]|merge(breadcrumb|default([])) %}

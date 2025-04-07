@@ -1,0 +1,7 @@
+{% trans_default_domain 'app' %}
+{% extends 'app/layout.html.twig' %}
+{% block title 'issue.label'|trans %}
+
+{% set breadcrumb = [{
+    label: 'issue.label'|trans,
+}]|merge(breadcrumb|default([])) %}

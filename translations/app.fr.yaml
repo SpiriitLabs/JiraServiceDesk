@@ -12,6 +12,8 @@ action:
     add: 'Ajouter'
     remove: 'Supprimer'
     download: 'Télécharger'
+    return: 'Retour'
+    generate: 'Générer'
 
 locale:
     label: 'Langue'
@@ -54,6 +56,10 @@ modal:
         title: 'Suppression'
         description: "En cliquant sur ce bouton, vous acceptez de supprimer l'élément sélectionné."
         action: 'Valider'
+    warning:
+        title: 'Attention'
+        description: "En cliquant sur ce bouton, vous acceptez d'effectuer le processus sélectionné."
+        action: 'Valider'
 
 blameable:
     created: "Crée le %date% par %user%"
@@ -71,7 +77,8 @@ filter:
 dashboard:
     label: 'Tableau de bord'
     welcome: 'Bonjour %name% !'
-
+    admin: "Tableau d'administration"
+    app: "Tableau d'application"
 
 user:
     label: 'Utilisateur(s)'
@@ -96,6 +103,12 @@ user:
     preferedTheme:
         label: 'Theme de couleur préférée'
 
+profile:
+    label: 'Profil'
+    view:
+        title: 'Mon profil utilisateur'
+        edit: 'Éditer mon profil'
+        
 project:
     label: 'Projet(s)'
     title:
@@ -107,11 +120,62 @@ project:
         label: 'Clé Jira'
     jiraId:
         label: 'Identifiant Jira'
-    avatarUrl:
-        label: "URL de l'avatar"
+    description:
+        label: "Description"
     users:
         label: 'Utilisateur(s) reliée'
+    lead:
+        label: 'Responsable'
+    category:
+        label: 'Catégorie de projet'
+    boards:
+        label: 'Tableaux'
+    board:
+        label: 'Tableau'
+    flashes:
+        alreadyExist: "Cette clé de projet est déjà existante sur l'outil"
 
+issue:
+    label: 'Ticket(s)'
+    action:
+        create: 'Crée un ticket'
+    titles:
+        create: "Crée un ticket"
+    assignee:
+        label: 'Assignée à'
+        not_assignee: 'Non assignée'
+    status:
+        label: 'Statut'
+    priority:
+        label: 'Prioritée'
+    summary:
+        label: 'Titre'
+    type:
+        label: 'Type'
+    description:
+        label: 'Description'
+        notice: '💡 Votre NOM et Prénom sera rajouter au ticket afin de faciliter le travail des chef(ffe)s de projet'
+    comment:
+        label: 'Commentaire(s)'
+    attachment:
+        label: 'Pièce(s) Jointe(s)'
+    transition:
+        label: 'Transition'
+        to: 'Passer à'
+      
+priority:
+    label: 'Prioritée(s)'
+    name:
+        label: 'Nom'
+    description:
+        label: 'Description'
+    iconUrl:
+        label: 'Icone'
+    statusColor:
+        label: 'Couleur'
+    flashes:
+        generated: 'Les éléments ont bien était récupérer.'
+        
 security:
     login:
         label: 'Connexion'

@@ -1,0 +1,91 @@
+{% extends 'app/project/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'project.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: entity.name,
+        href: path('app_project_view', {key: entity.jiraKey}),
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block action %}
+    <a href="{{ path('app_project_issue_create', {projectKey: entity.jiraKey}) }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'issue.action.create'|trans }}
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-between">
+
+        <div class="col-md-6">
+            <div class="card d-block">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h3 class="mt-0">{{ entity.name }}</h3>
+                    </div>
+                    <div class="badge text-bg-secondary mb-3">{{ entity.jiraKey }}</div>
+
+                    {% if entity.description is not null and entity.description is not same as '' %}
+                        <h5>{{ 'project.description.label'|trans }}:</h5>
+
+                        <p class="text-muted mb-2">
+                            {{ entity.description }}
+                        </p>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <h5>{{ 'project.lead.label'|trans }}</h5>
+                                <p>{{ jiraProject.lead.displayName }}</p>
+                            </div>
+                        </div>
+                        {% if jiraProject.projectCategory is defined and jiraProject.projectCategory is not null %}
+                            <div class="col-md-4">
+                                <div class="mb-4">
+                                    <h5>{{ 'project.category.label'|trans }}</h5>
+                                    <p>{{ jiraProject.projectCategory.name }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">{{ 'project.boards.label'|trans }}</h5>
+
+                    {% for board in boards %}
+                        {% if false == board.isPrivate %}
+                            <div class="card mb-1 shadow-none border">
+                                <div class="p-0 px-2">
+                                    <div class="row align-items-center">
+                                        <div class="col ps-2">
+                                            <a href="{{ path('app_project_board_view', {idProject: entity.id, idBoard: board.id}) }}" class="text-muted fw-bold">{{ board.name }}</a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="{{ path('app_project_board_view', {idProject: entity.id, idBoard: board.id}) }}" class="btn btn-link btn-lg text-muted">
+                                                <i class="ri-shape-2-fill"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

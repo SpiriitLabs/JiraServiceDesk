@@ -1,0 +1,14 @@
+{% trans_default_domain 'app' %}
+
+{% if reporter is not null %}
+    <span class="align-middle">
+        {% if reporter.accountId == jira_account_id %}
+            {{ app.user.fullName }}
+        {% else %}
+            <img src="{{ reporter.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+            {{ reporter.displayName }}
+        {% endif %}
+    </span>
+{% else %}
+    <span class="fst-italic">{{ 'issue.assignee.not_assignee'|trans }}</span>
+{% endif %}

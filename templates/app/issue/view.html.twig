@@ -1,0 +1,115 @@
+{% extends 'app/issue/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'issue.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: '#' ~ key,
+        href: path('app_issue_view', {keyIssue: key}),
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block action %}
+    <a href="{{ refererUrl }}" class="btn btn-outline-secondary">
+        <i class="mdi mdi-keyboard-return"></i>
+        {{ 'action.return'|trans }}
+    </a>
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-xxl-8 col-xl-7">
+
+            <twig:app:issue:content
+                issue="{{ issue }}"
+                withActions="true"
+            />
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="my-1">{{ 'issue.comment.label'|trans }} (<span class="fst-italic">{{ issue.fields.comment.total }}</span>)</h4>
+                </div>
+                <div class="card-body">
+
+                    {% for comment in comments %}
+                        {% if comment.visibility is null %}
+                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
+                            <div class="d-flex mt-3 mb-2">
+                                <div class="w-100">
+                                    <h5 class="mt-0">
+                                        <twig:app:issue:assignee
+                                            reporter="{{ comment.author }}"
+                                        />
+
+                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
+                                    </h5>
+                                    {{ comment.renderedBody|raw }}
+
+                                    <br>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="rounded">
+                        {{ form_start(commentForm, {
+                            attr: {
+                                class: 'comment-area-box',
+                            }
+                        }) }}
+                            {{ form_row(commentForm.comment, {
+                                attr: {
+                                    class: 'form-control border-0 resize-none',
+                                    rows: '3',
+                                }
+                            }) }}
+                            {{ form_row(commentForm.attachments) }}
+
+                            <div class="d-flex flex-row justify-content-end">
+                                <button type="submit" class="btn btn-sm btn-success"><i class="uil uil-message me-1"></i>{{ 'action.save'|trans }}</button>
+                            </div>
+                        {{ form_end(commentForm) }}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% if issue.customAttachments|length > 0 %}
+            <div class="col-xxl-4 col-xl-5">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ 'issue.attachment.label'|trans }}</h5>
+
+                        {% for attachment in issue.customAttachments %}
+                            <div class="card my-1 shadow-none border">
+                                <div class="p-2">
+                                    <div class="col align-items-center">
+                                        <img src="{{ attachment.thumbnailUrl }}" alt="">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col ps-2">
+                                                <a href="{{ attachment.url }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
+                                                <p class="mb-0 text-muted">{{ attachment.author }}</p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="{{ attachment.url }}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                                    <i class="ri-download-2-line"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

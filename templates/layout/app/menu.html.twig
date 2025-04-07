@@ -1,0 +1,31 @@
+{% trans_default_domain 'adherent' %}
+
+{% set currentRoute = app.request.attributes.get('_route') %}
+
+<div class="topnav">
+  <div class="container-fluid">
+    <nav class="navbar navbar-dark navbar-expand-lg topnav-menu">
+      <div class="collapse navbar-collapse" id="topnav-menu-content">
+        <ul class="navbar-nav">
+
+            <twig:nav:app:item-single
+                path="app_dashboard"
+                trans="dashboard.label"
+                icon="mdi mdi-home-city"
+                href="{{ path('app_dashboard') }}"
+                role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+            />
+
+            <twig:nav:app:item-single
+                path="app_project"
+                trans="project.label"
+                icon="uil-briefcase"
+                href="{{ path('app_project_list') }}"
+                role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+            />
+
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

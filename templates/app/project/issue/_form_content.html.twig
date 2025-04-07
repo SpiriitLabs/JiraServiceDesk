@@ -1,0 +1,28 @@
+{% trans_default_domain 'app' %}
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.summary) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.attachments) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.type) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.priority) }}
+    </div>
+</div>
+
+<div class="row">
+    {{ form_row(form.description, {
+        row_attr: {
+            class: 'mb-0'
+        }
+    }) }}
+    <p class="mb-0 text-muted">{{ 'issue.description.notice'|trans }}</p>
+</div>

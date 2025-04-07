@@ -41,9 +41,11 @@
             </li>
 
             <li class="d-sm-inline-block">
-                <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ 'header.themeMode'|trans }}">
-                    <i class="ri-moon-line font-22"></i>
-                </div>
+                <a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
+                    <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
+                        <i class="ri-moon-line font-22"></i>
+                    </div>
+                </a>
             </li>
 
             <li class="dropdown">
@@ -61,7 +63,7 @@
                         <h6 class="text-overflow m-0">{{ 'header.dropdown.welcome'|trans }}</h6>
                     </div>
 
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ path('admin_user_edit', {id: app.user.id}) }}" class="dropdown-item">
                         <i class="mdi mdi-account-circle"></i>
                         <span>{{ 'profile.label'|trans }}</span>
                     </a>
@@ -70,6 +72,13 @@
                         <a href="{{ impersonation_exit_path(path('admin_dashboard') ) }}" class="dropdown-item bg-danger text-white">
                             <i class="mdi mdi-lock-alert"></i>
                             <span>{{ 'action.exitImpersonation'|trans }}</span>
+                        </a>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('app_dashboard') }}" class="dropdown-item bg-info text-white">
+                            <i class="uil-briefcase"></i>
+                            <span>{{ 'dashboard.app'|trans }}</span>
                         </a>
                     {% endif %}
 

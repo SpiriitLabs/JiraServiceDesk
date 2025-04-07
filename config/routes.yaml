@@ -20,3 +20,9 @@ admin:
     type: attribute
     name_prefix: admin_
     prefix: admin
+    
+when@dev:
+    redirect:
+        path: /
+        controller: App\Controller\Security\LoginController::__invoke
+

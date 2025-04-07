@@ -1,0 +1,11 @@
+{% trans_default_domain 'app' %}
+
+<footer class="footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+          2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
+      </div>
+    </div>
+  </div>
+</footer>

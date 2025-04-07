@@ -1,0 +1,50 @@
+{% extends 'app/project/base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'project.board.label'|trans ~ ' ' ~ entity.name %}
+{% set breadcrumb = [
+    {
+        label: entity.name,
+        href: path('app_project_view', {key: entity.jiraKey}),
+    },
+    {
+        label: 'project.board.label'
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block content %}
+
+    <div class="row">
+        {% set columnsNames = [] %}
+        {% for columnName , columnValues in kanbanIssues %}
+            {% set columnsNames = columnsNames|merge([columnName|lower|u.ascii|u.replace(' ', '-')]) %}
+        {% endfor %}
+
+        <div class="board"  >
+            {% for columnName , columnValues in kanbanIssues %}
+                {% if columnValues.issues|length > 0 %}
+                    <div class="tasks"  {% if loop.first %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode}) }}{% endif %}>
+                        <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
+
+                        <div id="{{ columnName|lower|u.ascii|u.replace(' ', '-') }}" data-kanban-transition-id="{{ columnValues.transitionId }}" class="task-list-items">
+
+                            {% for issue in columnValues.issues %}
+                                <twig:app:kanban:item_card
+                                    issue="{{ issue }}"
+                                    project="{{ entity }}"
+                                />
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+{% endblock %}

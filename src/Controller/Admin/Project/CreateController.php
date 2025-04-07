@@ -3,11 +3,13 @@
 namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Exception\Project\ProjectAlreadyExistException;
 use App\Form\Admin\Project\ProjectFormType;
 use App\Message\Command\Admin\Project\CreateProject;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
@@ -26,7 +28,20 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $projectCreated = $this->handle($form->getData());
+            try {
+                $projectCreated = $this->handle($form->getData());
+            } catch (HandlerFailedException $exception) {
+                if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
+                    $this->addFlash(
+                        type: 'danger',
+                        message: $exception->getMessage(),
+                    );
+
+                    return $this->redirectToRoute(RouteCollection::CREATE->prefixed());
+                }
+
+                throw $exception;
+            }
 
             if ($projectCreated !== null) {
                 $this->addFlash(
