@@ -26,7 +26,6 @@ class TransitionToController extends AbstractController
         string $issueId,
         string $transitionId,
     ): Response {
-        return new Response('', Response::HTTP_BAD_REQUEST);
         $this->handle(
             new TransitionTo(
                 issueId: $issueId,

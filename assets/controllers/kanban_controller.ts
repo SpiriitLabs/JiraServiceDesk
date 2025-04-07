@@ -23,7 +23,7 @@ export default class extends Controller {
 
     this.drake = dragula(divElements);
 
-    this.drake.on('drop', async (element: Element, target: Element, source: Element, sibling: Element) => {
+    this.drake.on('drop', async function (element: Element, target: Element, source: Element, sibling: Element) {
       // @ts-ignore
       const transitionId = target.dataset.kanbanTransitionId;
       // @ts-ignore
@@ -32,19 +32,18 @@ export default class extends Controller {
       try {
         const response = await fetch(`/app/issue/${issueId}/transition/${transitionId}`, {
           method: 'POST',
-        }).then(response => {
-          if (!response.ok) {
-              this.drake.cancel(true);
-          }
         });
-      } catch (error) {
-        console.error(error);
-      }
 
-      // if (!response.ok) {
-      //   this.drake.cancel(true);
-      // }
-    });
+        throw new Error('API error');
+        if (!response.ok) {
+          throw new Error('API error');
+        }
+
+      } catch (error) {
+        console.error("❌ Failed to update issue transition:", error);
+        this.drake.cancel(true); // Revert the move, `this` is correctly bound now
+      }
+    }.bind(this));
   }
 
 }
