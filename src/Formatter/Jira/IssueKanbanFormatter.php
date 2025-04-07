@@ -46,6 +46,7 @@ class IssueKanbanFormatter
             $result[$columnConfiguration->name] = [
                 'min' => $columnConfiguration->min,
                 'max' => $columnConfiguration->max,
+                'transitionId' => null,
                 'issues' => [],
             ];
         }
@@ -59,33 +60,65 @@ class IssueKanbanFormatter
         ?BoardColumnConfig $columnsConfiguration = null
     ): array {
         if ($columnsConfiguration === null) {
-            if (! isset($result[$issue->fields->status->name])) {
-                $result[$issue->fields->status->name] = [
-                    'min' => 0,
-                    'max' => 0,
-                    'issues' => [],
-                ];
-            }
+            return $this->insertWithoutColumnConfig($result, $issue);
+        }
+        [$issueColumnName, $issueStatusId] = $this->findColumnAndStatusId($columnsConfiguration, $issue);
 
-            $result[$issue->fields->status->name]['issues'][] = $issue;
-
+        if ($issueColumnName === null) {
             return $result;
         }
 
-        $issueColumnName = null;
-        foreach ($columnsConfiguration->columns as $columnConfiguration) {
-            foreach ($columnConfiguration->statuses as $statusConfiguration) {
-                if ($issue->fields->status->id === $statusConfiguration->id) {
-                    $issueColumnName = $columnConfiguration->name;
-                    break;
+        $result[$issueColumnName]['issues'][] = $issue;
+
+        if (
+            $issueStatusId !== null &&
+            !isset($result[$issueColumnName]['transitionId'])
+        ) {
+            $result[$issueColumnName]['transitionId'] = $this->findTransitionId($issue, $issueStatusId);
+        }
+
+        return $result;
+    }
+
+    private function insertWithoutColumnConfig(array $result, Issue $issue): array
+    {
+        $statusName = $issue->fields->status->name;
+
+        if (!isset($result[$statusName])) {
+            $result[$statusName] = [
+                'min' => 0,
+                'max' => 0,
+                'transitionId' => null,
+                'issues' => [],
+            ];
+        }
+
+        $result[$statusName]['issues'][] = $issue;
+
+        return $result;
+    }
+
+    private function findColumnAndStatusId(BoardColumnConfig $config, Issue $issue): array
+    {
+        foreach ($config->columns as $column) {
+            foreach ($column->statuses as $status) {
+                if ($issue->fields->status->id === $status->id) {
+                    return [$column->name, $status->id];
                 }
             }
         }
 
-        if ($issueColumnName !== null) {
-            $result[$issueColumnName]['issues'][] = $issue;
+        return [null, null];
+    }
+
+    private function findTransitionId(Issue $issue, string $targetStatusId): ?string
+    {
+        foreach ($issue->transitions as $transition) {
+            if ($transition->to->id === $targetStatusId) {
+                return $transition->id;
+            }
         }
 
-        return $result;
+        return null;
     }
 }

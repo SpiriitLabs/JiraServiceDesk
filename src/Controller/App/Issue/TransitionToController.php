@@ -8,6 +8,7 @@ use App\Message\Command\App\Issue\TransitionTo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
@@ -24,7 +25,8 @@ class TransitionToController extends AbstractController
         Request $request,
         string $issueId,
         string $transitionId,
-    ): RedirectResponse {
+    ): Response {
+        return new Response('', Response::HTTP_BAD_REQUEST);
         $this->handle(
             new TransitionTo(
                 issueId: $issueId,

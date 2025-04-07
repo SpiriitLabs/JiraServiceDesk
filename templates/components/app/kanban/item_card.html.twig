@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
 
 {% if issue is not null %}
-<div class="card mb-0">
+<div class="card mb-0" data-issue-id="{{ issue.id }}">
     <div class="card-body p-3">
         <small class="float-end text-muted">{{ issue.fields.created|date('d/m/Y H:i') }}</small>
         <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>

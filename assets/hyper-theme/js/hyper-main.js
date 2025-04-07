@@ -72,9 +72,9 @@ const bootstrap = require('bootstrap');
         }
 
         // RTL Layout
-        if (document.getElementById('app-style').href.includes('rtl.min.css')) {
-            document.getElementsByTagName('html')[0].dir = "rtl";
-        }
+        // if (document.getElementById('app-style').href.includes('rtl.min.css')) {
+        //     document.getElementsByTagName('html')[0].dir = "rtl";
+        // }
     }
 
     // Portlet Widget (Card Reload, Collapse, and Delete)
