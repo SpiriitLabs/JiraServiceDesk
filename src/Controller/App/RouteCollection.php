@@ -17,4 +17,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     case REDIRECT_AFTER_LOGIN = 'redirect_after_login';
 
     case DASHBOARD = 'dashboard';
+    case PROFIL = 'profil';
 }

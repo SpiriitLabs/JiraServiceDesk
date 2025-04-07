@@ -6,6 +6,8 @@ use App\Entity\User;
 
 class EditUser extends AbstractUserDTO
 {
+    public array $projects;
+
     public function __construct(
         public readonly User $user,
     ) {
@@ -17,5 +19,9 @@ class EditUser extends AbstractUserDTO
             preferedLocale: $this->user->preferredLocale,
             preferedTheme: $this->user->preferredTheme,
         );
+
+        $this->projects = $this->user->getProjects()
+            ->toArray()
+        ;
     }
 }
