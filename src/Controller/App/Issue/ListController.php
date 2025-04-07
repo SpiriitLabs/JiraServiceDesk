@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\App;
+namespace App\Controller\App\Issue;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\User;
@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
-    path: '/dashboard',
-    name: RouteCollection::DASHBOARD->value,
-    methods: [Request::METHOD_GET]
+    path: '/issues',
+    name: RouteCollection::LIST->value,
+    methods: [Request::METHOD_GET],
 )]
-class DashboardController extends AbstractController
+class ListController extends AbstractController
 {
     use GetControllerTrait;
 
@@ -32,14 +32,12 @@ class DashboardController extends AbstractController
                 sort: $request->get('_sort', 'id'),
                 page: $request->get('page', 1),
                 user: $user,
-                onlyUserAssigned: true,
             )
         );
 
         return $this->render(
-            view: 'app/dashboard.html.twig',
+            view: 'app/issue/list.html.twig',
             parameters: [
-                'projects' => $user->getProjects(),
                 'searchIssuesResult' => $searchIssueResult,
             ]
         );

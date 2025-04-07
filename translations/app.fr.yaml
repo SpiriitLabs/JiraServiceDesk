@@ -140,6 +140,8 @@ issue:
         create: 'Crée un ticket'
     titles:
         create: "Crée un ticket"
+    jiraKey:
+        label: 'Clé'
     assignee:
         label: 'Assignée à'
         not_assignee: 'Non assignée'

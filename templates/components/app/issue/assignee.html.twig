@@ -1,5 +1,6 @@
 {% trans_default_domain 'app' %}
 
+{% dump(reporter) %}
 {% if reporter is not null %}
     <span class="align-middle">
         {% if reporter.accountId == jira_account_id %}

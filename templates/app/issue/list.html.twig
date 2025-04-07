@@ -1,28 +1,14 @@
-{% extends 'app/layout.html.twig' %}
+{% extends 'app/issue/base.html.twig' %}
 {% trans_default_domain 'app' %}
 
-{% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
+{% block pageTitle 'issue.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
 
 {% block content %}
-    <div class="row">
-        {% for project in projects %}
-            {# @var project \Entity\Project #}
-
-            <div class="col-md-6 col-xxl-3">
-                <div class="card d-block">
-                    <div class="card-body">
-                        <h4 class="mt-0">
-                            <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }} <i class="mdi mdi-share-all"></i></a>
-                        </h4>
-                        <div class="badge bg-secondary">{{ project.jiraKey }}</div>
-
-                        <p class="text-muted font-13 my-3">{{ project.description }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
     <twig:list:data-list
         :datas="searchIssuesResult.issues"
         :totalDatas="searchIssuesResult.total"
@@ -32,25 +18,31 @@
         {% block tableTh %}
             {% trans_default_domain 'app' %}
 
+            <th class="d-none d-md-table-cell">
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'issue.jiraKey.label'|trans,
+                    'property': 'key',
+                } %}
+            </th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'issue.summary.label'|trans,
                     'property': 'summary',
                 } %}
             </th>
-            <th>
+            <th class="d-none d-md-table-cell">
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'issue.assignee.label'|trans,
                     'property': 'assignee',
                 } %}
             </th>
-            <th>
+            <th class="d-none d-md-table-cell">
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'issue.status.label'|trans,
                     'property': 'status',
                 } %}
             </th>
-            <th>
+            <th class="d-none d-md-table-cell">
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'issue.priority.label'|trans,
                     'property': 'priority',
@@ -60,10 +52,21 @@
         {% endblock %}
 
         {% block tableTd %}
-            <td>{{ object.fields.summary }}</td>
-            <td>{% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}</td>
-            <td><div class="badge status-{{ object.fields.status.statuscategory.colorName }}"><p class="m-0 p-1 font-14">{{ object.fields.status.name }}</p></div></td>
-            <td><div class="d-flex align-items-center gap-1"><img src="{{ object.fields.priority.iconUrl }}" width="15px" alt="{{ object.fields.priority.id }}"><h5 class="mt-1 font-14">{{ object.fields.priority.name }}</h5></div></td>
+            {% import "admin/macros/issue.html.twig" as issueMacros %}
+
+            <td class="d-none d-md-table-cell">{{ object.key }}</td>
+            <td>
+                {{ object.fields.summary }}
+
+                <div class="text-muted d-flex flex-column d-md-none gap-2 mt-2">
+                    {% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}
+                    {{ issueMacros.issueStatus(object) }}
+                    {{ issueMacros.issuePriority(object) }}
+                </div>
+            </td>
+            <td class="d-none d-md-table-cell">{% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}</td>
+            <td class="d-none d-md-table-cell">{{ issueMacros.issueStatus(object) }}</td>
+            <td class="d-none d-md-table-cell">{{ issueMacros.issuePriority(object) }}</td>
             <td>
                 <a class="action-icon text-secondary" href="{{ path('app_issue_view', {keyIssue: object.key}) }}">
                     <i class="mdi mdi-eye"></i>
