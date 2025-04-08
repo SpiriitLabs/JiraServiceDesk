@@ -221,7 +221,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addFavorite(Favorite $favorite): static
     {
-        if (!$this->favorites->contains($favorite)) {
+        if (! $this->favorites->contains($favorite)) {
             $this->favorites->add($favorite);
             $favorite->setUser($this);
         }
@@ -239,5 +239,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function hasFavoriteByCode(string $code): bool
+    {
+        foreach ($this->favorites as $favorite) {
+            if ($favorite->code === $code) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
