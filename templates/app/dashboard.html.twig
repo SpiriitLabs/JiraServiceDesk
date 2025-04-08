@@ -4,4 +4,26 @@
 {% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
 
 {% block content %}
+    <div class="row">
+        {% for project in projects %}
+            {# @var project \Entity\Project #}
+
+            <div class="col-md-6 col-xxl-3">
+                <div class="card d-block">
+                    <div class="card-body">
+                        <h4 class="mt-0">
+                            <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }} <i class="mdi mdi-share-all"></i></a>
+                        </h4>
+                        <div class="badge bg-secondary">{{ project.jiraKey }}</div>
+
+                        <p class="text-muted font-13 my-3">{{ project.description }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include 'app/issue/_list_content.html.twig' with {
+        searchIssuesResult: searchIssuesResult,
+    } %}
 {% endblock %}

@@ -24,6 +24,14 @@
                 role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
             />
 
+            <twig:nav:app:item-single
+                path="app_issue_list"
+                trans="issue.label"
+                icon="uil-clipboard-alt"
+                href="{{ path('app_issue_list') }}"
+                role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+            />
+
         </ul>
       </div>
     </nav>

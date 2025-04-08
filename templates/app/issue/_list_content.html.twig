@@ -1,0 +1,73 @@
+<twig:list:data-list
+    :datas="searchIssuesResult.issues"
+    :totalDatas="searchIssuesResult.total"
+>
+    {% trans_default_domain 'app' %}
+
+    {% block filterFormRows %}
+        {% if filterForm is defined and filterForm is not null %}
+            <div class="col-md-6">
+                {{ form_row(filterForm.query) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+
+    {% block tableTh %}
+        {% trans_default_domain 'app' %}
+
+        <th class="d-none d-md-table-cell">
+            {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.jiraKey.label'|trans,
+                'property': 'key',
+            } %}
+        </th>
+        <th>
+            {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.summary.label'|trans,
+                'property': 'summary',
+            } %}
+        </th>
+        <th class="d-none d-md-table-cell">
+            {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.assignee.label'|trans,
+                'property': 'assignee',
+            } %}
+        </th>
+        <th class="d-none d-md-table-cell">
+            {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.status.label'|trans,
+                'property': 'status',
+            } %}
+        </th>
+        <th class="d-none d-md-table-cell">
+            {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.priority.label'|trans,
+                'property': 'priority',
+            } %}
+        </th>
+        <th class="min"></th>
+    {% endblock %}
+
+    {% block tableTd %}
+        {% import "macros/issue.html.twig" as issueMacros %}
+
+        <td class="d-none d-md-table-cell">{{ object.key }}</td>
+        <td>
+            {{ object.fields.summary }}
+
+            <div class="text-muted d-flex flex-column d-md-none gap-2 mt-2">
+                {% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}
+                {{ issueMacros.issuePriority(object) }}
+                {{ issueMacros.issueStatus(object) }}
+            </div>
+        </td>
+        <td class="d-none d-md-table-cell">{% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}</td>
+        <td class="d-none d-md-table-cell">{{ issueMacros.issueStatus(object) }}</td>
+        <td class="d-none d-md-table-cell">{{ issueMacros.issuePriority(object) }}</td>
+        <td>
+            <a class="action-icon text-secondary" href="{{ path('app_issue_view', {keyIssue: object.key}) }}">
+                <i class="mdi mdi-eye"></i>
+            </a>
+        </td>
+    {% endblock %}
+</twig:list:data-list>
