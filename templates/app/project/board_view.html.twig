@@ -15,6 +15,10 @@
     }
 ] %}
 
+{% block action %}
+
+{% endblock %}
+
 {% block content %}
 
     <div class="row">
@@ -23,7 +27,7 @@
             {% set columnsNames = columnsNames|merge([columnName|lower|u.ascii|u.replace(' ', '-')]) %}
         {% endfor %}
 
-        <div class="board"  >
+        <div class="board">
             {% for columnName , columnValues in kanbanIssues %}
                 {% if columnValues.issues|length > 0 %}
                     <div class="tasks"  {% if loop.first %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode}) }}{% endif %}>

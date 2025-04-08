@@ -33,6 +33,7 @@
         "@types/dragula": "^3.7.5",
         "bootstrap": "^5.3.3",
         "dragula": "^3.7.3",
+        "htmx.org": "^1.9.12",
         "jquery": "^3.7.1",
         "simplebar": "^6.2.7",
         "tom-select": "^2.4.1"
