@@ -1,0 +1,12 @@
+{% trans_default_domain 'app' %}
+
+<form action="{{ path('app_api_add_favorite') }}" hx-post="{{ path('app_api_add_favorite') }}" hx-trigger="click" hx-swap="outerHTML" hx-target="this">
+    <input type="hidden" name="code" value="{{ code }}">
+    <input type="hidden" name="name" value="{{ name }}">
+    <input type="hidden" name="link" value="{{ link }}">
+
+    <button type="submit" class="btn btn-outline-primary">
+        <i class="mdi mdi-heart"></i>
+        {{ 'favorite.action.add'|trans }}
+    </button>
+</form>

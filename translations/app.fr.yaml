@@ -80,6 +80,12 @@ dashboard:
     admin: "Tableau d'administration"
     app: "Tableau d'application"
 
+favorite:
+    label: 'Favori(s)'
+    action:
+        add: "Ajouter aux favoris"
+        remove: "Supprimer des favoris"
+
 user:
     label: 'Utilisateur(s)'
     title:
