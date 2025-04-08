@@ -11,5 +11,7 @@
 {% block content %}
     {% include 'app/issue/_list_content.html.twig' with {
         searchIssuesResult: searchIssuesResult,
+        filterFormResetPath: path('app_issue_list'),
+        filterForm: filterForm,
     } %}
 {% endblock %}

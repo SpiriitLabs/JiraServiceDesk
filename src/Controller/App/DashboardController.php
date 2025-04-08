@@ -6,8 +6,6 @@ use App\Controller\Common\GetControllerTrait;
 use App\Entity\User;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\SearchIssuesResult;
-use Pagerfanta\Adapter\ArrayAdapter;
-use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

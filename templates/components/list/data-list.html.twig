@@ -2,6 +2,35 @@
 
 <div class="row">
     <div class="col-12">
+        {% block formFilter %}
+            {% if filterForm is defined and filterForm is not none %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        {{ form_start(filterForm, {attr: {
+                            class: 'row form-inline',
+                        }}) }}
+                        <div class="d-flex flex-row align-items-end gap-4">
+                            {% block filterFormRows '' %}
+
+                            {{ form_rest(filterForm) }}
+                            <div class="col-md-2 mb-3">
+                                <div class="btn-group">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="ri-search-line"></i>
+                                        {{ 'action.filter'|trans }}
+                                    </button>
+                                    <a title="Reset" href="{{ filterFormResetPath }}" class="btn btn-light">
+                                        <i class="mdi mdi-window-close"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {{ form_end(filterForm) }}
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">

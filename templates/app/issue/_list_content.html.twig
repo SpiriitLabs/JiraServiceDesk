@@ -4,6 +4,14 @@
 >
     {% trans_default_domain 'app' %}
 
+    {% block filterFormRows %}
+        {% if filterForm is defined and filterForm is not null %}
+            <div class="col-md-6">
+                {{ form_row(filterForm.query) }}
+            </div>
+        {% endif %}
+    {% endblock %}
+
     {% block tableTh %}
         {% trans_default_domain 'app' %}
 

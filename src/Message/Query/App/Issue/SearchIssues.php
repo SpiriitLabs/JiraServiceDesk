@@ -3,6 +3,7 @@
 namespace App\Message\Query\App\Issue;
 
 use App\Entity\User;
+use App\Model\Filter\IssueFilter;
 use App\Model\SortParams;
 
 class SearchIssues
@@ -16,6 +17,7 @@ class SearchIssues
         public int $page = 1,
         public ?User $user = null,
         public bool $onlyUserAssigned = false,
+        public ?IssueFilter $filter = null,
     ) {
         $this->sort = SortParams::createSort($sort);
     }

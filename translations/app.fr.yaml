@@ -14,6 +14,7 @@ action:
     download: 'Télécharger'
     return: 'Retour'
     generate: 'Générer'
+    filter: 'Filtrer'
 
 locale:
     label: 'Langue'
@@ -48,8 +49,6 @@ list:
         next: 'Suivant'
         empty: "Oups, nous n'avons pas trouvé d'éléments."
         total: '%number% Résultat(s)'
-    filter:
-        action: 'Filtrer'
 
 modal:
     delete:
@@ -71,6 +70,7 @@ sidebar:
         administration: 'Administration'
 
 filter:
+    label: 'Filtre(s)'
     query:
         label: 'Rechercher'
 
