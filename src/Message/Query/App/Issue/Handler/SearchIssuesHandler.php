@@ -37,19 +37,11 @@ class SearchIssuesHandler
             ;
         }
 
-        if ($query->filter !== null) {
-            if ($query->filter->query !== null) {
-                $jql
-                    ->addExpression('text', '~', $query->filter->query)
-                    ->addExpression('summary', '~', $query->filter->query)
-                ;
-            }
-
-            if ($query->filter->project !== null) {
-                $jql
-                    ->addInExpression('project', [$query->filter->project->jiraKey])
-                ;
-            }
+        if ($query->filter !== null && $query->filter->query !== null) {
+            $jql
+                ->addExpression('text', '~', $query->filter->query)
+                ->addExpression('summary', '~', $query->filter->query)
+            ;
         }
 
         $issues_fields = [
