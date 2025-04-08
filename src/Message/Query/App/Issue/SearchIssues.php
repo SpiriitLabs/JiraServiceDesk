@@ -7,7 +7,7 @@ use App\Model\SortParams;
 
 class SearchIssues
 {
-    public const int MAX_ISSUES_RESULTS = 50;
+    public const int MAX_ISSUES_RESULTS = 10;
 
     public SortParams $sort;
 

@@ -26,19 +26,28 @@ class ListController extends AbstractController
         User $user,
         Request $request,
     ): Response {
+        $page = $request->get('page', 1);
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
                 sort: $request->get('_sort', 'id'),
-                page: $request->get('page', 1),
+                page: $page,
                 user: $user,
             )
         );
+
+        if ($page > ($searchIssueResult->page + 1)) {
+            return $this->redirectToRoute(RouteCollection::LIST->prefixed());
+        }
 
         return $this->render(
             view: 'app/issue/list.html.twig',
             parameters: [
                 'searchIssuesResult' => $searchIssueResult,
+                'currentPage' => $page,
+                'previousPage' => ($page - 1) < 1 ? null : ($page - 1),
+                'nextPage' => ($page + 1) > ($searchIssueResult->page + 1) ? null : $page + 1,
+                'maxPage' => $searchIssueResult->page + 1,
             ]
         );
     }

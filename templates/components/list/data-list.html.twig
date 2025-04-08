@@ -36,7 +36,24 @@
                             </p>
 
                             <div class="pagerfanta mt-4 pagination">
-{#                                    {{ pagerfanta(pagination) }}#}
+                                <ul class="pagination">
+                                    {% if previousPage is defined and previousPage is not null %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('app_issue_list', {page: previousPage}) }}" rel="prev">Précédent</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for i in 1..maxPage %}
+                                        {% set activePage = (i == currentPage) %}
+                                        <li class="page-item{% if activePage %} active{% endif %}"{% if activePage %} aria-current="page"{% endif %}>
+                                            <a class="page-link" href="{{ path('app_issue_list', {page: i}) }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if nextPage is defined and nextPage is not null %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('app_issue_list', {page: nextPage}) }}" rel="next">Suivant</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
                             </div>
                         </div>
                     {% endif %}
