@@ -60,6 +60,15 @@ class EditController extends AbstractController
         ]);
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($issue, $project));
 
+        if ($project == null) {
+            $this->addFlash(
+                type: 'danger',
+                message: 'flash.error',
+            );
+
+            return $this->redirect($request->headers->get('referer'));
+        }
+
         $form = $this->createForm(
             type: EditIssueFormType::class,
             data: new EditIssue(
