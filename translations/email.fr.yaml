@@ -1,0 +1,9 @@
+issue:
+    create:
+        title: "Nouveau ticket disponible !"
+        description: "Un nouveau ticket '%ticket_name%' à était crée sur votre project '%project_name%'<br/>Consulter le directement depuis votre espace client."
+        action: "Voir le ticket"
+    edit:
+        title: "Ticket mis à jour !"
+        description: "Votre ticket '%ticket_name%' du project '%project_name%' à était mis à jour.<br/>Consulter le directement depuis votre espace client."
+        action: "Voir le ticket"

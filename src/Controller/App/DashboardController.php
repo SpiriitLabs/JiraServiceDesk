@@ -42,6 +42,7 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute(RouteCollection::DASHBOARD->prefixed());
         }
 
+
         return $this->render(
             view: 'app/dashboard.html.twig',
             parameters: [
