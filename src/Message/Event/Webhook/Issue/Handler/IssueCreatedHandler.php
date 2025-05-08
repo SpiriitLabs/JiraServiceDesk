@@ -21,11 +21,20 @@ class IssueCreatedHandler implements LoggerAwareInterface
     ) {
     }
 
-    public function __invoke(IssueCreated $event): void {
+    public function __invoke(IssueCreated $event): void
+    {
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['summary'];
-        $project = $this->projectRepository->findOneBy(['jiraId' => $event->getPayload()['issue']['fields']['project']['id'], 'jiraKey' => $event->getPayload()['issue']['fields']['project']['key']]);
-        $this->logger->info('WEBHOOK/IssueCreate', ['issueKey' => $issueKey, 'issueSummary' => $issueSummary, 'projectId' => $project->getId(), 'projectKey' => $project->jiraKey]);
+        $project = $this->projectRepository->findOneBy([
+            'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
+            'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
+        ]);
+        $this->logger->info('WEBHOOK/IssueCreate', [
+            'issueKey' => $issueKey,
+            'issueSummary' => $issueSummary,
+            'projectId' => $project->getId(),
+            'projectKey' => $project->jiraKey,
+        ]);
 
         $templatedEmail = new TemplatedEmail()
             ->htmlTemplate('email/issue/issue_create.html.twig')
@@ -42,7 +51,9 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 ->locale($user->preferredLocale->value)
             ;
 
-            $this->logger->info('WEBHOOK/IssueCreate - Generate mail to user', ['user' => $user->email]);
+            $this->logger->info('WEBHOOK/IssueCreate - Generate mail to user', [
+                'user' => $user->email,
+            ]);
             $this->commandBus->dispatch(
                 new EmailNotification(
                     user: $user,
@@ -51,5 +62,4 @@ class IssueCreatedHandler implements LoggerAwareInterface
             );
         }
     }
-
 }

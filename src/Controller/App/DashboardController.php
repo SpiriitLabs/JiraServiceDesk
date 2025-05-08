@@ -24,34 +24,22 @@ class DashboardController extends AbstractController
     public function __invoke(
         #[CurrentUser]
         User $user,
-        Request $request,
     ): Response {
-        $page = $request->get('page', 1);
-
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
-                sort: $request->get('_sort', 'id'),
-                page: $page,
+                sort: 'id',
                 user: $user,
+                maxIssuesResults: 200,
                 onlyUserAssigned: true,
             )
         );
-
-        if ($page > ($searchIssueResult->page + 1)) {
-            return $this->redirectToRoute(RouteCollection::DASHBOARD->prefixed());
-        }
-
 
         return $this->render(
             view: 'app/dashboard.html.twig',
             parameters: [
                 'projects' => $user->getProjects(),
                 'searchIssuesResult' => $searchIssueResult,
-                'currentPage' => $page,
-                'previousPage' => ($page - 1) < 1 ? null : ($page - 1),
-                'nextPage' => ($page + 1) > ($searchIssueResult->page + 1) ? null : $page + 1,
-                'maxPage' => $searchIssueResult->page + 1,
             ]
         );
     }

@@ -9,7 +9,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class EmailNotificationHandler
 {
-
     public function __construct(
         private readonly MailerInterface $mailer,
     ) {
@@ -21,5 +20,4 @@ class EmailNotificationHandler
             $command->email,
         );
     }
-
 }

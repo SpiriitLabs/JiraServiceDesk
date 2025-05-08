@@ -41,5 +41,6 @@
     <h3>Vos ticket assignée</h3>
     {% include 'app/issue/_list_content.html.twig' with {
         searchIssuesResult: searchIssuesResult,
+        hasPagination: "false",
     } %}
 {% endblock %}

@@ -1,6 +1,8 @@
+{% set hasPagination = hasPagination is defined ? hasPagination : true %}
 <twig:list:data-list
     :datas="searchIssuesResult.issues"
     :totalDatas="searchIssuesResult.total"
+    :hasPagination="hasPagination"
 >
     {% trans_default_domain 'app' %}
 

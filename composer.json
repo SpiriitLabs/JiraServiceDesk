@@ -102,6 +102,11 @@
             "allow-contrib": false,
             "require": "7.2.*",
             "docker": true
+        },
+        "patches": {
+            "lesstif/jira-cloud-restapi": {
+                "Issue #91: update search() to work with search/jql": "https://github.com/lesstif/php-JiraCloud-RESTAPI/pull/97.patch"
+            }
         }
     },
     "require-dev": {

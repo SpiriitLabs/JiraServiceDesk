@@ -8,16 +8,17 @@ use App\Model\SortParams;
 
 class SearchIssues
 {
-    public const int MAX_ISSUES_RESULTS = 10;
+    public const int MAX_ISSUES_RESULTS = 50;
 
     public SortParams $sort;
 
     public function __construct(
         string $sort,
-        public int $page = 1,
         public ?User $user = null,
         public bool $onlyUserAssigned = false,
         public ?IssueFilter $filter = null,
+        public int $maxIssuesResults = self::MAX_ISSUES_RESULTS,
+        public ?string $pageToken = null,
     ) {
         $this->sort = SortParams::createSort($sort);
     }
