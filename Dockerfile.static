@@ -5,9 +5,9 @@ ARG FRANKENPHP_VERSION=1.1.4
 
 WORKDIR /go/src/app
 
-# Install the missing PHP extensions (including iconv)
-RUN apt-get update && apt-get install -y \
-    libiconv-hook-dev \
+# Install the missing PHP extension (including iconv) using apk
+RUN apk add --no-cache \
+    libiconv \
     && docker-php-ext-install iconv
 
 # Copy Symfony app (everything)
