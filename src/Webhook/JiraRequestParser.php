@@ -60,12 +60,15 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             'event' => $payload->get('webhookEvent'),
         ]);
 
-        return match ($payload->get('webhookEvent')) {
+        $event = match ($payload->get('webhookEvent')) {
             'jira:issue_created' => new IssueCreated(payload: $payload->all()),
-            'jira:issue_updated' => new IssueUpdated(payload: $payload->all()),
-            'jira:comment_created' => new CommentCreated(payload: $payload->all()),
-            'jira:comment_updated' => new CommentUpdated(payload: $payload->all()),
+            'issue_updated' => new IssueUpdated(payload: $payload->all()),
+            'comment_created' => new CommentCreated(payload: $payload->all()),
+            'comment_updated' => new CommentUpdated(payload: $payload->all()),
             default => new RejectWebhookException(message: 'Invalid webhook event.'),
         };
+
+        dump($event);
+        return $event;
     }
 }

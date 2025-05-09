@@ -8,9 +8,11 @@ use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 
+#[AsMessageHandler()]
 class IssueCreatedHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;

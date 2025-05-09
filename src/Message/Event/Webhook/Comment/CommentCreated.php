@@ -11,6 +11,10 @@ class CommentCreated extends RemoteEvent
         string $id = '',
         string $name = 'comment-created',
     ) {
-        parent::__construct($name, uniqid($id), $payload);
+        parent::__construct(
+            name: $name, 
+            id: sprintf('%s-%s', $name, uniqid($id)), 
+            payload: $payload,
+        );
     }
 }
