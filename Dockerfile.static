@@ -1,39 +1,23 @@
-# Stage 1: Build PHP with iconv extension
-FROM php:8.4-alpine AS php-builder
+FROM dunglas/frankenphp:static-builder
 
-# Install dependencies required for building PHP extensions
-RUN apk add --no-cache \
-    autoconf \
-    gcc \
-    g++ \
-    make \
-    musl-dev \
-    && docker-php-ext-configure iconv \
-    && docker-php-ext-install iconv
+ARG PHP_VERSION=8.4
+ARG FRANKENPHP_VERSION=1.1.4
 
-# Stage 2: Build FrankenPHP static binary
-FROM dunglas/frankenphp:static-builder AS frankenphp-builder
-
-# Copy PHP binaries and extensions from the first stage
-COPY --from=php-builder /usr/local/ /usr/local/
-
-# Set the working directory to the app directory
 WORKDIR /go/src/app
 
-# Copy your Symfony application to the container
+# Copy Symfony project (everything)
 COPY . ./dist/app/
 
-# Install Composer dependencies (optional if you need them)
+# Install Composer dependencies
 WORKDIR /go/src/app/dist/app
 RUN curl -sS https://getcomposer.org/installer | php && \
     php composer.phar install --no-dev --optimize-autoloader
 
-# Set up environment variables and paths for building static binary
+# Build static binary
 WORKDIR /go/src/app
 ENV EMBED=dist/app
-ENV PHP_VERSION=8.4
-ENV FRANKENPHP_VERSION=1.1.4
+ENV PHP_VERSION=${PHP_VERSION}
+ENV FRANKENPHP_VERSION=${FRANKENPHP_VERSION}
 ENV NO_COMPRESS=1
 
-# Run FrankenPHP to build the static binary
 RUN ./build-static.sh
