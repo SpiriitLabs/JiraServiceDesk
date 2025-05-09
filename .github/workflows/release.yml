@@ -25,6 +25,10 @@ jobs:
       - name: Copy executable to release directory
         run: |
           docker run --rm app-template cp /usr/local/bin/app-template ./release/app-template
+      
+      - name: Copy executable to release directory
+        run: |
+          docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template
 
       - name: Upload executable as artifact
         uses: actions/upload-artifact@v4
