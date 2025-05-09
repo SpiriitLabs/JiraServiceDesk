@@ -3,42 +3,35 @@ name: Build and Release Static Binary
 on:
   push:
     tags:
-      - 'v*'  # Déclenche cette action uniquement lorsqu'un tag est poussé
+      - 'v*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout du code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Configurer Docker Buildx pour la construction multi-plateforme
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3. Construction de l'image Docker
       - name: Build Docker image with static-build.Dockerfile
         run: |
-          docker build -f static-build.Dockerfile -t my-symfony-app .
+          docker build -f static-build.Dockerfile -t app-template .
 
-      # 4. Créer un répertoire de release
       - name: Create release directory
         run: mkdir release
 
-      # 5. Copier l'exécutable généré depuis Docker vers le répertoire de release
       - name: Copy executable to release directory
         run: |
-          docker run --rm my-symfony-app cp /usr/local/bin/my-symfony-app ./release/my-symfony-app
+          docker run --rm app-template cp /usr/local/bin/app-template ./release/app-template
 
-      # 6. Upload de l'exécutable comme artefact avec la nouvelle version v4
       - name: Upload executable as artifact
         uses: actions/upload-artifact@v4
         with:
           name: executable
-          path: ./release/my-symfony-app
+          path: ./release/app-template
 
-      # 7. Créer une release GitHub et ajouter l'exécutable comme asset
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
