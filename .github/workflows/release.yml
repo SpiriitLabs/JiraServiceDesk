@@ -3,7 +3,7 @@ name: Build and Release Static Binary
 on:
   push:
     tags:
-      - 'v*'  # Déclenche le workflow pour chaque nouveau tag (ex : v1.0.0)
+      - 'v*'  # Déclenche cette action uniquement lorsqu'un tag est poussé
 
 jobs:
   build:
@@ -13,27 +13,37 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Configurer Docker Buildx pour les architectures multi-plateformes
+      # 2. Configurer Docker Buildx pour la construction multi-plateforme
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      # 3. Construction de l'image Docker avec le Dockerfile
+      # 3. Construction de l'image Docker
       - name: Build Docker image with static-build.Dockerfile
         run: |
-          docker build -f Dockerfile -t my-symfony-app .
+          docker build -f static-build.Dockerfile -t my-symfony-app .
 
-      # 4. Créer le répertoire de release
+      # 4. Créer un répertoire de release
       - name: Create release directory
         run: mkdir release
 
-      # 5. Copier l'exécutable statique dans le répertoire de release
+      # 5. Copier l'exécutable généré depuis Docker vers le répertoire de release
       - name: Copy executable to release directory
         run: |
           docker run --rm my-symfony-app cp /usr/local/bin/my-symfony-app ./release/my-symfony-app
 
-      # 6. Upload de l'exécutable comme artefact
+      # 6. Upload de l'exécutable comme artefact avec la nouvelle version v4
       - name: Upload executable as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: executable
           path: ./release/my-symfony-app
+
+      # 7. Créer une release GitHub et ajouter l'exécutable comme asset
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: "Release ${{ github.ref }}"
+          body: 'Release of version ${{ github.ref }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
