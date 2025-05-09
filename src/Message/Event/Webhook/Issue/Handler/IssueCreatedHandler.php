@@ -26,7 +26,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
     public function __invoke(IssueCreated $event): void
     {
         $issueKey = $event->getPayload()['issue']['key'];
-        $issueSummary = $event->getPayload()['issue']['summary'];
+        $issueSummary = $event->getPayload()['issue']['fields']['summary'];
         $project = $this->projectRepository->findOneBy([
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
@@ -38,7 +38,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $templatedEmail = new TemplatedEmail()
+        $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/issue/issue_create.html.twig')
             ->context([
                 'project' => $project,
