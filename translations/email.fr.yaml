@@ -1,9 +1,19 @@
 issue:
-    create:
+    created:
         title: "Nouveau ticket disponible !"
         description: "Un nouveau ticket '%ticket_name%' à était crée sur votre project '%project_name%'<br/>Consulter le directement depuis votre espace client."
         action: "Voir le ticket"
-    edit:
+    edited:
         title: "Ticket mis à jour !"
         description: "Votre ticket '%ticket_name%' du project '%project_name%' à était mis à jour.<br/>Consulter le directement depuis votre espace client."
         action: "Voir le ticket"
+
+comment:
+    created:
+        title: "Nouveau commentaire déposé !"
+        description: "Un nouveau commentaire à était déposé sur le ticket '%ticket_name%' du projet '%project_name%'<br/>Consulet le directement depuis votre espace client."
+        action: "Voir le commentaire"
+    updated:
+        title: "Modification d'un commentaire !"
+        description: "Un commentaire à était modifiée sur le ticket '%ticket_name%' du projet '%project_name%'<br/>Consulet le directement depuis votre espace client."
+        action: "Voir le commentaire"

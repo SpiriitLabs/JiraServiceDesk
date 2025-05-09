@@ -25,11 +25,9 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
     ) {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function consume(RemoteEvent $event): void {
-        if (!$this->support($event)) {
+    public function consume(RemoteEvent $event): void
+    {
+        if (! $this->support($event)) {
             return;
         }
 
@@ -46,5 +44,4 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
             default => false,
         };
     }
-
 }

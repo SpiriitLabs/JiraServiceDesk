@@ -26,6 +26,7 @@
         "spiriitlabs/form-filter-bundle": ">=11.0.6",
         "stof/doctrine-extensions-bundle": "^1.13",
         "symfony/console": "7.2.*",
+        "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/flex": "^2.5",
         "symfony/form": "7.2.*",

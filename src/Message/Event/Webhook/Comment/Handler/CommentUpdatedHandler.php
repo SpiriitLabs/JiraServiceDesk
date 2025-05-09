@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Message\Event\Webhook\Issue\Handler;
+namespace App\Message\Event\Webhook\Comment\Handler;
 
 use App\Message\Command\Common\EmailNotification;
-use App\Message\Event\Webhook\Issue\IssueCreated;
+use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
-class IssueCreatedHandler implements LoggerAwareInterface
+class CommentUpdatedHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -25,7 +25,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
     ) {
     }
 
-    public function __invoke(IssueCreated $event): void
+    public function __invoke(CommentUpdated $event): void
     {
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
@@ -33,7 +33,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
-        $this->logger->info('WEBHOOK/IssueCreated', [
+        $this->logger->info('WEBHOOK/CommentUpdated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,
             'projectId' => $project->getId(),
@@ -43,15 +43,18 @@ class IssueCreatedHandler implements LoggerAwareInterface
         $templatedEmail = (new TemplatedEmail())
             ->subject(
                 $this->translator->trans(
-                    id: 'issue.created.title',
+                    id: 'comment.created.title',
                     domain: 'email',
                 ),
             )
-            ->htmlTemplate('email/issue/issue_created.html.twig')
+            ->htmlTemplate('email/comment/updated.html.twig')
             ->context([
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
+                'commentAuthorName' => $event->getPayload()['comment']['author']['displayName'],
+                'commentAuthorAvatarUrl' => array_shift($event->getPayload()['comment']['author']['avatarUrls']),
+                'commentBody' => $event->getPayload()['comment']['body'],
             ])
         ;
 
@@ -61,7 +64,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 ->locale($user->preferredLocale->value)
             ;
 
-            $this->logger->info('WEBHOOK/IssueCreated - Generate mail to user', [
+            $this->logger->info('WEBHOOK/CommentUpdated - Generate mail to user', [
                 'user' => $user->email,
             ]);
             $this->commandBus->dispatch(

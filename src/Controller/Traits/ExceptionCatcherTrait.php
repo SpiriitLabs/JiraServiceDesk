@@ -12,7 +12,7 @@ trait ExceptionCatcherTrait
      */
     protected function getHandledException(\Throwable $exception, mixed $expectedException): ?\Throwable
     {
-        if (!\is_array($expectedException)) {
+        if (! \is_array($expectedException)) {
             $expectedException = [$expectedException];
         }
 
@@ -20,7 +20,7 @@ trait ExceptionCatcherTrait
             $exception = $exception->getPrevious();
         }
 
-        if (null !== $exception && \in_array($exception::class, $expectedException, true)) {
+        if ($exception !== null && \in_array($exception::class, $expectedException, true)) {
             return $exception;
         }
 

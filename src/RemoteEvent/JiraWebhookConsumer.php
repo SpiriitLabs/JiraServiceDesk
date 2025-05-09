@@ -27,7 +27,7 @@ final class JiraWebhookConsumer implements ConsumerInterface, LoggerAwareInterfa
 
     public function consume(RemoteEvent $event): void
     {
-        if (!$this->support($event)) {
+        if (! $this->support($event)) {
             return;
         }
 

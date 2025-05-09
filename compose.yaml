@@ -7,7 +7,7 @@ services:
       MERCURE_PUBLISHER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
       # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
-      DATABASE_URL: mysql://root:root@database/app?serverVersion=mariadb-11.5.2
+      DATABASE_URL: mysql://root:root@database/app?serverVersion=mariadb-10.7.4
       # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://php/.well-known/mercure}
       MERCURE_PUBLIC_URL: ${CADDY_MERCURE_PUBLIC_URL:-https://${SERVER_NAME:-localhost}:${HTTPS_PORT:-443}/.well-known/mercure}
@@ -30,12 +30,11 @@ services:
         protocol: udp
 
   database:
-      image: mariadb
+      image: mariadb:10.7.4
       environment:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: app
       volumes:
-          - database_data:/var/lib/mysql/
           - ./database_data:/var/lib/mysql
           - ./.docker/database/scripts/reset:/usr/local/bin/reset
           - ./.docker/database/scripts/save:/usr/local/bin/save
@@ -49,9 +48,3 @@ services:
 volumes:
   caddy_data:
   caddy_config:
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
-
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###

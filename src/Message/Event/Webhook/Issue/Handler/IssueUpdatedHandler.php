@@ -3,7 +3,7 @@
 namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Message\Command\Common\EmailNotification;
-use App\Message\Event\Webhook\Issue\IssueCreated;
+use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -14,7 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
-class IssueCreatedHandler implements LoggerAwareInterface
+class IssueUpdatedHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -25,7 +25,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
     ) {
     }
 
-    public function __invoke(IssueCreated $event): void
+    public function __invoke(IssueUpdated $event): void
     {
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
@@ -33,7 +33,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
-        $this->logger->info('WEBHOOK/IssueCreated', [
+        $this->logger->info('WEBHOOK/IssueUpdated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,
             'projectId' => $project->getId(),
@@ -43,11 +43,11 @@ class IssueCreatedHandler implements LoggerAwareInterface
         $templatedEmail = (new TemplatedEmail())
             ->subject(
                 $this->translator->trans(
-                    id: 'issue.created.title',
+                    id: 'issue.edited.title',
                     domain: 'email',
                 ),
             )
-            ->htmlTemplate('email/issue/issue_created.html.twig')
+            ->htmlTemplate('email/issue/issue_edited.html.twig')
             ->context([
                 'project' => $project,
                 'issueSummary' => $issueSummary,
@@ -61,7 +61,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 ->locale($user->preferredLocale->value)
             ;
 
-            $this->logger->info('WEBHOOK/IssueCreated - Generate mail to user', [
+            $this->logger->info('WEBHOOK/IssueUpdated - Generate mail to user', [
                 'user' => $user->email,
             ]);
             $this->commandBus->dispatch(
