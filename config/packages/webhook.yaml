@@ -2,5 +2,5 @@ framework:
   webhook:
     routing:
       jira:
-        service: App\Webhook\JiraRequestParser
+        service: App\Webhook\Parser\JiraRequestParser
         secret: '%env(JIRA_WEBHOOK_SECRET)%'
