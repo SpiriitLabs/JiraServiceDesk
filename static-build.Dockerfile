@@ -1,27 +1,24 @@
-# Étape 1 : Utiliser l'image FrankenPHP pour la compilation de l'exécutable statique
-FROM dunglas/frankenphp:static-builder AS builder
+# BUILD Phase 1 - Run Composer install
+FROM composer:lts AS composer-compile
 
-# Étape 2 : Définir le répertoire de travail
+COPY . /go/src/app/dist/app
+WORKDIR /go/src/app/dist/app
+
+RUN composer install --ignore-platform-reqs --optimize-autoloader --no-dev --no-interaction --no-progress --prefer-dist
+
+# BUILD Phase 2 - Compile with FrankenPHP
+FROM dunglas/frankenphp:static-builder-musl AS frankenphp-static-builder
+
+COPY --from=composer-compile /go/src/app/dist/app /go/src/app/dist/app
+
 WORKDIR /go/src/app
+RUN rm -f dist/cache_key dist/frankenphp-linux-x86_64
+RUN EMBED=dist/app \
+	NO_COMPRESS=yes \
+	./build-static.sh
 
-# Étape 3 : Copier tout le code de ton projet Symfony dans le conteneur
-COPY . .
+# COPY files from inside the container to outside
+# docker cp $(docker create --name static-app-tmp app-template):/go/src/app/dist/frankenphp-linux-x86_64 my-app ; docker rm static-app-tmp
 
-# Étape 4 : Installer les dépendances PHP avec Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --optimize-autoloader
-
-# Étape 5 : Compiler l'application Symfony en un exécutable statique
-RUN EMBED=dist/app/ ./build-static.sh
-
-# Étape 6 : Utiliser une image minimaliste pour le runtime
-FROM debian:bullseye-slim
-
-# Étape 7 : Copier le binaire statique de l'application Symfony
-COPY --from=builder /go/src/app/dist/app/my-symfony-app /usr/local/bin/my-symfony-app
-
-# Étape 8 : Exposer le port 8080 (si ton application écoute sur ce port)
-EXPOSE 8080
-
-# Étape 9 : Démarrer l'application Symfony via l'exécutable statique
-CMD ["my-symfony-app"]
+# Alternative build run this command for auto build and copy the build file to the source directory
+# docker run --rm -it -v $PWD:/go/src/app/dist/app -w /go/src/app dunglas/frankenphp:static-builder-musl bash -c 'rm -f dist/cache_key dist/frankenphp-linux-x86_64 && EMBED=dist/app NO_COMPRESS=yes ./build-static.sh && cp -av dist/frankenphp-linux-x86_64 /go/src/app/dist/app/my-app'
