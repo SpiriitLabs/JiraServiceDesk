@@ -5,7 +5,12 @@ ARG FRANKENPHP_VERSION=1.1.4
 
 WORKDIR /go/src/app
 
-# Copy Symfony project (everything)
+# Install the missing PHP extensions (including iconv)
+RUN apt-get update && apt-get install -y \
+    libiconv-hook-dev \
+    && docker-php-ext-install iconv
+
+# Copy Symfony app (everything)
 COPY . ./dist/app/
 
 # Install Composer dependencies
