@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 
-#[AsMessageHandler()]
+#[AsMessageHandler]
 class IssueCreatedHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
