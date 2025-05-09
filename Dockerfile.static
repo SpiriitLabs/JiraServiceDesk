@@ -1,0 +1,23 @@
+FROM dunglas/frankenphp:static-builder
+
+ARG PHP_VERSION=8.3
+ARG FRANKENPHP_VERSION=1.1.4
+
+WORKDIR /go/src/app
+
+# Copy Symfony project (everything)
+COPY . ./dist/app/
+
+# Install Composer dependencies
+WORKDIR /go/src/app/dist/app
+RUN curl -sS https://getcomposer.org/installer | php && \
+    php composer.phar install --no-dev --optimize-autoloader
+
+# Build static binary
+WORKDIR /go/src/app
+ENV EMBED=dist/app
+ENV PHP_VERSION=${PHP_VERSION}
+ENV FRANKENPHP_VERSION=${FRANKENPHP_VERSION}
+ENV NO_COMPRESS=1
+
+RUN ./build-static.sh
