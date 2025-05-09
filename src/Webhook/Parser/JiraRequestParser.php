@@ -68,8 +68,6 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             default => new RejectWebhookException(message: 'Invalid webhook event.'),
         };
 
-        dump($event);
-
         return $event;
     }
 }
