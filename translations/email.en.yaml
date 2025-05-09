@@ -1,0 +1,19 @@
+issue:
+    created:
+        title: "New ticket available!"
+        description: "A new ticket '%ticket_name%' has been created for your project '%project_name%'.<br/>You can view it directly from your client area."
+        action: "View the ticket"
+    edited:
+        title: "Ticket updated!"
+        description: "Your ticket '%ticket_name%' for the project '%project_name%' has been updated.<br/>You can view it directly from your client area."
+        action: "View the ticket"
+
+comment:
+    created:
+        title: "New comment posted!"
+        description: "A new comment has been posted on the ticket '%ticket_name%' for the project '%project_name%'.<br/>You can view it directly from your client area."
+        action: "View the comment"
+    updated:
+        title: "Comment updated!"
+        description: "A comment has been updated on the ticket '%ticket_name%' for the project '%project_name%'.<br/>You can view it directly from your client area."
+        action: "View the comment"

@@ -40,9 +40,10 @@ build:
 
 QUEUE_NAME ?= async
 VERBOSITY ?= -v
+LIMIT ?= 1
 .PHONY: consume
 consume: ## Run an async messenger consumer
-	@$(CONSOLE) messenger:consume $(QUEUE_NAME) $(VERBOSITY)
+	@$(CONSOLE) messenger:consume $(QUEUE_NAME) $(VERBOSITY) --limit=$(LIMIT)
 
 ##
 ## —— Dependencies 🔒️————————————————

@@ -2,6 +2,7 @@
 
 namespace App\Message\Query\App\Issue\Handler;
 
+use App\Entity\Project;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\SearchIssuesResult;
 use JiraCloud\Issue\IssueService;
@@ -27,8 +28,15 @@ class SearchIssuesHandler
             ->addInExpression('labels', ['from-client'])
         ;
 
-        foreach ($query->user->getProjects() as $userProject) {
-            $jql->setProject($userProject->jiraKey);
+        if ($query->user != null) {
+            $jql->addInExpression(
+                field: JqlQuery::FIELD_PROJECT,
+                values: array_map(
+                    fn (Project $project) => $project->jiraKey,
+                    $query->user->getProjects()
+                        ->toArray(),
+                )
+            );
         }
 
         if ($query->onlyUserAssigned) {
@@ -57,17 +65,15 @@ class SearchIssuesHandler
         $jql->addAnyExpression(sprintf('%s %s %s', JqlQuery::KEYWORD_ORDER_BY, $query->sort->by, $query->sort->dir));
         $issues = $this->service->search(
             jql: $jql->getQuery(),
-            startAt: ($query->page - 1) * SearchIssues::MAX_ISSUES_RESULTS,
-            maxResults: SearchIssues::MAX_ISSUES_RESULTS,
+            nextPageToken: $query->pageToken ?? '',
+            maxResults: $query->maxIssuesResults,
             fields: $issues_fields,
         );
 
-        $page = $issues->getTotal() / SearchIssues::MAX_ISSUES_RESULTS;
-
         return new SearchIssuesResult(
-            page: $page,
-            total: $issues->getTotal(),
+            total: count($issues->issues),
             issues: $issues->getIssues(),
+            nextPageToken: $issues->nextPageToken,
         );
     }
 }

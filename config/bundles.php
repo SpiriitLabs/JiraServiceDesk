@@ -54,4 +54,7 @@ return [
     Symfony\UX\Autocomplete\AutocompleteBundle::class => [
         'all' => true,
     ],
+    Symfony\Bundle\MonologBundle\MonologBundle::class => [
+        'all' => true,
+    ],
 ];

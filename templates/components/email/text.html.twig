@@ -1,0 +1,41 @@
+{% trans_default_domain 'app' %}
+{% props text = 'TEXTE' %}
+
+<table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%"
+       align="center" class="r3-o" style="table-layout: fixed; width: 100%;">
+    <tr>
+        <td class="r4-i" style="padding-bottom: 20px; padding-top: 20px;">
+            <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                <tr>
+                    <th width="100%" valign="top" class="r5-c" style="font-weight: normal;">
+                        <table cellspacing="0" cellpadding="0" border="0" role="presentation"
+                               width="100%" class="r6-o"
+                               style="table-layout: fixed; width: 100%;">
+                            <tr>
+                                <td valign="top" class="r7-i"
+                                    style="padding-left: 15px; padding-right: 15px;">
+                                    <table width="100%" cellspacing="0" cellpadding="0"
+                                           border="0" role="presentation">
+                                        {% block content %}
+                                        <tr>
+                                            <td class="r16-c nl2go-default-textstyle"
+                                                align="left"
+                                                style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                                                <div>
+                                                    <p style="margin: 0;">
+                                                            {{ text }}
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endblock %}
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </th>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

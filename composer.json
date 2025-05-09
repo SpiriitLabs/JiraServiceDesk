@@ -26,12 +26,15 @@
         "spiriitlabs/form-filter-bundle": ">=11.0.6",
         "stof/doctrine-extensions-bundle": "^1.13",
         "symfony/console": "7.2.*",
+        "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/flex": "^2.5",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/http-client": "7.2.*",
+        "symfony/mailer": "7.2.*",
         "symfony/messenger": "7.2.*",
+        "symfony/monolog-bundle": "^3.10",
         "symfony/options-resolver": "7.2.*",
         "symfony/runtime": "7.2.*",
         "symfony/security-bundle": "7.2.*",
@@ -41,6 +44,7 @@
         "symfony/ux-autocomplete": "^2.24",
         "symfony/ux-twig-component": "^2.24",
         "symfony/validator": "7.2.*",
+        "symfony/webhook": "7.2.*",
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "7.2.*",
         "twig/extra-bundle": "^2.12|^3.20",
@@ -99,6 +103,11 @@
             "allow-contrib": false,
             "require": "7.2.*",
             "docker": true
+        },
+        "patches": {
+            "lesstif/jira-cloud-restapi": {
+                "Issue #91: update search() to work with search/jql": "https://github.com/lesstif/php-JiraCloud-RESTAPI/pull/97.patch"
+            }
         }
     },
     "require-dev": {
