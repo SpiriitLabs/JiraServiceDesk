@@ -1,33 +1,50 @@
-name: Build and Release FrankenPHP Binary
+name: Build and Release Static Binary
 
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*'  # Déclenche l'action sur un push de tag, par exemple 'v1.0.0'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      # 1. Checkout du code
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      # 2. Configuration de Docker Buildx pour multi-architecture (si nécessaire)
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v1
 
-      - name: Build Static Binary
-        run: docker build -t frankenphp-app -f Dockerfile.static .
-
-      - name: Extract Binary
+      # 3. Construction de l'image Docker sans se connecter à Docker Hub
+      - name: Build Docker image with static-build.Dockerfile
         run: |
-          ID=$(docker create frankenphp-app)
-          docker cp $ID:/go/src/app/dist/frankenphp-linux-$(uname -m) ./frankenphp
-          docker rm $ID
-          chmod +x ./frankenphp
+          docker build -f Dockerfile -t my-symfony-app .
 
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v2
+      # 4. Créer le répertoire pour la release
+      - name: Create release directory
+        run: mkdir release
+
+      # 5. Copier le fichier exécutable dans le répertoire de release
+      - name: Copy executable to release directory
+        run: |
+          docker run --rm my-symfony-app cp /usr/local/bin/my-symfony-app ./release/my-symfony-app
+
+      # 6. Upload de l'exécutable comme artefact
+      - name: Upload executable as artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: ./frankenphp
+          name: executable
+          path: ./release/my-symfony-app
+
+      # 7. Créer une release GitHub avec l'exécutable attaché
+      - name: Create GitHub Release
+        uses: gh-actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: "Release ${{ github.ref }}"
+          body: 'Release of version ${{ github.ref }}'
+          files: ./release/my-symfony-app
