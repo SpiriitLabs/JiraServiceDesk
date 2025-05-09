@@ -3,7 +3,7 @@ name: Build and Release Static Binary
 on:
   push:
     tags:
-      - 'v*.*.*'  # Déclenche l'action sur un push de tag, par exemple 'v1.0.0'
+      - 'v*'  # Déclenche le workflow pour chaque nouveau tag (ex : v1.0.0)
 
 jobs:
   build:
@@ -13,38 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Configuration de Docker Buildx pour multi-architecture (si nécessaire)
+      # 2. Configurer Docker Buildx pour les architectures multi-plateformes
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
 
-      # 3. Construction de l'image Docker sans se connecter à Docker Hub
+      # 3. Construction de l'image Docker avec le Dockerfile
       - name: Build Docker image with static-build.Dockerfile
         run: |
           docker build -f Dockerfile -t my-symfony-app .
 
-      # 4. Créer le répertoire pour la release
+      # 4. Créer le répertoire de release
       - name: Create release directory
         run: mkdir release
 
-      # 5. Copier le fichier exécutable dans le répertoire de release
+      # 5. Copier l'exécutable statique dans le répertoire de release
       - name: Copy executable to release directory
         run: |
           docker run --rm my-symfony-app cp /usr/local/bin/my-symfony-app ./release/my-symfony-app
 
       # 6. Upload de l'exécutable comme artefact
       - name: Upload executable as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: executable
           path: ./release/my-symfony-app
-
-      # 7. Créer une release GitHub avec l'exécutable attaché
-      - name: Create GitHub Release
-        uses: gh-actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: "Release ${{ github.ref }}"
-          body: 'Release of version ${{ github.ref }}'
-          files: ./release/my-symfony-app
