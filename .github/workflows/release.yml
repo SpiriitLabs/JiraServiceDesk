@@ -36,7 +36,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          release_name: "Release ${{ github.ref }}"
+          name: "Release ${{ github.ref }}"
           body: 'Release of version ${{ github.ref }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
