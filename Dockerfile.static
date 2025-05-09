@@ -8,7 +8,6 @@ RUN apk add --no-cache \
     g++ \
     make \
     musl-dev \
-    libiconv \
     && docker-php-ext-configure iconv \
     && docker-php-ext-install iconv
 
