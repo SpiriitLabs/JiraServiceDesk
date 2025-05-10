@@ -15,12 +15,11 @@ services:
       MERCURE_EXTRA_DIRECTIVES: demo
       # See https://xdebug.org/docs/all_settings#mode
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
-      APP_ENV: "${APP_ENV:-dev}"
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
     tty: true
-
+  
   phpmyadmin:
     image: phpmyadmin
     depends_on:
@@ -34,15 +33,9 @@ services:
     ports:
       - "8080:80"
 
+  mailpit:
+    image: axllent/mailpit
+
   database:
     ports:
       - "5432"
-
-  mailer:
-    image: axllent/mailpit
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-    environment:
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
