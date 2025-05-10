@@ -30,6 +30,7 @@ readonly class CreateProjectHandler
         }
 
         $jiraProject = $this->jiraProjectRepository->get($command->jiraKey);
+        dd($jiraProject);
 
         if ($jiraProject === null) {
             return null;

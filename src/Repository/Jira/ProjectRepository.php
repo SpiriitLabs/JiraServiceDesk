@@ -20,6 +20,7 @@ class ProjectRepository
         try {
             return $this->service->get($key);
         } catch (JiraException $jiraException) {
+            dd($jiraException);
             return null;
         }
     }
