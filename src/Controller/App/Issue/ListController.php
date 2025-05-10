@@ -32,7 +32,9 @@ class ListController extends AbstractController
         IssueFilter $filter = new IssueFilter(),
     ): Response {
         $page = $request->get('page', null);
-        $form = $this->createForm(IssueFormFilter::class, $filter);
+        $form = $this->createForm(IssueFormFilter::class, $filter, [
+            'current_user' => $user,
+        ]);
         $form->handleRequest($request);
 
         /** @var SearchIssuesResult $searchIssueResult */

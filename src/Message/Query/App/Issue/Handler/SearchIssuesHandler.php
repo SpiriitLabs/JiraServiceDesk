@@ -28,13 +28,18 @@ class SearchIssuesHandler
             ->addInExpression('labels', ['from-client'])
         ;
 
-        if ($query->user != null) {
+        if (count($query->filter->projects) === 0 && $query->user !== null) {
+            $query->filter->projects = $query->user->getProjects()
+                ->toArray()
+            ;
+        }
+
+        if ($query->filter !== null && count($query->filter->projects) !== 0) {
             $jql->addInExpression(
                 field: JqlQuery::FIELD_PROJECT,
                 values: array_map(
                     fn (Project $project) => $project->jiraKey,
-                    $query->user->getProjects()
-                        ->toArray(),
+                    $query->filter->projects,
                 )
             );
         }
