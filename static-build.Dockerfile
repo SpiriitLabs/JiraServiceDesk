@@ -1,14 +1,19 @@
 FROM composer:lts AS composer-compile
-
 COPY . /go/src/app/dist/app
 WORKDIR /go/src/app/dist/app
 
 RUN echo "APP_ENV=prod" > .env.local
 RUN composer install --ignore-platform-reqs --optimize-autoloader --no-dev --no-interaction --no-progress --prefer-dist
 
-FROM dunglas/frankenphp:static-builder-musl AS frankenphp-static-builder
-
+FROM node:lts AS npm-build
 COPY --from=composer-compile /go/src/app/dist/app /go/src/app/dist/app
+WORKDIR /go/src/app/dist/app
+
+RUN npm install
+RUN npm run build
+
+FROM dunglas/frankenphp:static-builder-musl AS frankenphp-static-builder
+COPY --from=npm-build /go/src/app/dist/app /go/src/app/dist/app
 
 WORKDIR /go/src/app
 RUN rm -f dist/cache_key dist/frankenphp-linux-x86_64
