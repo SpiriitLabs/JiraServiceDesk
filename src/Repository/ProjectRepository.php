@@ -13,8 +13,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProjectRepository extends AbstractEntityRepository
 {
-    protected const ALIAS = 'p';
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Project::class);
