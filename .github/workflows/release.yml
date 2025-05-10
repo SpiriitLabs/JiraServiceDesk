@@ -1,0 +1,46 @@
+name: Build and Release Static Binary
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image with static-build.Dockerfile
+        run: |
+          docker build -f static-build.Dockerfile -t app-template .
+
+      - name: Create release directory
+        run: mkdir release
+
+      - name: Copy executable to release directory
+        run: |
+          docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template
+
+      - name: Upload executable as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: executable
+          path: ./release/app-template
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          name: "Release ${{ github.ref }}"
+          body: 'Release of version ${{ github.ref }}'
+          files: ./release/app-template
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+
+
