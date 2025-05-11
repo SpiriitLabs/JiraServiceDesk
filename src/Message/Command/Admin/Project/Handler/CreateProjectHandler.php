@@ -23,9 +23,6 @@ readonly class CreateProjectHandler
 
     public function __invoke(CreateProject $command): ?Project
     {
-        dd($this->appProjectRepository->findOneBy([
-            'jiraKey' => $command->jiraKey,
-        ]));
         if ($this->appProjectRepository->findOneBy([
             'jiraKey' => $command->jiraKey,
         ]) !== null) {
@@ -33,7 +30,6 @@ readonly class CreateProjectHandler
         }
 
         $jiraProject = $this->jiraProjectRepository->get($command->jiraKey);
-        dd($jiraProject);
 
         if ($jiraProject === null) {
             return null;
