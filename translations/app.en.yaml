@@ -1,0 +1,205 @@
+action:
+  label: "Action(s)"
+  logout: "Logout"
+  create: "Create"
+  cancel: "Cancel"
+  save: "Save"
+  list: "List"
+  exit: "Exit"
+  edit: "Edit"
+  exitImpersonation: "Stop impersonation"
+  view: "View"
+  add: "Add"
+  remove: "Remove"
+  download: "Download"
+  return: "Back"
+  generate: "Generate"
+  filter: "Filter"
+
+locale:
+  label: "Language"
+  fr: "French"
+  en: "English"
+
+theme:
+  label: "Color theme"
+  light: "Light"
+  dark: "Dark"
+  auto: "Automatic"
+
+flash:
+  edited: "The item was successfully updated."
+  created: "The item was successfully created."
+  deleted: "The item was successfully deleted."
+  stopped: "The item was successfully stopped."
+  error: "An error occurred."
+
+header:
+  themeMode: "Color mode"
+  dropdown:
+    welcome: "Hello!"
+
+title:
+  all: "Jira Service Desk"
+  short: "ServiceDesk"
+
+list:
+  pagination:
+    previous: "Previous"
+    next: "Next"
+    empty: "Oops, we couldn't find any items."
+    total: "%number% result(s)"
+
+modal:
+  delete:
+    title: "Delete"
+    description: "By clicking this button, you agree to delete the selected item."
+    action: "Confirm"
+  warning:
+    title: "Warning"
+    description: "By clicking this button, you agree to perform the selected action."
+    action: "Confirm"
+
+blameable:
+  created: "Created on %date% by %user%"
+  updated: "Last modified on %date% by %user%"
+
+sidebar:
+  categories:
+    navigation: "Navigation"
+    administration: "Administration"
+
+filter:
+  label: "Filter(s)"
+  query:
+    label: "Search"
+
+dashboard:
+  label: "Dashboard"
+  welcome: "Welcome %name%!"
+  admin: "Admin dashboard"
+  app: "Application dashboard"
+
+favorite:
+  label: "Favorite(s)"
+  action:
+    add: "Add to favorites"
+    remove: "Remove from favorites"
+
+user:
+  label: "User(s)"
+  title:
+    create: "Create a user"
+    edit: "Edit user '%email%'"
+  email:
+    label: "Username"
+  password:
+    label: "Password"
+    new: "New password"
+    repeat: "Repeat password"
+    notice: "💡 Leave empty to keep the current one."
+  firstName:
+    label: "First name"
+  lastName:
+    label: "Last name"
+  roles:
+    label: "Role(s)"
+    role_admin: "Administrator"
+    role_user: "User"
+  preferedLocale:
+    label: "Preferred language"
+  preferedTheme:
+    label: "Preferred color theme"
+
+profile:
+  label: "Profile"
+  view:
+    title: "My user profile"
+
+project:
+  label: "Project(s)"
+  title:
+    create: "Create a project from Jira"
+    edit: "Edit project '%key%'"
+  name:
+    label: "Name"
+  jiraKey:
+    label: "Jira key"
+  jiraId:
+    label: "Jira ID"
+  description:
+    label: "Description"
+  users:
+    label: "Associated user(s)"
+  lead:
+    label: "Manager"
+  category:
+    label: "Project category"
+  boards:
+    label: "Boards"
+  board:
+    label: "Board"
+  flashes:
+    alreadyExist: "This project key already exists in the tool."
+
+issue:
+  label: "Ticket(s)"
+  action:
+    create: "Create a ticket"
+  titles:
+    create: "Create a ticket"
+  jiraKey:
+    label: "Key"
+  assignee:
+    label: "Assigned to"
+    not_assignee: "Unassigned"
+  status:
+    label: "Status"
+  priority:
+    label: "Priority"
+  summary:
+    label: "Title"
+  type:
+    label: "Type"
+  description:
+    label: "Description"
+    notice: "💡 Your first and last name will be added to the ticket to help project managers."
+  comment:
+    label: "Comment(s)"
+  attachment:
+    label: "Attachment(s)"
+  transition:
+    label: "Transition"
+    to: "Move to"
+
+priority:
+  label: "Priority(ies)"
+  name:
+    label: "Name"
+  description:
+    label: "Description"
+  iconUrl:
+    label: "Icon"
+  statusColor:
+    label: "Color"
+  flashes:
+    generated: "Items were successfully retrieved."
+
+security:
+  login:
+    label: "Login"
+    sign_in: "Sign in"
+    sign_in_catch_phrase: "to access the application"
+    action: "Sign in"
+  check_email:
+    label: "Check your email address"
+    description: "If an account matching your email address exists, a message with a password reset link has been sent.<br/>This link will expire in %expire_link_time%."
+    retry: "If you don't receive an email, please check your spam folder."
+    action: "Try again"
+  reset_password_request:
+    label: "Change your password"
+    description: "Enter your email address and we'll send you a link to reset your password."
+    action: "Send reset email"
+  reset_password:
+    label: "Change your password"
+    action: "Update"
