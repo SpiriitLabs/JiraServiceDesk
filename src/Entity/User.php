@@ -68,6 +68,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         get => UserNameService::initials($this->firstName, $this->lastName);
     }
 
+    #[ORM\Column(length: 255)]
+    #[Versioned]
+    public ?string $company = null;
+
     #[ORM\Column(nullable: false, enumType: Locale::class)]
     #[Versioned]
     public Locale $preferredLocale = Locale::FR;
@@ -108,11 +112,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Versioned]
     public bool $preferenceNotificationCommentUpdated = false;
 
-    public function __construct(?string $email, ?string $firstName, ?string $lastName)
+    public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company)
     {
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
     }

@@ -13,6 +13,7 @@ class EditUser extends AbstractUserDTO
             email: $this->user->email,
             lastName: $this->user->getLastName(),
             firstName: $this->user->firstName,
+            company: $this->user->company,
             roles: $this->user->getRoles(),
             projects: $this->user->getProjects()
                 ->toArray(),

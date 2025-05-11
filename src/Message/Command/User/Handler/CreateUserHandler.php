@@ -31,7 +31,8 @@ readonly class CreateUserHandler
         $user = new User(
             email: $command->email,
             firstName: $command->firstName,
-            lastName: $command->lastName
+            lastName: $command->lastName,
+            company: $command->company,
         );
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;

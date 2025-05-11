@@ -55,7 +55,11 @@ class DashboardController extends AbstractController
     {
         return $this->userRepository->createQueryBuilder('u')
             ->select('COUNT(u.id)')
-            ->where('u.' . $preferenceProperty . ' = :active')->setParameter('active', true)->getQuery()->getSingleScalarResult()
+            ->where('u.' . $preferenceProperty . ' = :active')->setParameter(
+                'active',
+                true
+            )->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 }

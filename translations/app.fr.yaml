@@ -104,6 +104,8 @@ user:
         label: "Prénom"
     lastName:
         label: "Nom"
+    company:
+        label: "Entreprise"
     roles:
         label: "Rôle(s)"
         role_admin: "Administrateur"

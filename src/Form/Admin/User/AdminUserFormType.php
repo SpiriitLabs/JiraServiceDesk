@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Enum\User\Role;
 use App\Form\Type\ChoiceSwitchType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,6 +22,9 @@ class AdminUserFormType extends AbstractUserFormType
         parent::buildForm($builder, $options);
 
         $builder
+            ->add('company', TextType::class, [
+                'required' => false,
+            ])
             ->add('roles', ChoiceSwitchType::class, [
                 'multiple' => true,
                 'required' => true,

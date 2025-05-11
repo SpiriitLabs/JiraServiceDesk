@@ -18,6 +18,7 @@ class AbstractUserDTO
         public array $roles = [],
         public array $projects = [],
         public ?string $plainPassword = null,
+        public ?string $company = null,
         public Locale $preferedLocale = Locale::FR,
         public Theme $preferedTheme = Theme::AUTO,
         public bool $preferenceNotification = true,

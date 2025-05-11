@@ -30,10 +30,18 @@
                                             <p class="mb-0 mt-2 font-13 text-white-50">{{ 'user.email.label'|trans }}</p>
                                             <h5 class="mb-0 mt-0 text-white">{{ app.user.email }}</h5>
                                         </li>
+                                        {% if app.user.company is not null %}
+                                        <li class="list-inline-item">
+                                            <p class="mb-0 mt-2 font-13 text-white-50">{{ 'user.company.label'|trans }}</p>
+                                            <h5 class="mb-0 mt-0 text-white">{{ app.user.company }}</h5>
+                                        </li>                                            
+                                        {% endif %}
+                                        {% if app.user.projects|length > 0 %}
                                         <li class="list-inline-item">
                                             <p class="mb-0 mt-2 font-13 text-white-50">{{ 'project.label'|trans }}</p>
                                             <h5 class="mb-0 mt-0 text-white">{% for project in app.user.projects %}{{ project.name }}{% if false == loop.last %}, {% endif %}{% endfor %}</h5>
-                                        </li>
+                                        </li>                                            
+                                        {% endif %}
                                     </ul>
                                 </div>
                             </div>
