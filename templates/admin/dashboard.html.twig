@@ -4,4 +4,63 @@
 {% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
 
 {% block content %}
+	<div class="row">
+		<div class="col-12">
+			<div class="card widget-inline">
+				<div class="card-body p-0">
+					<div class="row g-0">
+						<div class="col-sm-6 col-lg-3">
+							<div class="card rounded-0 shadow-none m-0">
+								<div class="card-body text-center">
+									<i class="ri-briefcase-line text-muted font-24"></i>
+									<h3>
+										<span>{{ projects_count }}</span>
+									</h3>
+									<p class="text-muted font-15 mb-0">{{ 'dashboard.total_of'|trans }}{{ 'project.label'|trans }}</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-3">
+							<div class="card rounded-0 shadow-none m-0 border-start border-light">
+								<div class="card-body text-center">
+									<i class="mdi mdi-bell-badge-outline text-muted font-24"></i>
+									<h3>
+										<span>{{ user_preference_notification }}</span>
+									</h3>
+									<p class="text-muted font-15 mb-0">{{ 'dashboard.total_of_user_notification'|trans }}</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-lg-3">
+							<div class="card rounded-0 shadow-none m-0 border-start border-light">
+								<div class="card-body text-center">
+									<i class="ri-group-line text-muted font-24"></i>
+									<h3>
+										<span>{{ users_count }}</span>
+									</h3>
+									<p class="text-muted font-15 mb-0">{{ 'dashboard.total_of'|trans }}{{ 'user.label'|trans }}</p>
+								</div>
+							</div>
+						</div>
+
+						{# <div class="col-sm-6 col-lg-3">
+							<div class="card rounded-0 shadow-none m-0 border-start border-light">
+								<div class="card-body text-center">
+									<i class="ri-line-chart-line text-muted font-24"></i>
+									<h3>
+										<span>93%</span>
+										<i class="mdi mdi-arrow-up text-success"></i>
+									</h3>
+									<p class="text-muted font-15 mb-0">Productivity</p>
+								</div>
+							</div>
+						</div> #}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

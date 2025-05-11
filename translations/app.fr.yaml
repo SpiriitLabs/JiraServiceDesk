@@ -79,6 +79,8 @@ dashboard:
     welcome: "Bonjour %name% !"
     admin: "Tableau d'administration"
     app: "Tableau de l'application"
+    total_of: "Total de "
+    total_of_user_notification: "Total d'utilisateur(s) ayant des notifications"
 
 favorite:
     label: "Favori(s)"
