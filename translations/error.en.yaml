@@ -1,0 +1,14 @@
+title:
+    all: 'Jira Service Desk'
+
+error:
+    title: 'Error'
+    action: 'Back'
+
+404:
+    title: 'Page Not Found'
+    description: "The page you're looking for doesn't exist or has been moved."
+
+500:
+    title: 'Internal Server Error'
+    description: "An internal server error occurred. Please try again later."

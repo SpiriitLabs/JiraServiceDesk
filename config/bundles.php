@@ -57,4 +57,7 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => [
         'all' => true,
     ],
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => [
+        'all' => true,
+    ],
 ];

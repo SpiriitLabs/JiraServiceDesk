@@ -2,19 +2,45 @@
 
 namespace App\Form\Filter\Issue;
 
+use App\Entity\Project;
+use App\Entity\User;
 use App\Form\AbstractFilterType;
 use App\Model\Filter\IssueFilter;
+use App\Repository\ProjectRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IssueFormFilter extends AbstractFilterType
 {
+    public function __construct(
+        private readonly ProjectRepository $projectRepository,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var User $user */
+        $user = $options['current_user'];
+
         $builder
             ->add('query', TextType::class, [
                 'required' => false,
+            ])
+            ->add('projects', EntityType::class, [
+                'class' => Project::class,
+                'required' => false,
+                'multiple' => true,
+                'autocomplete' => true,
+                'label' => 'project.label',
+                'choice_label' => 'name',
+                'query_builder' => function (ProjectRepository $projectRepository) use ($user) {
+                    return $projectRepository->getByUser($user);
+                },
+                'data' => $this->projectRepository->getByUser($user)
+                    ->getQuery()
+                    ->getResult(),
             ])
         ;
     }
@@ -25,6 +51,9 @@ class IssueFormFilter extends AbstractFilterType
         $resolver->setDefaults([
             'data_class' => IssueFilter::class,
             'label_format' => 'filter.%name%.label',
+            'current_user' => null,
         ]);
+
+        $resolver->setRequired('current_user');
     }
 }

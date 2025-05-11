@@ -21,5 +21,9 @@ class SearchIssues
         public ?string $pageToken = null,
     ) {
         $this->sort = SortParams::createSort($sort);
+
+        if ($this->filter === null && $this->user !== null) {
+            $this->filter = new IssueFilter(projects: $this->user->getProjects()->toArray());
+        }
     }
 }

@@ -1,191 +1,205 @@
 action:
-    label: 'Action(s)'
-    logout: 'Déconnexion'
-    create: 'Créer'
-    cancel: 'Annuler'
-    save: 'Enregistrer'
-    list: 'Liste'
-    exit: 'Quitter'
-    edit: 'Éditer'
-    exitImpersonation: "Arrêter l'impersonation"
-    view: 'Visualisation'
-    add: 'Ajouter'
-    remove: 'Supprimer'
-    download: 'Télécharger'
-    return: 'Retour'
-    generate: 'Générer'
-    filter: 'Filtrer'
+    label: "Action(s)"
+    logout: "Déconnexion"
+    create: "Créer"
+    cancel: "Annuler"
+    save: "Enregistrer"
+    list: "Liste"
+    exit: "Quitter"
+    edit: "Modifier"
+    exitImpersonation: "Arrêter l'usurpation"
+    view: "Voir"
+    add: "Ajouter"
+    remove: "Supprimer"
+    download: "Télécharger"
+    return: "Retour"
+    generate: "Générer"
+    filter: "Filtrer"
 
 locale:
-    label: 'Langue'
-    fr: 'Français'
-    en: 'Anglais'
-    
+    label: "Langue"
+    fr: "Français"
+    en: "Anglais"
+
 theme:
-    label: 'Theme de couleur'
-    light: 'Clair'
-    dark: 'Sombre'
-    auto: 'Automatique'
+    label: "Thème de couleur"
+    light: "Clair"
+    dark: "Sombre"
+    auto: "Automatique"
 
 flash:
     edited: "L'élément a été modifié avec succès."
     created: "L'élément a été créé avec succès."
     deleted: "L'élément a été supprimé avec succès."
-    stopped: "L'élément a été stoppé avec succès."
+    stopped: "L'élément a été arrêté avec succès."
     error: "Une erreur est survenue."
 
 header:
-    themeMode: 'Mode de couleur'
+    themeMode: "Mode de couleur"
     dropdown:
-        welcome: 'Bonjour !'
+        welcome: "Bonjour !"
 
 title:
-    all: 'Jira Service Desk'
-    short: 'ServiceDesk'
+    all: "Jira Service Desk"
+    short: "ServiceDesk"
 
 list:
     pagination:
-        previous: 'Précédent'
-        next: 'Suivant'
-        empty: "Oups, nous n'avons pas trouvé d'éléments."
-        total: '%number% Résultat(s)'
+        previous: "Précédent"
+        next: "Suivant"
+        empty: "Oups, nous n'avons trouvé aucun élément."
+        total: "%number% résultat(s)"
 
 modal:
     delete:
-        title: 'Suppression'
+        title: "Suppression"
         description: "En cliquant sur ce bouton, vous acceptez de supprimer l'élément sélectionné."
-        action: 'Valider'
+        action: "Valider"
     warning:
-        title: 'Attention'
-        description: "En cliquant sur ce bouton, vous acceptez d'effectuer le processus sélectionné."
-        action: 'Valider'
+        title: "Attention"
+        description: "En cliquant sur ce bouton, vous acceptez d'effectuer l'action sélectionnée."
+        action: "Valider"
 
 blameable:
-    created: "Crée le %date% par %user%"
+    created: "Créé le %date% par %user%"
     updated: "Dernière modification le %date% par %user%"
-    
+
 sidebar:
     categories:
-        navigation: 'Navigation'
-        administration: 'Administration'
+        navigation: "Navigation"
+        administration: "Administration"
 
 filter:
-    label: 'Filtre(s)'
+    label: "Filtre(s)"
     query:
-        label: 'Rechercher'
+        label: "Rechercher"
 
 dashboard:
-    label: 'Tableau de bord'
-    welcome: 'Bonjour %name% !'
+    label: "Tableau de bord"
+    welcome: "Bonjour %name% !"
     admin: "Tableau d'administration"
-    app: "Tableau d'application"
+    app: "Tableau de l'application"
 
 favorite:
-    label: 'Favori(s)'
+    label: "Favori(s)"
     action:
         add: "Ajouter aux favoris"
-        remove: "Supprimer des favoris"
+        remove: "Retirer des favoris"
 
 user:
-    label: 'Utilisateur(s)'
+    label: "Utilisateur(s)"
     title:
         create: "Création d'un utilisateur"
-        edit: "Édition de l'utilisateur '%email%'"
+        edit: "Modification de l'utilisateur '%email%'"
     email:
-        label: 'Identifiant'
+        label: "Identifiant"
     password:
-        label: 'Mot de passe'
-        notice: '💡 Laissez vide pour ne pas changer.'
+        label: "Mot de passe"
+        new: "Nouveau mot de passe"
+        repeat: "Répéter le mot de passe"
+        notice: "💡 Laissez vide pour ne pas le modifier."
     firstName:
-        label: 'Prénom'
+        label: "Prénom"
     lastName:
-        label: 'Nom'
+        label: "Nom"
     roles:
-        label: 'Rôle(s)'
-        role_admin: 'Administrateur'
-        role_user: 'Utilisateur'
+        label: "Rôle(s)"
+        role_admin: "Administrateur"
+        role_user: "Utilisateur"
     preferedLocale:
-        label: 'Langue préférée'
+        label: "Langue préférée"
     preferedTheme:
-        label: 'Theme de couleur préférée'
+        label: "Thème de couleur préféré"
 
 profile:
-    label: 'Profil'
+    label: "Profil"
     view:
-        title: 'Mon profil utilisateur'
-        
+        title: "Mon profil utilisateur"
+
 project:
-    label: 'Projet(s)'
+    label: "Projet(s)"
     title:
-        create: "Création d'un project à partir de Jira"
-        edit: "Édition du projet '%key%'"
+        create: "Création d'un projet à partir de Jira"
+        edit: "Modification du projet '%key%'"
     name:
-        label: 'Nom'
+        label: "Nom"
     jiraKey:
-        label: 'Clé Jira'
+        label: "Clé Jira"
     jiraId:
-        label: 'Identifiant Jira'
+        label: "Identifiant Jira"
     description:
         label: "Description"
     users:
-        label: 'Utilisateur(s) reliée'
+        label: "Utilisateur(s) associé(s)"
     lead:
-        label: 'Responsable'
+        label: "Responsable"
     category:
-        label: 'Catégorie de projet'
+        label: "Catégorie du projet"
     boards:
-        label: 'Tableaux'
+        label: "Tableaux"
     board:
-        label: 'Tableau'
+        label: "Tableau"
     flashes:
-        alreadyExist: "Cette clé de projet est déjà existante sur l'outil"
+        alreadyExist: "Cette clé de projet existe déjà dans l'outil."
 
 issue:
-    label: 'Ticket(s)'
+    label: "Ticket(s)"
     action:
-        create: 'Crée un ticket'
+        create: "Créer un ticket"
     titles:
-        create: "Crée un ticket"
+        create: "Créer un ticket"
     jiraKey:
-        label: 'Clé'
+        label: "Clé"
     assignee:
-        label: 'Assignée à'
-        not_assignee: 'Non assignée'
+        label: "Assigné à"
+        not_assignee: "Non assigné"
     status:
-        label: 'Statut'
+        label: "Statut"
     priority:
-        label: 'Prioritée'
+        label: "Priorité"
     summary:
-        label: 'Titre'
+        label: "Titre"
     type:
-        label: 'Type'
+        label: "Type"
     description:
-        label: 'Description'
-        notice: '💡 Votre NOM et Prénom sera rajouter au ticket afin de faciliter le travail des chef(ffe)s de projet'
+        label: "Description"
+        notice: "💡 Votre nom et prénom seront ajoutés au ticket pour faciliter le travail des chef(fe)s de projet."
     comment:
-        label: 'Commentaire(s)'
+        label: "Commentaire(s)"
     attachment:
-        label: 'Pièce(s) Jointe(s)'
+        label: "Pièce(s) jointe(s)"
     transition:
-        label: 'Transition'
-        to: 'Passer à'
-      
+        label: "Transition"
+        to: "Passer à"
+
 priority:
-    label: 'Prioritée(s)'
+    label: "Priorité(s)"
     name:
-        label: 'Nom'
+        label: "Nom"
     description:
-        label: 'Description'
+        label: "Description"
     iconUrl:
-        label: 'Icone'
+        label: "Icône"
     statusColor:
-        label: 'Couleur'
+        label: "Couleur"
     flashes:
-        generated: 'Les éléments ont bien était récupérer.'
-        
+        generated: "Les éléments ont bien été récupérés."
+
 security:
     login:
-        label: 'Connexion'
-        sign_in: 'Connectez-vous'
+        label: "Connexion"
+        sign_in: "Connectez-vous"
         sign_in_catch_phrase: "pour accéder à l'application"
-        action: 'Se connecter'
+        action: "Se connecter"
+    check_email:
+        label: "Vérifiez votre adresse e-mail"
+        description: "Si un compte correspondant à votre adresse e-mail existe, un message contenant un lien pour réinitialiser votre mot de passe vient d'être envoyé.<br/>Ce lien expirera dans %expire_link_time%."
+        retry: "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier de courriers indésirables."
+        action: "Réessayer"
+    reset_password_request:
+        label: "Changer votre mot de passe"
+        description: "Saisissez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe."
+        action: "Envoyer l’e-mail de réinitialisation"
+    reset_password:
+        label: "Changement de mot de passe"
+        action: "Modifier"

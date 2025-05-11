@@ -8,8 +8,11 @@
 
     {% block filterFormRows %}
         {% if filterForm is defined and filterForm is not null %}
-            <div class="col-md-6">
+            <div class="col-12 col-md-4">
                 {{ form_row(filterForm.query) }}
+            </div>
+            <div class="col-12 col-md-4">
+                {{ form_row(filterForm.projects) }}
             </div>
         {% endif %}
     {% endblock %}

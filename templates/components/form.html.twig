@@ -9,7 +9,9 @@
             {% block header '' %}
 
             <div class="card-body">
+                {{ form_errors(form) }}
                 {% block content '' %}
+                {{ form_rest(form) }}
             </div>
 
             <div class="card-footer">

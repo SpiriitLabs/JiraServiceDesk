@@ -1,0 +1,41 @@
+{% extends 'email/layout.html.twig' %}
+{% trans_default_domain 'email' %}
+
+{% block content %}
+
+    <twig:email:title
+        text="{{ 'security.create_account.title'|trans }}"
+    />
+
+    <twig:email:text>
+        {% block content %}
+            {% trans_default_domain 'email' %}
+
+            <tr>
+                <td class="r16-c nl2go-default-textstyle"
+                    align="left"
+                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                    <div>
+                        <p style="margin: 0;">
+                            {{ 'security.create_account.description'|trans() }}
+                        </p>
+                        <p style="margin: 0;">
+                            {{ 'security.create_account.expire_time'|trans({'%expire_link_time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}) }}
+                        </p>
+                    </div>
+                </td>
+            </tr>
+
+        {% endblock %}
+    </twig:email:text>
+
+{% endblock %}
+
+{% block action %}
+
+    <twig:email:action
+        label="{{ 'security.create_account.action'|trans }}"
+        href="{{ absolute_url(path('security_forgot_password_reset', {token: resetToken.token})) }}"
+    />
+
+{% endblock %}

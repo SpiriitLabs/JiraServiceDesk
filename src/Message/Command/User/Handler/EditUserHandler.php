@@ -20,7 +20,7 @@ readonly class EditUserHandler
         $user = $command->user;
 
         $user->firstName = $command->firstName;
-        $user->lastName = $command->lastName;
+        $user->setLastName($command->lastName);
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;
         $user->preferredTheme = $command->preferedTheme;
