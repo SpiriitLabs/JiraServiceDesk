@@ -33,9 +33,23 @@ services:
     ports:
       - "8080:80"
 
-  mailpit:
+  mailer:
     image: axllent/mailpit
+    volumes:
+      - mailpit:/data
+    ports:
+      - "1080:8025"
+      - "1025:1025"
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
   database:
     ports:
       - "5432"
+
+volumes:
+  mailpit:
+  

@@ -17,3 +17,10 @@ comment:
         title: "Modification d'un commentaire !"
         description: "Un commentaire a été modifié sur le ticket '%ticket_name%' du projet '%project_name%'.<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le commentaire"
+
+security:
+    reset_password:
+        title: "Votre demande de changement de mot de passe"
+        description_title: "Pour réinitialiser votre mot de passe, veuillez consulter le lien suivant"
+        description: "Ce lien expirera dans %expire_link_time%."
+        action: "Réinitialiser mon mot de passe"

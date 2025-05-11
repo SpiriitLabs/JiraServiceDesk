@@ -57,12 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Versioned]
-    public ?string $lastName = null {
-        set {
-            $this->lastName = strtoupper($value);
-        }
-        get => $this->lastName;
-    }
+    private ?string $lastName = null;
 
     public string $fullName {
         get => sprintf('%s %s', $this->firstName, $this->lastName);
@@ -114,6 +109,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = strtoupper($lastName);
     }
 
     /**
@@ -223,7 +228,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (! $this->favorites->contains($favorite)) {
             $this->favorites->add($favorite);
-            $favorite->setUser($this);
+            $favorite->user = $this;
         }
 
         return $this;
@@ -233,8 +238,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->favorites->removeElement($favorite)) {
             // set the owning side to null (unless already changed)
-            if ($favorite->getUser() === $this) {
-                $favorite->setUser(null);
+            if ($favorite->user === $this) {
+                $favorite->user = null;
             }
         }
 
