@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use App\Service\UserNameService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation\Loggable;
@@ -86,6 +87,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $favorites;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotification = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationIssueCreated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationIssueUpdated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationCommentCreated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationCommentUpdated = false;
 
     public function __construct(?string $email, ?string $firstName, ?string $lastName)
     {

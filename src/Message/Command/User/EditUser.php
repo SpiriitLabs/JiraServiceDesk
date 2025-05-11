@@ -18,6 +18,11 @@ class EditUser extends AbstractUserDTO
                 ->toArray(),
             preferedLocale: $this->user->preferredLocale,
             preferedTheme: $this->user->preferredTheme,
+            preferenceNotification: $this->user->preferenceNotification,
+            preferenceNotificationIssueCreated: $this->user->preferenceNotificationIssueCreated,
+            preferenceNotificationIssueUpdated: $this->user->preferenceNotificationIssueUpdated,
+            preferenceNotificationCommentCreated: $this->user->preferenceNotificationCommentCreated,
+            preferenceNotificationCommentUpdated: $this->user->preferenceNotificationCommentUpdated,
         );
     }
 }

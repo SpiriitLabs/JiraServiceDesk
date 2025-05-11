@@ -16,6 +16,10 @@ class EmailNotificationHandler
 
     public function __invoke(EmailNotification $command): void
     {
+        if ($command->user->preferenceNotification === false) {
+            return;
+        }
+
         $this->mailer->send(
             $command->email,
         );

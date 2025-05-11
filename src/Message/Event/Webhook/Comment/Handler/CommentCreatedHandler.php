@@ -59,6 +59,10 @@ class CommentCreatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
+            if ($user->preferenceNotificationCommentCreated === false) {
+                continue;
+            }
+
             $emailToSent = clone $templatedEmail
                 ->to(new Address($user->email, $user->fullName))
                 ->locale($user->preferredLocale->value)

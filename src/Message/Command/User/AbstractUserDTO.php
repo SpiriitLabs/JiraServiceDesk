@@ -20,6 +20,11 @@ class AbstractUserDTO
         public ?string $plainPassword = null,
         public Locale $preferedLocale = Locale::FR,
         public Theme $preferedTheme = Theme::AUTO,
+        public bool $preferenceNotification = true,
+        public bool $preferenceNotificationIssueCreated = true,
+        public bool $preferenceNotificationIssueUpdated = true,
+        public bool $preferenceNotificationCommentCreated = true,
+        public bool $preferenceNotificationCommentUpdated = true,
     ) {
     }
 }

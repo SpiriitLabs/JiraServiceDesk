@@ -36,6 +36,11 @@ readonly class CreateUserHandler
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;
         $user->preferredTheme = $command->preferedTheme;
+        $user->preferenceNotification = $command->preferenceNotification;
+        $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
+        $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
+        $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
+        $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
 
         $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
         $user->setPassword($password);
