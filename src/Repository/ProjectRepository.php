@@ -20,7 +20,7 @@ class ProjectRepository extends AbstractEntityRepository
 
     public function getByUser(User $user): QueryBuilder
     {
-        return $this->createQueryBuilder('p')
+        return $this->createQueryBuilder(self::ALIAS)
             ->innerJoin(self::ALIAS . '.users', 'u')
             ->where('u = :user')
             ->setParameter('user', $user)
