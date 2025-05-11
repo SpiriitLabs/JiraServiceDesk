@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         get => UserNameService::initials($this->firstName, $this->lastName);
     }
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Versioned]
     public ?string $company = null;
 
@@ -112,7 +112,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Versioned]
     public bool $preferenceNotificationCommentUpdated = false;
 
-    public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company)
+    public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company = null)
     {
         $this->email = $email;
         $this->firstName = $firstName;

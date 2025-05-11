@@ -17,7 +17,7 @@
                     style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
                     <div>
                         <p style="margin: 0;">
-                            {{ 'security.create_account.description'|trans() }}
+                            {{ 'security.create_account.description'|trans({'%full_name%': createdUser.fullName}) }}
                         </p>
                         <p style="margin: 0;">
                             {{ 'security.create_account.expire_time'|trans({'%expire_link_time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}) }}

@@ -58,11 +58,13 @@ readonly class CreateUserHandler
                 $this->translator->trans(
                     id: 'security.create_account.title',
                     domain: 'email',
+                    locale: $user->preferredLocale->value,
                 ),
             )
             ->htmlTemplate('email/security/create_account.html.twig')
             ->context([
                 'resetToken' => $resetUserToken,
+                'createdUser' => $user,
             ])
         ;
 
