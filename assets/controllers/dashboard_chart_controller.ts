@@ -4,6 +4,7 @@ import ApexCharts from 'apexcharts'
 
 export default class extends Controller {
   static values = {
+    usersCountTotal: Number,
     usersCountPreferenceNotification: Number,
     usersCountPreferenceNotificationIssueCreated: Number,
     usersCountPreferenceNotificationIssueUpdated: Number,
@@ -13,6 +14,7 @@ export default class extends Controller {
 
   static targets = ["notificationPreferenceChart"];
 
+  declare readonly usersCountTotalValue: number;
   declare readonly usersCountPreferenceNotificationValue: number;
   declare readonly usersCountPreferenceNotificationIssueCreatedValue: number;
   declare readonly usersCountPreferenceNotificationIssueUpdatedValue: number;
@@ -34,21 +36,27 @@ export default class extends Controller {
 				type: "radialBar"
 			},
 			series: [
-				Math.round((this.usersCountPreferenceNotificationIssueCreatedValue / this.usersCountPreferenceNotificationValue) * 100),
-				Math.round((this.usersCountPreferenceNotificationIssueUpdatedValue / this.usersCountPreferenceNotificationValue) * 100),
-				Math.round((this.usersCountPreferenceNotificationCommentCreatedValue / this.usersCountPreferenceNotificationValue) * 100),
-				Math.round((this.usersCountPreferenceNotificationCommentUpdatedValue / this.usersCountPreferenceNotificationValue) * 100),
+				Math.round((this.usersCountPreferenceNotificationValue / this.usersCountTotalValue) * 100),
+				Math.round((this.usersCountPreferenceNotificationIssueCreatedValue / this.usersCountTotalValue) * 100),
+				Math.round((this.usersCountPreferenceNotificationIssueUpdatedValue / this.usersCountTotalValue) * 100),
+				Math.round((this.usersCountPreferenceNotificationCommentCreatedValue / this.usersCountTotalValue) * 100),
+				Math.round((this.usersCountPreferenceNotificationCommentUpdatedValue / this.usersCountTotalValue) * 100),
 			],
 			plotOptions: {
 				radialBar: {
 					dataLabels: {
 						total: {
-							show: false,
+							show: true,
+              label: "Total",
+              formatter: () => {
+                return `${this.usersCountTotalValue}`;
+              }
 						}
 					}
 				}
 			},
 			labels: [
+        'Notifications',
         'Issue Created',
         'Issue Updated',
         'Comment Created',
