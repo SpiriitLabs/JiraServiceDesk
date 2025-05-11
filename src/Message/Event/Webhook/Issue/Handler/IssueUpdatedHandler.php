@@ -41,12 +41,6 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         ]);
 
         $templatedEmail = (new TemplatedEmail())
-            ->subject(
-                $this->translator->trans(
-                    id: 'issue.edited.title',
-                    domain: 'email',
-                ),
-            )
             ->htmlTemplate('email/issue/issue_edited.html.twig')
             ->context([
                 'project' => $project,
@@ -61,6 +55,13 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             }
 
             $emailToSent = clone $templatedEmail
+                ->subject(
+                    $this->translator->trans(
+                        id: 'issue.edited.title',
+                        domain: 'email',
+                        locale: $user->preferredLocale->value,
+                    ),
+                )
                 ->to(new Address($user->email, $user->fullName))
                 ->locale($user->preferredLocale->value)
             ;

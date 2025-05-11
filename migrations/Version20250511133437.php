@@ -23,6 +23,9 @@ final class Version20250511133437 extends AbstractMigration
         $this->addSql(<<<'SQL'
             ALTER TABLE user ADD preference_notification TINYINT(1) NOT NULL, ADD preference_notification_issue_created TINYINT(1) NOT NULL, ADD preference_notification_issue_updated TINYINT(1) NOT NULL, ADD preference_notification_comment_created TINYINT(1) NOT NULL, ADD preference_notification_comment_updated TINYINT(1) NOT NULL
         SQL);
+        $this->addSql(<<<'SQL'
+            UPDATE user SET preference_notification = 1, preference_notification_issue_created = 1, preference_notification_issue_updated = 1, preference_notification_comment_created = 1, preference_notification_comment_updated = 1 WHERE 1
+        SQL);
     }
 
     public function down(Schema $schema): void
