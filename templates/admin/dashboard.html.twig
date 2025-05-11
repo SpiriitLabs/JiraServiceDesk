@@ -26,7 +26,7 @@
 								<div class="card-body text-center">
 									<i class="mdi mdi-bell-badge-outline text-muted font-24"></i>
 									<h3>
-										<span>{{ user_preference_notification }}</span>
+										<span>{{ users_count_preference_notification }}</span>
 									</h3>
 									<p class="text-muted font-15 mb-0">{{ 'dashboard.total_of_user_notification'|trans }}</p>
 								</div>
@@ -45,22 +45,81 @@
 							</div>
 						</div>
 
-						{# <div class="col-sm-6 col-lg-3">
+						<div class="col-sm-6 col-lg-3">
 							<div class="card rounded-0 shadow-none m-0 border-start border-light">
 								<div class="card-body text-center">
-									<i class="ri-line-chart-line text-muted font-24"></i>
+									<i class="ri-honour-line text-muted font-24"></i>
 									<h3>
-										<span>93%</span>
-										<i class="mdi mdi-arrow-up text-success"></i>
+										<span>{{ priorities_count }}</span>
 									</h3>
-									<p class="text-muted font-15 mb-0">Productivity</p>
+									<p class="text-muted font-15 mb-0">{{ 'dashboard.total_of'|trans }}{{ 'priority.label'|trans }}</p>
 								</div>
 							</div>
-						</div> #}
+						</div>
 
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<div class="row" {{ stimulus_controller('dashboard_chart', {
+			usersCountPreferenceNotification: users_count_preference_notification,
+			usersCountPreferenceNotificationIssueCreated: users_count_preference_notification_issue_created,
+			usersCountPreferenceNotificationIssueUpdated: users_count_preference_notification_issue_updated,
+			usersCountPreferenceNotificationCommentCreated: users_count_preference_notification_comment_created,
+			usersCountPreferenceNotificationCommentUpdated: users_count_preference_notification_comment_updated,
+		}) }}>
+		<div class="col-lg-5">
+			<div class="card">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h4 class="header-title">{{ 'user.preferenceNotification.label'|trans }}</h4>
+				</div>
+
+				<div class="card-body pt-0">
+					<div id="chartToRender" {{ stimulus_target('dashboard_chart', 'notificationPreferenceChart') }}></div>
+
+					<div class="row text-center mt-3">
+						<div class="col-sm-3">
+							<i class="mdi mdi-ticket-confirmation widget-icon rounded-circle bg-primary-lighten text-primary"></i>
+							<h3 class="fw-normal mt-3">
+								<span>{{ users_count_preference_notification_issue_created }}</span>
+							</h3>
+							<p class="text-muted mb-0 mb-2">
+								{{ 'user.preferenceNotificationIssueCreated.label'|trans }}
+							</p>
+						</div>
+						<div class="col-sm-3">
+							<i class="mdi mdi-ticket-confirmation widget-icon rounded-circle bg-primary-lighten text-primary"></i>
+							<h3 class="fw-normal mt-3">
+								<span>{{ users_count_preference_notification_issue_updated }}</span>
+							</h3>
+							<p class="text-muted mb-0 mb-2">
+								{{ 'user.preferenceNotificationIssueUpdated.label'|trans }}
+							</p>
+						</div>
+						<div class="col-sm-3">
+							<i class="mdi mdi-comment-quote widget-icon rounded-circle bg-primary-lighten text-primary"></i>
+							<h3 class="fw-normal mt-3">
+								<span>{{ users_count_preference_notification_comment_created }}</span>
+							</h3>
+							<p class="text-muted mb-0 mb-2">
+								{{ 'user.preferenceNotificationCommentCreated.label'|trans }}
+							</p>
+						</div>
+						<div class="col-sm-3">
+							<i class="mdi mdi-comment-processing widget-icon rounded-circle bg-primary-lighten text-primary"></i>
+							<h3 class="fw-normal mt-3">
+								<span>{{ users_count_preference_notification_comment_created }}</span>
+							</h3>
+							<p class="text-muted mb-0 mb-2">
+								{{ 'user.preferenceNotificationCommentUpdated.label'|trans }}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}
