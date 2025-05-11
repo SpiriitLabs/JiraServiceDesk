@@ -47,6 +47,7 @@ class ProjectFormType extends AbstractType
             'translation_domain' => 'app',
             'label_format' => 'project.%name%.label',
             'editable' => false,
+            'csrf_protection' => false,
         ]);
     }
 }
