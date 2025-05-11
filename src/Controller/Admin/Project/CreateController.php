@@ -27,12 +27,10 @@ class CreateController extends AbstractController
         $form = $this->createForm(type: ProjectFormType::class, data: new CreateProject());
         $form->handleRequest($request);
 
-        dump($form->isValid());
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $projectCreated = $this->handle($form->getData());
             } catch (HandlerFailedException $exception) {
-                dd($exception);
                 if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
                     $this->addFlash(
                         type: 'danger',
