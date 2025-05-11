@@ -175,6 +175,7 @@ bump:
 	@sed -i '' 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(COMPOSER_FILE)
 	@sed -i '' 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(PACKAGE_FILE)
 	@sed -i '' 's/^PROJECT_VERSION=.*/PROJECT_VERSION=$(VERSION)/' $(ENV_FILE)
+	@git tag $(VERSION)
 
 SERVER ?= rmjsd.p
 DOMAIN ?= rmjsd
