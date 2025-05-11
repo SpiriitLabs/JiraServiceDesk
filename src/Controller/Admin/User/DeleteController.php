@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
-    path: '/user/{id:user}/delete',
+    path: '/user/{id}/delete',
     name: RouteCollection::DELETE->value,
     methods: [Request::METHOD_POST],
 )]
