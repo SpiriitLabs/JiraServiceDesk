@@ -3,10 +3,16 @@
 namespace App\Message\Command\User\Handler;
 
 use App\Entity\User;
+use App\Enum\User\Locale;
 use App\Message\Command\User\CreateUser;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 #[AsMessageHandler]
 readonly class CreateUserHandler
@@ -14,6 +20,9 @@ readonly class CreateUserHandler
     public function __construct(
         private EntityManagerInterface $entityManager,
         private UserPasswordHasherInterface $passwordHasher,
+        private TranslatorInterface $translator,
+        private ResetPasswordHelperInterface $resetPasswordHelper,
+        private MailerInterface $mailer,
     ) {
     }
 
@@ -32,6 +41,26 @@ readonly class CreateUserHandler
         $user->setPassword($password);
 
         $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $resetUserToken = $this->resetPasswordHelper->generateResetToken($user);
+
+        $email = (new TemplatedEmail())
+            ->to(new Address($user->email, $user->fullName))
+            ->locale($user->preferredLocale->value ?? Locale::FR->value)
+            ->subject(
+                $this->translator->trans(
+                    id: 'security.create_account.title',
+                    domain: 'email',
+                ),
+            )
+            ->htmlTemplate('email/security/create_account.html.twig')
+            ->context([
+                'resetToken' => $resetUserToken,
+            ])
+        ;
+
+        $this->mailer->send($email);
 
         return $user;
     }

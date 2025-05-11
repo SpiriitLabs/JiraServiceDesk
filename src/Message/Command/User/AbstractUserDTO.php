@@ -7,11 +7,16 @@ use App\Enum\User\Theme;
 
 class AbstractUserDTO
 {
+    /**
+     * @param array<int,mixed> $roles
+     * @param array<int,mixed> $projects
+     */
     public function __construct(
         public string $email,
         public string $lastName,
         public string $firstName,
         public array $roles = [],
+        public array $projects = [],
         public ?string $plainPassword = null,
         public Locale $preferedLocale = Locale::FR,
         public Theme $preferedTheme = Theme::AUTO,
