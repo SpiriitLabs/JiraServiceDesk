@@ -74,8 +74,14 @@ CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 # Prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod
 
-ENV APP_ENV=prod
-ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
+#ENV APP_ENV=prod
+#ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
+
+# Install NodeJS for assets build
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+	&& rm -rf /var/lib/apt/lists/*
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
