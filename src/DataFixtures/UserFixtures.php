@@ -56,6 +56,11 @@ class UserFixtures extends Fixture
         );
         $user->setRoles($roles);
         $user->preferredTheme = Theme::DARK;
+        $user->preferenceNotification = true;
+        $user->preferenceNotificationIssueCreated = true;
+        $user->preferenceNotificationIssueUpdated = true;
+        $user->preferenceNotificationCommentCreated = true;
+        $user->preferenceNotificationCommentUpdated = true;
 
         $password = $this->passwordHasher->hashPassword($user, 'password');
         $user->setPassword($password);
