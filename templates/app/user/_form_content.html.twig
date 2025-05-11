@@ -23,11 +23,31 @@
     </div>
 </div>
 
+<hr>
+
 <div class="row">
     <div class="col-md-6">
         {{ form_row(form.preferedLocale) }}
     </div>
     <div class="col-md-6">
         {{ form_row(form.preferedTheme) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        {{ form_row(form.preferenceNotification) }}
+    </div>
+    <div class="col-md-2">
+        {{ form_row(form.preferenceNotificationIssueCreated) }}
+    </div>
+    <div class="col-md-2">
+        {{ form_row(form.preferenceNotificationIssueUpdated) }}
+    </div>
+    <div class="col-md-2">
+        {{ form_row(form.preferenceNotificationCommentCreated) }}
+    </div>
+    <div class="col-md-2">
+        {{ form_row(form.preferenceNotificationCommentUpdated) }}
     </div>
 </div>

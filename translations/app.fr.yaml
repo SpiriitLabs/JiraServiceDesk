@@ -79,6 +79,8 @@ dashboard:
     welcome: "Bonjour %name% !"
     admin: "Tableau d'administration"
     app: "Tableau de l'application"
+    total_of: "Total de "
+    total_of_user_notification: "Total d'utilisateur(s) ayant des notifications"
 
 favorite:
     label: "Favori(s)"
@@ -102,6 +104,8 @@ user:
         label: "Prénom"
     lastName:
         label: "Nom"
+    company:
+        label: "Entreprise"
     roles:
         label: "Rôle(s)"
         role_admin: "Administrateur"
@@ -110,6 +114,16 @@ user:
         label: "Langue préférée"
     preferedTheme:
         label: "Thème de couleur préféré"
+    preferenceNotification:
+        label: "Notifications"
+    preferenceNotificationIssueCreated:
+        label: "Notification de ticket crée"
+    preferenceNotificationIssueUpdated:
+        label: "Notification de ticket modifée"
+    preferenceNotificationCommentCreated:
+        label: "Notification de commentaire crée"
+    preferenceNotificationCommentUpdated:
+        label: "Notification de commentaire modifée"
 
 profile:
     label: "Profil"

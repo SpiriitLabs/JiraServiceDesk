@@ -4,6 +4,7 @@ namespace App\Form\Admin\User;
 
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
+use App\Form\Type\SwitchType;
 use App\Message\Command\User\AbstractUserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -57,6 +58,21 @@ abstract class AbstractUserFormType extends AbstractType
                     new NotBlank(),
                 ],
                 'choice_label' => fn (Theme $theme) => $theme->label(),
+            ])
+            ->add('preferenceNotification', SwitchType::class, [
+                'required' => false,
+            ])
+            ->add('preferenceNotificationIssueCreated', SwitchType::class, [
+                'required' => false,
+            ])
+            ->add('preferenceNotificationIssueUpdated', SwitchType::class, [
+                'required' => false,
+            ])
+            ->add('preferenceNotificationCommentCreated', SwitchType::class, [
+                'required' => false,
+            ])
+            ->add('preferenceNotificationCommentUpdated', SwitchType::class, [
+                'required' => false,
             ])
         ;
     }

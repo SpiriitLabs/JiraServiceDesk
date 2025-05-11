@@ -1,26 +1,31 @@
 issue:
     created:
         title: "New ticket available!"
-        description: "A new ticket '%ticket_name%' has been created in your project '%project_name%'.<br/>View it directly from your client space."
+        description: "A new ticket \"%ticket_name%\" has been created in your project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View ticket"
     edited:
         title: "Ticket updated!"
-        description: "Your ticket '%ticket_name%' in the project '%project_name%' has been updated.<br/>View it directly from your client space."
+        description: "Your ticket \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
         action: "View ticket"
 
 comment:
     created:
-        title: "New comment posted!"
-        description: "A new comment has been posted on the ticket '%ticket_name%' in the project '%project_name%'.<br/>View it directly from your client space."
+        title: "New comment added!"
+        description: "A new comment has been added to the ticket \"%ticket_name%\" in the project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View comment"
     updated:
         title: "Comment updated!"
-        description: "A comment has been updated on the ticket '%ticket_name%' in the project '%project_name%'.<br/>View it directly from your client space."
+        description: "A comment has been updated on the ticket \"%ticket_name%\" in the project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View comment"
 
 security:
     reset_password:
         title: "Your password reset request"
-        description_title: "To reset your password, please click the following link"
+        description_title: "To reset your password, please use the following link:"
         description: "This link will expire in %expire_link_time%."
         action: "Reset my password"
+    create_account:
+        title: "Your account creation"
+        description: "Welcome %full_name% to your ticket management tool. To continue, please set your password by clicking the link below."
+        expire_time: "This link will expire in %expire_link_time%."
+        action: "Set your password"

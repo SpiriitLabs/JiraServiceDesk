@@ -31,11 +31,17 @@ readonly class CreateUserHandler
         $user = new User(
             email: $command->email,
             firstName: $command->firstName,
-            lastName: $command->lastName
+            lastName: $command->lastName,
+            company: $command->company,
         );
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;
         $user->preferredTheme = $command->preferedTheme;
+        $user->preferenceNotification = $command->preferenceNotification;
+        $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
+        $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
+        $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
+        $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
 
         $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
         $user->setPassword($password);
@@ -52,11 +58,13 @@ readonly class CreateUserHandler
                 $this->translator->trans(
                     id: 'security.create_account.title',
                     domain: 'email',
+                    locale: $user->preferredLocale->value,
                 ),
             )
             ->htmlTemplate('email/security/create_account.html.twig')
             ->context([
                 'resetToken' => $resetUserToken,
+                'createdUser' => $user,
             ])
         ;
 

@@ -10,25 +10,39 @@
 ] %}
 
 {% block content %}
-    <div class="row">
+	<div class="row">
 
-        {% for project in projects %}
-            {# @var project \Entity\Project #}
+		{% if projects|length == 0 %}
+			<div class="card">
+				<div class="card-body">
+					<div class="table-responsive">
+						<div class="alert alert-warning text-center" role="alert">
+							{{ 'list.pagination.empty'|trans }}
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
 
-            <div class="col-md-6 col-xxl-3">
-                <div class="card d-block">
-                    <div class="card-body">
-                        <h4 class="mt-0">
-                            <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }} <i class="mdi mdi-share-all"></i></a>
-                        </h4>
-                        <div class="badge bg-secondary">{{ project.jiraKey }}</div>
+		{% for project in projects %}
+			{# @var project \Entity\Project #}
 
-                        <p class="text-muted font-13 my-3">{{ project.description }}</p>
-                    </div>
-                </div>
-            </div>
+			<div class="col-md-6 col-xxl-3">
+				<div class="card d-block">
+					<div class="card-body">
+						<h4 class="mt-0">
+							<a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }}
+								<i class="mdi mdi-share-all"></i>
+							</a>
+						</h4>
+						<div class="badge bg-secondary">{{ project.jiraKey }}</div>
 
-        {% endfor %}
+						<p class="text-muted font-13 my-3">{{ project.description }}</p>
+					</div>
+				</div>
+			</div>
 
-    </div>
+		{% endfor %}
+
+	</div>
 {% endblock %}

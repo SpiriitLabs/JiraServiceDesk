@@ -41,12 +41,6 @@ class IssueCreatedHandler implements LoggerAwareInterface
         ]);
 
         $templatedEmail = (new TemplatedEmail())
-            ->subject(
-                $this->translator->trans(
-                    id: 'issue.created.title',
-                    domain: 'email',
-                ),
-            )
             ->htmlTemplate('email/issue/issue_created.html.twig')
             ->context([
                 'project' => $project,
@@ -56,7 +50,18 @@ class IssueCreatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
+            if ($user->preferenceNotificationIssueCreated === false) {
+                continue;
+            }
+
             $emailToSent = clone $templatedEmail
+                ->subject(
+                    $this->translator->trans(
+                        id: 'issue.created.title',
+                        domain: 'email',
+                        locale: $user->preferredLocale->value,
+                    ),
+                )
                 ->to(new Address($user->email, $user->fullName))
                 ->locale($user->preferredLocale->value)
             ;

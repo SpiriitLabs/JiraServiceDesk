@@ -8,6 +8,7 @@ use App\Repository\UserRepository;
 use App\Service\UserNameService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation\Loggable;
@@ -67,6 +68,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         get => UserNameService::initials($this->firstName, $this->lastName);
     }
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Versioned]
+    public ?string $company = null;
+
     #[ORM\Column(nullable: false, enumType: Locale::class)]
     #[Versioned]
     public Locale $preferredLocale = Locale::FR;
@@ -87,11 +92,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $favorites;
 
-    public function __construct(?string $email, ?string $firstName, ?string $lastName)
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotification = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationIssueCreated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationIssueUpdated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationCommentCreated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $preferenceNotificationCommentUpdated = false;
+
+    public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company = null)
     {
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
     }

@@ -41,12 +41,6 @@ class CommentUpdatedHandler implements LoggerAwareInterface
         ]);
 
         $templatedEmail = (new TemplatedEmail())
-            ->subject(
-                $this->translator->trans(
-                    id: 'comment.created.title',
-                    domain: 'email',
-                ),
-            )
             ->htmlTemplate('email/comment/updated.html.twig')
             ->context([
                 'project' => $project,
@@ -59,7 +53,18 @@ class CommentUpdatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
+            if ($user->preferenceNotificationCommentUpdated === false) {
+                continue;
+            }
+
             $emailToSent = clone $templatedEmail
+                ->subject(
+                    $this->translator->trans(
+                        id: 'comment.created.title',
+                        domain: 'email',
+                        locale: $user->preferredLocale->value,
+                    ),
+                )
                 ->to(new Address($user->email, $user->fullName))
                 ->locale($user->preferredLocale->value)
             ;

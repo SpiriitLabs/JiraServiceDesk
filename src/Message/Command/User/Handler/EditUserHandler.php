@@ -21,9 +21,15 @@ readonly class EditUserHandler
 
         $user->firstName = $command->firstName;
         $user->setLastName($command->lastName);
+        $user->company = $command->company;
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;
         $user->preferredTheme = $command->preferedTheme;
+        $user->preferenceNotification = $command->preferenceNotification;
+        $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
+        $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
+        $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
+        $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
 
         if (
             count(array_diff($user->getProjects()->toArray(), $command->projects)) > 0

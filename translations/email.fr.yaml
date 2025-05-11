@@ -26,6 +26,6 @@ security:
         action: "Réinitialiser mon mot de passe"
     create_account:
         title: "Création de votre compte"
-        description: "Bienvenue sur votre outil de gestion de ticket, pour continuer merci de mettre en place un mot de passe en cliquant sur le lien ci-dessous."
+        description: "Bienvenue %full_name% sur votre outil de gestion de ticket, pour continuer merci de mettre en place un mot de passe en cliquant sur le lien ci-dessous."
         expire_time: "Ce lien expirera dans %expire_link_time%."
         action: "Mettre en place votre mot de passe"

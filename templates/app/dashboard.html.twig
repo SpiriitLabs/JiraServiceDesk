@@ -4,42 +4,50 @@
 {% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
 
 {% block content %}
-    <div class="row pb-5">
-        <h3>Vos favoris et vos projets</h3>
-        {% for favorite in app.user.favorites %}
-            {# @var favorite \Entity\Favorite #}
+	{% if projects|length > 0 or app.user.favorites|length > 0 %}
+		<div class="row pb-5">
+			<h3>Vos favoris et vos projets</h3>
+			{% for favorite in app.user.favorites %}
+				{# @var favorite \Entity\Favorite #}
 
-            <div class="col-md-6 col-xxl-3">
-                <div class="card d-block">
-                    <div class="card-body">
-                        <h4 class="mt-0">
-                            <a href="{{ favorite.link }}" class="text-title">{{ favorite.name }} <i class="mdi mdi-share-all"></i></a>
-                        </h4>
-                        <div class="badge bg-secondary">FAVORITE <i class="uil-favorite"></i></div>
+				<div class="col-md-6 col-xxl-3">
+					<div class="card d-block">
+						<div class="card-body">
+							<h4 class="mt-0">
+								<a href="{{ favorite.link }}" class="text-title">{{ favorite.name }}
+									<i class="mdi mdi-share-all"></i>
+								</a>
+							</h4>
+							<div class="badge bg-secondary">FAVORITE
+								<i class="uil-favorite"></i>
+							</div>
 
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 
-        {% for project in projects %}
-            {# @var project \Entity\Project #}
+			{% for project in projects %}
+				{# @var project \Entity\Project #}
 
-            <div class="col-md-6 col-xxl-3">
-                <div class="card d-block">
-                    <div class="card-body">
-                        <h4 class="mt-0">
-                            <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }} <i class="mdi mdi-share-all"></i></a>
-                        </h4>
-                        <div class="badge bg-secondary">{{ project.jiraKey }}</div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+				<div class="col-md-6 col-xxl-3">
+					<div class="card d-block">
+						<div class="card-body">
+							<h4 class="mt-0">
+								<a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }}
+									<i class="mdi mdi-share-all"></i>
+								</a>
+							</h4>
+							<div class="badge bg-secondary">{{ project.jiraKey }}</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
 
-    <h3>Vos ticket assignée</h3>
-    {% include 'app/issue/_list_content.html.twig' with {
+	<h3>Vos ticket assignée</h3>
+	{% include 'app/issue/_list_content.html.twig' with {
         searchIssuesResult: searchIssuesResult,
         hasPagination: "false",
     } %}
