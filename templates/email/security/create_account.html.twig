@@ -19,6 +19,9 @@
                         <p style="margin: 0;">
                             {{ 'security.create_account.description'|trans() }}
                         </p>
+                        <p style="margin: 0;">
+                            {{ 'security.create_account.expire_time'|trans({'%expire_link_time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}) }}
+                        </p>
                     </div>
                 </td>
             </tr>
