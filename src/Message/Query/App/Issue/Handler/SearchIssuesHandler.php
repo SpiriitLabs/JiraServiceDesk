@@ -34,6 +34,13 @@ class SearchIssuesHandler
             ;
         }
 
+        if ($query->filter !== null && count($query->filter->projects) === 0) {
+            return new SearchIssuesResult(
+                total: 0,
+                issues: [],
+            );
+        }
+
         if ($query->filter !== null && count($query->filter->projects) !== 0) {
             $jql->addInExpression(
                 field: JqlQuery::FIELD_PROJECT,
