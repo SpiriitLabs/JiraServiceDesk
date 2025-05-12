@@ -20,7 +20,6 @@ updates:
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    auto-merge: true
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -42,4 +41,3 @@ updates:
     allow:
       - dependency-type: "direct"
       - dependency-type: "indirect"
-    auto-merge: true
