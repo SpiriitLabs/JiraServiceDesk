@@ -12,7 +12,10 @@ export default class extends Controller {
 
   connect(): void {
     console.log("🌲 Kanban controller connected.");
-    this.createSortableKanban();
+
+    if (window.innerWidth > 768) {
+      this.createSortableKanban();
+    }
   }
 
   public createSortableKanban(): void {
