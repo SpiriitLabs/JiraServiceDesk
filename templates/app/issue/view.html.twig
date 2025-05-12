@@ -35,26 +35,6 @@
                 </div>
                 <div class="card-body">
 
-                    {% for comment in comments %}
-                        {% if comment.visibility is null %}
-                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
-                            <div class="d-flex mt-3 mb-2">
-                                <div class="w-100">
-                                    <h5 class="mt-0">
-                                        <twig:app:issue:assignee
-                                            reporter="{{ comment.author }}"
-                                        />
-
-                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
-                                    </h5>
-                                    {{ comment.renderedBody|raw }}
-
-                                    <br>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-
                     <div class="rounded">
                         {{ form_start(commentForm, {
                             attr: {
@@ -74,6 +54,26 @@
                             </div>
                         {{ form_end(commentForm) }}
                     </div>
+
+                    {% for comment in comments|reverse %}
+                        {% if comment.visibility is null %}
+                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
+                            <div class="d-flex mt-3 mb-2">
+                                <div class="w-100">
+                                    <h5 class="mt-0">
+                                        <twig:app:issue:assignee
+                                            reporter="{{ comment.author }}"
+                                        />
+
+                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
+                                    </h5>
+                                    {{ comment.renderedBody|raw }}
+
+                                    <br>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
 
                 </div>
             </div>
