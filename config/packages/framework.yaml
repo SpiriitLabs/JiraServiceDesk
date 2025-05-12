@@ -1,21 +1,26 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    trusted_proxies: '127.0.0.1,5.161.107.103,5.161.112.3,%env(ROUTER_REQUEST_CONTEXT_HOST)%,REMOTE_ADDR'
+    http_method_override: false
+    handle_all_throwables: true
     secret: '%env(APP_SECRET)%'
+    csrf_protection: true
 
     # Note that the session will be started ONLY if you read or write from it.
-    session:
-        handler_id: ~
-        cookie_lifetime: 2678400
-        name: AMS
-        cookie_domain: '%env(COOKIE_DOMAIN)%'
-        cookie_secure: auto
-        cookie_samesite: lax
+    session: true
 
     #esi: true
     #fragments: true
+    router:
+        default_uri: 'https://127.0.0.1/'
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
+
+when@prod:
+    framework:
+        router:
+            default_uri: '%env(ROUTER_REQUEST_CONTEXT_SCHEME)%://%env(ROUTER_REQUEST_CONTEXT_HOST)%/'
