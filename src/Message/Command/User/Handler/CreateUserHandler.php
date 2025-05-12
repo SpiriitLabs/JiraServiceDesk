@@ -46,6 +46,10 @@ readonly class CreateUserHandler
         $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
         $user->setPassword($password);
 
+        foreach ($command->projects as $project) {
+            $user->addProject($project);
+        }
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
