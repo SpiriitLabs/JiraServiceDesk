@@ -37,7 +37,11 @@ class AbstractIssueFormType extends AbstractType
             ->add('priority', EntityType::class, [
                 'required' => true,
                 'class' => Priority::class,
-                'choice_label' => fn (Priority $priority) => sprintf('%s (%s)', $priority->name, $priority->description),
+                'choice_label' => fn (Priority $priority) => sprintf(
+                    '%s (%s)',
+                    $priority->name,
+                    $priority->description
+                ),
             ])
         ;
     }

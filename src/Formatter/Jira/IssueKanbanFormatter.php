@@ -43,10 +43,15 @@ class IssueKanbanFormatter
         }
 
         foreach ($columnsConfiguration->columns as $columnConfiguration) {
+            $transitionId = null;
+            if (count($columnConfiguration->statuses) > 0) {
+                $transitionId = $columnConfiguration->statuses[0]->id;
+            }
+
             $result[$columnConfiguration->name] = [
                 'min' => $columnConfiguration->min,
                 'max' => $columnConfiguration->max,
-                'transitionId' => null,
+                'transitionId' => $transitionId,
                 'issues' => [],
             ];
         }
@@ -54,6 +59,11 @@ class IssueKanbanFormatter
         return $result;
     }
 
+    /**
+     * @param array<int,mixed> $result
+     *
+     * @return array|array<int,mixed>
+     */
     private function insertIssueInResult(
         array $result,
         Issue $issue,
@@ -74,12 +84,18 @@ class IssueKanbanFormatter
             $issueStatusId !== null
             && ! isset($result[$issueColumnName]['transitionId'])
         ) {
+            dump($issueStatusId);
             $result[$issueColumnName]['transitionId'] = $this->findTransitionId($issue, $issueStatusId);
         }
 
         return $result;
     }
 
+    /**
+     * @param array<int,mixed> $result
+     *
+     * @return array|array<int,mixed>
+     */
     private function insertWithoutColumnConfig(array $result, Issue $issue): array
     {
         $statusName = $issue->fields->status->name;
@@ -98,6 +114,9 @@ class IssueKanbanFormatter
         return $result;
     }
 
+    /**
+     * @return array<int,mixed>|array<int,null>
+     */
     private function findColumnAndStatusId(BoardColumnConfig $config, Issue $issue): array
     {
         foreach ($config->columns as $column) {
