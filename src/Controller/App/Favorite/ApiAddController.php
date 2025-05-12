@@ -47,11 +47,6 @@ class ApiAddController extends AbstractController
             throw new BadRequestHttpException();
         }
 
-        $this->addFlash(
-            type: 'success',
-            message: 'flash.success',
-        );
-
         return $this->render(
             view: 'components/app/favorite/remove_from_favorite.html.twig',
             parameters: [

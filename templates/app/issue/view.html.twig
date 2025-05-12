@@ -18,6 +18,20 @@
         <i class="mdi mdi-keyboard-return"></i>
         {{ 'action.return'|trans }}
     </a>
+
+    {% if app.user.hasFavoriteByCode('issue-' ~ key) %}
+        <twig:app:favorite:remove_from_favorite
+            code="issue-{{ key }}"
+            name="{{ 'issue.label'|trans}} #{{ key }}"
+            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
+        />
+    {% else %}
+        <twig:app:favorite:add_to_favorite
+            code="issue-{{ key }}"
+            name="{{ 'issue.label'|trans}} #{{ key }}"
+            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
+        />
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -34,26 +48,6 @@
                     <h4 class="my-1">{{ 'issue.comment.label'|trans }} (<span class="fst-italic">{{ issue.fields.comment.total }}</span>)</h4>
                 </div>
                 <div class="card-body">
-
-                    {% for comment in comments %}
-                        {% if comment.visibility is null %}
-                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
-                            <div class="d-flex mt-3 mb-2">
-                                <div class="w-100">
-                                    <h5 class="mt-0">
-                                        <twig:app:issue:assignee
-                                            reporter="{{ comment.author }}"
-                                        />
-
-                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
-                                    </h5>
-                                    {{ comment.renderedBody|raw }}
-
-                                    <br>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
 
                     <div class="rounded">
                         {{ form_start(commentForm, {
@@ -74,6 +68,26 @@
                             </div>
                         {{ form_end(commentForm) }}
                     </div>
+
+                    {% for comment in comments|reverse %}
+                        {% if comment.visibility is null %}
+                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
+                            <div class="d-flex mt-3 mb-2">
+                                <div class="w-100">
+                                    <h5 class="mt-0">
+                                        <twig:app:issue:assignee
+                                            reporter="{{ comment.author }}"
+                                        />
+
+                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
+                                    </h5>
+                                    {{ comment.renderedBody|raw }}
+
+                                    <br>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
 
                 </div>
             </div>
