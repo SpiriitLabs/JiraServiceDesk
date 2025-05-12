@@ -18,6 +18,20 @@
         <i class="mdi mdi-keyboard-return"></i>
         {{ 'action.return'|trans }}
     </a>
+
+    {% if app.user.hasFavoriteByCode('issue-' ~ key) %}
+        <twig:app:favorite:remove_from_favorite
+            code="issue-{{ key }}"
+            name="{{ 'issue.label'|trans}} #{{ key }}"
+            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
+        />
+    {% else %}
+        <twig:app:favorite:add_to_favorite
+            code="issue-{{ key }}"
+            name="{{ 'issue.label'|trans}} #{{ key }}"
+            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
+        />
+    {% endif %}
 {% endblock %}
 
 {% block content %}
