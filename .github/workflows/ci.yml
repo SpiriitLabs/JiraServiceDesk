@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, pdo, pdo_mysql, curl, dom, json, xml, zip
+          coverage: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Validate Composer configuration
+        run: composer validate --strict 2>&1 | grep -v 'The version field is present'
+
+      - name: Run NPM audit
+        run: npm audit --audit-level=moderate
+
+      - name: Run Symfony linters
+        run: |
+          php bin/console lint:container
+          php bin/console lint:translations
+          php bin/console lint:twig templates/
+          php bin/console lint:yaml config
+
+      - name: Run Easy Coding Standard
+        run: vendor/bin/ecs check src

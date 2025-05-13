@@ -128,7 +128,7 @@ Create a script to automatically download the latest release of your FrankenPHP 
 
 # === Configuration ===
 GITHUB_USER="RomainMILLAN"
-REPO_NAME="Romain-MILLAN-Jira-Service-Desk"
+REPO_NAME="JiraServiceDesk"
 CURRENT_APP_PATH="/your/application/folder/app"
 ASSET_NAME="app-template"
 

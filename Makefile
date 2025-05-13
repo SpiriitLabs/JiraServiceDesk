@@ -149,6 +149,14 @@ quality: ecs ## Run quality code tools
 ecs:		## Coding standards
 	@$(PHP) vendor/bin/ecs check --fix
 
+.PHONY: lint
+lint:		## Lint code
+	@$(CONSOLE) lint:container
+	@$(CONSOLE) lint:translations
+	@$(CONSOLE) lint:twig templates/
+	@$(CONSOLE) lint:xliff
+	@$(CONSOLE) lint:yaml config
+
 ##
 ## —— Configuration 📋 ————————————————
 COMPOSER_FILE=./composer.json
