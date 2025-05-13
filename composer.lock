@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e71353c1876e805be42b83527d9135e",
+    "content-hash": "e1cefefa84ccb7c68e09fe86f85ffc82",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -10223,16 +10223,16 @@
         },
         {
             "name": "symplify/coding-standard",
-            "version": "12.3.3",
+            "version": "12.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/coding-standard.git",
-                "reference": "389d92487734a85ebe72cd196314d02475f6f181"
+                "reference": "53fa63574c87478fad6bf57445af07defae549b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/coding-standard/zipball/389d92487734a85ebe72cd196314d02475f6f181",
-                "reference": "389d92487734a85ebe72cd196314d02475f6f181",
+                "url": "https://api.github.com/repos/symplify/coding-standard/zipball/53fa63574c87478fad6bf57445af07defae549b4",
+                "reference": "53fa63574c87478fad6bf57445af07defae549b4",
                 "shasum": ""
             },
             "require": {
@@ -10264,7 +10264,7 @@
             "description": "Set of Symplify rules for PHP_CodeSniffer and PHP CS Fixer.",
             "support": {
                 "issues": "https://github.com/symplify/coding-standard/issues",
-                "source": "https://github.com/symplify/coding-standard/tree/12.3.3"
+                "source": "https://github.com/symplify/coding-standard/tree/12.4.0"
             },
             "funding": [
                 {
@@ -10276,7 +10276,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-27T22:45:44+00:00"
+            "time": "2025-05-13T12:59:53+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
