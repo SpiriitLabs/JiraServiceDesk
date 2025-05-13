@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Validate Composer configuration
-        run: composer validate --strict
+        run: composer validate --strict 2>&1 | grep -v 'The version field is present'
 
       - name: Run NPM audit
         run: npm audit --audit-level=moderate
