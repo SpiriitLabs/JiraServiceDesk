@@ -1,45 +1,51 @@
-name: CI dependencies Workflow
+name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
+  lint:
+    name: Lint & Validate
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.4'
-        coverage: none
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, intl, pdo, pdo_mysql, curl, dom, json, xml, zip
+          coverage: none
 
-    - name: Install Composer dependencies
-      run: |
-        curl -sS https://getcomposer.org/installer | php
-        php composer.phar install --no-interaction --prefer-dist
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
 
-    - name: Run Composer validate
-      run: |
-        php composer.phar validate --no-check-all
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22'
+      - name: Install NPM dependencies
+        run: npm ci
 
-    - name: Install npm dependencies
-      run: |
-        npm install
+      - name: Validate Composer configuration
+        run: composer validate --strict
 
-    - name: Run npm audit
-      run: |
-        npm audit --production --audit-level=high
+      - name: Run NPM audit
+        run: npm audit --audit-level=moderate
+
+      - name: Run Symfony linters
+        run: |
+          php bin/console lint:container
+          php bin/console lint:translations
+          php bin/console lint:twig templates/
+          php bin/console lint:xliff
+          php bin/console lint:yaml config
+
+      - name: Run Easy Coding Standard
+        run: vendor/bin/ecs check src
