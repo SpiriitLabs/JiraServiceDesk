@@ -1,4 +1,4 @@
-{% extends 'admin/user/base.html.twig' %}
+{% extends 'admin/project/base.html.twig' %}
 
 {% trans_default_domain 'app' %}
 
@@ -6,7 +6,7 @@
 {% set breadcrumb = [
     {
         href: path('admin_project_edit', {id: entity.id}),
-        label: entity.id,
+        label: '#' ~ entity.id,
     },
     {
         label: 'action.edit',
