@@ -117,8 +117,8 @@
         "symfony/maker-bundle": "^1.63.0",
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
-        "symplify/coding-standard": "^12.4.0",
-        "symplify/easy-coding-standard": "^12.5.16",
+        "symplify/coding-standard": "^12.4.2",
+        "symplify/easy-coding-standard": "^12.5.18",
         "slevomat/coding-standard": "^8.18.0"
     }
 }

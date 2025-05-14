@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1cefefa84ccb7c68e09fe86f85ffc82",
+    "content-hash": "864fb9fca0dcc9af1fc3cc1f9a8ea74b",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -10223,16 +10223,16 @@
         },
         {
             "name": "symplify/coding-standard",
-            "version": "12.4.0",
+            "version": "12.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symplify/coding-standard.git",
-                "reference": "53fa63574c87478fad6bf57445af07defae549b4"
+                "reference": "e5a509319100fae418ff6b4b93f84e35196efd71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symplify/coding-standard/zipball/53fa63574c87478fad6bf57445af07defae549b4",
-                "reference": "53fa63574c87478fad6bf57445af07defae549b4",
+                "url": "https://api.github.com/repos/symplify/coding-standard/zipball/e5a509319100fae418ff6b4b93f84e35196efd71",
+                "reference": "e5a509319100fae418ff6b4b93f84e35196efd71",
                 "shasum": ""
             },
             "require": {
@@ -10264,7 +10264,7 @@
             "description": "Set of Symplify rules for PHP_CodeSniffer and PHP CS Fixer.",
             "support": {
                 "issues": "https://github.com/symplify/coding-standard/issues",
-                "source": "https://github.com/symplify/coding-standard/tree/12.4.0"
+                "source": "https://github.com/symplify/coding-standard/tree/12.4.2"
             },
             "funding": [
                 {
@@ -10276,20 +10276,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-13T12:59:53+00:00"
+            "time": "2025-05-13T14:34:01+00:00"
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "12.5.16",
+            "version": "12.5.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-coding-standard/easy-coding-standard.git",
-                "reference": "3e99ec9bd64528cedb7f7e0a9e892a1c3c803935"
+                "reference": "451dfeba3770f2d7476468b891a789c451ae4b34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-coding-standard/easy-coding-standard/zipball/3e99ec9bd64528cedb7f7e0a9e892a1c3c803935",
-                "reference": "3e99ec9bd64528cedb7f7e0a9e892a1c3c803935",
+                "url": "https://api.github.com/repos/easy-coding-standard/easy-coding-standard/zipball/451dfeba3770f2d7476468b891a789c451ae4b34",
+                "reference": "451dfeba3770f2d7476468b891a789c451ae4b34",
                 "shasum": ""
             },
             "require": {
@@ -10325,7 +10325,7 @@
             ],
             "support": {
                 "issues": "https://github.com/easy-coding-standard/easy-coding-standard/issues",
-                "source": "https://github.com/easy-coding-standard/easy-coding-standard/tree/12.5.16"
+                "source": "https://github.com/easy-coding-standard/easy-coding-standard/tree/12.5.18"
             },
             "funding": [
                 {
@@ -10337,7 +10337,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-28T07:01:07+00:00"
+            "time": "2025-05-14T09:38:08+00:00"
         }
     ],
     "aliases": [],
