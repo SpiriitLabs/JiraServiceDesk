@@ -19,7 +19,17 @@
         cancelLink="{{ path('admin_project_list') }}"
     >
         <twig:block name="content">
-            {% include 'admin/project/_form_content.html.twig' %}
+            {% embed 'admin/project/_form_content.html.twig' %}
+                {% block content %}
+
+                    <div class="row">
+                        <div class="col">
+                            {{ form_row(form.assignableRolesIds) }}
+                        </div>
+                    </div>
+
+                {% endblock %}
+            {% endembed %}
         </twig:block>
     </twig:form>
 {% endblock %}

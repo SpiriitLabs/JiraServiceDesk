@@ -147,6 +147,8 @@ project:
         label: "Utilisateur(s) associé(s)"
     lead:
         label: "Responsable"
+    assignableRolesIds:
+        label: "Role d'utilisateur assignable"
     category:
         label: "Catégorie du projet"
     boards:

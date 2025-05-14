@@ -6,6 +6,7 @@ use App\Controller\Common\EditControllerTrait;
 use App\Entity\Project;
 use App\Form\Admin\Project\ProjectFormType;
 use App\Message\Command\Admin\Project\EditProject;
+use App\Message\Query\App\Project\GetProjectRolesByJiraKey;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class EditController extends AbstractController
     ): Response {
         $form = $this->createForm(type: ProjectFormType::class, data: new EditProject($project), options: [
             'editable' => true,
+            'roles' => $this->handle(new GetProjectRolesByJiraKey($project->jiraKey)),
         ]);
         $form->handleRequest($request);
 

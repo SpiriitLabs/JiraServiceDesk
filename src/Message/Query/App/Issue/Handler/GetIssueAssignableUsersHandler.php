@@ -21,8 +21,7 @@ readonly class GetIssueAssignableUsersHandler
     public function __invoke(GetIssueAssignableUsers $query): array
     {
         $jiraCanAssignable = $this->userRepository->getAssignableUser(
-            $query->issue->key,
-            $query->project?->jiraKey ?? null
+            $query->project
         );
         $result = [];
 
