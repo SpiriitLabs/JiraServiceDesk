@@ -23,4 +23,13 @@ class ProjectRepository
             return null;
         }
     }
+
+    public function getRoles(string $key): array
+    {
+        try {
+            return $this->service->getProjectRoles($key);
+        } catch (JiraException $jiraException) {
+            return [];
+        }
+    }
 }

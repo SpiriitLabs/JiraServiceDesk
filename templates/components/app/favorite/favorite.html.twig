@@ -1,0 +1,15 @@
+{% props code = '', link = '#', name = '' %}
+
+{% if app.user.hasFavoriteByCode(code) %}
+    <twig:app:favorite:remove_from_favorite
+        code="{{ app.user.id ~ '-favorite-' ~ code }}"
+        name="{{ name }}"
+        link="{{ link }}"
+    />
+{% else %}
+    <twig:app:favorite:add_to_favorite
+        code="{{ app.user.id ~ '-favorite-' ~ code }}"
+        name="{{ name }}"
+        link="{{ link }}"
+    />
+{% endif %}

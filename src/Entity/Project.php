@@ -51,6 +51,9 @@ class Project
     #[ORM\OneToMany(targetEntity: IssueType::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $issuesTypes;
 
+    #[ORM\Column]
+    public array $assignableRolesIds = [];
+
     public function __construct(
         string $name,
         int $jiraId,
@@ -64,6 +67,7 @@ class Project
 
         $this->users = new ArrayCollection();
         $this->issuesTypes = new ArrayCollection();
+        $this->assignableRolesIds = [];
     }
 
     public function getId(): ?int

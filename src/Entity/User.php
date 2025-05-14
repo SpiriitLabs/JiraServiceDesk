@@ -275,7 +275,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function hasFavoriteByCode(string $code): bool
     {
         foreach ($this->favorites as $favorite) {
-            if ($favorite->code === $code) {
+            if ($favorite->code === sprintf('%d-favorite-%s', $this->id, $code)) {
                 return true;
             }
         }

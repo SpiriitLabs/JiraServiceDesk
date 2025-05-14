@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Entity\Project;
 use App\Exception\Project\ProjectAlreadyExistException;
 use App\Form\Admin\Project\ProjectFormType;
 use App\Message\Command\Admin\Project\CreateProject;
@@ -29,12 +30,14 @@ class CreateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                /** @var ?Project $projectCreated */
                 $projectCreated = $this->handle($form->getData());
             } catch (HandlerFailedException $exception) {
                 if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
                     $this->addFlash(
                         type: 'danger',
-                        message: $exception->getMessage(),
+                        message: $exception->getPrevious()
+                            ->getMessage(),
                     );
 
                     return $this->redirectToRoute(RouteCollection::CREATE->prefixed());
@@ -45,11 +48,16 @@ class CreateController extends AbstractController
 
             if ($projectCreated !== null) {
                 $this->addFlash(
-                    type: 'success',
-                    message: 'flash.created',
+                    type: 'info',
+                    message: 'project.flashes.created',
                 );
 
-                return $this->redirectToRoute(RouteCollection::LIST->prefixed());
+                return $this->redirectToRoute(
+                    route: RouteCollection::EDIT->prefixed(),
+                    parameters: [
+                        'id' => $projectCreated->getId(),
+                    ]
+                );
             }
 
             $this->addFlash(

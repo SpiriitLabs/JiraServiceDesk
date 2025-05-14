@@ -1,7 +1,7 @@
-@import '_override.scss';
-@import '_environment.scss';
-@import 'common/buttons.scss';
-@import '_issue.scss';
+@use '_override.scss';
+@use '_environment.scss';
+@use 'common/buttons.scss';
+@use '_issue.scss';
 
 .button-no-style {
     background: none;
@@ -15,5 +15,4 @@
 
 .a-clear {
     color: inherit;
-    text-underline: none;
 }
