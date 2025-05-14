@@ -112,6 +112,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Versioned]
     public bool $preferenceNotificationCommentUpdated = false;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $hasCompletedIntroduction = false;
+
     public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company = null)
     {
         $this->email = $email;

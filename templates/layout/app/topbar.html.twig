@@ -97,6 +97,11 @@
 							<span>{{ 'dashboard.admin'|trans }}</span>
 						</a>
 					{% endif %}
+
+					<a href="{{ path('app_introduction_restart', {id: app.user.id}) }}" class="dropdown-item">
+						<i class="mdi mdi-restart"></i>
+						<span>{{ 'header.dropdown.restart_introduction'|trans }}</span>
+					</a>
 				</div>
 			</li>
 		</ul>

@@ -38,6 +38,7 @@ header:
     themeMode: "Mode d’affichage"
     dropdown:
         welcome: "Bienvenue !"
+        restart_introduction: "Recommencer l'introduction"
 
 title:
     all: "Jira Service Desk"

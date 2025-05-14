@@ -4,7 +4,7 @@
 {% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
 
 {% block content %}
-	<section {{ stimulus_controller('intro') }} data-title="{{ 'introduction.title'|trans(domain: 'intro') }}" data-intro="{{ 'introduction.description'|trans(domain: 'intro') }}" data-step="1">
+	<section {{ stimulus_controller('intro', {hasCompletedIntroduction: app.user.hasCompletedIntroduction, apiUrl: absolute_url(path('app_api_introduction_check', {id: app.user.id}))}) }} data-title="{{ 'introduction.title'|trans(domain: 'intro') }}" data-intro="{{ 'introduction.description'|trans(domain: 'intro') }}" data-step="1">
 		{% if projects|length > 0 or app.user.favorites|length > 0 %}
 			<div class="row pb-5" data-title="Dashboard" data-title='{{ 'dashboard.title'|trans(domain: 'intro') }}' data-intro="{{ 'dashboard.favorites_and_projects'|trans(domain: 'intro') }}" data-step="7">
 				<h3>Vos favoris et vos projets</h3>
