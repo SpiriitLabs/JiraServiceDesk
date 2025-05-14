@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IntroductionController extends AbstractController
 {
-
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -25,7 +24,10 @@ class IntroductionController extends AbstractController
         methods: [Request::METHOD_POST],
     )]
     public function apiCheck(
-        #[MapEntity(mapping: ['id' => 'id'])] User $user,
+        #[MapEntity(mapping: [
+            'id' => 'id',
+        ])]
+        User $user,
     ): Response {
         $user->hasCompletedIntroduction = true;
         $this->entityManager->flush();
@@ -39,12 +41,14 @@ class IntroductionController extends AbstractController
         methods: [Request::METHOD_GET],
     )]
     public function restart(
-        #[MapEntity(mapping: ['id' => 'id'])] User $user,
+        #[MapEntity(mapping: [
+            'id' => 'id',
+        ])]
+        User $user,
     ): RedirectResponse {
         $user->hasCompletedIntroduction = false;
         $this->entityManager->flush();
-        
+
         return $this->redirectToRoute(RouteCollection::DASHBOARD->prefixed());
     }
-
 }
