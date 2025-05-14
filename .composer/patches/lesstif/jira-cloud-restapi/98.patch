@@ -1,80 +1,363 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'">
-    <meta content="origin" name="referrer">
-    <title>Rate limit &middot; GitHub</title>
-    <meta name="viewport" content="width=device-width">
-    <style type="text/css" media="screen">
-      body {
-        background-color: #f6f8fa;
-        color: #24292e;
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
-        font-size: 14px;
-        line-height: 1.5;
-        margin: 0;
-      }
+From 6b0c51cb9097626835da772f6a29a61387c1b930 Mon Sep 17 00:00:00 2001
+From: Romain MILLAN <rmillan@spiriit.com>
+Date: Tue, 13 May 2025 12:11:30 +0200
+Subject: [PATCH 1/3] feat(project): Add a function to get all project roles
 
-      .container { margin: 50px auto; max-width: 600px; text-align: center; padding: 0 24px; }
+---
+ README.md                      | 25 +++++++++++++++++++++++++
+ src/Project/ProjectService.php | 19 +++++++++++++++++++
+ tests/ProjectTest.php          | 19 +++++++++++++++++++
+ 3 files changed, 63 insertions(+)
 
-      a { color: #0366d6; text-decoration: none; }
-      a:hover { text-decoration: underline; }
+diff --git a/README.md b/README.md
+index fe53b53..7fadf7c 100644
+--- a/README.md
++++ b/README.md
+@@ -124,6 +124,7 @@ $iss = new IssueService(new ArrayConfiguration(
+ - [Get Project Components](#get-project-components)
+ - [Get Project Type](#get-project-type)
+ - [Get Project Version](#get-project-version)
++- [Get Project Roles]()
+ 
+ ### Custom Field
+ - [Get All Field list](#get-all-field-list)
+@@ -491,6 +492,30 @@ try {
+ ```
+ 
+ 
++#### Get Project Roles
++
++[See Jira API reference](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-project-roles/#api-rest-api-3-project-projectidorkey-role-get)
++
++```php
++<?php
++require 'vendor/autoload.php';
++
++use JiraCloud\Project\ProjectService;
++use JiraCloud\JiraException;
++
++try {
++    $projectService = new ProjectService();
++
++    // return project roles list. 
++    $ret = $projectService->getProjectRoles('TEST'); 
++    	
++    var_dump($ret);
++} catch (JiraCloud\JiraException $e) {
++	print('Error Occurred! ' . $e->getMessage());
++}
++```
++
++
+ #### Get All Field List
+ 
+ [See Jira API reference](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-fields/#api-rest-api-3-field-get)
+diff --git a/src/Project/ProjectService.php b/src/Project/ProjectService.php
+index 0fbf013..220f749 100644
+--- a/src/Project/ProjectService.php
++++ b/src/Project/ProjectService.php
+@@ -392,4 +392,23 @@ public function archiveProject($projectIdOrKey)
+ 
+         return $ret;
+     }
++
++    /**
++     * @param $projectIdOrKey
++     *
++     * @throws JiraException
++     *
++     * @return array<string, string>
++     *
++     * STATUS 401 Returned if the user is not logged in.
++     * STATUS 404 - Returned if the project does not exist.
++     */
++    public function getProjectRoles($projectIdOrKey)
++    {
++        $response = $this->exec($this->uri.'/'.$projectIdOrKey.'/role');
++
++        $this->log->info('getProjectRoles Result='.$response);
++
++        return (array) json_decode($response);
++    }
+ }
+diff --git a/tests/ProjectTest.php b/tests/ProjectTest.php
+index c48456c..2ccca4f 100644
+--- a/tests/ProjectTest.php
++++ b/tests/ProjectTest.php
+@@ -202,4 +202,23 @@ public function get_unknown_project_type_expect_to_JiraException(string $projKey
+ 
+         return $projKey;
+     }
++
++    /**
++     * @test
++     * @depends get_project_lists
++     */
++    public function get_project_roles_array(string $projKey): string
++    {
++        try {
++            $projectService = new ProjectService();
++
++            $roles = $projectService->getProjectRoles($projKey);
++
++            $this->assertIsArray($roles);
++        } catch (JiraException $e) {
++            $this->fail('get_project_roles_array ' . $e->getMessage());
++        }
++
++        return $projKey;
++    }
+ }
 
-      h1 { line-height: 60px; font-size: 48px; font-weight: 300; margin: 0px; text-shadow: 0 1px 0 #fff; }
-      p { color: rgba(0, 0, 0, 0.5); margin: 20px 0 40px; }
+From 3b447a09e76ae6e01b90140bed9104312d715f2b Mon Sep 17 00:00:00 2001
+From: Romain MILLAN <rmillan@spiriit.com>
+Date: Tue, 13 May 2025 12:57:55 +0200
+Subject: [PATCH 2/3] feat(role): Get project role id info
 
-      ul { list-style: none; margin: 25px 0; padding: 0; }
-      li { display: table-cell; font-weight: bold; width: 1%; }
+---
+ README.md                      | 26 +++++++++++++++++++++--
+ src/Project/ProjectService.php | 39 ++++++++++++++++++++++++++++++++++
+ src/Role/Role.php              | 19 +++++++++++++++++
+ tests/ProjectTest.php          | 36 +++++++++++++++++++++++++++++--
+ 4 files changed, 116 insertions(+), 4 deletions(-)
+ create mode 100644 src/Role/Role.php
 
-      .logo { display: inline-block; margin-top: 35px; }
-      .logo-img-2x { display: none; }
-      @media
-      only screen and (-webkit-min-device-pixel-ratio: 2),
-      only screen and (   min--moz-device-pixel-ratio: 2),
-      only screen and (     -o-min-device-pixel-ratio: 2/1),
-      only screen and (        min-device-pixel-ratio: 2),
-      only screen and (                min-resolution: 192dpi),
-      only screen and (                min-resolution: 2dppx) {
-        .logo-img-1x { display: none; }
-        .logo-img-2x { display: inline-block; }
-      }
+diff --git a/README.md b/README.md
+index 7fadf7c..467072c 100644
+--- a/README.md
++++ b/README.md
+@@ -124,7 +124,8 @@ $iss = new IssueService(new ArrayConfiguration(
+ - [Get Project Components](#get-project-components)
+ - [Get Project Type](#get-project-type)
+ - [Get Project Version](#get-project-version)
+-- [Get Project Roles]()
++- [Get Project Roles](#get-project-roles)
++- [Get Project Role](#get-project-role)
+ 
+ ### Custom Field
+ - [Get All Field list](#get-all-field-list)
+@@ -491,7 +492,6 @@ try {
+ 
+ ```
+ 
+-
+ #### Get Project Roles
+ 
+ [See Jira API reference](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-project-roles/#api-rest-api-3-project-projectidorkey-role-get)
+@@ -515,6 +515,28 @@ try {
+ }
+ ```
+ 
++#### Get Project Role
++
++[See Jira API reference](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-project-roles/#api-rest-api-3-project-projectidorkey-role-id-get)
++
++```php
++<?php
++require 'vendor/autoload.php';
++
++use JiraCloud\Project\ProjectService;
++use JiraCloud\JiraException;
++
++try {
++    $projectService = new ProjectService();
++
++    // return project role data with reporter assigned. 
++    $ret = $projectService->getProjectRoles('TEST', '1'); 
++    	
++    var_dump($ret);
++} catch (JiraCloud\JiraException $e) {
++	print('Error Occurred! ' . $e->getMessage());
++}
++```
+ 
+ #### Get All Field List
+ 
+diff --git a/src/Project/ProjectService.php b/src/Project/ProjectService.php
+index 220f749..7041653 100644
+--- a/src/Project/ProjectService.php
++++ b/src/Project/ProjectService.php
+@@ -7,6 +7,7 @@
+ use JiraCloud\Issue\Reporter;
+ use JiraCloud\Issue\Version;
+ use JiraCloud\JiraException;
++use JiraCloud\Role\Role;
+ 
+ class ProjectService extends \JiraCloud\JiraClient
+ {
+@@ -411,4 +412,42 @@ public function getProjectRoles($projectIdOrKey)
+ 
+         return (array) json_decode($response);
+     }
++
++    /**
++     * @param $projectIdOrKey
++     * @param $roleId
++     *
++     * @throws JiraException
++     *
++     * @return Role
++     *
++     * STATUS 401 Returned if the user is not logged in.
++     * STATUS 404 - Returned if the project does not exist.
++     */
++    public function getProjectRole($projectIdOrKey, $roleId, $excludeInactiveUsers = false)
++    {
++        $response = $this->exec($this->uri.'/'.$projectIdOrKey.'/role/'.$roleId.'?excludeInactiveUsers='.$excludeInactiveUsers);
++
++        $this->log->info('getProjectRole Result='.$response);
++
++        $reporters = array_map(
++            function ($elem) {
++                $reporter = $this->json_mapper->map($elem, new Reporter());
++                $reporter->accountId = $elem->actorUser->accountId;
++
++                return $reporter;
++            },
++            array_filter(json_decode($response)->actors, function ($elem) {
++                return $elem->type === "atlassian-user-role-actor";
++            }),
++        );
++
++        $role = $this->json_mapper->map(
++            json_decode($response),
++            new Role()
++        );
++        $role->actors = $reporters;
++
++        return $role;
++    }
+ }
+diff --git a/src/Role/Role.php b/src/Role/Role.php
+new file mode 100644
+index 0000000..011f716
+--- /dev/null
++++ b/src/Role/Role.php
+@@ -0,0 +1,19 @@
++<?php
++
++namespace JiraCloud\Role;
++
++use JiraCloud\ClassSerialize;
++use JiraCloud\Issue\Reporter;
++
++class Role
++{
++    use ClassSerialize;
++
++    public string $name;
++    public int $id;
++    public string $description;
++    public string $self;
++
++    public array $actors;
++
++}
+diff --git a/tests/ProjectTest.php b/tests/ProjectTest.php
+index 2ccca4f..0cf2203 100644
+--- a/tests/ProjectTest.php
++++ b/tests/ProjectTest.php
+@@ -7,6 +7,7 @@
+ use JiraCloud\JiraException;
+ use JiraCloud\Project\Project;
+ use JiraCloud\Project\ProjectType;
++use JiraCloud\Role\Role;
+ use PHPUnit\Framework\TestCase;
+ use JiraCloud\Project\ProjectService;
+ 
+@@ -207,7 +208,7 @@ public function get_unknown_project_type_expect_to_JiraException(string $projKey
+      * @test
+      * @depends get_project_lists
+      */
+-    public function get_project_roles_array(string $projKey): string
++    public function get_project_roles_array(string $projKey): array
+     {
+         try {
+             $projectService = new ProjectService();
+@@ -215,10 +216,41 @@ public function get_project_roles_array(string $projKey): string
+             $roles = $projectService->getProjectRoles($projKey);
+ 
+             $this->assertIsArray($roles);
++
++            $parts = explode('/', rtrim(array_shift($roles), '/'));
++            $roleId = end($parts);
+         } catch (JiraException $e) {
+             $this->fail('get_project_roles_array ' . $e->getMessage());
+         }
+ 
+-        return $projKey;
++        return ['projKey' => 'JUL', 'roleId' => $roleId];
++    }
++
++    /**
++     * @test
++     * @depends get_project_roles_array
++     * @param array<string, string> $datas
++     *      projKey: project key
++     *      roleId: role id
++     *
++     * @return string
++     * @throws \JsonMapper_Exception
++     */
++    public function get_project_role(array $datas): string
++    {
++        try {
++            $projectService = new ProjectService();
++
++            $role = $projectService->getProjectRole($datas['projKey'], $datas['roleId'], true);
++
++            self::assertInstanceOf(Role::class, $role);
++            self::assertIsString($role->name);
++            self::assertIsString($role->description);
++            self::assertIsInt($role->id);
++        } catch (JiraException $e) {
++            $this->fail('get_project_role ' . $e->getMessage());
++        }
++
++        return '$projKey';
+     }
+ }
 
-      #suggestions {
-        margin-top: 35px;
-        color: #ccc;
-      }
-      #suggestions a {
-        color: #666666;
-        font-weight: 200;
-        font-size: 14px;
-        margin: 0 10px;
-      }
+From 9fa4b06da78e9a5b41d78f34af08253850997393 Mon Sep 17 00:00:00 2001
+From: Romain MILLAN <rmillan@spiriit.com>
+Date: Tue, 13 May 2025 13:00:55 +0200
+Subject: [PATCH 3/3] fix: Fix StyleCI
 
-    </style>
-  </head>
-  <body>
+---
+ src/Project/ProjectService.php | 2 +-
+ src/Role/Role.php              | 3 ---
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-    <div class="container">
-
-      <h1>Whoa there!</h1>
-      <p>You have exceeded a secondary rate limit.<br><br>
-        Please wait a few minutes before you try again;<br>
-        in some cases this may take up to an hour.
-      </p>
-      <div id="suggestions">
-        <a href="https://support.github.com/contact">Contact Support</a> &mdash;
-        <a href="https://githubstatus.com">GitHub Status</a> &mdash;
-        <a href="https://twitter.com/githubstatus">@githubstatus</a>
-      </div>
-
-      <a href="/" class="logo logo-img-1x">
-        <img width="32" height="32" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFMTZCRDY3REIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFMTZCRDY3RUIzRjAxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdCQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjdDQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+SM9MCAAAA+5JREFUeNrEV11Ik1EY3s4+ddOp29Q5b0opCgKFsoKoi5Kg6CIhuwi6zLJLoYLopq4qsKKgi4i6CYIoU/q5iDAKs6syoS76IRWtyJ+p7cdt7sf1PGOD+e0c3dygAx/67ZzzPM95/877GYdHRg3ZjMXFxepQKNS6sLCwJxqNNuFpiMfjVs4ZjUa/pmmjeD6VlJS8NpvNT4QQ7mxwjSsJiEQim/1+/9lgMHgIr5ohuxG1WCw9Vqv1clFR0dCqBODElV6v90ogEDjGdYbVjXhpaendioqK07CIR7ZAqE49PT09BPL2PMgTByQGsYiZlQD4uMXtdr+JxWINhgINYhGT2MsKgMrm2dnZXgRXhaHAg5jEJodUAHxux4LudHJE9RdEdA+i3Juz7bGHe4mhE9FNrgwBCLirMFV9Okh5eflFh8PR5nK5nDabrR2BNJlKO0T35+Li4n4+/J+/JQCxhmu5h3uJoXNHPbmWZAHMshWB8l5/ipqammaAf0zPDDx1ONV3vurdidqwAQL+pEc8sLcAe1CCvQ3YHxIW8Pl85xSWNC1hADDIv0rIE/o4J0k3kww4xSlwIhcq3EFFOm7KN/hUGOQkt0CFa5WpNJlMvxBEz/IVQAxg/ZRZl9wiHA63yDYieM7DnLP5CiAGsC7I5sgtYKJGWe2A8seFqgFJrJjEPY1Cn3pJ8/9W1e5VWsFDTEmFrBcoDhZJEQkXuhICMyKpjhahqN21hRYATKfUOlDmkygrR4o4C0VOLGJKrOITKB4jijzdXygBKixyC5TDQdnk/Pz8qRw6oOWGlsTKGOQW6OH6FBWsyePxdOXLTgxiyebILZCjz+GLgMIKnXNzc49YMlcRdHXcSwxFVgTInQhC9G33UhNoJLuqq6t345p9y3eUy8OTk5PjAHuI9uo4b07FBaOhsu0A4Unc+T1TU1Nj3KsSSE5yJ65jqF2DDd8QqWYmAZrIM2VlZTdnZmb6AbpdV9V6ec9znf5Q7HjYumdRE0JOp3MjitO4SFa+cZz8Umqe3TCbSLvdfkR/kWDdNQl5InuTcysOcpFT35ZrbBxx4p3JAHlZVVW1D/634VRt+FvLBgK/v5LV9WS+10xMTEwtRw7XvqOL+e2Q8V3AYIOIAXQ26/heWVnZCVfcyKHg2CBgTpmPmjYM8l24GyaUHyaIh7XwfR9ErE8qHoDfn2LTNAVC0HX6MFcBIP8Bi+6F6cdW/DICkANRfx99fEYFQ7Nph5i/uQiA214gno7K+guhaiKg9gC62+M8eR7XsBsYJ4ilam60Fb7r7uAj8wFyuwM1oIOWgfmDy6RXEEQzJMPe23DXrVS7rtyD3Df8z/FPgAEAzWU5Ku59ZAUAAAAASUVORK5CYII=">
-      </a>
-
-      <a href="/" class="logo logo-img-2x">
-        <img width="32" height="32" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpEQUM1QkUxRUI0MUMxMUUyQUQzREIxQzRENUFFNUM5NiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpEQUM1QkUxRkI0MUMxMUUyQUQzREIxQzRENUFFNUM5NiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkUxNkJENjdGQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkUxNkJENjgwQjNGMDExRTJBRDNEQjFDNEQ1QUU1Qzk2Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+hfPRaQAAB6lJREFUeNrsW2mM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">
-      </a>
-    </div>
-  </body>
-</html>
+diff --git a/src/Project/ProjectService.php b/src/Project/ProjectService.php
+index 7041653..c385dbd 100644
+--- a/src/Project/ProjectService.php
++++ b/src/Project/ProjectService.php
+@@ -438,7 +438,7 @@ function ($elem) {
+                 return $reporter;
+             },
+             array_filter(json_decode($response)->actors, function ($elem) {
+-                return $elem->type === "atlassian-user-role-actor";
++                return $elem->type === 'atlassian-user-role-actor';
+             }),
+         );
+ 
+diff --git a/src/Role/Role.php b/src/Role/Role.php
+index 011f716..e7f08b5 100644
+--- a/src/Role/Role.php
++++ b/src/Role/Role.php
+@@ -3,7 +3,6 @@
+ namespace JiraCloud\Role;
+ 
+ use JiraCloud\ClassSerialize;
+-use JiraCloud\Issue\Reporter;
+ 
+ class Role
+ {
+@@ -13,7 +12,5 @@ class Role
+     public int $id;
+     public string $description;
+     public string $self;
+-
+     public array $actors;
+-
+ }
