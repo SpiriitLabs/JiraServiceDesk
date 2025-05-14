@@ -36,7 +36,8 @@ class CreateController extends AbstractController
                 if ($exception->getPrevious() instanceof ProjectAlreadyExistException) {
                     $this->addFlash(
                         type: 'danger',
-                        message: $exception->getPrevious()->getMessage(),
+                        message: $exception->getPrevious()
+                            ->getMessage(),
                     );
 
                     return $this->redirectToRoute(RouteCollection::CREATE->prefixed());
