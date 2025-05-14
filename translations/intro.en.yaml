@@ -1,0 +1,19 @@
+introduction:
+  title: "JiraServiceDesk - Introduction"
+  description: "Welcome to your new ticket management tool. With this interface, you can easily access all the tickets related to your projects."
+
+how_to_use:
+  title: "Usage Tips"
+  locale: "Allows you to change the interface language. Please note that ticket content remains in its original language."
+  theme: "Customize the application's appearance. Automatic mode is enabled by default, but you can choose another option from your profile."
+
+menu:
+  title: "Navigation"
+  project: "Access your list of projects to view details and explore the associated Kanban boards."
+  issue: "View all project tickets and apply filters to refine your search."
+  profil: "From your user profile, adjust preferences such as language, theme, and notifications for ticket creation or updates."
+
+dashboard:
+  title: "Dashboard"
+  favorites_and_projects: "View your list of favorites and the projects assigned to you."
+  assignee_issues: "Here you'll find all tickets assigned to you, along with their reference keys and relevant information to help manage them efficiently."
