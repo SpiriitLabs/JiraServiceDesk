@@ -16,19 +16,11 @@
 ] %}
 
 {% block action %}
-    {% if app.user.hasFavoriteByCode(entity.jiraKey ~ '-board-' ~ boardId) %}
-        <twig:app:favorite:remove_from_favorite
-            code="{{ entity.jiraKey }}-board-{{ boardId }}"
-            name="{{ 'project.board.label'|trans}} {{ entity.name }}"
-            link="{{ absolute_url(path('app_project_board_view', {idProject: entity.id, idBoard: boardId})) }}"
-        />
-    {% else %}
-        <twig:app:favorite:add_to_favorite
-            code="{{ entity.jiraKey }}-board-{{ boardId }}"
-            name="{{ 'project.board.label'|trans}} {{ entity.name }}"
-            link="{{ absolute_url(path('app_project_board_view', {idProject: entity.id, idBoard: boardId})) }}"
-        />
-    {% endif %}
+    <twig:app:favorite:favorite
+        code="{{ entity.jiraKey }}-board-{{ boardId }}"
+        name="{{ 'project.board.label'|trans}} {{ entity.name }}"
+        link="{{ absolute_url(path('app_project_board_view', {idProject: entity.id, idBoard: boardId})) }}"
+    />
 {% endblock %}
 
 {% block content %}
