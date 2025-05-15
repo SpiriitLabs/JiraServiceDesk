@@ -22,6 +22,7 @@ class RoutingExtension extends AbstractExtension
         return [
             new TwigFunction('current_path', fn () => $this->getRoutePathFromRequest()),
             new TwigFunction('current_route', fn () => $this->getRouteFromRequest()),
+            new TwigFunction('referer_url', fn () => $this->getRefererUrl()),
         ];
     }
 
@@ -29,7 +30,7 @@ class RoutingExtension extends AbstractExtension
     {
         $request = $this->requestStack->getMainRequest();
 
-        return $request?->attributes->get('_route') ?? 'admin_dashboard';
+        return $request?->attributes->get('_route') ?? 'app_dashboard';
     }
 
     private function getRoutePathFromRequest(): string
@@ -41,5 +42,12 @@ class RoutingExtension extends AbstractExtension
         $currentRouteParams = $request?->attributes->get('_route_params') ?? [];
 
         return $this->urlGenerator->generate($currentRoute, $currentRouteParams);
+    }
+
+    private function getRefererUrl(): string
+    {
+        $request = $this->requestStack->getMainRequest();
+
+        return $request?->headers?->get('referer') ?? 'app_dashboard';
     }
 }

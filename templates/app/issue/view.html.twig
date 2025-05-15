@@ -14,24 +14,16 @@
 ] %}
 
 {% block action %}
-    <a href="{{ refererUrl }}" class="btn btn-outline-secondary">
+    <a href="{{ referer_rul() }}" class="btn btn-outline-secondary">
         <i class="mdi mdi-keyboard-return"></i>
         {{ 'action.return'|trans }}
     </a>
 
-    {% if app.user.hasFavoriteByCode('issue-' ~ key) %}
-        <twig:app:favorite:remove_from_favorite
+    <twig:app:favorite:favorite
             code="issue-{{ key }}"
             name="{{ 'issue.label'|trans}} #{{ key }}"
             link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
-        />
-    {% else %}
-        <twig:app:favorite:add_to_favorite
-            code="issue-{{ key }}"
-            name="{{ 'issue.label'|trans}} #{{ key }}"
-            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
-        />
-    {% endif %}
+    />
 {% endblock %}
 
 {% block content %}
