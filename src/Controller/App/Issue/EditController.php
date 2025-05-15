@@ -58,7 +58,7 @@ class EditController extends AbstractController
         $project = $this->projectRepository->findOneBy([
             'jiraKey' => $issue->fields->project->key,
         ]);
-        $assignableUsers = $this->handle(new GetIssueAssignableUsers($issue, $project));
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
 
         if ($project == null) {
             $this->addFlash(

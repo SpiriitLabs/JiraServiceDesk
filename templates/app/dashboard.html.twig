@@ -4,51 +4,56 @@
 {% block pageTitle 'dashboard.welcome'|trans({'%name%': app.user.fullName}) %}
 
 {% block content %}
-	{% if projects|length > 0 or app.user.favorites|length > 0 %}
-		<div class="row pb-5">
-			<h3>Vos favoris et vos projets</h3>
-			{% for favorite in app.user.favorites %}
-				{# @var favorite \Entity\Favorite #}
+	<section {{ stimulus_controller('intro', {hasCompletedIntroduction: app.user.hasCompletedIntroduction, apiUrl: absolute_url(path('app_api_introduction_check', {id: app.user.id}))}) }} data-title="{{ 'introduction.title'|trans(domain: 'intro') }}" data-intro="{{ 'introduction.description'|trans(domain: 'intro') }}" data-step="1">
+		{% if projects|length > 0 or app.user.favorites|length > 0 %}
+			<div class="row pb-5" data-title="Dashboard" data-title='{{ 'dashboard.title'|trans(domain: 'intro') }}' data-intro="{{ 'dashboard.favorites_and_projects'|trans(domain: 'intro') }}" data-step="7">
+				<h3>Vos favoris et vos projets</h3>
+				{% for favorite in app.user.favorites %}
+					{# @var favorite \Entity\Favorite #}
 
-				<div class="col-md-6 col-xxl-3">
-					<div class="card d-block">
-						<div class="card-body">
-							<h4 class="mt-0">
-								<a href="{{ favorite.link }}" class="text-title">{{ favorite.name }}
-									<i class="mdi mdi-share-all"></i>
-								</a>
-							</h4>
-							<div class="badge bg-secondary">FAVORITE
-								<i class="uil-favorite"></i>
+					<div class="col-md-6 col-xxl-3">
+						<div class="card d-block">
+							<div class="card-body">
+								<h4 class="mt-0">
+									<a href="{{ favorite.link }}" class="text-title">{{ favorite.name }}
+										<i class="mdi mdi-share-all"></i>
+									</a>
+								</h4>
+								<div class="badge bg-secondary">FAVORITE
+									<i class="uil-favorite"></i>
+								</div>
+
 							</div>
-
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
 
-			{% for project in projects %}
-				{# @var project \Entity\Project #}
+				{% for project in projects %}
+					{# @var project \Entity\Project #}
 
-				<div class="col-md-6 col-xxl-3">
-					<div class="card d-block">
-						<div class="card-body">
-							<h4 class="mt-0">
-								<a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }}
-									<i class="mdi mdi-share-all"></i>
-								</a>
-							</h4>
-							<div class="badge bg-secondary">{{ project.jiraKey }}</div>
+					<div class="col-md-6 col-xxl-3">
+						<div class="card d-block">
+							<div class="card-body">
+								<h4 class="mt-0">
+									<a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="text-title">{{ project.name }}
+										<i class="mdi mdi-share-all"></i>
+									</a>
+								</h4>
+								<div class="badge bg-secondary">{{ project.jiraKey }}</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			</div>
+		{% endif %}
+
+		<div data-title="Ticket(s)" data-title='{{ 'dashboard.title'|trans(domain: 'intro') }}' data-intro="{{ 'dashboard.assignee_issues'|trans(domain: 'intro') }}" data-step="8">
+			<h3>Vos ticket assignée</h3>
+
+			{% include 'app/issue/_list_content.html.twig' with {
+				searchIssuesResult: searchIssuesResult,
+				hasPagination: "false",
+			} %}
 		</div>
-	{% endif %}
-
-	<h3>Vos ticket assignée</h3>
-	{% include 'app/issue/_list_content.html.twig' with {
-        searchIssuesResult: searchIssuesResult,
-        hasPagination: "false",
-    } %}
+	</section>
 {% endblock %}

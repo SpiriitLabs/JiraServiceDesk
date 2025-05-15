@@ -36,6 +36,11 @@
         <div class="d-flex flex-column flex-md-row gap-md-5">
 
             <div>
+                <p class="mt-2 mb-1 text-muted fw-bold font-12 text-uppercase">{{ 'issue.jiraKey.label'|trans }}</p>
+                <div class="d-flex">{{ issue.key }}</div>
+            </div>
+
+            <div>
                 <p class="mt-2 mb-1 text-muted fw-bold font-12 text-uppercase">{{ 'issue.assignee.label'|trans }}</p>
                 <div class="d-flex">
                     <twig:app:issue:assignee

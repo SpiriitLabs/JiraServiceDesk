@@ -26,7 +26,7 @@ class EditIssueHandler
         $jiraIssueType = new IssueType();
         $jiraIssueType->id = $command->type->jiraId;
 
-        $issueField = new IssueField()
+        $issueField = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)

@@ -26,7 +26,7 @@
 
 		<ul class="topbar-menu d-flex align-items-center gap-3">
 
-			<li class="dropdown">
+			<li class="dropdown" data-title="{{ 'how_to_use.title'|trans(domain: 'intro') }}" data-intro="{{ 'how_to_use.locale'|trans(domain: 'intro') }}" data-step="2">
 				<a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 					<img src="{{ asset('build/static/images/locale/'~app.locale~'.jpg') }}" alt="user-image" class="me-0 me-sm-1" height="12">
 					<span class="align-middle d-none d-lg-inline-block">{{ app.locale == 'fr' ? 'locale.fr'|trans : 'locale.en'|trans }}</span>
@@ -49,7 +49,7 @@
 				</div>
 			</li>
 
-			<li class="d-sm-inline-block">
+			<li class="d-sm-inline-block" data-title="{{ 'how_to_use.title'|trans(domain: 'intro') }}" data-intro="{{ 'how_to_use.theme'|trans(domain: 'intro') }}" data-step="3">
 				<a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
 					<div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
 						<i class="ri-moon-line font-22"></i>
@@ -97,6 +97,11 @@
 							<span>{{ 'dashboard.admin'|trans }}</span>
 						</a>
 					{% endif %}
+
+					<a href="{{ path('app_introduction_restart', {id: app.user.id}) }}" class="dropdown-item">
+						<i class="mdi mdi-restart"></i>
+						<span>{{ 'header.dropdown.restart_introduction'|trans }}</span>
+					</a>
 				</div>
 			</li>
 		</ul>

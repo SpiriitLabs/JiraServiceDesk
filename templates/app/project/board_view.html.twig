@@ -16,6 +16,11 @@
 ] %}
 
 {% block action %}
+    <a href="{{ referer_url() }}" class="btn btn-outline-secondary">
+        <i class="mdi mdi-keyboard-return"></i>
+        {{ 'action.return'|trans }}
+    </a>
+
     <twig:app:favorite:favorite
         code="{{ entity.jiraKey }}-board-{{ boardId }}"
         name="{{ 'project.board.label'|trans}} {{ entity.name }}"

@@ -8,6 +8,7 @@ use App\Message\Command\App\Issue\AbstractIssueDTO;
 use App\Repository\IssueTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,6 +44,10 @@ class AbstractIssueFormType extends AbstractType
                     $priority->description
                 ),
             ])
+            ->add('assignee', ChoiceType::class, [
+                'required' => true,
+                'choices' => $options['assignees'],
+            ])
         ;
     }
 
@@ -53,6 +58,7 @@ class AbstractIssueFormType extends AbstractType
             'translation_domain' => 'app',
             'label_format' => 'issue.%name%.label',
             'projectId' => null,
+            'assignees' => [],
         ]);
     }
 }

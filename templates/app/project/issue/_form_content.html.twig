@@ -5,7 +5,7 @@
         {{ form_row(form.summary) }}
     </div>
     <div class="col-md-6">
-        {{ form_row(form.attachments) }}
+        {{ form_row(form.project) }}
     </div>
 </div>
 
@@ -19,10 +19,20 @@
 </div>
 
 <div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.assignee) }}
+    </div>
+</div>
+
+<div class="row">
     {{ form_row(form.description, {
         row_attr: {
             class: 'mb-0'
         }
     }) }}
-    <p class="mb-0 text-muted">{{ 'issue.description.notice'|trans }}</p>
+    <p class="text-muted">{{ 'issue.description.notice'|trans }}</p>
+</div>
+
+<div class="row">
+    {{ form_row(form.attachments) }}
 </div>

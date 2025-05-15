@@ -2,12 +2,13 @@
 
 namespace App\Controller\App\Project\Issue;
 
-use App\Controller\App\Project\RouteCollection as AppProjectRouteCollection;
+use App\Controller\App\Issue\RouteCollection as IssueRouteCollection;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
+use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
-    path: '/project/{projectKey}/issue/create',
+    path: '/project/{projectKey}/issues/create',
     name: RouteCollection::CREATE->value,
     methods: [Request::METHOD_GET, Request::METHOD_POST],
 )]
@@ -33,6 +34,8 @@ class CreateController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
+
         $form = $this->createForm(
             type: CreateIssueFormType::class,
             data: new CreateIssue(
@@ -40,7 +43,7 @@ class CreateController extends AbstractController
                 creator: $user,
             ),
             options: [
-                'projectId' => $project->getId(),
+                'assignees' => $assignableUsers,
             ]
         );
         $form->handleRequest($request);
@@ -55,9 +58,10 @@ class CreateController extends AbstractController
                 );
 
                 return $this->redirectToRoute(
-                    route: AppProjectRouteCollection::VIEW->prefixed(),
+                    route: IssueRouteCollection::VIEW->prefixed(),
                     parameters: [
-                        'key' => $project->jiraKey,
+                        'keyProject' => $project->jiraKey,
+                        'keyIssue' => $issue->key,
                     ]
                 );
             }
