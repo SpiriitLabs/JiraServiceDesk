@@ -33,6 +33,8 @@ flash:
     deleted: "L’élément a été supprimé avec succès."
     stopped: "L’élément a été arrêté avec succès."
     error: "Une erreur est survenue."
+    custom:
+        user_no_project: "Vous n'avez aucun projet(s) reliée à votre compte utilisateur."
 
 header:
     themeMode: "Mode d’affichage"

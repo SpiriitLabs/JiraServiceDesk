@@ -26,6 +26,24 @@ class CreateController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
+        if ($user->getProjects()->count() == 0) {
+            $this->addFlash(
+                type: 'warning',
+                message: 'flash.custom.user_no_project',
+            );
+
+            return $this->redirectToRoute(RouteCollection::LIST->prefixed());
+        }
+
+        if ($user->getProjects()->count() == 1) {
+            return $this->redirectToRoute(
+                route: IssueRouteCollection::CREATE->prefixed(),
+                parameters: [
+                    'projectKey' => $user->getProjects()->first()->jiraKey,
+                ],
+            );
+        }
+
         $form = $this->createForm(
             type: SelectProjectFormType::class,
             options: [
