@@ -24,6 +24,11 @@
             name="{{ 'issue.label'|trans}} #{{ key }}"
             link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
     />
+
+    <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="btn btn-secondary">
+        <i class="mdi mdi-pencil"></i>
+        {{ 'action.edit'|trans }}
+    </a>
 {% endblock %}
 
 {% block content %}
