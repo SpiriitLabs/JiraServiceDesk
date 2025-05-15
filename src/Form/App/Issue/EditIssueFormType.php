@@ -18,22 +18,18 @@ class EditIssueFormType extends AbstractIssueFormType
                 'required' => true,
                 'choices' => $options['transitions'],
             ])
-            ->add('assignee', ChoiceType::class, [
-                'required' => true,
-                'choices' => $options['assignees'],
-            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'data_class' => EditIssue::class,
             'translation_domain' => 'app',
             'label_format' => 'issue.%name%.label',
             'projectId' => null,
             'transitions' => [],
-            'assignees' => [],
         ]);
     }
 }

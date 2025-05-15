@@ -49,6 +49,12 @@ class CreateIssueHandler
             ->addLabelAsString('from-client')
         ;
 
+        if ($command->assignee !== 'null') {
+            $issue->setAssigneeAccountId($command->assignee);
+        } else {
+            $issue->setAssigneeToUnassigned();
+        }
+
         $jiraIssue = $this->issueRepository->create($issue);
 
         foreach ($command->attachments as $attachment) {

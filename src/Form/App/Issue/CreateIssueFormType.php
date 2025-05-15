@@ -34,7 +34,7 @@ class CreateIssueFormType extends AbstractIssueFormType
 
         $builder
             ->add('description', TextareaType::class, [
-                'required' => false,
+                'required' => true,
             ])
             ->add('attachments', FileType::class, [
                 'required' => false,
@@ -61,6 +61,7 @@ class CreateIssueFormType extends AbstractIssueFormType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'data_class' => CreateIssue::class,
             'translation_domain' => 'app',

@@ -11,6 +11,7 @@ class AbstractIssueDTO
         public string $summary,
         public ?Priority $priority = null,
         public ?IssueType $type = null,
+        public ?string $assignee = null,
     ) {
     }
 }

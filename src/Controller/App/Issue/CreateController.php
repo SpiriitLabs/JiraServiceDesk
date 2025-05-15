@@ -39,7 +39,9 @@ class CreateController extends AbstractController
             return $this->redirectToRoute(
                 route: IssueRouteCollection::CREATE->prefixed(),
                 parameters: [
-                    'projectKey' => $user->getProjects()->first()->jiraKey,
+                    'projectKey' => $user->getProjects()
+                        ->first()
+                        ->jiraKey,
                 ],
             );
         }
