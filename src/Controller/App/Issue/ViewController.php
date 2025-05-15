@@ -43,7 +43,6 @@ class ViewController extends AbstractController
             new GetCommentsIssue($keyIssue),
         );
         $project = $keyProject !== null ? $this->handle(new GetProjectByJiraKey(jiraKey: $keyProject)) : null;
-        $refererUrl = $request->headers->get('referer');
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);
@@ -71,7 +70,6 @@ class ViewController extends AbstractController
                 'project' => $project,
                 'comments' => $comments->comments,
                 'commentForm' => $form->createView(),
-                'refererUrl' => $refererUrl,
             ]
         );
     }

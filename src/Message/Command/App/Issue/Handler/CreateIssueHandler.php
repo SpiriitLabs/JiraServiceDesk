@@ -28,7 +28,7 @@ class CreateIssueHandler
     {
         $jiraIssueType = new IssueType();
         $jiraIssueType->id = $command->type->jiraId;
-        $description = new Document()
+        $description = (new Document())
             ->paragraph()
             ->text($command->description)
             ->break()
@@ -39,13 +39,13 @@ class CreateIssueHandler
             ->end()
         ;
 
-        $issue = new IssueField()
+        $issue = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
             ->setDescription(new AtlassianDocumentFormat($description))
-            ->setPriorityNameAsString($command->priority->value)
+            ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
 
