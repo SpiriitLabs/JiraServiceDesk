@@ -90,37 +90,10 @@
             </div>
         </div>
 
-        {% if issue.customAttachments|length > 0 %}
-            <div class="col-xxl-4 col-xl-5">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">{{ 'issue.attachment.label'|trans }}</h5>
-
-                        {% for attachment in issue.customAttachments %}
-                            <div class="card my-1 shadow-none border">
-                                <div class="p-2">
-                                    <div class="col align-items-center">
-                                        <img src="{{ attachment.thumbnailUrl }}" alt="">
-                                        <div class="row align-items-center justify-content-center">
-                                            <div class="col ps-2">
-                                                <a href="{{ attachment.url }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
-                                                <p class="mb-0 text-muted">{{ attachment.author }}</p>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a href="{{ attachment.url }}" target="_blank" class="btn btn-link btn-lg text-muted">
-                                                    <i class="ri-download-2-line"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+        <twig:Turbo:Frame
+            id="issue_view_attachments"
+            src="{{ path('app_issue_view_attachments_stream', {'keyIssue': issue.key}) }}"
+        >
+        </twig:Turbo:Frame>
     </div>
 {% endblock %}

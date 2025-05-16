@@ -19,5 +19,6 @@
         searchIssuesResult: searchIssuesResult,
         filterFormResetPath: path('app_issue_list'),
         filterForm: filterForm,
+        nextPageLink: searchIssuesResult.nextPageToken is not null ? path('app_issue_list', {page: searchIssuesResult.nextPageToken}) : null
     } %}
 {% endblock %}

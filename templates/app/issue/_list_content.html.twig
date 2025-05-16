@@ -1,8 +1,9 @@
-{% set hasPagination = hasPagination is defined ? hasPagination : true %}
+{% set nextPageLink = nextPageLink is defined ? nextPageLink : null %}
+
 <twig:list:data-list
     :datas="searchIssuesResult.issues"
     :totalDatas="searchIssuesResult.total"
-    :hasPagination="hasPagination"
+    :nextPageLink="nextPageLink"
 >
     {% trans_default_domain 'app' %}
 

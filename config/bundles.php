@@ -60,4 +60,7 @@ return [
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => [
         'all' => true,
     ],
+    Symfony\UX\Turbo\TurboBundle::class => [
+        'all' => true,
+    ],
 ];

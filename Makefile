@@ -95,6 +95,10 @@ db-diff: ## Generate a new migration
 db-migrate: ## Execute all not migrate migrations
 	@$(CONSOLE) doctrine:migration:migrate --no-interaction
 
+.PHONY: db-migrate
+db-migrate-prev: ## Revert the last migration
+	@$(CONSOLE) doctrine:migration:migrate 'prev' --no-interaction
+
 db-fixtures: ## Load fixtures
 	@$(CONSOLE) doctrine:fixtures:load -n --append
 
@@ -106,6 +110,10 @@ db-reset: ## Reset database and execute migrations
 	@$(CONSOLE) doctrine:database:create
 	@echo "🚚 Run all migrations."
 	@make db-migrate
+
+.PHONY: db-reload
+db-reload: ## Reset and run fixtures into database
+db-reload: db-reset db-fixtures
 
 .PHONY: db-import
 db-import: ## Reset database with given DUMP variable

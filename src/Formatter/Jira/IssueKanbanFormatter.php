@@ -2,6 +2,7 @@
 
 namespace App\Formatter\Jira;
 
+use App\Entity\Project;
 use JiraCloud\Board\BoardColumnConfig;
 use JiraCloud\Issue\Issue;
 
@@ -12,7 +13,7 @@ class IssueKanbanFormatter
      *
      * @return array<Issue>
      */
-    public function format(array $issues, ?BoardColumnConfig $columnsConfiguration = null): array
+    public function format(array $issues, Project $project, ?BoardColumnConfig $columnsConfiguration = null): array
     {
         $result = [
             'À faire' => [
@@ -21,13 +22,14 @@ class IssueKanbanFormatter
                 'max' => 0,
             ],
         ];
-        $result = $this->formatResult($columnsConfiguration);
+        $result = $this->formatResult($project, $columnsConfiguration);
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
             $result = $this->insertIssueInResult(
                 result: $result,
                 issue: $issue,
+                project: $project,
                 columnsConfiguration: $columnsConfiguration
             );
         }
@@ -35,7 +37,7 @@ class IssueKanbanFormatter
         return $result;
     }
 
-    private function formatResult(?BoardColumnConfig $columnsConfiguration = null): array
+    private function formatResult(Project $project, ?BoardColumnConfig $columnsConfiguration = null): array
     {
         $result = [];
         if ($columnsConfiguration === null) {
@@ -43,17 +45,22 @@ class IssueKanbanFormatter
         }
 
         foreach ($columnsConfiguration->columns as $columnConfiguration) {
-            $transitionId = null;
-            if (count($columnConfiguration->statuses) > 0) {
-                $transitionId = $columnConfiguration->statuses[0]->id;
-            }
+            $allBacklog = ! empty($columnConfiguration->statuses)
+                && array_reduce(
+                    $columnConfiguration->statuses,
+                    fn ($carry, $status) => $carry && in_array($status->id, $project->backlogStatusesIds, true),
+                    true
+                );
 
-            $result[$columnConfiguration->name] = [
-                'min' => $columnConfiguration->min,
-                'max' => $columnConfiguration->max,
-                'transitionId' => $transitionId,
-                'issues' => [],
-            ];
+            if (! $allBacklog) {
+                $transitionId = $columnConfiguration->statuses[0]->id ?? null;
+                $result[$columnConfiguration->name] = [
+                    'min' => $columnConfiguration->min,
+                    'max' => $columnConfiguration->max,
+                    'transitionId' => $transitionId,
+                    'issues' => [],
+                ];
+            }
         }
 
         return $result;
@@ -67,8 +74,13 @@ class IssueKanbanFormatter
     private function insertIssueInResult(
         array $result,
         Issue $issue,
+        Project $project,
         ?BoardColumnConfig $columnsConfiguration = null
     ): array {
+        if (in_array($issue->fields->status->id, $project->backlogStatusesIds)) {
+            return $result;
+        }
+
         if ($columnsConfiguration === null) {
             return $this->insertWithoutColumnConfig($result, $issue);
         }

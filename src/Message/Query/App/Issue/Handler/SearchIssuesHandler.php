@@ -64,6 +64,10 @@ class SearchIssuesHandler
             ;
         }
 
+        if ($query->filter !== null && count($query->filter->statusesIds) > 0) {
+            $jql->addInExpression('status', $query->filter->statusesIds);
+        }
+
         $issues_fields = [
             'id',
             'key',
