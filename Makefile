@@ -95,6 +95,10 @@ db-diff: ## Generate a new migration
 db-migrate: ## Execute all not migrate migrations
 	@$(CONSOLE) doctrine:migration:migrate --no-interaction
 
+.PHONY: db-migrate
+db-migrate-prev: ## Revert the last migration
+	@$(CONSOLE) doctrine:migration:migrate 'prev' --no-interaction
+
 db-fixtures: ## Load fixtures
 	@$(CONSOLE) doctrine:fixtures:load -n --append
 
