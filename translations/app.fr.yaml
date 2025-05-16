@@ -114,6 +114,8 @@ user:
         label: "Rôle(s)"
         role_admin: "Administrateur"
         role_user: "Utilisateur"
+        role_app_can_assignee: "[APPLICATION] Peux assignée"
+        role_app_can_view_backlog: "[APPLICATION] Peux voir le backlog des projets"
     preferedLocale:
         label: "Langue préférée"
     preferedTheme:

@@ -18,11 +18,13 @@
     </div>
 </div>
 
+{% if form.assignee is defined %}
 <div class="row">
     <div class="col-md-6">
         {{ form_row(form.assignee) }}
     </div>
 </div>
+{% endif %}
 
 <div class="row">
     {{ form_row(form.description, {

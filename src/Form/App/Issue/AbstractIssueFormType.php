@@ -4,9 +4,11 @@ namespace App\Form\App\Issue;
 
 use App\Entity\IssueType;
 use App\Entity\Priority;
+use App\Enum\User\Role;
 use App\Message\Command\App\Issue\AbstractIssueDTO;
 use App\Repository\IssueTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,6 +18,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AbstractIssueFormType extends AbstractType
 {
+    public function __construct(
+        private readonly Security $security,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -44,11 +51,16 @@ class AbstractIssueFormType extends AbstractType
                     $priority->description
                 ),
             ])
-            ->add('assignee', ChoiceType::class, [
-                'required' => true,
-                'choices' => $options['assignees'],
-            ])
         ;
+
+        if ($this->security->isGranted(Role::ROLE_APP_CAN_ASSIGNEE)) {
+            $builder
+                ->add('assignee', ChoiceType::class, [
+                    'required' => true,
+                    'choices' => $options['assignees'],
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

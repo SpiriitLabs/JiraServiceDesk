@@ -85,11 +85,13 @@
 
     </div>
 
-    <div class="row">
-        <twig:Turbo:Frame 
-            id="project_view_issues_status_backlog_container"
-            src="{{ path('app_project_issue_show_backlog_list', {'projectKey': entity.jiraKey}) }}"
-        >
-        </twig:Turbo:Frame>
-    </div>
+    {% if is_granted('ROLE_CAN_VIEW_BACKLOG') %}
+        <div class="row">
+            <twig:Turbo:Frame 
+                id="project_view_issues_status_backlog_container"
+                src="{{ path('app_project_issue_show_backlog_list', {'projectKey': entity.jiraKey}) }}"
+            >
+            </twig:Turbo:Frame>
+        </div>
+    {% endif %}
 {% endblock %}
