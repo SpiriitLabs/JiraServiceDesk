@@ -107,6 +107,10 @@ db-reset: ## Reset database and execute migrations
 	@echo "🚚 Run all migrations."
 	@make db-migrate
 
+.PHONY: db-reload
+db-reload: ## Reset and run fixtures into database
+db-reload: db-reset db-fixtures
+
 .PHONY: db-import
 db-import: ## Reset database with given DUMP variable
 	@:$(call check_defined, DUMP, sql file)
