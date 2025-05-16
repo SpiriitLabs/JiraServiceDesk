@@ -30,7 +30,10 @@ class ShowBacklogController extends AbstractController
         #[MapEntity(mapping: ['projectKey' => 'jiraKey'])] Project $project,
         Request $request,
     ): Response {
+        $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $page = $request->get('page', null);
+        $defaultSort = 'id';
+        $sort = $request->get('_sort', $defaultSort);
 
         $issueFilter = new IssueFilter(
             projects: [$project],
@@ -39,13 +42,15 @@ class ShowBacklogController extends AbstractController
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
+                sort: $sort,
                 pageToken: $page,
                 filter: $issueFilter,
+                maxIssuesResults: ($sort !== $defaultSort ? 1000 : SearchIssues::MAX_ISSUES_RESULTS),
             )
         );      
 
         return $this->render(
-            view: 'app/project/issue/show_backlog_list.html.twig', 
+            view: 'app/project/issue/show_backlog_list.stream.html.twig', 
             parameters: [
                 'searchIssuesResult' => $searchIssueResult,
                 'nextPage' => $searchIssueResult->nextPageToken,
@@ -78,10 +83,13 @@ class ShowBacklogController extends AbstractController
             )
         );
 
-        return $this->render('app/project/issue/show_backlog.stream.html.twig', [
-            'searchIssuesResult' => $result,
-            'project' => $project,
-        ]);
+        return $this->render(
+            view: 'app/project/issue/show_backlog.stream.html.twig',
+            parameters: [
+                'searchIssuesResult' => $result,
+                'project' => $project,
+            ]
+        );
     }
 
 

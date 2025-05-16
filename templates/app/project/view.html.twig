@@ -89,9 +89,9 @@
 
     </div>
 
-    <div class="row">
+    <div class="row" id="issues_backlog_list_container">
         <twig:Turbo:Frame 
-            id="issues_backlog_list_container"
+            id="issues_backlog_list_container_frame"
             src="{{ path('app_project_issue_show_backlog_list', {'projectKey': jiraProject.key}) }}"
         >
         </twig:Turbo:Frame>
