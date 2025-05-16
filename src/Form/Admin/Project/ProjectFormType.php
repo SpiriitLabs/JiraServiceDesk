@@ -52,6 +52,15 @@ class ProjectFormType extends AbstractType
                         'data-controller' => 'form-control select2',
                     ],
                 ])
+                ->add('backlogStatuses', ChoiceType::class, [
+                    'choices' => $options['statuses'],
+                    'multiple' => true,
+                    'required' => false,
+                    'autocomplete' => true,
+                    'attr' => [
+                        'data-controller' => 'form-control select2',
+                    ],
+                ])
             ;
         }
     }
@@ -65,6 +74,7 @@ class ProjectFormType extends AbstractType
             'editable' => false,
             'csrf_protection' => false,
             'roles' => [],
+            'statuses' => [],
         ]);
     }
 }

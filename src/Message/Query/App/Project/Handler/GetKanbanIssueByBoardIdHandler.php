@@ -46,6 +46,6 @@ readonly class GetKanbanIssueByBoardIdHandler
             ],
         );
 
-        return $this->formatter->format($boardIssues, $boardColumnConfiguration);
+        return $this->formatter->format($boardIssues, $query->project, $boardColumnConfiguration);
     }
 }

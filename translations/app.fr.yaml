@@ -152,6 +152,8 @@ project:
         label: "Responsable"
     assignableRolesIds:
         label: "Rôle(s) assignable(s)"
+    backlogStatuses:
+        label: "Status dans le backlog"
     category:
         label: "Catégorie"
     boards:
@@ -160,7 +162,7 @@ project:
         label: "Tableau"
     flashes:
         alreadyExist: "Cette clé de projet existe déjà."
-        created: "Le projet a été créé. Veuillez sélectionner les rôles des utilisateur pouvant être assignées dans les tickets."
+        created: "Le projet a été créé. Veuillez sélectionner les status du backlog ainsi que les rôles des utilisateur pouvant être assignées dans les tickets."
 
 issue:
     label: "Ticket(s)"

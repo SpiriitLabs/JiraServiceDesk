@@ -28,7 +28,7 @@ class BoardViewController extends AbstractController
         string $idBoard,
     ): Response {
         $kanbanIssuesFormatted = $this->handle(
-            new GetKanbanIssueByBoardId($idBoard),
+            new GetKanbanIssueByBoardId($project, $idBoard),
         );
 
         return $this->render(

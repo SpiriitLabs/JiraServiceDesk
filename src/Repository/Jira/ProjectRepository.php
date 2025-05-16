@@ -32,4 +32,13 @@ class ProjectRepository
             return [];
         }
     }
+
+    public function getStatuses(string $key): array
+    {
+        try {
+            return $this->service->getStatuses($key);
+        } catch (JiraException $jiraException) {
+            return [];
+        }
+    }
 }

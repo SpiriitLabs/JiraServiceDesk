@@ -9,6 +9,7 @@ class EditProject extends AbstractProjectDTO
     public function __construct(
         public Project $project,
         public array $assignableRolesIds = [],
+        public array $backlogStatuses = [],
     ) {
         parent::__construct(
             jiraKey: $this->project->jiraKey,
