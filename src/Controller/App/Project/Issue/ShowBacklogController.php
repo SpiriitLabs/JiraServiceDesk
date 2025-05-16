@@ -27,7 +27,10 @@ class ShowBacklogController extends AbstractController
         methods: [Request::METHOD_GET],
     )]
     public function list(
-        #[MapEntity(mapping: ['projectKey' => 'jiraKey'])] Project $project,
+        #[MapEntity(mapping: [
+            'projectKey' => 'jiraKey',
+        ])]
+        Project $project,
         Request $request,
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
@@ -47,14 +50,14 @@ class ShowBacklogController extends AbstractController
                 filter: $issueFilter,
                 maxIssuesResults: ($sort !== $defaultSort ? 1000 : SearchIssues::MAX_ISSUES_RESULTS),
             )
-        );      
+        );
 
         return $this->render(
-            view: 'app/project/issue/show_backlog_list.stream.html.twig', 
+            view: 'app/project/issue/show_backlog_list.stream.html.twig',
             parameters: [
                 'searchIssuesResult' => $searchIssueResult,
                 'nextPage' => $searchIssueResult->nextPageToken,
-                'project' => $project
+                'project' => $project,
             ]
         );
     }
@@ -65,7 +68,10 @@ class ShowBacklogController extends AbstractController
         methods: [Request::METHOD_GET],
     )]
     public function streamBacklog(
-        #[MapEntity(mapping: ['projectKey' => 'jiraKey'])] Project $project,
+        #[MapEntity(mapping: [
+            'projectKey' => 'jiraKey',
+        ])]
+        Project $project,
         Request $request
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
@@ -91,6 +97,4 @@ class ShowBacklogController extends AbstractController
             ]
         );
     }
-
-
 }
