@@ -55,7 +55,7 @@ class Project
     public array $assignableRolesIds = [];
 
     #[ORM\Column]
-    public array $backlogStatuses = [];
+    public array $backlogStatusesIds = [];
 
     public function __construct(
         string $name,

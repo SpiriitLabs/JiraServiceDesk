@@ -1,0 +1,16 @@
+<twig:Turbo:Stream:Append 
+    target="#issues_backlog_list_content"
+>
+    {% include 'app/project/issue/_show_backlog_issues_body.html.twig' with {
+        datas: searchIssuesResult.issues
+    } %}
+</twig:Turbo:Stream:Append>
+
+<twig:Turbo:Stream:Replace 
+    target="#pagination_container"
+>
+    {% include 'app/project/issue/_show_backlog_issues_pagination_next.html.twig' with {
+        projectKeyValue: project.jiraKey,
+        pageValue: searchIssuesResult.nextPageToken
+    } %}
+</twig:Turbo:Stream:Replace>

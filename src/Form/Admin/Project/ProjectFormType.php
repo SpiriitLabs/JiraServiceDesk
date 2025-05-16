@@ -52,7 +52,7 @@ class ProjectFormType extends AbstractType
                         'data-controller' => 'form-control select2',
                     ],
                 ])
-                ->add('backlogStatuses', ChoiceType::class, [
+                ->add('backlogStatusesIds', ChoiceType::class, [
                     'choices' => $options['statuses'],
                     'multiple' => true,
                     'required' => false,

@@ -138,6 +138,7 @@ project:
     title:
         create: "Création d’un projet depuis Jira"
         edit: "Modification du projet '%key%'"
+        backlogIssues: "Ticket(s) dans le backlog"
     name:
         label: "Nom"
     jiraKey:
@@ -152,7 +153,7 @@ project:
         label: "Responsable"
     assignableRolesIds:
         label: "Rôle(s) assignable(s)"
-    backlogStatuses:
+    backlogStatusesIds:
         label: "Status dans le backlog"
     category:
         label: "Catégorie"

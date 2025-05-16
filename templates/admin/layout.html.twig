@@ -20,7 +20,7 @@
         {% block notifications '' %}
     {% endblock %}
 </head>
-<body {{ stimulus_controller('theme') }} id="body">
+<body {{ stimulus_controller('theme') }} id="body" {% block turbo %}data-turbo="false"{% endblock %}>
     <div class="toast-container position-fixed bottom-0 end-0 p-3" {{ stimulus_controller('flash') }} id="toastsNotifications">
         {% for type, messages in app.flashes %}
             {% for message in messages %}

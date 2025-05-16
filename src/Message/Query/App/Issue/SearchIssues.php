@@ -13,7 +13,7 @@ class SearchIssues
     public SortParams $sort;
 
     public function __construct(
-        string $sort,
+        string $sort = 'id',
         public ?User $user = null,
         public bool $onlyUserAssigned = false,
         public ?IssueFilter $filter = null,

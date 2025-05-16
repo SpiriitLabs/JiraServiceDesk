@@ -48,7 +48,7 @@ class IssueKanbanFormatter
             $allBacklog = ! empty($columnConfiguration->statuses)
                 && array_reduce(
                     $columnConfiguration->statuses,
-                    fn ($carry, $status) => $carry && in_array($status->id, $project->backlogStatuses, true),
+                    fn ($carry, $status) => $carry && in_array($status->id, $project->backlogStatusesIds, true),
                     true
                 );
 
@@ -77,7 +77,7 @@ class IssueKanbanFormatter
         Project $project,
         ?BoardColumnConfig $columnsConfiguration = null
     ): array {
-        if (in_array($issue->fields->status->id, $project->backlogStatuses)) {
+        if (in_array($issue->fields->status->id, $project->backlogStatusesIds)) {
             return $result;
         }
 
