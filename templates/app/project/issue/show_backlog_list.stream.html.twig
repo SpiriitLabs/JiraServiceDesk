@@ -1,11 +1,11 @@
 <twig:Turbo:Stream:Replace 
-    target="#issues_backlog_list_container"
+    target="#issues_backlog_list_container_frame"
 >
     {% trans_default_domain 'app' %}
     {% set datas = searchIssuesResult.issues %}
     {% set totalDatas = searchIssuesResult.total %}
 
-    <div class="card" id="issues_backlog_list_container">
+    <div class="card" id="issues_backlog_list_container_frame">
         <div class="card-header">
             <h4>{{ 'project.title.backlogIssues'|trans }}</h4>
         </div>

@@ -1,0 +1,39 @@
+<twig:Turbo:Stream:Replace 
+    target="#project_view_content"
+>
+    {% trans_default_domain 'app' %}
+    
+    <div class="card d-block">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="mt-0">{{ project.name }}</h3>
+            </div>
+            <div class="badge text-bg-secondary mb-3">{{ project.jiraKey }}</div>
+
+            {% if project.description is not null and project.description is not same as '' %}
+                <h5>{{ 'project.description.label'|trans }}:</h5>
+
+                <p class="text-muted mb-2">
+                    {{ project.description }}
+                </p>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <h5>{{ 'project.lead.label'|trans }}</h5>
+                        <p>{{ jiraProject.lead.displayName }}</p>
+                    </div>
+                </div>
+                {% if jiraProject.projectCategory is defined and jiraProject.projectCategory is not null %}
+                    <div class="col-md-4">
+                        <div class="mb-4">
+                            <h5>{{ 'project.category.label'|trans }}</h5>
+                            <p>{{ jiraProject.projectCategory.name }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</twig:Turbo:Stream:Replace>

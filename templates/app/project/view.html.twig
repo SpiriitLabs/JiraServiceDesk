@@ -24,75 +24,71 @@
     <div class="row justify-content-between">
 
         <div class="col-md-6">
-            <div class="card d-block">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h3 class="mt-0">{{ entity.name }}</h3>
-                    </div>
-                    <div class="badge text-bg-secondary mb-3">{{ entity.jiraKey }}</div>
+            <twig:Turbo:Frame 
+                id="project_view_content"
+                src="{{ path('app_project_stream_view', {'projectKey': entity.jiraKey}) }}"
+            >
+                {% trans_default_domain 'app' %}
 
-                    {% if entity.description is not null and entity.description is not same as '' %}
-                        <h5>{{ 'project.description.label'|trans }}:</h5>
-
-                        <p class="text-muted mb-2">
-                            {{ entity.description }}
-                        </p>
-                    {% endif %}
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-4">
-                                <h5>{{ 'project.lead.label'|trans }}</h5>
-                                <p>{{ jiraProject.lead.displayName }}</p>
-                            </div>
+                <div class="card d-block">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h3 class="mt-0 placeholder-wave"><span class="placeholder col-4"></span></h3>
                         </div>
-                        {% if jiraProject.projectCategory is defined and jiraProject.projectCategory is not null %}
+                        <div class="badge text-bg-secondary mb-3 placeholder-wave"><span class="placeholder col-2"></span></div>
+
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="mb-4">
-                                    <h5>{{ 'project.category.label'|trans }}</h5>
-                                    <p>{{ jiraProject.projectCategory.name }}</p>
+                                    <h5>{{ 'project.lead.label'|trans }}</h5>
+                                    <p class="placeholder-wave"><span class="placeholder col-12"></span></p>
                                 </div>
                             </div>
-                        {% endif %}
+                        </div>
                     </div>
                 </div>
-            </div>
+            </twig:Turbo:Frame>
         </div>
 
         <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">{{ 'project.boards.label'|trans }}</h5>
+            <twig:Turbo:Frame 
+                id="project_view_board_list"
+                src="{{ path('app_project_board_stream_list', {'projectKey': entity.jiraKey}) }}"
+            >
+                {% trans_default_domain 'app' %}
 
-                    {% for board in boards %}
-                        {% if false == board.isPrivate %}
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ 'project.boards.label'|trans }}</h5>
+
+                        {% for _ in 1..2 %}
                             <div class="card mb-1 shadow-none border">
                                 <div class="p-0 px-2">
                                     <div class="row align-items-center">
                                         <div class="col ps-2">
-                                            <a href="{{ path('app_project_board_view', {idProject: entity.id, idBoard: board.id}) }}" class="text-muted fw-bold">{{ board.name }}</a>
+                                            <p class="placeholder-wave text-muted fw-bold"><span class="placeholder col-12"></span></a>
                                         </div>
                                         <div class="col-auto">
-                                            <a href="{{ path('app_project_board_view', {idProject: entity.id, idBoard: board.id}) }}" class="btn btn-link btn-lg text-muted">
+                                            <a href="#" class="btn btn-link btn-lg text-muted placeholder-wave">
                                                 <i class="ri-shape-2-fill"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
 
+                    </div>
                 </div>
-            </div>
+            </twig:Turbo:Frame>
         </div>
 
     </div>
 
-    <div class="row" id="issues_backlog_list_container">
+    <div class="row">
         <twig:Turbo:Frame 
             id="issues_backlog_list_container_frame"
-            src="{{ path('app_project_issue_show_backlog_list', {'projectKey': jiraProject.key}) }}"
+            src="{{ path('app_project_issue_show_backlog_list', {'projectKey': entity.jiraKey}) }}"
         >
         </twig:Turbo:Frame>
     </div>

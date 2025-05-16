@@ -1,0 +1,29 @@
+<twig:Turbo:Stream:Replace 
+    target="#project_view_board_list"
+>
+    {% trans_default_domain 'app' %}
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mb-3">{{ 'project.boards.label'|trans }}</h5>
+
+            {% for board in boards %}
+                <div class="card mb-1 shadow-none border">
+                    <div class="p-0 px-2">
+                        <div class="row align-items-center">
+                            <div class="col ps-2">
+                                <a href="{{ path('app_project_board_view', {idProject: project.id, idBoard: board.id}) }}" class="text-muted fw-bold">{{ board.name }}</a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{{ path('app_project_board_view', {idProject: project.id, idBoard: board.id}) }}" class="btn btn-link btn-lg text-muted">
+                                    <i class="ri-shape-2-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</twig:Turbo:Stream:Replace>
