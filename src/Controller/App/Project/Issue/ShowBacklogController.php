@@ -52,8 +52,9 @@ class ShowBacklogController extends AbstractController
             )
         );
 
-        return $this->render(
-            view: 'app/project/issue/show_backlog_list.stream.html.twig',
+        return $this->renderBlock(
+            view: 'app/project/issue/project_view_issues_backlog.stream.html.twig',
+            block: 'list',
             parameters: [
                 'searchIssuesResult' => $searchIssueResult,
                 'nextPage' => $searchIssueResult->nextPageToken,
@@ -63,8 +64,8 @@ class ShowBacklogController extends AbstractController
     }
 
     #[Route(
-        path: '/stream',
-        name: RouteCollection::SHOW_BACKLOG_STREAM->value,
+        path: '/list/next',
+        name: RouteCollection::SHOW_BACKLOG_LIST_NEXT->value,
         methods: [Request::METHOD_GET],
     )]
     public function streamBacklog(
@@ -77,20 +78,19 @@ class ShowBacklogController extends AbstractController
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $page = $request->get('page', null);
 
-        $issueFilter = new IssueFilter(
-            projects: [$project],
-            statusesIds: $project->backlogStatusesIds
-        );
-
         $result = $this->handle(
             new SearchIssues(
                 pageToken: $page,
-                filter: $issueFilter,
+                filter: new IssueFilter(
+                    projects: [$project],
+                    statusesIds: $project->backlogStatusesIds
+                ),
             )
         );
 
-        return $this->render(
-            view: 'app/project/issue/show_backlog.stream.html.twig',
+        return $this->renderBlock(
+            view: 'app/project/issue/project_view_issues_backlog.stream.html.twig',
+            block: 'list_next',
             parameters: [
                 'searchIssuesResult' => $result,
                 'project' => $project,

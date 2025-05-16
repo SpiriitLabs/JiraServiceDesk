@@ -15,6 +15,7 @@ action:
     return: "Retour"
     generate: "Générer"
     filter: "Filtrer"
+    next: "Suivant"
 
 locale:
     label: "Langue"

@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
-{% props datas = [], totalDatas = null, hasPagination = "true", %}
+{% props datas = [], totalDatas = null, nextPageLink = null, hasNumberResult = true %}
 
-<div class="row">
+<div class="row" {% block container_attributes '' %}>
     <div class="col-12">
         {% block formFilter %}
             {% if filterForm is defined and filterForm is not none %}
@@ -20,7 +20,7 @@
                                         <i class="ri-search-line"></i>
                                         {{ 'action.filter'|trans }}
                                     </button>
-                                    <a title="Reset" href="{{ filterFormResetPath }}" class="btn btn-light">
+                                    <a title="Reset" href="{i{ filterFormResetPath }}" class="btn btn-light">
                                         <i class="mdi mdi-window-close"></i>
                                     </a>
                                 </div>
@@ -33,6 +33,12 @@
         {% endblock %}
 
         <div class="card">
+            <div class="card-header">
+                {% block header %}
+                    
+                {% endblock %}
+            </div>
+
             <div class="card-body">
                 <div class="table-responsive">
                     {% if datas|length == 0 %}
@@ -47,48 +53,39 @@
                             </tr>
                             </thead>
 
-                            <tbody>
-                            {% for object in datas %}
-                                <tr>
-                                    {% block tableTd '' %}
-                                </tr>
-                            {% endfor %}
+                            <tbody {% block tbody_attributes '' %}>
+                                {% block tableTb %}
+                                    {% for object in datas %}
+                                        <tr>
+                                            {% block tableTd '' %}
+                                        </tr>
+                                    {% endfor %}
+                                {% endblock %}
                             </tbody>
                         </table>
 
                         <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-start align-items-md-center">
                             <p class="mb-0 h-25">
-                                {% if datas|length == 0 %}
-                                    {{ 'list.pagination.empty'|trans }}
-                                {% elseif totalDatas is not null %}
-                                    {{ 'list.pagination.total'|trans({'%number%': totalDatas}) }}
+                                {% if hasNumberResult %}
+                                    {% if datas|length == 0 %}
+                                        {{ 'list.pagination.empty'|trans }}
+                                    {% elseif totalDatas is not null %}
+                                        {{ 'list.pagination.total'|trans({'%number%': totalDatas}) }}
+                                    {% endif %}                                    
                                 {% endif %}
                             </p>
 
-                            {% if hasPagination is defined and hasPagination == "true" %}
-                                <div class="pagerfanta mt-4 pagination">
-                                    <ul class="pagination">
-                                        {% if previousPage is defined and previousPage is not null %}
+                            {% block pagination %}
+                                {% if nextPageLink is defined and nextPageLink is not null %}
+                                    <div class="pagerfanta mt-4 pagination">
+                                        <ul class="pagination">
                                             <li class="page-item">
-                                                <a class="page-link" href="{{ path('app_issue_list', {page: previousPage}) }}" rel="prev">Précédent</a>
+                                                <a class="page-link" href="{{ nextPageLink }}" rel="next">{{ 'action.next'|trans }}</a>
                                             </li>
-                                        {% endif %}
-                                        {% if maxPage is defined and maxPage is not null %}
-                                            {% for i in 1..maxPage %}
-                                                {% set activePage = (i == currentPage) %}
-                                                <li class="page-item{% if activePage %} active{% endif %}"{% if activePage %} aria-current="page"{% endif %}>
-                                                    <a class="page-link" href="{{ path('app_issue_list', {page: i}) }}">{{ i }}</a>
-                                                </li>
-                                            {% endfor %}
-                                        {% endif %}
-                                        {% if nextPage is defined and nextPage is not null %}
-                                            <li class="page-item">
-                                                <a class="page-link" href="{{ path('app_issue_list', {page: nextPage}) }}" rel="next">Suivant</a>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
                         </div>
                     {% endif %}
                 </div>
