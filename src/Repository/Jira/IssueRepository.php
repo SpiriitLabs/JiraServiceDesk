@@ -4,6 +4,7 @@ namespace App\Repository\Jira;
 
 use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
+use JiraCloud\Issue\Comments;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueService;
@@ -33,7 +34,7 @@ class IssueRepository
         }
     }
 
-    public function getCommentForIssue(string $issueId): \JiraCloud\Issue\Comments
+    public function getCommentForIssue(string $issueId): Comments
     {
         try {
             return $this->service->getComments(
@@ -44,7 +45,7 @@ class IssueRepository
                 ],
             );
         } catch (JiraException $e) {
-            return [];
+            return new Comments();
         }
     }
 
