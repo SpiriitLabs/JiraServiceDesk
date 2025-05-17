@@ -28,23 +28,23 @@ class CreateIssueHandler
     {
         $jiraIssueType = new IssueType();
         $jiraIssueType->id = $command->type->jiraId;
-        $description = (new Document())
-            ->paragraph()
-            ->text($command->description)
-            ->break()
-            ->break()
-            ->text('-------')
-            ->break()
-            ->text($command->creator->fullName)
-            ->end()
-        ;
+        // $description = (new Document())
+        //     ->paragraph()
+        //     ->text($command->description)
+        //     ->break()
+        //     ->break()
+        //     ->text('-------')
+        //     ->break()
+        //     ->text($command->creator->fullName)
+        //     ->end()
+        // ;
 
         $issue = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
-            ->setDescription(new AtlassianDocumentFormat($description))
+            ->setDescription(new AtlassianDocumentFormat(Document::load($command->description)))
             ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
