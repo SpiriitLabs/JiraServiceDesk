@@ -14,7 +14,7 @@ class IssueFilter
      */
     public function __construct(
         public array $projects = [],
-        public array $statusesIds = [],
+        public ?array $statusesIds = null,
     ) {
     }
 }
