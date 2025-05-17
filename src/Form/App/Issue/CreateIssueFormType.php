@@ -9,7 +9,6 @@ use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\ProjectRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -37,8 +36,8 @@ class CreateIssueFormType extends AbstractIssueFormType
             ->add('description', QuillAdfType::class, [
                 'required' => true,
                 'attr' => [
-                    'style' => "height: 250px"
-                ]
+                    'style' => 'height: 250px',
+                ],
             ])
             ->add('attachments', FileType::class, [
                 'required' => false,

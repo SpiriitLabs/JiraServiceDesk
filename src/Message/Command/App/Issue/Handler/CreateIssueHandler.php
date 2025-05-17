@@ -44,7 +44,9 @@ class CreateIssueHandler
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
-            ->setDescription(new AtlassianDocumentFormat(Document::load($command->description)))
+            ->setDescription(
+                new AtlassianDocumentFormat(Document::load((array) json_decode($command->description, true)))
+            )
             ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;

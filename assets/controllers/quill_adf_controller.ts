@@ -1,6 +1,5 @@
 import {Controller} from "@hotwired/stimulus";
-import { convertHtmlToADF } from "@razroo/html-to-adf";
-
+import init, {convert} from "htmltoadf";
 import Quill from 'quill';
 
 export default class extends Controller {
@@ -13,7 +12,7 @@ export default class extends Controller {
 
   connect() {
     console.log("QuillEditor connected 🖋")
-
+    init();
     this.editorTarget.style.height = this.inputTarget.style.height;
 
     const quillEditor = new Quill(this.editorTarget, {
@@ -43,7 +42,71 @@ export default class extends Controller {
     });
 
     quillEditor.on('text-change', (): void => {
-      this.inputTarget.value = convertHtmlToADF(quillEditor.getSemanticHTML());
+      // console.log(convert(this.normalize(quillEditor.root.innerHTML)));
+      this.inputTarget.value = convert(this.normalize(quillEditor.root.innerHTML));
     })
   }
+
+  private normalize(html: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    doc.querySelectorAll('span.ql-ui[contenteditable="false"]').forEach(span => span.remove());
+    const lists = doc.querySelectorAll('ol, ul');
+
+    lists.forEach(list => {
+      if (list.tagName.toLowerCase() === 'ol' && list.querySelector('li[data-list="bullet"]')) {
+        const ul = document.createElement('ul');
+        Array.from(list.children).forEach(li => ul.appendChild(li));
+        list.parentNode?.replaceChild(ul, list);
+        list = ul;
+      }
+
+      list.querySelectorAll('li').forEach(li => {
+        const indentClass = Array.from(li.classList).find(cls => cls.startsWith('ql-indent-'));
+        const indentLevel = indentClass ? parseInt(indentClass.replace('ql-indent-', ''), 10) : 0;
+
+        li.classList.forEach(cls => {
+          if (cls.startsWith('ql-indent-')) li.classList.remove(cls);
+        });
+
+        if (indentLevel > 0) {
+          let prev = li.previousElementSibling;
+          while (prev && !prev.matches('li')) prev = prev.previousElementSibling;
+          if (!prev) return;
+          let container = prev;
+
+          for (let i = 1; i < indentLevel; i++) {
+            let nestedList = container.querySelector(list.tagName.toLowerCase());
+            if (!nestedList) {
+              nestedList = document.createElement(list.tagName.toLowerCase());
+              container.appendChild(nestedList);
+            }
+            const nestedLis = nestedList.querySelectorAll('li');
+            container = nestedLis[nestedLis.length - 1];
+            if (!container) break;
+          }
+
+          let nestedList = container.querySelector(list.tagName.toLowerCase());
+          if (!nestedList) {
+            nestedList = document.createElement(list.tagName.toLowerCase());
+            container.appendChild(nestedList);
+          }
+          nestedList.appendChild(li);
+        }
+
+        if (!li.querySelector('p')) {
+          const p = document.createElement('p');
+          while (li.firstChild) {
+            p.appendChild(li.firstChild);
+          }
+          li.appendChild(p);
+        }
+      });
+    });
+
+    return doc.body.innerHTML;
+  }
+
+
+
 }
