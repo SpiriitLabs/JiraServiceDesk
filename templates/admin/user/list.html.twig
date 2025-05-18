@@ -17,8 +17,20 @@
 {% endblock %}
 
 {% block content %}
-    <twig:list:list>
+    <twig:list:list
+        :filterFormResetPath="path('admin_user_list')"
+        :filterForm="filterForm"
+    >
         {% trans_default_domain 'app' %}
+
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.projects) }}
+            </div>
+        </twig:block>
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
@@ -41,6 +53,12 @@
                     'property': 'lastName',
                 } %}
             </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'user.company.label'|trans,
+                    'property': 'company',
+                } %}
+            </th>
             <th class="min"></th>
         {% endblock %}
 
@@ -48,6 +66,13 @@
             <td>{{ object.email }}</td>
             <td>{{ object.firstName }}</td>
             <td>{{ object.lastName }}</td>
+            <td>
+                {% if object.company is not null %}
+                    {{ object.company }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">
                     <i class="mdi mdi-pencil"></i>

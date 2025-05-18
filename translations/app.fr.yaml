@@ -98,7 +98,7 @@ user:
     create: "Création d’un utilisateur"
     edit: "Modification de l’utilisateur « %email% »"
   email:
-    label: "Identifiant"
+    label: "Addresse Email"
   password:
     label: "Mot de passe"
     new: "Nouveau mot de passe"

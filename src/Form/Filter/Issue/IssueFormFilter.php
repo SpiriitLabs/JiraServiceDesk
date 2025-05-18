@@ -50,7 +50,6 @@ class IssueFormFilter extends AbstractFilterType
         parent::configureOptions($resolver);
         $resolver->setDefaults([
             'data_class' => IssueFilter::class,
-            'label_format' => 'filter.%name%.label',
             'current_user' => null,
         ]);
 
