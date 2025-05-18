@@ -15,4 +15,9 @@ class AbstractFilterType extends AbstractType
             'translation_domain' => 'app',
         ]);
     }
+
+    public function getBlockPrefix(): string
+    {
+        return 'filter';
+    }
 }

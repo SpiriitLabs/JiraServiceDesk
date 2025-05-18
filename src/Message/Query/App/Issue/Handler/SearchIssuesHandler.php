@@ -64,7 +64,11 @@ class SearchIssuesHandler
             ;
         }
 
-        if ($query->filter !== null && count($query->filter->statusesIds) > 0) {
+        if ($query->filter !== null && $query->filter->statusesIds !== null) {
+            if (count($query->filter->statusesIds) === 0) {
+                return new SearchIssuesResult(total: 0);
+            }
+
             $jql->addInExpression('status', $query->filter->statusesIds);
         }
 

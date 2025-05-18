@@ -12,6 +12,7 @@ class AbstractFormFilter extends AbstractType
         $resolver->setDefaults([
             'method' => 'GET',
             'translation_domain' => 'app',
+            'label_format' => 'filter.%name%.label',
         ]);
     }
 }

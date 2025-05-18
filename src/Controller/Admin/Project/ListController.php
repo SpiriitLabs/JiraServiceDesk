@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\Project;
+use App\Form\Filter\ProjectFormFilter;
 use App\Message\Query\PaginateEntities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +23,15 @@ class ListController extends AbstractController
     public function __invoke(
         Request $request,
     ): Response {
+        $filterForm = $this->createForm(ProjectFormFilter::class);
+        $filterForm->handleRequest($request);
+
         $pagination = $this->handle(
             new PaginateEntities(
-                Project::class,
-                $request->get('_sort', 'updatedAt'),
-                $request->get('page', 1),
+                class: Project::class,
+                sort: $request->get('_sort', 'updatedAt'),
+                page: $request->get('page', 1),
+                form: $filterForm,
             ),
         );
 
@@ -34,6 +39,7 @@ class ListController extends AbstractController
             view: 'admin/project/list.html.twig',
             parameters: [
                 'pagination' => $pagination,
+                'filterForm' => $filterForm,
             ],
         );
     }

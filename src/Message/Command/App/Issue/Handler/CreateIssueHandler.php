@@ -3,6 +3,8 @@
 namespace App\Message\Command\App\Issue\Handler;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Entity\User;
+use App\Formatter\Jira\AdfHardBreakFormatter;
 use App\Message\Command\App\Issue\AddAttachment;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\Jira\IssueRepository;
@@ -28,23 +30,21 @@ class CreateIssueHandler
     {
         $jiraIssueType = new IssueType();
         $jiraIssueType->id = $command->type->jiraId;
-        $description = (new Document())
-            ->paragraph()
-            ->text($command->description)
-            ->break()
-            ->break()
-            ->text('-------')
-            ->break()
-            ->text($command->creator->fullName)
-            ->end()
-        ;
+
+        $descriptionData = $this->appendCreator(
+            $command->creator,
+            AdfHardBreakFormatter::format((array) json_decode($command->description, true))
+        );
+        $adfDocument = Document::load($descriptionData);
 
         $issue = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
-            ->setDescription(new AtlassianDocumentFormat($description))
+            ->setDescription(
+                new AtlassianDocumentFormat($adfDocument)
+            )
             ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
@@ -68,5 +68,34 @@ class CreateIssueHandler
         }
 
         return $jiraIssue;
+    }
+
+    /**
+     * @param array<int,mixed> $data
+     *
+     * @return array<mixed>
+     */
+    private function appendCreator(User $creator, array $data): array
+    {
+        $data['content'][] = [
+            'type' => 'paragraph',
+            'content' => [
+                [
+                    'type' => 'text',
+                    'text' => '--------------',
+                ],
+            ],
+        ];
+        $data['content'][] = [
+            'type' => 'paragraph',
+            'content' => [
+                [
+                    'type' => 'text',
+                    'text' => $creator->fullName,
+                ],
+            ],
+        ];
+
+        return $data;
     }
 }

@@ -1,14 +1,14 @@
 action:
   label: "Action(s)"
-  logout: "Déconnexion"
+  logout: "Se déconnecter"
   create: "Créer"
   cancel: "Annuler"
   save: "Enregistrer"
-  list: "Liste"
-  exit: "Quitter"
+  list: "Afficher la liste"
+  exit: "Fermer"
   edit: "Modifier"
-  exitImpersonation: "Quitter l’usurpation d’identité"
-  view: "Afficher"
+  exitImpersonation: "Quitter le mode d’usurpation d’identité"
+  view: "Voir"
   add: "Ajouter"
   remove: "Supprimer"
   download: "Télécharger"
@@ -29,10 +29,10 @@ theme:
   auto: "Automatique"
 
 flash:
-  edited: "L’élément a été modifié avec succès."
-  created: "L’élément a été créé avec succès."
-  deleted: "L’élément a été supprimé avec succès."
-  stopped: "L’élément a été arrêté avec succès."
+  edited: "Modification enregistrée avec succès."
+  created: "Création effectuée avec succès."
+  deleted: "Suppression effectuée avec succès."
+  stopped: "Arrêt effectué avec succès."
   error: "Une erreur est survenue."
   custom:
     user_no_project: "Aucun projet n’est associé à votre compte utilisateur."
@@ -41,7 +41,7 @@ header:
   themeMode: "Mode d’affichage"
   dropdown:
     welcome: "Bienvenue !"
-    restart_introduction: "Recommencer l’introduction"
+    restart_introduction: "Revoir l’introduction"
 
 title:
   all: "Jira Service Desk"
@@ -61,7 +61,7 @@ modal:
     action: "Confirmer"
   warning:
     title: "Attention"
-    description: "En cliquant sur ce bouton, vous confirmez l’exécution de l’action sélectionnée."
+    description: "Cette action est irréversible. Cliquez pour confirmer."
     action: "Confirmer"
 
 blameable:
@@ -83,8 +83,10 @@ dashboard:
   welcome: "Bonjour %name% !"
   admin: "Tableau d’administration"
   app: "Tableau de l’application"
-  total_of: "Total de"
-  total_of_user_notification: "Nombre d’utilisateur(s) avec des notifications"
+  total_of: "Nombre total de"
+  total_of_user_notification: "Utilisateur(s) ayant des notifications"
+  favorites_and_projects: "Vos favoris et vos projets"
+  assignee_issues: "Vos ticket assignée"
 
 favorite:
   label: "Favori(s)"
@@ -95,14 +97,14 @@ favorite:
 user:
   label: "Utilisateur(s)"
   title:
-    create: "Création d’un utilisateur"
-    edit: "Modification de l’utilisateur « %email% »"
+    create: "Créer un nouvel utilisateur"
+    edit: "Modifier l’utilisateur « %email% »"
   email:
-    label: "Identifiant"
+    label: "Adresse e-mail"
   password:
     label: "Mot de passe"
     new: "Nouveau mot de passe"
-    repeat: "Répéter le mot de passe"
+    repeat: "Confirmer le mot de passe"
     notice: "💡 Laissez ce champ vide si vous ne souhaitez pas modifier le mot de passe."
   firstName:
     label: "Prénom"
@@ -115,7 +117,7 @@ user:
     role_admin: "Administrateur"
     role_user: "Utilisateur"
     role_app_can_assignee: "[APPLICATION] Peut être assigné"
-    role_app_can_view_backlog: "[APPLICATION] Peut consulter le backlog des projets"
+    role_app_can_view_backlog: "[APPLICATION] Accès au backlog des projets"
   preferedLocale:
     label: "Langue préférée"
   preferedTheme:
@@ -123,13 +125,13 @@ user:
   preferenceNotification:
     label: "Notifications"
   preferenceNotificationIssueCreated:
-    label: "Notification lors de la création d’un ticket"
+    label: "Recevoir une notification lors de la création d’un ticket"
   preferenceNotificationIssueUpdated:
-    label: "Notification lors de la modification d’un ticket"
+    label: "Recevoir une notification lors de la mise à jour d’un ticket"
   preferenceNotificationCommentCreated:
-    label: "Notification lors de la création d’un commentaire"
+    label: "Recevoir une notification lors de la création d’un commentaire"
   preferenceNotificationCommentUpdated:
-    label: "Notification lors de la modification d’un commentaire"
+    label: "Recevoir une notification lors de la modification d’un commentaire"
 
 profile:
   label: "Profil"
@@ -139,8 +141,8 @@ profile:
 project:
   label: "Projet(s)"
   title:
-    create: "Création d’un projet depuis Jira"
-    edit: "Modification du projet « %key% »"
+    create: "Créer un projet depuis Jira"
+    edit: "Modifier le projet « %key% »"
     backlogIssues: "Ticket(s) dans le backlog"
   name:
     label: "Nom"
@@ -155,7 +157,7 @@ project:
   lead:
     label: "Responsable"
   assignableRolesIds:
-    label: "Rôle(s) assignable(s)"
+    label: "Rôle(s) pouvant être assigné(s)"
   backlogStatusesIds:
     label: "Statuts du backlog"
   category:
@@ -165,8 +167,8 @@ project:
   board:
     label: "Tableau"
   flashes:
-    alreadyExist: "Cette clé de projet existe déjà."
-    created: "Le projet a été créé. Veuillez sélectionner les statuts du backlog ainsi que les rôles des utilisateurs pouvant être assignés aux tickets."
+    alreadyExist: "Cette clé de projet est déjà utilisée."
+    created: "Projet créé avec succès. Veuillez sélectionner les statuts du backlog et les rôles des utilisateurs pouvant être assignés."
 
 issue:
   label: "Ticket(s)"
@@ -189,7 +191,7 @@ issue:
     label: "Type"
   description:
     label: "Description"
-    notice: "💡 Votre prénom et nom seront ajoutés au ticket pour en faciliter le suivi par les chefs de projet."
+    notice: "💡 Votre prénom et nom seront ajoutés pour permettre un meilleur suivi par les chefs de projet."
   comment:
     label: "Commentaire(s)"
   attachment:
@@ -199,7 +201,7 @@ issue:
     to: "Passer à"
   create:
     select_project:
-      description: "Sélectionnez le projet dans lequel vous souhaitez créer le ticket pour continuer."
+      description: "Veuillez sélectionner un projet pour continuer la création du ticket."
 
 priority:
   label: "Priorité(s)"
@@ -212,23 +214,23 @@ priority:
   statusColor:
     label: "Couleur"
   flashes:
-    generated: "Les éléments ont été récupérés avec succès."
+    generated: "Les priorités ont été récupérées avec succès."
 
 security:
   login:
     label: "Connexion"
-    sign_in: "Connectez-vous"
+    sign_in: "Se connecter"
     sign_in_catch_phrase: "pour accéder à l’application"
-    action: "Se connecter"
+    action: "Connexion"
   check_email:
-    label: "Vérifiez votre adresse e-mail"
-    description: "Si un compte correspondant à cette adresse existe, un e-mail contenant un lien de réinitialisation a été envoyé.<br/>Ce lien expirera dans %expire_link_time%."
-    retry: "Si vous ne recevez pas l’e-mail, vérifiez votre dossier de courriers indésirables."
+    label: "Vérification de l’adresse e-mail"
+    description: "Si un compte correspondant existe, un e-mail de réinitialisation a été envoyé.<br/>Ce lien expirera dans %expire_link_time%."
+    retry: "Si vous ne recevez rien, vérifiez votre dossier de courriers indésirables."
     action: "Réessayer"
   reset_password_request:
     label: "Réinitialisation du mot de passe"
-    description: "Saisissez votre adresse e-mail. Un lien de réinitialisation vous sera envoyé."
-    action: "Envoyer le lien de réinitialisation"
+    description: "Saisissez votre adresse e-mail pour recevoir un lien de réinitialisation."
+    action: "Envoyer le lien"
   reset_password:
     label: "Nouveau mot de passe"
-    action: "Modifier"
+    action: "Mettre à jour"

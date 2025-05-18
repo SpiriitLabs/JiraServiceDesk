@@ -4,6 +4,7 @@ namespace App\Controller\Admin\User;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\User;
+use App\Form\Filter\UserFormFilter;
 use App\Message\Query\PaginateEntities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +23,15 @@ class ListController extends AbstractController
     public function __invoke(
         Request $request,
     ): Response {
+        $filterForm = $this->createForm(UserFormFilter::class);
+        $filterForm->handleRequest($request);
+
         $pagination = $this->handle(
             new PaginateEntities(
-                User::class,
-                $request->get('_sort', 'id'),
-                $request->get('page', 1),
+                class: User::class,
+                sort: $request->get('_sort', 'id'),
+                page: $request->get('page', 1),
+                form: $filterForm,
             ),
         );
 
@@ -34,6 +39,7 @@ class ListController extends AbstractController
             view: 'admin/user/list.html.twig',
             parameters: [
                 'pagination' => $pagination,
+                'filterForm' => $filterForm,
             ],
         );
     }

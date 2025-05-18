@@ -32,6 +32,8 @@ export default class extends Controller {
       // @ts-ignore
       const issueId = element.dataset.issueId;
 
+      console.log(issueId, transitionId);
+
       try {
         const response = await fetch(`/app/api/issue/${issueId}/transition/${transitionId}`, {
           method: 'POST',

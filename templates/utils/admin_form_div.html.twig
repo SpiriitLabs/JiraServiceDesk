@@ -1,16 +1,15 @@
 {% extends 'bootstrap_5_layout.html.twig' %}
 
-{% block quill_widget %}
+{% block quill_adf_widget %}
   {% apply spaceless %}
-    <div {{ stimulus_controller('quill', {toolbar: toolbarOptions}) }} data-id="{{ id }}">
-      <div {{ stimulus_target('quill', 'editor') }}>
+    <div {{ stimulus_controller('quill_adf', {toolbar: toolbarOptions}) }} data-id="{{ id }}">
+      <div {{ stimulus_target('quill_adf', 'editor') }}>
         {{ value|raw }}
       </div>
-      <input type="hidden" {{ block('widget_attributes') }}
-             value="{{ value }}" {{ stimulus_target('quill', 'input') }}/>
+      <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" {{ stimulus_target('quill_adf', 'input') }}/>
     </div>
   {% endapply %}
-{% endblock quill_widget %}
+{% endblock quill_adf_widget %}
 
 {% block _query_widget %}
   <div class="input-group" {{ stimulus_controller('search-query', {

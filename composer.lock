@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63015b037a69d7240dfd600dc2df3610",
+    "content-hash": "204d1edbf163fa7132159ff424d8ca48",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2582,16 +2582,16 @@
         },
         {
             "name": "spiriitlabs/form-filter-bundle",
-            "version": "v11.0.6",
+            "version": "v11.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SpiriitLabs/form-filter-bundle.git",
-                "reference": "34d2a67eff787fd70f47008ca56172b0cbb39a8b"
+                "reference": "4649371567478ed8510c552fdfa0f11db9107456"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SpiriitLabs/form-filter-bundle/zipball/34d2a67eff787fd70f47008ca56172b0cbb39a8b",
-                "reference": "34d2a67eff787fd70f47008ca56172b0cbb39a8b",
+                "url": "https://api.github.com/repos/SpiriitLabs/form-filter-bundle/zipball/4649371567478ed8510c552fdfa0f11db9107456",
+                "reference": "4649371567478ed8510c552fdfa0f11db9107456",
                 "shasum": ""
             },
             "require": {
@@ -2604,7 +2604,7 @@
             "require-dev": {
                 "doctrine/annotations": "^2.0",
                 "doctrine/doctrine-bundle": "^1.8 || ^2.0",
-                "rector/rector": "^0.17.1",
+                "rector/rector": "^2.0",
                 "symfony/phpunit-bridge": "^5.4|^6.4|^7.0",
                 "symfony/var-dumper": "^5.4|^6.4|^7.0",
                 "symplify/easy-coding-standard": "^11.3"
@@ -2629,9 +2629,9 @@
                 "symfony"
             ],
             "support": {
-                "source": "https://github.com/SpiriitLabs/form-filter-bundle/tree/v11.0.6"
+                "source": "https://github.com/SpiriitLabs/form-filter-bundle/tree/v11.0.7"
             },
-            "time": "2024-11-22T10:50:32+00:00"
+            "time": "2025-05-13T08:34:50+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",

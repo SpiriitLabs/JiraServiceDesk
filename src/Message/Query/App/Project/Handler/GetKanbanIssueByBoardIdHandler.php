@@ -5,6 +5,7 @@ namespace App\Message\Query\App\Project\Handler;
 use App\Formatter\Jira\IssueKanbanFormatter;
 use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use App\Repository\Jira\BoardRepository;
+use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\JqlQuery;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -17,6 +18,9 @@ readonly class GetKanbanIssueByBoardIdHandler
     ) {
     }
 
+    /**
+     * @return Issue[]
+     */
     public function __invoke(GetKanbanIssueByBoardId $query): array
     {
         $boardColumnConfiguration = $this->boardRepository->getBoardConfigurationById(

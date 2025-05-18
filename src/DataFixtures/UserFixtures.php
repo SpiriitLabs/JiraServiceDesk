@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
             email: 'superadmin@email.tld',
             firstName: 'Super',
             lastName: 'Admin',
-            roles: [Role::ROLE_USER, Role::ROLE_ADMIN],
+            roles: [Role::ROLE_USER, Role::ROLE_ADMIN, Role::ROLE_APP_CAN_ASSIGNEE, Role::ROLE_APP_CAN_VIEW_BACKLOG],
             reference: self::SUPER_ADMIN_USER_REFERENCE,
             manager: $manager
         );
@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
             email: 'user@email.tld',
             firstName: 'Uti',
             lastName: 'Lisateur',
-            roles: [Role::ROLE_USER],
+            roles: [Role::ROLE_USER, Role::ROLE_APP_CAN_ASSIGNEE, Role::ROLE_APP_CAN_VIEW_BACKLOG],
             reference: self::USER_REFERENCE,
             manager: $manager
         );

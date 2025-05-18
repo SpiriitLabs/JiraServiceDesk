@@ -7,7 +7,7 @@
 	<section {{ stimulus_controller('intro', {hasCompletedIntroduction: app.user.hasCompletedIntroduction, apiUrl: absolute_url(path('app_api_introduction_check', {id: app.user.id}))}) }} data-title="{{ 'introduction.title'|trans(domain: 'intro') }}" data-intro="{{ 'introduction.description'|trans(domain: 'intro') }}" data-step="1">
 		{% if projects|length > 0 or app.user.favorites|length > 0 %}
 			<div class="row pb-5" data-title="Dashboard" data-title='{{ 'dashboard.title'|trans(domain: 'intro') }}' data-intro="{{ 'dashboard.favorites_and_projects'|trans(domain: 'intro') }}" data-step="7">
-				<h3>Vos favoris et vos projets</h3>
+				<h3>{{ 'dashboard.favorites_and_projects'|trans }}</h3>
 				{% for favorite in app.user.favorites %}
 					{# @var favorite \Entity\Favorite #}
 
@@ -48,7 +48,7 @@
 		{% endif %}
 
 		<div data-title="Ticket(s)" data-title='{{ 'dashboard.title'|trans(domain: 'intro') }}' data-intro="{{ 'dashboard.assignee_issues'|trans(domain: 'intro') }}" data-step="8">
-			<h3>Vos ticket assignée</h3>
+			<h3>{{ 'dashboard.assignee_issues'|trans }}</h3>
 
 			{% include 'app/issue/_list_content.html.twig' with {
 				searchIssuesResult: searchIssuesResult,
