@@ -85,6 +85,8 @@ dashboard:
   app: "Application Dashboard"
   total_of: "Total of"
   total_of_user_notification: "User(s) with notifications"
+  favorites_and_projects: "Your favorites and your projects"
+  assignee_issues: "Your assigned ticket"
 
 favorite:
   label: "Favorite(s)"
