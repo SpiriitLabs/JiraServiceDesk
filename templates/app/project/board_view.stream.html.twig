@@ -1,0 +1,27 @@
+<twig:Turbo:Stream:Replace
+    target="#project_board_view"
+>
+    {% set columnsNames = [] %}
+    {% for columnName , columnValues in kanbanIssues %}
+        {% set columnsNames = columnsNames|merge([columnName|lower|u.ascii|u.replace(' ', '-')]) %}
+    {% endfor %}
+
+    <div class="board">
+        {% for columnName , columnValues in kanbanIssues %}
+            <div class="tasks" {% if loop.first %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode}) }}{% endif %}>
+                <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
+
+                <div id="{{ columnName|lower|u.ascii|u.replace(' ', '-') }}" data-kanban-transition-id="{{ columnValues.transitionId }}" class="task-list-items">
+
+                    {% for issue in columnValues.issues %}
+                        <twig:app:kanban:item_card
+                            issue="{{ issue }}"
+                            project="{{ entity }}"
+                        />
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</twig:Turbo:Stream:Replace>
