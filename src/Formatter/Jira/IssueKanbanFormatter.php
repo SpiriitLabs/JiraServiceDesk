@@ -20,9 +20,10 @@ class IssueKanbanFormatter
                 'issues' => [],
                 'min' => 0,
                 'max' => 0,
+                'transitionId' => 0,
             ],
         ];
-        $result = $this->formatResult($project, $columnsConfiguration);
+        $result = $this->formatResult($project, $columnsConfiguration, $issues[0]);
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
@@ -37,8 +38,11 @@ class IssueKanbanFormatter
         return $result;
     }
 
-    private function formatResult(Project $project, ?BoardColumnConfig $columnsConfiguration = null): array
-    {
+    private function formatResult(
+        Project $project,
+        ?BoardColumnConfig $columnsConfiguration = null,
+        ?Issue $firstIssue = null
+    ): array {
         $result = [];
         if ($columnsConfiguration === null) {
             return $result;
@@ -53,7 +57,11 @@ class IssueKanbanFormatter
                 );
 
             if (! $allBacklog) {
-                $transitionId = $columnConfiguration->statuses[0]->id ?? null;
+                $transitionId = null;
+                if (count($columnConfiguration->statuses) > 0 && $columnConfiguration->statuses[0]->id !== null) {
+                    $transitionId = $this->findTransitionId($firstIssue, $columnConfiguration->statuses[0]->id);
+                }
+
                 $result[$columnConfiguration->name] = [
                     'min' => $columnConfiguration->min,
                     'max' => $columnConfiguration->max,
@@ -84,8 +92,9 @@ class IssueKanbanFormatter
         if ($columnsConfiguration === null) {
             return $this->insertWithoutColumnConfig($result, $issue);
         }
-        [$issueColumnName, $issueStatusId] = $this->findColumnAndStatusId($columnsConfiguration, $issue);
 
+
+        [$issueColumnName, $issueStatusId] = $this->findColumnAndStatusId($columnsConfiguration, $issue);
         if ($issueColumnName === null) {
             return $result;
         }
@@ -96,7 +105,6 @@ class IssueKanbanFormatter
             $issueStatusId !== null
             && ! isset($result[$issueColumnName]['transitionId'])
         ) {
-            dump($issueStatusId);
             $result[$issueColumnName]['transitionId'] = $this->findTransitionId($issue, $issueStatusId);
         }
 
