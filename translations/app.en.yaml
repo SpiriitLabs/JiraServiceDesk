@@ -1,18 +1,18 @@
 action:
   label: "Action(s)"
-  logout: "Logout"
+  logout: "Log out"
   create: "Create"
   cancel: "Cancel"
   save: "Save"
-  list: "List"
-  exit: "Exit"
+  list: "View list"
+  exit: "Close"
   edit: "Edit"
-  exitImpersonation: "Exit impersonation"
+  exitImpersonation: "Exit impersonation mode"
   view: "View"
   add: "Add"
   remove: "Remove"
   download: "Download"
-  return: "Return"
+  return: "Back"
   generate: "Generate"
   filter: "Filter"
   next: "Next"
@@ -35,13 +35,13 @@ flash:
   stopped: "The item was successfully stopped."
   error: "An error has occurred."
   custom:
-    user_no_project: "No project is linked to your user account."
+    user_no_project: "No project is associated with your user account."
 
 header:
   themeMode: "Display mode"
   dropdown:
     welcome: "Welcome!"
-    restart_introduction: "Restart the introduction"
+    restart_introduction: "Restart introduction"
 
 title:
   all: "Jira Service Desk"
@@ -56,12 +56,12 @@ list:
 
 modal:
   delete:
-    title: "Delete confirmation"
-    description: "By clicking this button, you confirm the deletion of the selected item."
+    title: "Delete Confirmation"
+    description: "Clicking this button will confirm the deletion of the selected item."
     action: "Confirm"
   warning:
     title: "Warning"
-    description: "By clicking this button, you confirm the execution of the selected action."
+    description: "Clicking this button will confirm the execution of the selected action."
     action: "Confirm"
 
 blameable:
@@ -81,10 +81,10 @@ filter:
 dashboard:
   label: "Dashboard"
   welcome: "Hello %name%!"
-  admin: "Administration dashboard"
-  app: "Application dashboard"
+  admin: "Admin Dashboard"
+  app: "Application Dashboard"
   total_of: "Total of"
-  total_of_user_notification: "Number of user(s) with notifications"
+  total_of_user_notification: "User(s) with notifications"
 
 favorite:
   label: "Favorite(s)"
@@ -96,14 +96,14 @@ user:
   label: "User(s)"
   title:
     create: "Create a user"
-    edit: "Edit user '%email%'"
+    edit: "Edit user \"%email%\""
   email:
-    label: "Username"
+    label: "Email address"
   password:
     label: "Password"
     new: "New password"
     repeat: "Repeat password"
-    notice: "💡 Leave this field empty if you don't want to change the password."
+    notice: "💡 Leave this field blank if you do not wish to change the password."
   firstName:
     label: "First name"
   lastName:
@@ -123,13 +123,13 @@ user:
   preferenceNotification:
     label: "Notifications"
   preferenceNotificationIssueCreated:
-    label: "Notification on issue creation"
+    label: "Notify on ticket creation"
   preferenceNotificationIssueUpdated:
-    label: "Notification on issue update"
+    label: "Notify on ticket update"
   preferenceNotificationCommentCreated:
-    label: "Notification on comment creation"
+    label: "Notify on comment creation"
   preferenceNotificationCommentUpdated:
-    label: "Notification on comment update"
+    label: "Notify on comment update"
 
 profile:
   label: "Profile"
@@ -140,8 +140,8 @@ project:
   label: "Project(s)"
   title:
     create: "Create a project from Jira"
-    edit: "Edit project '%key%'"
-    backlogIssues: "Backlog issue(s)"
+    edit: "Edit project \"%key%\""
+    backlogIssues: "Backlog ticket(s)"
   name:
     label: "Name"
   jiraKey:
@@ -166,18 +166,18 @@ project:
     label: "Board"
   flashes:
     alreadyExist: "This project key already exists."
-    created: "The project has been created. Please select the backlog statuses and assignable roles."
+    created: "Project created. Please select backlog statuses and user roles for ticket assignment."
 
 issue:
-  label: "Issue(s)"
+  label: "Ticket(s)"
   action:
-    create: "Create an issue"
+    create: "Create a ticket"
   titles:
-    create: "Create an issue"
+    create: "Create a ticket"
   jiraKey:
     label: "Key"
   assignee:
-    label: "Assignee"
+    label: "Assigned to"
     not_assignee: "Unassigned"
   status:
     label: "Status"
@@ -189,7 +189,7 @@ issue:
     label: "Type"
   description:
     label: "Description"
-    notice: "💡 Your first and last name will be added to the issue to help project managers track it more easily."
+    notice: "💡 Your first and last name will be added to help project managers track the ticket."
   comment:
     label: "Comment(s)"
   attachment:
@@ -199,7 +199,7 @@ issue:
     to: "Move to"
   create:
     select_project:
-      description: "Select the project where you want to create the issue to continue."
+      description: "Please select a project to proceed with ticket creation."
 
 priority:
   label: "Priority(ies)"
@@ -212,7 +212,7 @@ priority:
   statusColor:
     label: "Color"
   flashes:
-    generated: "Items have been successfully retrieved."
+    generated: "Items successfully retrieved."
 
 security:
   login:
@@ -221,14 +221,14 @@ security:
     sign_in_catch_phrase: "to access the application"
     action: "Log in"
   check_email:
-    label: "Check your email"
-    description: "If an account matches this email, a reset link has been sent.<br/>This link will expire in %expire_link_time%."
-    retry: "If you don't receive the email, please check your spam folder."
-    action: "Retry"
+    label: "Check your email address"
+    description: "If an account matching this email exists, a reset link has been sent.<br/>This link will expire in %expire_link_time%."
+    retry: "If you haven’t received the email, please check your spam folder."
+    action: "Try again"
   reset_password_request:
-    label: "Reset your password"
-    description: "Enter your email address. A reset link will be sent to you."
+    label: "Password reset"
+    description: "Enter your email address to receive a reset link."
     action: "Send reset link"
   reset_password:
     label: "New password"
-    action: "Change"
+    action: "Update"
