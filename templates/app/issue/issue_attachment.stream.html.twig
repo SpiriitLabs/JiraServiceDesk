@@ -12,14 +12,14 @@
                     <div class="card my-1 shadow-none border">
                         <div class="p-2">
                             <div class="col align-items-center">
-                                <img src="{{ attachment.thumbnailUrl }}" alt="">
+                                <img src="{{ path('app_issue_attachment_preview', {'attachmentId': attachment.id}) }}" alt="">
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col ps-2">
-                                        <a href="{{ attachment.url }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
+                                        <a href="{{ path('app_issue_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
                                         <p class="mb-0 text-muted">{{ attachment.author }}</p>
                                     </div>
                                     <div class="col-auto">
-                                        <a href="{{ attachment.url }}" target="_blank" class="btn btn-link btn-lg text-muted">
+                                        <a href="{{ path('app_issue_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="btn btn-link btn-lg text-muted">
                                             <i class="ri-download-2-line"></i>
                                         </a>
                                     </div>

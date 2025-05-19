@@ -31,7 +31,6 @@ class CreateCommentHandler
         $attachments = [];
         foreach ($commentAttachments as $commentAttachment) {
             /** @var UploadedFile $commentAttachment */
-
             $attachments = array_merge(
                 $attachments,
                 $this->handle(
