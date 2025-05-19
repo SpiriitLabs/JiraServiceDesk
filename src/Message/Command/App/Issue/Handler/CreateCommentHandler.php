@@ -31,12 +31,23 @@ class CreateCommentHandler
         $attachments = [];
         foreach ($commentAttachments as $commentAttachment) {
             /** @var UploadedFile $commentAttachment */
+            $originalFilename = $commentAttachment->getClientOriginalName();
+            $tmpPath = sys_get_temp_dir() . '/' . $originalFilename;
+            copy($commentAttachment->getPathname(), $tmpPath);
+            $renamedFile = new UploadedFile(
+                path: $tmpPath,
+                originalName: $originalFilename,
+                mimeType: $commentAttachment->getClientMimeType(),
+                error: null,
+                test: true
+            );
+
             $attachments = array_merge(
                 $attachments,
                 $this->handle(
                     new AddAttachment(
                         issue: $issue,
-                        file: $commentAttachment,
+                        file: $renamedFile,
                     ),
                 )
             );
