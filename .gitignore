@@ -34,7 +34,7 @@ yarn-error.log
 
 ###> romainmillan/jira-service-desk ###
 src/Cli/SandboxCommand.php
-public/uploads/issue_attachments/*
+private/uploads/*
 ###< romainmillan/jira-service-desk ###
 
 .DS_Store
