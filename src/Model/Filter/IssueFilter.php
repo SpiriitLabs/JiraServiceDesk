@@ -8,10 +8,6 @@ class IssueFilter
 {
     use FilterQueryTrait;
 
-    /**
-     * @param array<int,\App\Entity\Project> $projects
-     * @param array<int,mixed>               $statusesIds
-     */
     public function __construct(
         public array $projects = [],
         public ?array $statusesIds = null,

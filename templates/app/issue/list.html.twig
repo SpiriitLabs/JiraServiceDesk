@@ -14,6 +14,8 @@
     </a>
 {% endblock %}
 
+{% block turbo 'data-turbo="false"' %}
+
 {% block content %}
     {% include 'app/issue/_list_content.html.twig' with {
         searchIssuesResult: searchIssuesResult,
