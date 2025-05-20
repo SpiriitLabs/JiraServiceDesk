@@ -58,7 +58,7 @@ class EditController extends AbstractController
         $project = $this->projectRepository->findOneBy([
             'jiraKey' => $issue->fields->project->key,
         ]);
-        if (null == $project) {
+        if ($project == null) {
             $this->addFlash(
                 type: 'danger',
                 message: 'project.flashes.notFound',
