@@ -33,6 +33,10 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
+        if ($project == null) {
+            return;
+        }
+
         $this->logger->info('WEBHOOK/IssueCreated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,

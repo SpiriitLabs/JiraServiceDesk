@@ -169,6 +169,7 @@ project:
   flashes:
     alreadyExist: "This project key already exists."
     created: "Project created. Please select backlog statuses and user roles for ticket assignment."
+    notFound: "Project not found"
 
 issue:
   label: "Ticket(s)"

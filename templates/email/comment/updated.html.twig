@@ -11,45 +11,29 @@
         {% block content %}
             {% trans_default_domain 'email' %}
 
-            <tr>
-                <td class="r16-c nl2go-default-textstyle"
-                    align="left"
-                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
-                    <div>
-                        <p style="margin: 0;">
-                            {{ 'comment.updated.description'|trans({'%ticket_name%': issueSummary, '%project_name%': project.name})|raw }}
-                        </p>
-                    </div>
-                </td>
-            </tr>
-
-            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="center" class="r3-o" style="table-layout: fixed; width: 100%;">
+            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="center"
+                   class="r3-o" style="table-layout: fixed; width: 100%;">
                 <tr>
-                    <td class="r4-i" style="padding-bottom: 20px; padding-top: 20px;">
-                        <table width="100%" cellspacing="0" cellpadding="0" border="0"
-                            role="presentation">
+                    <td class="r16-i">
+                        <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                             <tr>
-                                <th width="100%" valign="top" class="r5-c" style="font-weight: normal;">
-                                    <table cellspacing="0" cellpadding="0" border="0"
-                                        role="presentation" width="100%" class="r6-o"
-                                        style="table-layout: fixed; width: 100%;">
+                                <th width="100%" valign="bottom" class="r12-c" style="font-weight: normal;">
+                                    <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" class="r6-o"
+                                           style="table-layout: fixed; width: 100%;">
                                         <tr>
-                                            <td valign="top" class="r7-i"
-                                                style="padding-left: 15px; padding-right: 15px;">
-                                                <table width="100%" cellspacing="0" cellpadding="0"
-                                                    border="0" role="presentation">
+                                            <td valign="top" class="r7-i" style="padding-left: 15px; padding-right: 15px;">
+                                                <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                                                     <tr>
-                                                        <td class="r17-c" align="center">
-                                                            <table width="100%" cellspacing="0"
-                                                                cellpadding="0" border="0"
-                                                                role="presentation" height="1"
-                                                                style="border-top-style: solid; background-clip: border-box; border-top-color: #4A4A4A; border-top-width: 1px; font-size: 1px; line-height: 1px;">
-                                                                <tr>
-                                                                    <td height="0"
-                                                                        style="font-size: 0px; line-height: 0px;">
-                                                                        ­</td>
-                                                                </tr>
-                                                            </table>
+                                                        <td class="r17-c nl2go-default-textstyle" align="left"
+                                                            style="color: #414141; font-family: Arial; font-size: 16px; word-break: break-word; line-height: 1; text-align: left; valign: top;">
+                                                            <div><p style="margin: 0;"><span
+                                                                        style="color: #6b778c;">
+                                                                            <a href="{{ absolute_url(path('app_project_view', {key: project.jiraKey})) }}">{{ project.name }}</a>
+                                                                        /
+                                                                        <a href="{{ absolute_url(path('app_issue_view', {'keyIssue': issueKey})) }}">{{ issueKey }}</a>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -62,37 +46,25 @@
                     </td>
                 </tr>
             </table>
-
-            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="center" class="r3-o" style="table-layout: fixed; width: 100%;">
+            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="center"
+                   class="r3-o" style="table-layout: fixed; width: 100%;">
                 <tr>
-                    <td class="r4-i" style="padding-bottom: 20px; padding-top: 20px;">
-                        <table width="100%" cellspacing="0" cellpadding="0" border="0"
-                            role="presentation">
+                    <td class="r16-i">
+                        <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                             <tr>
-                                <th width="25%" valign="top" class="r5-c" style="font-weight: normal;">
-                                    <table cellspacing="0" cellpadding="0" border="0"
-                                        role="presentation" width="100%" class="r6-o"
-                                        style="table-layout: fixed; width: 100%;">
+                                <th width="100%" valign="top" class="r5-c" style="font-weight: normal;">
+                                    <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" class="r6-o"
+                                           style="table-layout: fixed; width: 100%;">
                                         <tr>
-                                            <td valign="top" class="r18-i"
-                                                style="padding-left: 15px; padding-right: 15px;">
-                                                <table width="100%" cellspacing="0" cellpadding="0"
-                                                    border="0" role="presentation">
+                                            <td valign="top" class="r7-i" style="padding-left: 15px; padding-right: 15px;">
+                                                <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                                                     <tr>
-                                                        <td class="r2-c" align="center">
-                                                            <table cellspacing="0" cellpadding="0"
-                                                                border="0" role="presentation"
-                                                                width="120" class="r19-o"
-                                                                style="border-bottom-color: #aaaaaa; border-bottom-width: 3px; border-collapse: separate; border-left-color: #aaaaaa; border-left-width: 3px; border-radius: 400px; border-right-color: #aaaaaa; border-right-width: 3px; border-style: solid; border-top-color: #aaaaaa; border-top-width: 3px; table-layout: fixed; width: 120px;">
-                                                                <tr>
-                                                                    <td class="r20-i"
-                                                                        style="border-radius: 397px; font-size: 0px; line-height: 0px;">
-                                                                        <img src="{{ commentAuthorAvatarUrl }}"
-                                                                            width="114" border="0"
-                                                                            style="display: block; width: 100%; border-radius: 397px;">
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
+                                                        <td class="r17-c nl2go-default-textstyle" align="left"
+                                                            style="color: #414141; font-family: Arial; font-size: 16px; word-break: break-word; line-height: 1; text-align: left; valign: top;">
+                                                            <div><h2 class="default-heading2"
+                                                                     style="margin: 0; color: #414141; font-family: Arial; font-size: 32px; word-break: break-word;">
+                                                                    <span style="font-family: Arial; font-size: 24px;">{{ issueSummary }}</span>
+                                                                </h2></div>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -100,52 +72,64 @@
                                         </tr>
                                     </table>
                                 </th>
-                                <th width="75%" valign="top" class="r5-c" style="font-weight: normal;">
-                                    <table cellspacing="0" cellpadding="0" border="0"
-                                        role="presentation" width="100%" class="r6-o"
-                                        style="table-layout: fixed; width: 100%;">
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" align="center"
+                   class="r3-o" style="table-layout: fixed; width: 100%;">
+                <tr>
+                    <td class="r4-i" style="padding-bottom: 20px; padding-top: 20px;">
+                        <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                            <tr>
+                                <th width="16.67%" valign="top" class="r5-c" style="font-weight: normal;">
+                                    <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" class="r6-o"
+                                           style="table-layout: fixed; width: 100%;">
                                         <tr>
-                                            <td valign="top" class="r7-i"
-                                                style="padding-left: 15px; padding-right: 15px;">
-                                                <table width="100%" cellspacing="0" cellpadding="0"
-                                                    border="0" role="presentation">
+                                            <td valign="top" class="r18-i" style="padding-left: 15px; padding-right: 15px;">
+                                                <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
                                                     <tr>
-                                                        <td class="r21-c nl2go-default-textstyle"
-                                                            align="left"
+                                                        <td class="r17-c" align="left"
+                                                            style="border-radius: 50px; font-size: 0px; line-height: 0px; valign: top;"><img
+                                                                src="{{ commentAuthorAvatarUrl }}"
+                                                                width="70" border="0" style="display: block; width: 100%; border-radius: 50px;">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </th>
+                                <th width="83.33%" valign="top" class="r5-c" style="font-weight: normal;">
+                                    <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%" class="r6-o"
+                                           style="table-layout: fixed; width: 100%;">
+                                        <tr>
+                                            <td valign="top" class="r7-i" style="padding-left: 15px; padding-right: 15px;">
+                                                <table width="100%" cellspacing="0" cellpadding="0" border="0" role="presentation">
+                                                    <tr>
+                                                        <td class="r19-c nl2go-default-textstyle" align="left"
                                                             style="color: #414141; font-family: Arial; font-size: 16px; word-break: break-word; line-height: 1; text-align: left; valign: top;">
-                                                            <div>
-                                                                <h3 class="default-heading3"
-                                                                    style="margin: 0; color: #1f2d3d; font-family: Arial; font-size: 24px; word-break: break-word;">
-                                                                    {{ commentAuthorName }}</h3>
-                                                            </div>
+                                                            <div><h4 class="default-heading4"
+                                                                     style="margin: 0; color: #1f2d3d; font-family: Arial; font-size: 18px; word-break: break-word;">
+                                                                    <span style="font-size: 18px;">{{ commentAuthorName }}</span></h4></div>
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="r22-c" align="left">
-                                                            <table cellspacing="0" cellpadding="0"
-                                                                border="0" role="presentation"
-                                                                width="399" class="r14-o"
-                                                                style="table-layout: fixed;">
+                                                        <td class="r20-c" align="left">
+                                                            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="446"
+                                                                   class="r14-o" style="table-layout: fixed;">
                                                                 <tr>
-                                                                    <td class="r23-i"
-                                                                        style="padding-bottom: 15px; height: 3px;">
-                                                                        <table width="100%"
-                                                                            cellspacing="0"
-                                                                            cellpadding="0" border="0"
-                                                                            role="presentation">
+                                                                    <td class="r21-i" style="padding-bottom: 15px; height: 3px;">
+                                                                        <table width="100%" cellspacing="0" cellpadding="0" border="0"
+                                                                               role="presentation">
                                                                             <tr>
                                                                                 <td>
-                                                                                    <table width="100%"
-                                                                                        cellspacing="0"
-                                                                                        cellpadding="0"
-                                                                                        border="0"
-                                                                                        role="presentation"
-                                                                                        class="r23-i"
-                                                                                        height="3"
-                                                                                        style="border-top-style: solid; background-clip: border-box; border-top-color: #aaaaaa; border-top-width: 3px; font-size: 3px; line-height: 3px;">
+                                                                                    <table width="100%" cellspacing="0" cellpadding="0" border="0"
+                                                                                           role="presentation" class="r21-i" height="3"
+                                                                                           style="border-top-style: solid; background-clip: border-box; border-top-color: #aaaaaa; border-top-width: 3px; font-size: 3px; line-height: 3px;">
                                                                                         <tr>
-                                                                                            <td height="0" style="font-size: 0px; line-height: 0px;">
-                                                                                                ­</td>
+                                                                                            <td height="0" style="font-size: 0px; line-height: 0px;">­</td>
                                                                                         </tr>
                                                                                     </table>
                                                                                 </td>
@@ -158,23 +142,16 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="r13-c" align="left">
-                                                            <table cellspacing="0" cellpadding="0"
-                                                                border="0" role="presentation"
-                                                                width="100%" class="r24-o"
-                                                                style="table-layout: fixed; width: 100%;">
+                                                            <table cellspacing="0" cellpadding="0" border="0" role="presentation" width="100%"
+                                                                   class="r22-o" style="table-layout: fixed; width: 100%;">
                                                                 <tr>
-                                                                    <td align="left" valign="top"
-                                                                        class="r25-i nl2go-default-textstyle"
+                                                                    <td align="left" valign="top" class="r23-i nl2go-default-textstyle"
                                                                         style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left;">
-                                                                        <div>
-                                                                            <p style="margin: 0;">{{ commentBody }}</p>
-                                                                        </div>
+                                                                        <div><p style="margin: 0;">{{ commentBody }}</p></div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="nl2go-responsive-hide">
-                                                                    <td height="15"
-                                                                        style="font-size: 15px; line-height: 15px;">
-                                                                        ­</td>
+                                                                    <td height="15" style="font-size: 15px; line-height: 15px;">­</td>
                                                                 </tr>
                                                             </table>
                                                         </td>

@@ -33,6 +33,10 @@ class CommentCreatedHandler implements LoggerAwareInterface
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
+        if ($project == null) {
+            return;
+        }
+
         $this->logger->info('WEBHOOK/CommentCreated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,

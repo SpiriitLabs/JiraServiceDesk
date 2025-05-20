@@ -17,4 +17,6 @@ enum RouteCollection: string implements RouteCollectionInterface
     case EDIT = 'issue_edit';
     case TRANSITION_TO = 'issue_transition_to';
     case API_TRANSITION_TO = 'api_issue_transition_to';
+    case ATTACHMENT_PREVIEW = 'issue_attachment_preview';
+    case ATTACHMENT = 'issue_attachment';
 }

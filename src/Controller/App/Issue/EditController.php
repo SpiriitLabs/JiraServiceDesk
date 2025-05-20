@@ -58,6 +58,16 @@ class EditController extends AbstractController
         $project = $this->projectRepository->findOneBy([
             'jiraKey' => $issue->fields->project->key,
         ]);
+        if ($project == null) {
+            $this->addFlash(
+                type: 'danger',
+                message: 'project.flashes.notFound',
+            );
+
+            return $this->redirect(
+                $request->headers->get('referer'),
+            );
+        }
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
 
         if ($project == null) {
