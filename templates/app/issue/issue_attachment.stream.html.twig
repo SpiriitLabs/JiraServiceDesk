@@ -33,3 +33,10 @@
         </div>
     </div>
 </twig:Turbo:Stream:Replace>
+
+{% block empty %}
+    <twig:Turbo:Stream:Replace 
+        target="#issue_view_attachments"
+    >
+    </twig:Turbo:Stream:Replace>
+{% endblock %}

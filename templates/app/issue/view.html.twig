@@ -93,7 +93,37 @@
         <twig:Turbo:Frame
             id="issue_view_attachments"
             src="{{ path('app_issue_view_attachments_stream', {'keyIssue': issue.key}) }}"
+            class="col-xxl-4 col-xl-5"
         >
+                {% trans_default_domain 'app' %}
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ 'issue.attachment.label'|trans }}</h5>
+
+                        {% for _ in 1..2 %}
+                            <div class="card my-1 shadow-none border">
+                                <div class="p-2">
+                                    <div class="col align-items-center">
+                                        <img src="{{ asset('/build/static/images/logo/logo.svg') }}" style="width: 150px" alt="">
+                                        <div class="row align-items-center justify-content-center">
+                                            <div class="col ps-2">
+                                                <a href="#" style="cursor: not-allowed;" class="text-muted fw-bold placeholder-wave"><span class="placeholder col-6"></span></a>
+                                                <p class="mb-0 text-muted placeholder-wave"><span class="placeholder col-5"></span></p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <a href="#" style="cursor: not-allowed;" class="btn btn-link btn-lg text-muted">
+                                                    <i class="ri-download-2-line"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
         </twig:Turbo:Frame>
     </div>
 {% endblock %}

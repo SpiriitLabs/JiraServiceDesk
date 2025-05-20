@@ -89,7 +89,13 @@ class ViewController extends AbstractController
         $issue = $this->handle(new GetFullIssue($keyIssue));
 
         if (count($issue->customAttachments) == 0) {
-            return new Response(status: 200);
+            return $this->renderBlock(
+                view: 'app/issue/issue_attachment.stream.html.twig',
+                block: 'empty',
+                parameters: [
+                    'issue' => $issue,
+                ]
+            );
         }
 
         return $this->render(
