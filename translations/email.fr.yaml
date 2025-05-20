@@ -11,11 +11,9 @@ issue:
 comment:
     created:
         title: "Nouveau commentaire ajouté !"
-        description: "Un nouveau commentaire a été ajouté au ticket « %ticket_name% » du projet « %project_name% ».<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le commentaire"
     updated:
         title: "Commentaire modifié !"
-        description: "Un commentaire a été modifié sur le ticket « %ticket_name% » du projet « %project_name% ».<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le commentaire"
 
 security:

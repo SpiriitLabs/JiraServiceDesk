@@ -11,11 +11,9 @@ issue:
 comment:
     created:
         title: "New comment added!"
-        description: "A new comment has been added to the ticket \"%ticket_name%\" in the project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View comment"
     updated:
         title: "Comment updated!"
-        description: "A comment has been updated on the ticket \"%ticket_name%\" in the project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View comment"
 
 security:
