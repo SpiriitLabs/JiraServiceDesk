@@ -57,15 +57,22 @@ class IssueKanbanFormatter
                 );
 
             if (! $allBacklog) {
-                $transitionId = null;
-                if (count($columnConfiguration->statuses) > 0 && $columnConfiguration->statuses[0]->id !== null) {
-                    $transitionId = $this->findTransitionId($firstIssue, $columnConfiguration->statuses[0]->id);
+                $transitions = [];
+                foreach ($columnConfiguration->statuses as $status) {
+                    foreach ($firstIssue->transitions as $transition) {
+                        if ($transition->to->id === $status->id) {
+                            $transitions[] = [
+                                'id' => $transition->id,
+                                'name' => $transition->to->name,
+                            ];
+                        }
+                    }
                 }
 
                 $result[$columnConfiguration->name] = [
                     'min' => $columnConfiguration->min,
                     'max' => $columnConfiguration->max,
-                    'transitionId' => $transitionId,
+                    'transitionIds' => $transitions,
                     'issues' => [],
                 ];
             }

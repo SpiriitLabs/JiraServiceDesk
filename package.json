@@ -44,6 +44,7 @@
         "jquery": "^3.7.1",
         "quill": "^2.0.3",
         "simplebar": "^6.2.7",
+        "sweetalert2": "^11.21.2",
         "tom-select": "^2.4.1"
     }
 }

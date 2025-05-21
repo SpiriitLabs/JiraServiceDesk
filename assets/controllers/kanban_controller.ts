@@ -1,13 +1,16 @@
 // @ts-ignore
 import { Controller } from '@hotwired/stimulus';
 import dragula from "dragula";
+import Swal from 'sweetalert2';
 
 export default class extends Controller {
   static values = {
-    columns: String
+    columns: String,
+    selectInputTitle: String,
   };
 
   declare readonly columnsValue: string;
+  declare readonly selectInputTitleValue: string;
   private drake: any;
 
   connect(): void {
@@ -19,29 +22,64 @@ export default class extends Controller {
   }
 
   public createSortableKanban(): void {
-    var divElements: HTMLDivElement[] = [];
-    JSON.parse(this.columnsValue).forEach((column: string) => {
-      divElements.push(<HTMLDivElement>document.getElementById(column));
-    })
+    const divElements: HTMLDivElement[] = [];
+    JSON.parse(this.columnsValue).forEach((columnId: string) => {
+      divElements.push(document.getElementById(columnId) as HTMLDivElement);
+    });
 
     this.drake = dragula(divElements);
 
-    this.drake.on('drop', async (element: Element, target: Element, source: Element, sibling: Element) => {
-      // @ts-ignore
-      const transitionId = target.dataset.kanbanTransitionId;
-      // @ts-ignore
-      const issueId = element.dataset.issueId;
+    this.drake.on('drop', async (element: Element, target: Element) => {
+      const issueId = element.getAttribute('data-issue-id');
+      const transitionData = target.getAttribute('data-kanban-transition-ids');
 
-      console.log(issueId, transitionId);
+      if (!issueId || !transitionData) {
+        console.warn("Missing data for issue or column.");
+        return;
+      }
 
+      let transitions;
       try {
-        const response = await fetch(`/app/api/issue/${issueId}/transition/${transitionId}`, {
-          method: 'POST',
+        transitions = JSON.parse(transitionData);
+      } catch (e) {
+        console.error("Invalid transition JSON:", transitionData);
+        return;
+      }
+
+      let selectedTransitionId;
+
+      if (transitions.length === 1) {
+        selectedTransitionId = transitions[0].id;
+      } else {
+        const options = transitions.reduce((acc: Record<string, string>, t: any) => {
+          acc[t.id] = t.name;
+          return acc;
+        }, {});
+
+        const result = await Swal.fire({
+          title: this.selectInputTitleValue,
+          input: 'select',
+          inputOptions: options,
+          showCancelButton: true,
+          allowOutsideClick: true,
+          allowEscapeKey: true,
         });
 
-        if (!response.ok) {
-          throw new Error('API error');
+        if (!result.isConfirmed || !result.value) {
+          window.location.reload();
+          return;
         }
+
+        selectedTransitionId = result.value;
+      }
+
+      try {
+        const response = await fetch(`/app/api/issue/${issueId}/transition/${selectedTransitionId}`, {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        });
+
+        if (!response.ok) throw new Error('Failed to update issue');
 
       } catch (error) {
         console.error("❌ Failed to update issue transition:", error);
@@ -49,6 +87,4 @@ export default class extends Controller {
       }
     });
   }
-
 }
-
