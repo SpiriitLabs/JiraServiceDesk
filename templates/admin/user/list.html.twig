@@ -32,7 +32,7 @@
             </div>
         </twig:block>
 
-        {% block tableTh %}
+        <twig:block name="tableTh">
             {% trans_default_domain 'app' %}
 
             <th>
@@ -59,10 +59,16 @@
                     'property': 'company',
                 } %}
             </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'user.enabled.label'|trans,
+                    'property': 'enabled',
+                } %}
+            </th>
             <th class="min"></th>
-        {% endblock %}
+        </twig:block>
 
-        {% block tableTd %}
+        <twig:block name="tableTd">
             <td>{{ object.email }}</td>
             <td>{{ object.firstName }}</td>
             <td>{{ object.lastName }}</td>
@@ -72,6 +78,9 @@
                 {% else %}
                     -
                 {% endif %}
+            </td>
+            <td>
+                <twig:bool data="{{ object.enabled }}"></twig:bool>
             </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">
@@ -87,6 +96,6 @@
                     button_link: path('admin_user_delete', {id: object.id}),
                 } %}
             </td>
-        {% endblock %}
+        </twig:block>
     </twig:list:list>
 {% endblock %}

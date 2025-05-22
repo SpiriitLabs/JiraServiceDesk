@@ -1,7 +1,7 @@
 {
     "name": "romainmillan-jiraservicedesk",
     "description": "A jira service desk client application.",
-    "version": "0.9.0",
+    "version": "0.11.0",
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
@@ -32,6 +32,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@marker.io/browser": "^0.20.2",
         "@popperjs/core": "^2.11.8",
         "@types/dragula": "^3.7.5",
         "@types/quill": "^2.0.14",
@@ -44,6 +45,7 @@
         "jquery": "^3.7.1",
         "quill": "^2.0.3",
         "simplebar": "^6.2.7",
+        "sweetalert2": "^11.21.2",
         "tom-select": "^2.4.1"
     }
 }

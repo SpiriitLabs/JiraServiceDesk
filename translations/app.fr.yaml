@@ -17,6 +17,9 @@ action:
   filter: "Filtrer"
   next: "Suivant"
 
+yes: "Oui"
+no: "Non"
+
 locale:
   label: "Langue"
   fr: "Français"
@@ -132,6 +135,8 @@ user:
     label: "Recevoir une notification lors de la création d’un commentaire"
   preferenceNotificationCommentUpdated:
     label: "Recevoir une notification lors de la modification d’un commentaire"
+  enabled:
+    label: "Compte actif"
 
 profile:
   label: "Profil"
@@ -170,6 +175,9 @@ project:
     alreadyExist: "Cette clé de projet est déjà utilisée."
     created: "Projet créé avec succès. Veuillez sélectionner les statuts du backlog et les rôles des utilisateurs pouvant être assignés."
     notFound: "Projet non trouvée"
+  kanban:
+    selectTransition:
+      title: 'Sélectionner le status'
 
 issue:
   label: "Ticket(s)"
@@ -222,6 +230,7 @@ security:
     label: "Connexion"
     sign_in: "Se connecter"
     sign_in_catch_phrase: "pour accéder à l’application"
+    account_disable: "Votre compte est désactivée"
     action: "Connexion"
   check_email:
     label: "Vérification de l’adresse e-mail"

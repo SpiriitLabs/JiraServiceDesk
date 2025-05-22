@@ -57,13 +57,6 @@ class SearchIssuesHandler
             ;
         }
 
-        if ($query->filter !== null && $query->filter->query !== null) {
-            $jql
-                ->addExpression('text', '~', $query->filter->query)
-                ->addExpression('summary', '~', $query->filter->query)
-            ;
-        }
-
         if ($query->filter !== null && $query->filter->statusesIds !== null) {
             if (count($query->filter->statusesIds) === 0) {
                 return new SearchIssuesResult(total: 0);
@@ -71,6 +64,28 @@ class SearchIssuesHandler
 
             $jql->addInExpression('status', $query->filter->statusesIds);
         }
+
+        $jqlQueryString = $jql->getQuery();
+        if ($query->filter !== null && $query->filter->query !== null) {
+            $filterJqlQuery = new JqlQuery();
+            $filterJqlQuery
+                ->addExpression('text', '~', $query->filter->query, '')
+                ->addExpression('summary', '~', $query->filter->query, JqlQuery::KEYWORD_OR)
+                ->addExpression('textfields', '~', $query->filter->query, JqlQuery::KEYWORD_OR)
+            ;
+
+            if (preg_match('/^[A-Z0-9]+-\d+$/i', $query->filter->query)) {
+                $filterJqlQuery = new JqlQuery();
+                $filterJqlQuery
+                    ->addExpression('issuekey', '=', strtoupper($query->filter->query), JqlQuery::KEYWORD_OR)
+                ;
+            }
+
+            $jql
+                ->addAnyExpression('and (' . $filterJqlQuery->getQuery() . ')')
+            ;
+        }
+        $jql->addAnyExpression(sprintf('%s %s %s', JqlQuery::KEYWORD_ORDER_BY, $query->sort->by, $query->sort->dir));
 
         $issues_fields = [
             'id',
@@ -82,7 +97,6 @@ class SearchIssuesHandler
             'timeoriginalestimate',
             'created',
         ];
-        $jql->addAnyExpression(sprintf('%s %s %s', JqlQuery::KEYWORD_ORDER_BY, $query->sort->by, $query->sort->dir));
         $issues = $this->service->search(
             jql: $jql->getQuery(),
             nextPageToken: $query->pageToken ?? '',

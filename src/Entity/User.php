@@ -116,14 +116,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Versioned]
     public bool $hasCompletedIntroduction = false;
 
-    public function __construct(?string $email, ?string $firstName, ?string $lastName, ?string $company = null)
-    {
+    #[ORM\Column(type: Types::BOOLEAN)]
+    #[Versioned]
+    public bool $enabled = true;
+
+    public function __construct(
+        ?string $email,
+        ?string $firstName,
+        ?string $lastName,
+        ?string $company = null,
+        bool $enabled = true
+    ) {
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
+        $this->enabled = $enabled;
     }
 
     public function getId(): ?int

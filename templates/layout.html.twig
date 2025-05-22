@@ -8,6 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="shortcut icon" href="{{ asset('/build/static/images/logo/favicon.ico') }}" type="image/ico">
     <title>{% block title 'JiraServiceDesk' %} - {{ 'title.all'|trans }}</title>
+
+    <link rel="shortcut icon" href="{{ asset('build/static/images/logo/logo.png') }}">
+    <link rel="mask-icon" href="{{ asset('build/static/images/logo/icon.png') }}" color="#FAFBFE">
     <link rel="manifest" href="{{ asset('build/static/pwa/site.webmanifest') }}">
 
     {% block stylesheets %}
@@ -21,7 +24,7 @@
         {% block notifications '' %}
     {% endblock %}
 </head>
-<body {{ stimulus_controller('theme') }} id="body">
+<body {{ stimulus_controller('theme marker_io') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }} id="body">
     <div class="toast-container position-fixed bottom-0 end-0 p-3" {{ stimulus_controller('flash') }} id="toastsNotifications">
         {% for type, messages in app.flashes %}
             {% for message in messages %}

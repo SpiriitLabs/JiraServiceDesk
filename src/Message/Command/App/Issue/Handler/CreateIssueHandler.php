@@ -13,6 +13,7 @@ use JiraCloud\ADF\AtlassianDocumentFormat;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueType;
+use JiraCloud\Issue\Priority;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -45,9 +46,12 @@ class CreateIssueHandler
             ->setDescription(
                 new AtlassianDocumentFormat($adfDocument)
             )
-            ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
+
+        $jiraPriority = new Priority();
+        $jiraPriority->id = (string) $command->priority->jiraId;
+        $issue->priority = $jiraPriority;
 
         if ($command->assignee !== 'null') {
             $issue->setAssigneeAccountId($command->assignee);

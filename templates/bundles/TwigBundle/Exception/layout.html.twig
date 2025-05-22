@@ -55,7 +55,7 @@
 </div>
 
 <footer class="footer footer-alt">
-    2023 - {{ 'now'|date('Y') }} © Romain MILLAN - <a class="ms-1" href="https://romainmillan.fr">romainmillan.fr</a>
+    2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
 </footer>
 </body>
 </html>

@@ -9,6 +9,7 @@ use App\Repository\Jira\IssueRepository;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueType;
+use JiraCloud\Issue\Priority;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -31,9 +32,12 @@ class EditIssueHandler
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId($command->project->jiraId)
             ->setSummary($command->summary)
-            ->setPriorityNameAsString($command->priority->name)
             ->addLabelAsString('from-client')
         ;
+
+        $jiraPriority = new Priority();
+        $jiraPriority->id = (string) $command->priority->jiraId;
+        $issueField->priority = $jiraPriority;
 
         if ($command->assignee !== 'null') {
             $issueField->setAssigneeAccountId($command->assignee);
