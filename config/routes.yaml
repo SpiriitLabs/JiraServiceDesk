@@ -21,8 +21,7 @@ admin:
     name_prefix: admin_
     prefix: admin
     
-when@dev:
-    redirect:
-        path: /
-        controller: App\Controller\Security\LoginController::__invoke
+redirect:
+    path: /
+    controller: App\Controller\Security\LoginController::__invoke
 
