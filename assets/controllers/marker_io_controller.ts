@@ -11,6 +11,7 @@ export default class extends Controller {
 
   connect(): void {
     console.log("💄 Marker.IO controller connected.");
+    console.log(this.projectIdValue);
     if (this.projectIdValue !== null && this.projectIdValue !== "") {
       this.initializeMarker(this.projectIdValue);
     } else {
