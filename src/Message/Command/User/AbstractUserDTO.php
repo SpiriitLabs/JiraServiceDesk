@@ -26,6 +26,7 @@ class AbstractUserDTO
         public bool $preferenceNotificationIssueUpdated = true,
         public bool $preferenceNotificationCommentCreated = true,
         public bool $preferenceNotificationCommentUpdated = true,
+        public bool $enabled = true,
     ) {
     }
 }

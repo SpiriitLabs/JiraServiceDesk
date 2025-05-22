@@ -33,6 +33,7 @@ readonly class CreateUserHandler
             firstName: $command->firstName,
             lastName: $command->lastName,
             company: $command->company,
+            enabled: $command->enabled,
         );
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferedLocale;

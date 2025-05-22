@@ -1,0 +1,4 @@
+{% trans_default_domain 'app' %}
+
+{% set text = (data ? 'yes'|trans : 'no'|trans) %}
+<span class="badge badge-lg fs-6 {{ data ? 'bg-success' : 'bg-danger' }}">{{ text }}</span>
