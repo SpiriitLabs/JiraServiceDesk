@@ -32,6 +32,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@marker.io/browser": "^0.20.2",
         "@popperjs/core": "^2.11.8",
         "@types/dragula": "^3.7.5",
         "@types/quill": "^2.0.14",
