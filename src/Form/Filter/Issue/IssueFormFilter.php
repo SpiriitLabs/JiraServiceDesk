@@ -27,13 +27,20 @@ class IssueFormFilter extends AbstractFilterType
         $builder
             ->add('query', TextType::class, [
                 'required' => false,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'filter.query.label',
+                ],
             ])
             ->add('projects', EntityType::class, [
                 'class' => Project::class,
                 'required' => false,
                 'multiple' => true,
                 'autocomplete' => true,
-                'label' => 'project.label',
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'project.label',
+                ],
                 'choice_label' => 'name',
                 'query_builder' => function (ProjectRepository $projectRepository) use ($user) {
                     return $projectRepository->getByUser($user);
