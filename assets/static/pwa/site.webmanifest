@@ -1,0 +1,15 @@
+{
+    "name": "Jira Service Desk",
+    "short_name": "ServiceDesk",
+    "icons": [
+        {
+            "src": "./icons/icon.png",
+            "type": "image/png",
+            "sizes": "any"
+        }
+    ],
+    "start_url": "/app/dashboard",
+    "display": "standalone",
+    "theme_color": "#2784FF",
+    "background_color": "#FAFBFE"
+}
