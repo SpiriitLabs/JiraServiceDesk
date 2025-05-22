@@ -118,7 +118,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::BOOLEAN)]
     #[Versioned]
-    public bool $enabled = false;
+    public bool $enabled = true;
 
     public function __construct(
         ?string $email,
