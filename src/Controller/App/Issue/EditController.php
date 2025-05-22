@@ -86,6 +86,7 @@ class EditController extends AbstractController
                 issue: $issue,
                 issueType: $this->issueTypeRepository->findOneBy([
                     'jiraId' => $issue->fields->issuetype->id,
+                    'project' => $project,
                 ]),
                 priority: $this->priorityRepository->findOneBy([
                     'jiraId' => $issue->fields->priority->id,
