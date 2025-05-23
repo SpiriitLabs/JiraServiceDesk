@@ -72,15 +72,6 @@ class EditController extends AbstractController
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
         $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
 
-        if ($project == null) {
-            $this->addFlash(
-                type: 'danger',
-                message: 'flash.error',
-            );
-
-            return $this->redirect($request->headers->get('referer'));
-        }
-
         $form = $this->createForm(
             type: EditIssueFormType::class,
             data: new EditIssue(
