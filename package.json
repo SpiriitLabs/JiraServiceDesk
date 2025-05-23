@@ -1,7 +1,7 @@
 {
     "name": "romainmillan-jiraservicedesk",
     "description": "A jira service desk client application.",
-    "version": "0.11.0",
+    "version": "0.11.2",
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
@@ -45,7 +45,7 @@
         "jquery": "^3.7.1",
         "quill": "^2.0.3",
         "simplebar": "^6.2.7",
-        "sweetalert2": "^11.21.2",
+        "sweetalert2": "^11",
         "tom-select": "^2.4.1"
     }
 }
