@@ -1,0 +1,30 @@
+parameters:
+    #  https://github.com/getsentry/sentry-symfony/issues/488
+    sentry.tracing.enabled: false
+
+sentry:
+  dsn: '%env(SENTRY_DSN)%'
+  options:
+    in_app_include:
+      - '%kernel.project_dir%'
+    environment: '%kernel.environment%'
+    error_types: E_ALL & ~E_DEPRECATED & ~E_NOTICE
+    send_default_pii: true
+    integrations:
+      - Sentry\Integration\RequestIntegration
+    ignore_exceptions:
+      - Symfony\Component\Console\Exception\CommandNotFoundException
+      - Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
+      - Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+      - Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
+      - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+      - Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
+      - Symfony\Component\Security\Core\Exception\AccessDeniedException
+
+services:
+  Sentry\Integration\RequestIntegration: ~
+
+when@test:
+  sentry:
+    tracing:
+      enabled: false

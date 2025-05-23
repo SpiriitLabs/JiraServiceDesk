@@ -23,6 +23,7 @@
         "pagerfanta/pagerfanta": "^2.0.1",
         "pagerfanta/twig": "^4.7.1",
         "runtime/frankenphp-symfony": "^0.2.0",
+        "sentry/sentry-symfony": "^5.2",
         "spiriitlabs/form-filter-bundle": "^12",
         "stof/doctrine-extensions-bundle": "^1.14",
         "symfony/console": "7.2.*",
