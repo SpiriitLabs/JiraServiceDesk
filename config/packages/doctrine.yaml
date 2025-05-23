@@ -18,13 +18,6 @@ doctrine:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
         mappings:
-            gedmo_loggable:
-                type: attribute
-                prefix: Gedmo\Loggable\Entity
-                dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/src/Loggable/Entity"
-                alias: GedmoLoggable # (optional) it will default to the name set for the mapping
-                is_bundle: false
-                
             App:
                 type: attribute
                 is_bundle: false

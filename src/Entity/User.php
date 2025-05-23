@@ -10,10 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Blameable\Traits\BlameableEntity;
-use Gedmo\Mapping\Annotation\Loggable;
 use Gedmo\Mapping\Annotation\SoftDeleteable;
-use Gedmo\Mapping\Annotation\Versioned;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -22,13 +19,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
-#[Loggable]
 #[SoftDeleteable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
-    use BlameableEntity;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,14 +31,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
-    #[Versioned]
     public ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Versioned]
     private array $roles = [];
 
     /**
@@ -53,11 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Versioned]
     public ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
-    #[Versioned]
     private ?string $lastName = null;
 
     public string $fullName {
@@ -69,15 +60,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Versioned]
     public ?string $company = null;
 
     #[ORM\Column(nullable: false, enumType: Locale::class)]
-    #[Versioned]
     public Locale $preferredLocale = Locale::FR;
 
     #[ORM\Column(nullable: false, enumType: Theme::class)]
-    #[Versioned]
     public Theme $preferredTheme = Theme::AUTO;
 
     /**
@@ -93,31 +81,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $favorites;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $preferenceNotification = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $preferenceNotificationIssueCreated = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $preferenceNotificationIssueUpdated = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $preferenceNotificationCommentCreated = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $preferenceNotificationCommentUpdated = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $hasCompletedIntroduction = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    #[Versioned]
     public bool $enabled = true;
 
     public function __construct(
@@ -207,17 +188,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getLoggable(): string
-    {
-        return sprintf(
-            '[%s] %s %s (%s)',
-            $this->id,
-            $this->firstName,
-            $this->lastName,
-            $this->email,
-        );
     }
 
     /**
