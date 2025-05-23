@@ -5,6 +5,7 @@ namespace App\Controller\App\Project;
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\Project;
 use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,8 @@ class BoardViewController extends AbstractController
         Project $project,
         string $idBoard,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
+
         return $this->render(
             view: 'app/project/board_view.html.twig',
             parameters: [
@@ -53,6 +56,7 @@ class BoardViewController extends AbstractController
         string $idBoard,
         Request $request,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $kanbanIssuesFormatted = $this->handle(
             new GetKanbanIssueByBoardId($project, $idBoard),

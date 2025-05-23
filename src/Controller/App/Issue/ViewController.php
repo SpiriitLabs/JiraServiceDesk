@@ -9,6 +9,7 @@ use App\Message\Command\App\Issue\CreateComment;
 use App\Message\Query\App\Issue\GetFullIssue;
 use App\Message\Query\App\Project\GetProjectByJiraKey;
 use App\Repository\Jira\IssueRepository;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +46,9 @@ class ViewController extends AbstractController
         $issue = $this->jiraIssueRepository->getFull($keyIssue);
         $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
         $project = $keyProject !== null ? $this->handle(new GetProjectByJiraKey(jiraKey: $keyProject)) : null;
+        if ($project !== null) {
+            $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
+        }
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);

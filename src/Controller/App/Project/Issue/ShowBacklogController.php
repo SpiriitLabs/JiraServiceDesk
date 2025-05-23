@@ -7,6 +7,7 @@ use App\Entity\Project;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\Filter\IssueFilter;
 use App\Model\SearchIssuesResult;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,7 @@ class ShowBacklogController extends AbstractController
         Project $project,
         Request $request,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $page = $request->get('page', null);
         $defaultSort = 'id';

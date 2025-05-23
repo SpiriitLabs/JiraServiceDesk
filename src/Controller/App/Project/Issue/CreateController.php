@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Message\Query\App\Issue\GetIssueAssignableUsers;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,6 +35,7 @@ class CreateController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
 
         $form = $this->createForm(
