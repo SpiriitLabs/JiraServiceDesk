@@ -4,6 +4,7 @@ namespace App\Controller\App\Project;
 
 use App\Entity\Project;
 use App\Repository\Jira\ProjectRepository;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,7 @@ class StreamViewController extends AbstractController
         Project $project,
         Request $request,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 
         return $this->render(

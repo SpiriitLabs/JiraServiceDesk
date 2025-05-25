@@ -4,6 +4,7 @@ namespace App\Controller\App\Project\Board;
 
 use App\Entity\Project;
 use App\Repository\Jira\BoardRepository;
+use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,6 +34,7 @@ class StreamListController extends AbstractController
         Project $project,
         Request $request,
     ): Response {
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $boards = $this->jiraBoardRepository->getBoardByProject($project);
 

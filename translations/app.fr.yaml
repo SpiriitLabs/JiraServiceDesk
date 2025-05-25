@@ -119,7 +119,7 @@ user:
     label: "Rôle(s)"
     role_admin: "Administrateur"
     role_user: "Utilisateur"
-    role_app_can_assignee: "[APPLICATION] Peut être assigné"
+    role_app_can_assignee: "[APPLICATION] Peut assigné des tickets"
     role_app_can_view_backlog: "[APPLICATION] Accès au backlog des projets"
   preferedLocale:
     label: "Langue préférée"

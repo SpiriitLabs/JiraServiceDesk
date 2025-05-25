@@ -11,6 +11,7 @@ use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use App\Repository\IssueTypeRepository;
 use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
+use App\Security\Voter\ProjectVoter;
 use JiraCloud\Issue\Issue;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,15 +70,7 @@ class EditController extends AbstractController
             );
         }
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
-
-        if ($project == null) {
-            $this->addFlash(
-                type: 'danger',
-                message: 'flash.error',
-            );
-
-            return $this->redirect($request->headers->get('referer'));
-        }
+        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
 
         $form = $this->createForm(
             type: EditIssueFormType::class,
