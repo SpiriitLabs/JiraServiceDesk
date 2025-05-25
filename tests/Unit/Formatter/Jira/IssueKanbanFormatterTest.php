@@ -23,7 +23,7 @@ class IssueKanbanFormatterTest extends TestCase
     {
         $this->formatter = new IssueKanbanFormatter();
         $this->project = $this->createMock(Project::class);
-        $this->project->backlogStatusesIds = ['1000'];
+        $this->project->backlogStatusesIds = ['10000'];
     }
 
     #[Test]
