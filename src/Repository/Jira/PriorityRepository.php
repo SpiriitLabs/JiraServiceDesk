@@ -2,7 +2,7 @@
 
 namespace App\Repository\Jira;
 
-use JiraCloud\JiraException;
+use JiraCloud\Issue\Priority;
 use JiraCloud\Priority\PriorityService;
 
 class PriorityRepository
@@ -14,12 +14,11 @@ class PriorityRepository
         $this->service = new PriorityService();
     }
 
+    /**
+     * @return Priority[]
+     */
     public function getAll(): array
     {
-        try {
-            return $this->service->getAll();
-        } catch (JiraException $exception) {
-            return [];
-        }
+        return $this->service->getAll();
     }
 }

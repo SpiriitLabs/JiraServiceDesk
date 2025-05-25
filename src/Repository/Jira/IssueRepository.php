@@ -20,18 +20,14 @@ class IssueRepository
         $this->service = new IssueService();
     }
 
-    public function getFull(string $issueId): ?Issue
+    public function getFull(string $issueId): Issue
     {
-        try {
-            return $this->service->get(
-                issueIdOrKey: $issueId,
-                paramArray: [
-                    'expand' => 'renderedFields,transitions',
-                ]
-            );
-        } catch (JiraException $e) {
-            return null;
-        }
+        return $this->service->get(
+            issueIdOrKey: $issueId,
+            paramArray: [
+                'expand' => 'renderedFields,transitions',
+            ]
+        );
     }
 
     public function getCommentForIssue(string $issueId): Comments
@@ -49,25 +45,17 @@ class IssueRepository
         }
     }
 
-    public function createComment(string $id, Comment $comment): ?Comment
+    public function createComment(string $id, Comment $comment): Comment
     {
-        try {
-            return $this->service->addComment($id, $comment);
-        } catch (JiraException $e) {
-            return null;
-        }
+        return $this->service->addComment($id, $comment);
     }
 
     /**
-     * @return array|Attachment[]
+     * @return Attachment[]
      */
     public function createAttachment(string $id, string $filePath): array
     {
-        try {
-            return $this->service->addAttachments($id, $filePath);
-        } catch (JiraException $e) {
-            return [];
-        }
+        return $this->service->addAttachments($id, $filePath);
     }
 
     public function transitionTo(string $id, string $transitionId): void
@@ -81,21 +69,13 @@ class IssueRepository
         );
     }
 
-    public function create(IssueField $issueField): ?Issue
+    public function create(IssueField $issueField): Issue
     {
-        try {
-            return $this->service->create($issueField);
-        } catch (JiraException $e) {
-            return null;
-        }
+        return $this->service->create($issueField);
     }
 
     public function update(Issue $issue, IssueField $issueField): ?string
     {
-        try {
-            return $this->service->update($issue->key, $issueField);
-        } catch (JiraException $e) {
-            return null;
-        }
+        return $this->service->update($issue->key, $issueField);
     }
 }

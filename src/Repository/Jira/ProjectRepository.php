@@ -2,7 +2,7 @@
 
 namespace App\Repository\Jira;
 
-use JiraCloud\JiraException;
+use JiraCloud\Issue\IssueType;
 use JiraCloud\Project\Project;
 use JiraCloud\Project\ProjectService;
 
@@ -17,28 +17,19 @@ class ProjectRepository
 
     public function get(string $key): ?Project
     {
-        try {
-            return $this->service->get($key);
-        } catch (JiraException $jiraException) {
-            return null;
-        }
+        return $this->service->get($key);
     }
 
     public function getRoles(string $key): array
     {
-        try {
-            return $this->service->getProjectRoles($key);
-        } catch (JiraException $jiraException) {
-            return [];
-        }
+        return $this->service->getProjectRoles($key);
     }
 
+    /**
+     * @return IssueType[]
+     */
     public function getStatuses(string $key): array
     {
-        try {
-            return $this->service->getStatuses($key);
-        } catch (JiraException $jiraException) {
-            return [];
-        }
+        return $this->service->getStatuses($key);
     }
 }
