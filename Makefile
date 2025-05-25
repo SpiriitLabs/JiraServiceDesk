@@ -134,7 +134,7 @@ db-dump: ## Save database to a sql file
 ##
 ## —— Tests 📊 & Code Quality ✅————————————————
 .PHONY: test
-tests: quality phpunit infection ## Runs quality code & tests
+tests: quality phpunit ## Runs quality code & tests
 
 .PHONY: phpunit
 phpunit: ## Runs unit tests

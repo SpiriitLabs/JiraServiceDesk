@@ -38,3 +38,13 @@ private/uploads/*
 ###< romainmillan/jira-service-desk ###
 
 .DS_Store
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###

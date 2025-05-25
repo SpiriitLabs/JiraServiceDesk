@@ -115,12 +115,17 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7.1",
+        "phpunit/phpunit": "^12.1",
+        "slevomat/coding-standard": "^8.18.1",
+        "symfony/browser-kit": "7.2.*",
+        "symfony/css-selector": "7.2.*",
         "symfony/debug-bundle": "7.2.*",
         "symfony/maker-bundle": "^1.63.0",
+        "symfony/phpunit-bridge": "^7.2",
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
         "symplify/coding-standard": "^12.4.2",
         "symplify/easy-coding-standard": "^12.5.18",
-        "slevomat/coding-standard": "^8.18.1"
+        "zenstruck/foundry": "^2.5"
     }
 }
