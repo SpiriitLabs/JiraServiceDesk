@@ -24,13 +24,13 @@
                             <div class="row">
                                 <div class="col-sm-10 col-md-12">
                                     {% set createdDate = entity.createdAt ? entity.createdAt|date('d/m/Y H:i') : '-' %}
-                                    {{ 'blameable.created'|trans({'%date%': createdDate, '%user%':  entity.createdBy|default('-')}) }}
+                                    {{ 'blameable.created'|trans({'%date%': createdDate}) }}
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-10 col-md-12">
                                     {% set updatedDate = entity.updatedAt ? entity.updatedAt|date('d/m/Y H:i') : '-' %}
-                                    {{ 'blameable.updated'|trans({'%date%': updatedDate, '%user%':  entity.updatedBy|default('-')}) }}
+                                    {{ 'blameable.updated'|trans({'%date%': updatedDate}) }}
                                 </div>
                             </div>
                         </div>

@@ -19,16 +19,20 @@
         {{ 'action.return'|trans }}
     </a>
 
-    <twig:app:favorite:favorite
-            code="issue-{{ key }}"
-            name="{{ 'issue.label'|trans}} #{{ key }}"
-            link="{{ absolute_url(path('app_issue_view', {keyIssue: key})) }}"
-    />
-
     <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="btn btn-secondary">
         <i class="mdi mdi-pencil"></i>
         {{ 'action.edit'|trans }}
     </a>
+
+    <twig:Turbo:Frame
+        id="favorite"
+        src="{{ path('app_favorite_stream', {
+            'code': app.user.id ~ '-favorite-issue-'~key,
+            'link': absolute_url(path('app_issue_view', {'keyIssue': key}))|url_encode,
+            'name': ' #' ~ key ~ ' - "' ~ issue.fields.summary ~ '"',
+        }) }}"
+    >
+    </twig:Turbo:Frame>
 {% endblock %}
 
 {% block content %}
@@ -113,7 +117,7 @@
                                             </div>
                                             <div class="col-auto">
                                                 <a href="#" style="cursor: not-allowed;" class="btn btn-link btn-lg text-muted">
-                                                    <i class="ri-download-2-line"></i>
+                                                    <i class="mdi mdi-eye"></i>
                                                 </a>
                                             </div>
                                         </div>

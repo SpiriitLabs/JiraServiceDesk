@@ -2,6 +2,7 @@
 
 namespace App\Message\Command\Admin\Project;
 
+use App\Entity\IssueType;
 use App\Entity\Project;
 
 class EditProject extends AbstractProjectDTO
@@ -10,6 +11,7 @@ class EditProject extends AbstractProjectDTO
         public Project $project,
         public array $assignableRolesIds = [],
         public array $backlogStatusesIds = [],
+        public ?IssueType $defaultIssueType = null,
     ) {
         parent::__construct(
             jiraKey: $this->project->jiraKey,
@@ -19,5 +21,6 @@ class EditProject extends AbstractProjectDTO
 
         $this->assignableRolesIds = $this->project->assignableRolesIds;
         $this->backlogStatusesIds = $this->project->backlogStatusesIds;
+        $this->defaultIssueType = $this->project->defaultIssueType;
     }
 }

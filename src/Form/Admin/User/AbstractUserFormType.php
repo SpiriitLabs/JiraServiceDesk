@@ -2,10 +2,14 @@
 
 namespace App\Form\Admin\User;
 
+use App\Entity\Project;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Form\Type\SwitchType;
 use App\Message\Command\User\AbstractUserDTO;
+use App\Message\Command\User\EditUser;
+use App\Repository\ProjectRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -75,6 +79,19 @@ abstract class AbstractUserFormType extends AbstractType
                 'required' => false,
             ])
         ;
+
+        if (is_a($builder->getData(), EditUser::class)) {
+            $builder
+                ->add('defaultProject', EntityType::class, [
+                    'required' => false,
+                    'class' => Project::class,
+                    'choice_label' => fn (Project $project) => $project->name,
+                    'query_builder' => function (ProjectRepository $projectRepository) use ($builder) {
+                        return $projectRepository->getByUser($builder->getData()->user);
+                    },
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

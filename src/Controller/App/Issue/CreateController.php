@@ -46,6 +46,15 @@ class CreateController extends AbstractController
             );
         }
 
+        if ($user->defaultProject !== null) {
+            return $this->redirectToRoute(
+                route: IssueRouteCollection::CREATE->prefixed(),
+                parameters: [
+                    'projectKey' => $user->defaultProject->jiraKey,
+                ],
+            );
+        }
+
         $form = $this->createForm(
             type: SelectProjectFormType::class,
             options: [

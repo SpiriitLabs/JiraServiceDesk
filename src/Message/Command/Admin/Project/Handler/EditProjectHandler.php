@@ -28,6 +28,7 @@ readonly class EditProjectHandler
         $project->jiraId = $jiraProject->id;
         $project->assignableRolesIds = $command->assignableRolesIds;
         $project->backlogStatusesIds = $command->backlogStatusesIds;
+        $project->defaultIssueType = $command->defaultIssueType;
 
         foreach ($project->getUsers() as $projectUser) {
             $project->removeUser($projectUser);

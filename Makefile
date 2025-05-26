@@ -188,9 +188,14 @@ bump:
 		exit 1; \
 	fi
 	@echo "Mise à jour de la version dans composer.json, package.json et .env vers $(VERSION)"
-	@sed -i '' 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(COMPOSER_FILE)
-	@sed -i '' 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(PACKAGE_FILE)
-	@sed -i '' 's/^PROJECT_VERSION=.*/PROJECT_VERSION=$(VERSION)/' $(ENV_FILE)
+	@case "$$(uname)" in \
+		Darwin) SED_OPT="-i ''";; \
+		*) SED_OPT="-i";; \
+	esac; \
+	sed $$SED_OPT 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(COMPOSER_FILE); \
+	sed $$SED_OPT 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(PACKAGE_FILE); \
+	sed $$SED_OPT 's/^PROJECT_VERSION=.*/PROJECT_VERSION=$(VERSION)/' $(ENV_FILE)
+
 
 SERVER ?= rmjsd.p
 DOMAIN ?= rmjsd

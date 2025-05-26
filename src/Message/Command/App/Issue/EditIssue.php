@@ -10,7 +10,7 @@ use JiraCloud\Issue\Issue;
 class EditIssue extends AbstractIssueDTO
 {
     public function __construct(
-        public Project $project,
+        Project $project,
         public Issue $issue,
         IssueType $issueType,
         Priority $priority,
@@ -19,6 +19,7 @@ class EditIssue extends AbstractIssueDTO
     ) {
         parent::__construct(
             summary: $this->issue->fields->summary,
+            project: $project,
             priority: $priority,
             type: $issueType,
             assignee: $assignee,

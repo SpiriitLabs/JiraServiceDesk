@@ -9,7 +9,7 @@
 
     <div class="board">
         {% for columnName , columnValues in kanbanIssues %}
-            <div class="tasks" {% if loop.first %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode, selectInputTitle: 'project.kanban.selectTransition.title'|trans}) }}{% endif %}>
+            <div class="tasks" {% if loop.first and is_granted('ROLE_APP_KANBAN') %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode, selectInputTitle: 'project.kanban.selectTransition.title'|trans}) }}{% endif %}>
                 <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
 
                 <div id="{{ columnName|lower|u.ascii|u.replace(' ', '-') }}" data-kanban-transition-ids='{{ columnValues.transitionIds|json_encode|e('html_attr') }}' class="task-list-items">

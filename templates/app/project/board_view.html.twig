@@ -21,11 +21,15 @@
         {{ 'action.return'|trans }}
     </a>
 
-    <twig:app:favorite:favorite
-        code="{{ entity.jiraKey }}-board-{{ boardId }}"
-        name="{{ 'project.board.label'|trans}} {{ entity.name }}"
-        link="{{ absolute_url(path('app_project_board_view', {idProject: entity.id, idBoard: boardId})) }}"
-    />
+    <twig:Turbo:Frame
+        id="favorite"
+        src="{{ path('app_favorite_stream', {
+            'code': app.user.id ~ '-favorite-project-'~entity.jiraKey~'-board-'~boardId,
+            'link': absolute_url(path('app_project_board_view', {idProject: entity.id, idBoard: boardId}))|url_encode,
+            'name': 'project.board.label'|trans ~ ' ' ~ entity.name,
+        }) }}"
+    >
+    </twig:Turbo:Frame>
 {% endblock %}
 
 {% block content %}

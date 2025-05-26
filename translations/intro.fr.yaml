@@ -15,5 +15,6 @@ menu:
 
 dashboard:
   title: "Tableau de bord"
-  favorites_and_projects: "Consultez vos favoris ainsi que les projets qui vous ont été assignés."
+  favorites: "Consultez vos favoris."
+  projects: "Consultez les projets qui vous ont été assignés."
   assignee_issues: "Retrouvez ici tous les tickets qui vous sont assignés, avec leurs clés de référence et les informations nécessaires pour les traiter efficacement."

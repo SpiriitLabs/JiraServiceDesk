@@ -42,4 +42,9 @@ class IssueType
     {
         return $this->id;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s (%s)', $this->name, $this->description);
+    }
 }

@@ -1,8 +1,8 @@
-<twig:Turbo:Stream:Replace 
+<twig:Turbo:Stream:Replace
     target="#issue_view_attachments"
 >
     {% trans_default_domain 'app' %}
-    
+
     <div class="col-xxl-4 col-xl-5">
         <div class="card">
             <div class="card-body">
@@ -19,9 +19,35 @@
                                         <p class="mb-0 text-muted">{{ attachment.author }}</p>
                                     </div>
                                     <div class="col-auto">
-                                        <a href="{{ path('app_issue_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="btn btn-link btn-lg text-muted">
-                                            <i class="ri-download-2-line"></i>
-                                        </a>
+
+
+                                        <button  type="button" class="btn btn-link btn-lg text-muted" data-bs-toggle="modal" data-bs-target="#full-width-modal">
+                                            <i class="mdi mdi-eye"></i>
+                                        </button>
+                                        <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-full-width">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="fullWidthModalLabel">{{ 'issue.attachment.preview'|trans }}</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                    </div>
+
+                                                    <div class="modal-body d-flex">
+                                                        <img src="{{ path('app_issue_attachment', {'attachmentId': attachment.id}) }}" alt="" style="margin: auto; width: 80%;">
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.exit'|trans }}</button>
+                                                        <a href="{{ path('app_issue_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="btn btn-primary">
+                                                            <i class="ri-download-2-line"></i>
+                                                            {{ 'action.download'|trans }}
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +61,7 @@
 </twig:Turbo:Stream:Replace>
 
 {% block empty %}
-    <twig:Turbo:Stream:Replace 
+    <twig:Turbo:Stream:Replace
         target="#issue_view_attachments"
     >
     </twig:Turbo:Stream:Replace>
