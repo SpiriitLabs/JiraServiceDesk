@@ -25,13 +25,6 @@ class AbstractIssueFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        if ($builder->getData()->type == null) {
-            $builder->getData()
-                ->type = $builder->getData()
-                ->project->defaultIssueType
-            ;
-        }
-
         $builder
             ->add('summary', TextType::class, [
                 'required' => true,

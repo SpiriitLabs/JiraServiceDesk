@@ -6,14 +6,26 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Type\QuillAdfType;
 use App\Message\Command\App\Issue\CreateIssue;
+use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CreateIssueFormType extends AbstractIssueFormType
 {
+    public function __construct(
+        Security $security,
+        #[Autowire(env: 'DEFAULT_PRIORITY_NAME')]
+        private readonly string $defaultPriorityName,
+        private readonly PriorityRepository $priorityRepository,
+    ) {
+        parent::__construct($security);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var User $user */
@@ -24,6 +36,21 @@ class CreateIssueFormType extends AbstractIssueFormType
         $project = $builder->getData()
             ->project
         ;
+
+        if ($builder->getData()->priority == null) {
+            $builder->getData()
+                ->priority = $this->priorityRepository->findOneBy([
+                    'name' => $this->defaultPriorityName,
+                ])
+            ;
+        }
+
+        if ($builder->getData()->type == null) {
+            $builder->getData()
+                ->type = $builder->getData()
+                ->project->defaultIssueType
+            ;
+        }
 
         $options['projectId'] = $project->getId();
         parent::buildForm($builder, $options);
