@@ -4,8 +4,6 @@ namespace App\Controller\App;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\User;
-use App\Message\Query\App\Issue\SearchIssues;
-use App\Model\SearchIssuesResult;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,21 +23,10 @@ class DashboardController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
-        /** @var SearchIssuesResult $searchIssueResult */
-        $searchIssueResult = $this->handle(
-            new SearchIssues(
-                sort: 'id',
-                user: $user,
-                maxIssuesResults: 200,
-                onlyUserAssigned: true,
-            )
-        );
-
         return $this->render(
             view: 'app/dashboard.html.twig',
             parameters: [
                 'projects' => $user->getProjects(),
-                'searchIssuesResult' => $searchIssueResult,
             ]
         );
     }
