@@ -4,7 +4,9 @@ namespace App\Repository\Jira;
 
 use App\Entity\Project;
 use JiraCloud\Board\Board;
+use JiraCloud\Board\BoardColumnConfig;
 use JiraCloud\Board\BoardService;
+use JiraCloud\Issue\AgileIssue;
 use JiraCloud\JiraException;
 
 class BoardRepository
@@ -30,35 +32,25 @@ class BoardRepository
         }
     }
 
-    public function getBoardById(string $id): ?Board
-    {
-        try {
-            return $this->service->getBoard($id);
-        } catch (JiraException $jiraException) {
-            return null;
-        }
-    }
-
     /**
-     * @param array<mixed> $parameters
+     * @return AgileIssue[]
      */
     public function getBoardIssuesById(string $id, array $parameters = []): array
     {
         try {
-            return $this->service->getBoardIssues($id, $parameters)
-                ->getArrayCopy()
-            ;
+            $issues = $this->service->getBoardIssues($id, $parameters);
+            if ($issues == null) {
+                return [];
+            }
+
+            return $issues->getArrayCopy();
         } catch (JiraException $jiraException) {
             return [];
         }
     }
 
-    public function getBoardConfigurationById(string $id, array $parameters = []): ?\JiraCloud\Board\BoardColumnConfig
+    public function getBoardConfigurationById(string $id, array $parameters = []): ?BoardColumnConfig
     {
-        try {
-            return $this->service->getBoardColumnConfiguration($id, $parameters);
-        } catch (JiraException $jiraException) {
-            return null;
-        }
+        return $this->service->getBoardColumnConfiguration($id, $parameters);
     }
 }
