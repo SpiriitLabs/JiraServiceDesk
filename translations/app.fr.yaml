@@ -122,6 +122,8 @@ user:
     role_user: "Utilisateur"
     role_app_can_assignee: "[APPLICATION] Peut assigné des tickets"
     role_app_can_view_backlog: "[APPLICATION] Accès au backlog des projets"
+    role_app_kanban: "[APPLICATION] Peut utiliser les kanbans"
+    role_app_view_kanban: "[APPLICATION] Peut voir les kanbans"
   preferedLocale:
     label: "Langue préférée"
   preferedTheme:
