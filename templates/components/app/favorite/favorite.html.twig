@@ -1,17 +1,41 @@
-{% props code = '', link = '#', name = '' %}
+{% block add %}
+    <twig:Turbo:Stream:Replace
+        target="#favorite"
+    >
+        {% trans_default_domain 'app' %}
 
-<div data-turbo="false">
-    {% if app.user.hasFavoriteByCode(code) %}
-        <twig:app:favorite:remove_from_favorite
-            code="{{ app.user.id ~ '-favorite-' ~ code }}"
-            name="{{ name }}"
-            link="{{ link }}"
-        />
-    {% else %}
-        <twig:app:favorite:add_to_favorite
-            code="{{ app.user.id ~ '-favorite-' ~ code }}"
-            name="{{ name }}"
-            link="{{ link }}"
-        />
-    {% endif %}
-</div>
+        <div id="favorite">
+            {{ form_start(form) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.link) }}
+
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="mdi mdi-heart"></i>
+                    {{ 'favorite.action.add'|trans }}
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </twig:Turbo:Stream:Replace>
+{% endblock %}
+
+{% block remove %}
+    <twig:Turbo:Stream:Replace
+        target="#favorite"
+    >
+        {% trans_default_domain 'app' %}
+
+        <div id="favorite">
+            {{ form_start(form) }}
+                {{ form_row(form.code) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.link) }}
+
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="mdi mdi-heart-broken"></i>
+                    {{ 'favorite.action.remove'|trans }}
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </twig:Turbo:Stream:Replace>
+{% endblock %}
