@@ -68,8 +68,8 @@ modal:
     action: "Confirmer"
 
 blameable:
-  created: "Créé le %date% par %user%"
-  updated: "Modifié le %date% par %user%"
+  created: "Créé le %date%"
+  updated: "Modifié le %date%"
 
 sidebar:
   categories:
