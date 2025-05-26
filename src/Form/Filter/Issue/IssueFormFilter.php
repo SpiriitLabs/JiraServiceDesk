@@ -45,7 +45,11 @@ class IssueFormFilter extends AbstractFilterType
                 'query_builder' => function (ProjectRepository $projectRepository) use ($user) {
                     return $projectRepository->getByUser($user);
                 },
-                'data' => $this->projectRepository->getByUser($user)
+                'data' => $user->defaultProject !== null ? [
+                    $user->defaultProject,
+                ] : $this->projectRepository->getByUser(
+                    $user
+                )
                     ->getQuery()
                     ->getResult(),
             ])
