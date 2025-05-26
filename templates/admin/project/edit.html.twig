@@ -23,8 +23,17 @@
                 {% block content %}
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md-6">
                             {{ form_row(form.assignableRolesIds) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.backlogStatusesIds) }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.defaultIssueType) }}
                         </div>
                     </div>
 

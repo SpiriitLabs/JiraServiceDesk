@@ -8,13 +8,14 @@ use App\Entity\User;
 class CreateIssue extends AbstractIssueDTO
 {
     public function __construct(
+        Project $project,
         public User $creator,
-        public ?Project $project = null,
         public array $attachments = [],
         public ?string $description = null,
     ) {
         parent::__construct(
             summary: '',
+            project: $project,
         );
     }
 }

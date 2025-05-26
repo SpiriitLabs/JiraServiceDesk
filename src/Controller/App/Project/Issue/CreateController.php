@@ -41,8 +41,8 @@ class CreateController extends AbstractController
         $form = $this->createForm(
             type: CreateIssueFormType::class,
             data: new CreateIssue(
-                project: $project,
                 creator: $user,
+                project: $project,
             ),
             options: [
                 'assignees' => $assignableUsers,

@@ -167,6 +167,8 @@ project:
     label: "Statuts du backlog"
   category:
     label: "Catégorie"
+  defaultIssueType:
+      label: "Type par défaut"
   boards:
     label: "Tableaux"
   board:

@@ -2,9 +2,11 @@
 
 namespace App\Form\Admin\Project;
 
+use App\Entity\IssueType;
 use App\Entity\User;
 use App\Message\Command\Admin\Project\AbstractProjectDTO;
 use App\Message\Command\Admin\Project\EditProject;
+use App\Repository\IssueTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -55,6 +57,20 @@ class ProjectFormType extends AbstractType
                 ->add('backlogStatusesIds', ChoiceType::class, [
                     'choices' => $options['statuses'],
                     'multiple' => true,
+                    'required' => false,
+                    'autocomplete' => true,
+                    'attr' => [
+                        'data-controller' => 'form-control select2',
+                    ],
+                ])
+                ->add('defaultIssueType', EntityType::class, [
+                    'class' => IssueType::class,
+                    'query_builder' => function (IssueTypeRepository $itr) use ($builder) {
+                        return $itr->createQueryBuilder('o')
+                            ->where('o.project = :project')
+                            ->setParameter('project', $builder->getData()->project)
+                        ;
+                    },
                     'required' => false,
                     'autocomplete' => true,
                     'attr' => [

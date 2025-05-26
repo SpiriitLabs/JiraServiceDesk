@@ -54,6 +54,9 @@ class Project
     #[ORM\Column]
     public array $backlogStatusesIds = [];
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    public ?IssueType $defaultIssueType = null;
+
     public function __construct(
         string $name,
         int $jiraId,
