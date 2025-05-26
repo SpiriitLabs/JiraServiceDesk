@@ -138,6 +138,8 @@ user:
     label: "Recevoir une notification lors de la modification d’un commentaire"
   enabled:
     label: "Compte actif"
+  defaultProject:
+      label: "Projet par défaut"
 
 profile:
   label: "Profil"

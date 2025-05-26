@@ -31,6 +31,7 @@ readonly class EditUserHandler
         $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
         $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
         $user->enabled = $command->enabled;
+        $user->defaultProject = $command->defaultProject;
 
         if (
             count(array_diff($user->getProjects()->toArray(), $command->projects)) > 0

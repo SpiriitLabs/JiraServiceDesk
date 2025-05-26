@@ -101,6 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     public bool $enabled = true;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    public ?Project $defaultProject = null;
+
     public function __construct(
         ?string $email,
         ?string $firstName,

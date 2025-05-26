@@ -13,10 +13,10 @@ class EditUser extends AbstractUserDTO
             email: $this->user->email,
             lastName: $this->user->getLastName(),
             firstName: $this->user->firstName,
-            company: $this->user->company,
             roles: $this->user->getRoles(),
             projects: $this->user->getProjects()
                 ->toArray(),
+            company: $this->user->company,
             preferedLocale: $this->user->preferredLocale,
             preferedTheme: $this->user->preferredTheme,
             preferenceNotification: $this->user->preferenceNotification,
@@ -25,6 +25,7 @@ class EditUser extends AbstractUserDTO
             preferenceNotificationCommentCreated: $this->user->preferenceNotificationCommentCreated,
             preferenceNotificationCommentUpdated: $this->user->preferenceNotificationCommentUpdated,
             enabled: $this->user->enabled,
+            defaultProject: $this->user->defaultProject,
         );
     }
 }
