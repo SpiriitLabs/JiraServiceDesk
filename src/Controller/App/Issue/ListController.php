@@ -8,6 +8,7 @@ use App\Form\Filter\Issue\IssueFormFilter;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\Filter\IssueFilter;
 use App\Model\SearchIssuesResult;
+use App\Repository\ProjectRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,11 @@ class ListController extends AbstractController
 {
     use GetControllerTrait;
 
+    public function __construct(
+        private readonly ProjectRepository $projectRepository,
+    ) {
+    }
+
     public function __invoke(
         Request $request,
         #[CurrentUser]
@@ -36,6 +42,10 @@ class ListController extends AbstractController
             'current_user' => $user,
         ]);
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() == false && $user->defaultProject !== null) {
+            $filter->projects = [$user->defaultProject];
+        }
 
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
