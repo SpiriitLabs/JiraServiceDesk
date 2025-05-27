@@ -10,6 +10,7 @@ use App\Message\Query\App\Issue\GetFullIssue;
 use App\Message\Query\App\Project\GetProjectByJiraKey;
 use App\Repository\Jira\IssueRepository;
 use App\Security\Voter\ProjectVoter;
+use App\Service\IssueHtmlProcessor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class ViewController extends AbstractController
 
     public function __construct(
         private IssueRepository $jiraIssueRepository,
+        private IssueHtmlProcessor $htmlProcessor,
     ) {
     }
 
@@ -67,6 +69,7 @@ class ViewController extends AbstractController
                 ],
             );
         }
+
 
         return $this->render(
             view: 'app/issue/view.html.twig',
