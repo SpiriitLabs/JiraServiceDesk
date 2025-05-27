@@ -29,7 +29,7 @@
         "symfony/console": "7.2.*",
         "symfony/doctrine-messenger": "7.2.*",
         "symfony/dotenv": "7.2.*",
-        "symfony/flex": "^2.6.0",
+        "symfony/flex": "^2.7.0",
         "symfony/form": "7.2.*",
         "symfony/framework-bundle": "7.2.*",
         "symfony/http-client": "7.2.*",
@@ -116,17 +116,17 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7.1",
-        "phpunit/phpunit": "^12.1",
+        "phpunit/phpunit": "^12.1.6",
         "slevomat/coding-standard": "^8.18.1",
         "symfony/browser-kit": "7.2.*",
         "symfony/css-selector": "7.2.*",
         "symfony/debug-bundle": "7.2.*",
         "symfony/maker-bundle": "^1.63.0",
-        "symfony/phpunit-bridge": "^7.2",
+        "symfony/phpunit-bridge": "^7.2.6",
         "symfony/stopwatch": "7.2.*",
         "symfony/web-profiler-bundle": "7.2.*",
         "symplify/coding-standard": "^12.4.2",
         "symplify/easy-coding-standard": "^12.5.18",
-        "zenstruck/foundry": "^2.5"
+        "zenstruck/foundry": "^2.5.2"
     }
 }
