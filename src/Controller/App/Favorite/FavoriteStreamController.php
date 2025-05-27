@@ -45,7 +45,6 @@ class FavoriteStreamController extends AbstractController
             'code' => $code,
             'user' => $user,
         ]);
-        dump($favoriteEntity);
 
         $form = $this->createForm(FavoriteFormType::class, [
             'code' => $code,
