@@ -17,10 +17,13 @@
 {% block turbo 'data-turbo="false"' %}
 
 {% block content %}
+    {% set queryParams = app.request.query.all %}
+    {% set updatedParams = queryParams|merge({'page': searchIssuesResult.nextPageToken}) %}
+
     {% include 'app/issue/_list_content.html.twig' with {
         searchIssuesResult: searchIssuesResult,
         filterFormResetPath: path('app_issue_list'),
         filterForm: filterForm,
-        nextPageLink: searchIssuesResult.nextPageToken is not null ? path('app_issue_list', {page: searchIssuesResult.nextPageToken}) : null
+        nextPageLink: searchIssuesResult.nextPageToken is not null ? path('app_issue_list', updatedParams) : null
     } %}
 {% endblock %}
