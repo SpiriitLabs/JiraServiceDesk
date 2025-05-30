@@ -47,6 +47,10 @@ class ViewController extends AbstractController
     ): Response {
         $issue = $this->jiraIssueRepository->getFull($keyIssue);
         $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
+        if (null == $keyProject) {
+            $keyProject = $issue->fields->project->key;
+        }
+
         $project = $keyProject !== null ? $this->handle(new GetProjectByJiraKey(jiraKey: $keyProject)) : null;
         if ($project !== null) {
             $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
