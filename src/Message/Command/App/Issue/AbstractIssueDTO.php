@@ -13,7 +13,7 @@ class AbstractIssueDTO
         public Project $project,
         public ?Priority $priority = null,
         public ?IssueType $type = null,
-        public ?string $assignee = null,
+        public ?string $assignee = 'null',
     ) {
     }
 }
