@@ -74,7 +74,6 @@ class ViewController extends AbstractController
             );
         }
 
-
         return $this->render(
             view: 'app/issue/view.html.twig',
             parameters: [
