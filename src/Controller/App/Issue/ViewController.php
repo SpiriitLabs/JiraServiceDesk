@@ -47,7 +47,7 @@ class ViewController extends AbstractController
     ): Response {
         $issue = $this->jiraIssueRepository->getFull($keyIssue);
         $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
-        if (null == $keyProject) {
+        if ($keyProject == null) {
             $keyProject = $issue->fields->project->key;
         }
 
