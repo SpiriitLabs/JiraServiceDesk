@@ -3,6 +3,7 @@ title:
 
 error:
     title: 'Erreur'
+    description: "Une erreur s'est produite."
     action: 'Retour'
 
 404:
