@@ -22,12 +22,18 @@ class IssueRepository
 
     public function getFull(string $issueId): Issue
     {
-        return $this->service->get(
+        $issue = $this->service->get(
             issueIdOrKey: $issueId,
             paramArray: [
                 'expand' => 'renderedFields,transitions',
             ]
         );
+
+        if (in_array('from-client', $issue->fields->labels) == false) {
+            throw new JiraException(sprintf("Issue #%d has not 'from-client' label", $issueId));
+        }
+
+        return $issue;
     }
 
     public function getCommentForIssue(string $issueId): Comments
