@@ -34,7 +34,7 @@ class AbstractIssueFormType extends AbstractType
             ])
             ->add('type', EntityType::class, [
                 'class' => IssueType::class,
-                'choice_label' => fn (IssueType $type) => sprintf('%s (%s)', $type->name, $type->description),
+                'choice_label' => 'name',
                 'query_builder' => function (IssueTypeRepository $itr) use ($options) {
                     return $itr->createQueryBuilder('o')
                         ->where('o.project = :project')
@@ -45,11 +45,7 @@ class AbstractIssueFormType extends AbstractType
             ->add('priority', EntityType::class, [
                 'required' => true,
                 'class' => Priority::class,
-                'choice_label' => fn (Priority $priority) => sprintf(
-                    '%s (%s)',
-                    $priority->name,
-                    $priority->description
-                ),
+                'choice_label' => 'name',
             ])
         ;
 
