@@ -2,14 +2,15 @@
 
 namespace App\Message\Command\Admin\Project\Handler;
 
-use App\Entity\IssueType;
 use App\Entity\Project;
 use App\Exception\Project\ProjectAlreadyExistException;
 use App\Message\Command\Admin\Project\CreateProject;
+use App\Message\Command\Admin\Project\GenerateProjectIssueTypes;
 use App\Repository\Jira\ProjectRepository;
 use App\Repository\ProjectRepository as AppProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
 readonly class CreateProjectHandler
@@ -18,6 +19,7 @@ readonly class CreateProjectHandler
         private AppProjectRepository $appProjectRepository,
         private ProjectRepository $jiraProjectRepository,
         private EntityManagerInterface $entityManager,
+        private MessageBusInterface $commandBus,
     ) {
     }
 
@@ -46,19 +48,14 @@ readonly class CreateProjectHandler
             $project->addUser($user);
         }
 
-        foreach ($jiraProject->issueTypes as $issueType) {
-            $issueType = new IssueType(
-                jiraId: $issueType->id,
-                name: $issueType->name,
-                description: $issueType->description,
-                iconUrl: $issueType->iconUrl,
-            );
-
-            $this->entityManager->persist($issueType);
-            $project = $project->addIssuesType($issueType);
-        }
-
         $this->entityManager->persist($project);
+
+        $this->commandBus->dispatch(
+            new GenerateProjectIssueTypes(
+                project: $project,
+                jiraIssueTypes: $jiraProject->issueTypes,
+            )
+        );
 
         return $project;
     }
