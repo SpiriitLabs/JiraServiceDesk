@@ -185,6 +185,8 @@ issue:
   assignee:
     label: "Assigned to"
     not_assignee: "Unassigned"
+  updated:
+    label: "Updated date"
   status:
     label: "Status"
   priority:

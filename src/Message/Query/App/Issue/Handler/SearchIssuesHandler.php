@@ -96,6 +96,7 @@ class SearchIssuesHandler
             'status',
             'timeoriginalestimate',
             'created',
+            'updated',
         ];
         $issues = $this->service->search(
             jql: $jql->getQuery(),

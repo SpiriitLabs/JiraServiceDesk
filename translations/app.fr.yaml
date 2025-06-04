@@ -197,6 +197,8 @@ issue:
   assignee:
     label: "Attribué à"
     not_assignee: "Non attribué"
+  updated:
+    label: "Date de mise à jour"
   status:
     label: "Statut"
   priority:

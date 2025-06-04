@@ -41,6 +41,12 @@
         </th>
         <th class="d-none d-md-table-cell">
             {% include 'components/list/sort-list-header.html.twig' with {
+                'label': 'issue.updated.label'|trans,
+                'property': 'updated',
+            } %}
+        </th>
+        <th class="d-none d-md-table-cell">
+            {% include 'components/list/sort-list-header.html.twig' with {
                 'label': 'issue.status.label'|trans,
                 'property': 'status',
             } %}
@@ -64,10 +70,12 @@
             <div class="text-muted d-flex flex-column d-md-none gap-2 mt-2">
                 {% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}
                 {{ issueMacros.issuePriority(object) }}
+                {{ object.fields.updated|date('d/m/Y H:i') }}
                 {{ issueMacros.issueStatus(object) }}
             </div>
         </td>
         <td class="d-none d-md-table-cell">{% include 'components/app/issue/assignee.html.twig' with {reporter: object.fields.assignee} %}</td>
+        <td class="d-none d-md-table-cell">{{ object.fields.updated|date('d/m/Y H:i') }}</td>
         <td class="d-none d-md-table-cell">{{ issueMacros.issueStatus(object) }}</td>
         <td class="d-none d-md-table-cell">{{ issueMacros.issuePriority(object) }}</td>
         <td>
