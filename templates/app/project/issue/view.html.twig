@@ -1,4 +1,4 @@
-{% extends 'app/issue/base.html.twig' %}
+{% extends 'app/project/issue/base.html.twig' %}
 
 {% trans_default_domain 'app' %}
 
@@ -6,7 +6,7 @@
 {% set breadcrumb = [
     {
         label: '#' ~ key,
-        href: path('app_issue_view', {keyIssue: key}),
+        href: path('app_project_issue_view', {'key': current_project.jiraKey, 'keyIssue': key}),
     },
     {
         label: 'action.view',
@@ -28,7 +28,7 @@
         id="favorite"
         src="{{ path('app_favorite_stream', {
             'code': app.user.id ~ '-favorite-issue-'~key,
-            'link': absolute_url(path('app_issue_view', {'keyIssue': key}))|url_encode,
+            'link': absolute_url(path('app_project_issue_view', {'key': current_project.jiraKey, 'keyIssue': key}))|url_encode,
             'name': ' #' ~ key ~ ' - "' ~ issue.fields.summary ~ '"',
         }) }}"
     >
@@ -70,28 +70,13 @@
                         {{ form_end(commentForm) }}
                     </div>
 
+                    <hr class="my-5">
+
                     {% for comment in comments|reverse %}
-                    <twig:app:issue:comment
-                        comment="{{comment}}"
-                    >
-                    </twig:app:issue:comment>
-                        {# {% if comment.visibility is null %}
-                            {% set avatarUrl = attribute(comment.author.avatarUrls, "48x48") %}
-                            <div class="d-flex mt-3 mb-2">
-                                <div class="w-100">
-                                    <h5 class="mt-0">
-                                        <twig:app:issue:assignee
-                                            reporter="{{ comment.author }}"
-                                        />
-
-                                        <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
-                                    </h5>
-                                    {{ comment.renderedBody|preview_attachment|raw }}
-
-                                    <br>
-                                </div>
-                            </div>
-                        {% endif %} #}
+                        <twig:app:issue:comment
+                            comment="{{comment}}"
+                        >
+                        </twig:app:issue:comment>
                     {% endfor %}
 
                 </div>
@@ -100,7 +85,7 @@
 
         <twig:Turbo:Frame
             id="issue_view_attachments"
-            src="{{ path('app_issue_view_attachments_stream', {'keyIssue': issue.key}) }}"
+            src="{{ path('app_project_issue_attachments_stream', {'key': current_project.jiraKey, 'keyIssue': issue.key}) }}"
             class="col-xxl-4 col-xl-5"
         >
                 {% trans_default_domain 'app' %}
