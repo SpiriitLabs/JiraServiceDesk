@@ -32,6 +32,14 @@ class RedirectAfterLoginController extends AbstractController
             ]);
         }
 
-        return $this->redirectToRoute(RouteCollection::DASHBOARD->prefixed());
+        if ($user->getProjects()->count() == 1) {
+            return $this->redirectToRoute(Project\RouteCollection::VIEW->prefixed(), [
+                'key' => $user->getProjects()
+                    ->first()
+                    ->jiraKey,
+            ]);
+        }
+
+        return $this->redirectToRoute(RouteCollection::PROJECT_SELECT->prefixed());
     }
 }

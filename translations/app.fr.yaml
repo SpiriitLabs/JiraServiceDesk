@@ -92,6 +92,9 @@ dashboard:
   projects: "Sélectionner un projet"
   assignee_issues: "Vos tickets sont assignés"
 
+select_project:
+    title: "Sélectionner votre projet"
+
 favorite:
   label: "Favori(s)"
   action:
@@ -241,6 +244,7 @@ security:
     sign_in: "Se connecter"
     sign_in_catch_phrase: "pour accéder à l’application"
     account_disable: "Votre compte est désactivée"
+    user_account_no_projects: "Vos n'avez aucun projet liez à votre compte."
     action: "Connexion"
   check_email:
     label: "Vérification de l’adresse e-mail"

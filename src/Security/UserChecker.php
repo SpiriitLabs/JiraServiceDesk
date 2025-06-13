@@ -33,5 +33,13 @@ class UserChecker implements UserCheckerInterface
                 locale: $user->preferredLocale?->value ?? Locale::FR->value,
             ), );
         }
+
+        if ($user->getProjects()->count() == 0) {
+            throw new CustomUserMessageAccountStatusException(message: $this->translator->trans(
+                id: 'security.login.user_account_no_projects',
+                domain: 'app',
+                locale: $user->preferredLocale?->value ?? Locale::FR->value,
+            ), );
+        }
     }
 }
