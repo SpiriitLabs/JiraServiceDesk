@@ -39,7 +39,7 @@ class CreateController extends AbstractController
             return $this->redirectToRoute(
                 route: IssueRouteCollection::CREATE->prefixed(),
                 parameters: [
-                    'projectKey' => $user->getProjects()
+                    'key' => $user->getProjects()
                         ->first()
                         ->jiraKey,
                 ],
@@ -50,7 +50,7 @@ class CreateController extends AbstractController
             return $this->redirectToRoute(
                 route: IssueRouteCollection::CREATE->prefixed(),
                 parameters: [
-                    'projectKey' => $user->defaultProject->jiraKey,
+                    'key' => $user->defaultProject->jiraKey,
                 ],
             );
         }
@@ -71,7 +71,7 @@ class CreateController extends AbstractController
             return $this->redirectToRoute(
                 route: IssueRouteCollection::CREATE->prefixed(),
                 parameters: [
-                    'projectKey' => $projectSelected->jiraKey,
+                    'key' => $projectSelected->jiraKey,
                 ],
             );
         }

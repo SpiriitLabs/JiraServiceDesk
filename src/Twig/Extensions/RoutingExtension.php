@@ -30,7 +30,7 @@ class RoutingExtension extends AbstractExtension
     {
         $request = $this->requestStack->getMainRequest();
 
-        return $request?->attributes->get('_route') ?? 'app_dashboard';
+        return $request?->attributes->get('_route') ?? '#';
     }
 
     private function getRoutePathFromRequest(): string
@@ -48,6 +48,6 @@ class RoutingExtension extends AbstractExtension
     {
         $request = $this->requestStack->getMainRequest();
 
-        return $request?->headers?->get('referer') ?? 'app_dashboard';
+        return $request?->headers?->get('referer') ?? '#';
     }
 }

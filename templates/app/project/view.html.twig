@@ -14,7 +14,7 @@
 ] %}
 
 {% block action %}
-    <a href="{{ path('app_project_issue_create', {projectKey: entity.jiraKey}) }}" class="btn btn-success">
+    <a href="{{ path('app_project_issue_create', {key: entity.jiraKey}) }}" class="btn btn-success">
         <i class="mdi mdi-plus"></i>
         {{ 'issue.action.create'|trans }}
     </a>
@@ -26,7 +26,7 @@
         <div class="col-md-6">
             <twig:Turbo:Frame
                 id="project_view_content"
-                src="{{ path('app_project_stream_view', {'projectKey': entity.jiraKey}) }}"
+                src="{{ path('app_project_view_stream', {'key': entity.jiraKey}) }}"
             >
                 {% trans_default_domain 'app' %}
 
@@ -51,7 +51,7 @@
             <div class="col-md-4">
                 <twig:Turbo:Frame
                     id="project_view_board_list"
-                    src="{{ path('app_project_board_stream_list', {'projectKey': entity.jiraKey}) }}"
+                    src="{{ path('app_project_board_list_stream', {'key': entity.jiraKey}) }}"
                 >
                     {% trans_default_domain 'app' %}
 
@@ -88,7 +88,7 @@
         <div class="row">
             <twig:Turbo:Frame
                 id="project_view_issues_status_backlog_container"
-                src="{{ path('app_project_issue_show_backlog_list', {'projectKey': entity.jiraKey}) }}"
+                src="{{ path('app_project_issue_show_backlog_list', {'key': entity.jiraKey}) }}"
             >
                 {% trans_default_domain 'app' %}
 
