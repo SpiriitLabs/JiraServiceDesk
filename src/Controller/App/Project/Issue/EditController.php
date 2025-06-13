@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controller\App\Issue;
+namespace App\Controller\App\Project\Issue;
 
+use App\Controller\App\Project\AbstractController;
 use App\Controller\Common\EditControllerTrait;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\EditIssueFormType;
 use App\Message\Command\App\Issue\EditIssue;
@@ -11,16 +13,15 @@ use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use App\Repository\IssueTypeRepository;
 use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
-use App\Security\Voter\ProjectVoter;
 use JiraCloud\Issue\Issue;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
-    path: '/issue/{key}/edit',
+    path: '/project/{key}/issue/{keyIssue}/edit',
     name: RouteCollection::EDIT->value,
     methods: [Request::METHOD_GET, Request::METHOD_POST],
 )]
@@ -36,15 +37,20 @@ class EditController extends AbstractController
     }
 
     public function __invoke(
-        string $key,
+        string $keyIssue,
         Request $request,
+        #[MapEntity(mapping: [
+            'key' => 'jiraKey',
+        ])]
+        Project $project,
         #[CurrentUser]
         User $user,
     ): Response {
+        $this->setCurrentProject($project);
         /** @var Issue $issue */
-        $issue = $this->handle(
-            new GetFullIssue($key),
-        );
+        $issue = $this->handle(new GetFullIssue($keyIssue));
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
+
         $issueTransitions = [];
         foreach ($issue->transitions as $issueTransition) {
             $issueTransitions[$issueTransition->name] = $issueTransition->id;
@@ -56,21 +62,6 @@ class EditController extends AbstractController
                 break;
             }
         }
-        $project = $this->projectRepository->findOneBy([
-            'jiraKey' => $issue->fields->project->key,
-        ]);
-        if ($project == null) {
-            $this->addFlash(
-                type: 'danger',
-                message: 'project.flashes.notFound',
-            );
-
-            return $this->redirect(
-                $request->headers->get('referer'),
-            );
-        }
-        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
-        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
 
         $form = $this->createForm(
             type: EditIssueFormType::class,
@@ -88,12 +79,13 @@ class EditController extends AbstractController
                 assignee: $issue->fields->assignee->accountId ?? 'null',
             ),
             options: [
-                'projectId' => $project?->getId() ?? null,
+                'projectId' => $project->getId(),
                 'transitions' => $issueTransitions,
                 'assignees' => $assignableUsers,
             ]
         );
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $jiraIssueEdited = $this->handle($form->getData());
 
@@ -106,7 +98,9 @@ class EditController extends AbstractController
                 return $this->redirectToRoute(
                     route: RouteCollection::VIEW->prefixed(),
                     parameters: [
-                        'keyIssue' => $key,
+                        'key' => $this->getCurrentProject()
+                            ->jiraKey,
+                        'keyIssue' => $keyIssue,
                     ],
                 );
             }
@@ -118,9 +112,9 @@ class EditController extends AbstractController
         }
 
         return $this->render(
-            view: 'app/issue/edit.html.twig',
+            view: 'app/project/issue/edit.html.twig',
             parameters: [
-                'key' => $key,
+                'key' => $keyIssue,
                 'issue' => $issue,
                 'form' => $form->createView(),
             ],

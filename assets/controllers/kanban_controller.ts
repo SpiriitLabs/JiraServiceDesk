@@ -30,6 +30,7 @@ export default class extends Controller {
     this.drake = dragula(divElements);
 
     this.drake.on('drop', async (element: Element, target: Element) => {
+      const projectKey = element.getAttribute('data-project-key');
       const issueId = element.getAttribute('data-issue-id');
       const transitionData = target.getAttribute('data-kanban-transition-ids');
 
@@ -74,7 +75,7 @@ export default class extends Controller {
       }
 
       try {
-        const response = await fetch(`/app/api/issue/${issueId}/transition/${selectedTransitionId}`, {
+        const response = await fetch(`/app/project/${projectKey}/issue/${issueId}/transition/${selectedTransitionId}/api`, {
           method: 'POST',
           headers: { 'X-Requested-With': 'XMLHttpRequest' },
         });

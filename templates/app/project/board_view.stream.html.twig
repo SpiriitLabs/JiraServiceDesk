@@ -16,8 +16,8 @@
 
                     {% for issue in columnValues.issues %}
                         <twig:app:kanban:item_card
-                            issue="{{ issue }}"
-                            project="{{ entity }}"
+                            :issue="issue"
+                            :project="current_project"
                         />
                     {% endfor %}
 
