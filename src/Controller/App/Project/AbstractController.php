@@ -18,6 +18,11 @@ class AbstractController extends FrameworkAbstractController
         $this->currentProject = $currentProject;
     }
 
+    public function getCurrentProject(): ?Project
+    {
+        return $this->currentProject;
+    }
+
     protected function render(string $view, array $parameters = [], ?Response $response = null): Response
     {
         if ($this->currentProject == null) {
