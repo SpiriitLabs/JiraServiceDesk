@@ -1,0 +1,29 @@
+{% extends 'app/project/issue/base.html.twig' %}
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'issue.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+{% block action %}
+    <a href="{{ path('app_project_issue_create', {key: current_project.jiraKey}) }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'issue.action.create'|trans }}
+    </a>
+{% endblock %}
+
+{% block turbo 'data-turbo="false"' %}
+
+{% block content %}
+    {% set queryParams = app.request.query.all %}
+    {% set updatedParams = queryParams|merge({'key': current_project.jiraKey, 'page': searchIssuesResult.nextPageToken}) %}
+
+    {% include 'app/project/issue/_list_content.html.twig' with {
+        searchIssuesResult: searchIssuesResult,
+        filterFormResetPath: path('app_project_issue_list', {key: current_project.jiraKey}),
+        filterForm: filterForm,
+        nextPageLink: searchIssuesResult.nextPageToken is not null ? path('app_project_issue_list', updatedParams) : null
+    } %}
+{% endblock %}

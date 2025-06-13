@@ -4,8 +4,8 @@
 
 {% set breadcrumb = [
     {
-        href: path('app_project_view', {key: project.jiraKey}),
-        label: project.name,
+        href: path('app_project_view', {key: current_project.jiraKey}),
+        label: current_project.name,
     },
     {
         label: 'issue.label'|trans

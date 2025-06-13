@@ -16,6 +16,14 @@
                   href="{{ path('app_project_view', {'key': current_project.jiraKey}) }}"
                   role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
               />
+
+              <twig:nav:app:item-single
+                  path="app_project_issue"
+                  trans="issue.label"
+                  icon="uil-clipboard-alt"
+                  href="{{ path('app_project_issue_list', {'key': current_project.jiraKey}) }}"
+                  role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+              />
           {% else %}
             <twig:nav:app:item-single
                 path="app_project"
@@ -25,14 +33,6 @@
                 role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
             />
           {% endif %}
-
-{#          <twig:nav:app:item-single#}
-{#              path="app_issue_list"#}
-{#              trans="issue.label"#}
-{#              icon="uil-clipboard-alt"#}
-{#              href="{{ path('app_issue_list') }}"#}
-{#              role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"#}
-{#          />#}
 
           <twig:nav:app:item-single
               path="app_profil"
