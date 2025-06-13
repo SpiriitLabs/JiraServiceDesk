@@ -8,5 +8,7 @@ enum RouteCollection: string
 {
     use AppRouteCollectionTrait;
 
-    case LIST = 'project_board_stream_list';
+    case LIST = 'project_board_list_stream';
+    case VIEW = 'project_board_view';
+    case VIEW_STREAM = 'project_board_view_stream';
 }

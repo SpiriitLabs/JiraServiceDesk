@@ -4,7 +4,7 @@
 	<div class="container-fluid detached-nav d-flex flex-row align-items-center justify-content-between">
 		<div class="d-flex flex-row align-items-center">
 			<div class="logo-topbar">
-				<a href="{{ path('app_dashboard') }}" class="d-flex flex-row align-items-center mt-1">
+				<a href="#" class="d-flex flex-row align-items-center mt-1">
 					<img
 					src="{{ asset('build/static/images/logo/logo.svg') }}" alt="logo" height="50">
 				{#          <h2 class="ms-2 text-dark display-only-desktop">{{ 'header.title'|trans }}</h2>#}
@@ -98,10 +98,6 @@
 						</a>
 					{% endif %}
 
-					<a href="{{ path('app_introduction_restart', {id: app.user.id}) }}" class="dropdown-item">
-						<i class="mdi mdi-restart"></i>
-						<span>{{ 'header.dropdown.restart_introduction'|trans }}</span>
-					</a>
 				</div>
 			</li>
 		</ul>

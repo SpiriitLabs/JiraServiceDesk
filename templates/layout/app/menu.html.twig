@@ -8,43 +8,39 @@
       <div class="collapse navbar-collapse" id="topnav-menu-content">
         <ul class="navbar-nav">
 
+          {% if current_project is defined %}
+              <twig:nav:app:item-single
+                  path="app_project_view"
+                  trans="{{ current_project.name }}"
+                  icon="uil-briefcase"
+                  href="{{ path('app_project_view', {'key': current_project.jiraKey}) }}"
+                  role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+              />
+          {% else %}
             <twig:nav:app:item-single
-                path="app_dashboard"
-                trans="dashboard.label"
-                icon="mdi mdi-home-city"
-                href="{{ path('app_dashboard') }}"
+                path="app_project"
+                trans="project.label"
+                icon="uil-briefcase"
+                href="{{ path('app_project_select') }}"
                 role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
             />
+          {% endif %}
 
-            <div data-title="{{ 'menu.title'|trans(domain: 'intro') }}" data-intro="{{ 'menu.project'|trans(domain: 'intro') }}" data-step="4">
-              <twig:nav:app:item-single
-                  path="app_project"
-                  trans="project.label"
-                  icon="uil-briefcase"
-                  href="{{ path('app_project_list') }}"
-                  role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
-              />
-            </div>
+{#          <twig:nav:app:item-single#}
+{#              path="app_issue_list"#}
+{#              trans="issue.label"#}
+{#              icon="uil-clipboard-alt"#}
+{#              href="{{ path('app_issue_list') }}"#}
+{#              role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"#}
+{#          />#}
 
-            <div data-title="{{ 'menu.title'|trans(domain: 'intro') }}" data-intro="{{ 'menu.issue'|trans(domain: 'intro') }}" data-step="5">
-              <twig:nav:app:item-single
-                  path="app_issue_list"
-                  trans="issue.label"
-                  icon="uil-clipboard-alt"
-                  href="{{ path('app_issue_list') }}"
-                  role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
-              />
-            </div>
-
-            <div data-title="{{ 'menu.title'|trans(domain: 'intro') }}" data-intro="{{ 'menu.profil'|trans(domain: 'intro') }}" data-step="6">
-              <twig:nav:app:item-single
-                  path="app_profil"
-                  trans="profile.label"
-                  icon="mdi mdi-account-circle"
-                  href="{{ path('app_profil') }}"
-                  role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
-              />
-            </div>
+          <twig:nav:app:item-single
+              path="app_profil"
+              trans="profile.label"
+              icon="mdi mdi-account-circle"
+              href="{{ path('app_profil') }}"
+              role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+          />
 
         </ul>
       </div>

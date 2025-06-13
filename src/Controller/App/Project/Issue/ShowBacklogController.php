@@ -2,21 +2,20 @@
 
 namespace App\Controller\App\Project\Issue;
 
+use App\Controller\App\Project\AbstractController;
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\Project;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\Filter\IssueFilter;
 use App\Model\SearchIssuesResult;
-use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\UX\Turbo\TurboBundle;
 
 #[Route(
-    path: '/project/{projectKey}/issues/backlog',
+    path: '/project/{key}/issues/backlog',
 )]
 class ShowBacklogController extends AbstractController
 {
@@ -29,12 +28,12 @@ class ShowBacklogController extends AbstractController
     )]
     public function list(
         #[MapEntity(mapping: [
-            'projectKey' => 'jiraKey',
+            'key' => 'jiraKey',
         ])]
         Project $project,
         Request $request,
     ): Response {
-        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
+        $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $page = $request->get('page', null);
         $defaultSort = 'id';
@@ -48,9 +47,9 @@ class ShowBacklogController extends AbstractController
         $searchIssueResult = $this->handle(
             new SearchIssues(
                 sort: $sort,
-                pageToken: $page,
                 filter: $issueFilter,
                 maxIssuesResults: ($sort !== $defaultSort ? 1000 : SearchIssues::MAX_ISSUES_RESULTS),
+                pageToken: $page,
             )
         );
 
@@ -72,7 +71,7 @@ class ShowBacklogController extends AbstractController
     )]
     public function streamBacklog(
         #[MapEntity(mapping: [
-            'projectKey' => 'jiraKey',
+            'key' => 'jiraKey',
         ])]
         Project $project,
         Request $request

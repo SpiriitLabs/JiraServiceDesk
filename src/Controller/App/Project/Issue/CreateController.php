@@ -3,22 +3,21 @@
 namespace App\Controller\App\Project\Issue;
 
 use App\Controller\App\Issue\RouteCollection as IssueRouteCollection;
+use App\Controller\App\Project\AbstractController;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Message\Query\App\Issue\GetIssueAssignableUsers;
-use App\Security\Voter\ProjectVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
-    path: '/project/{projectKey}/issues/create',
+    path: '/project/{key}/issues/create',
     name: RouteCollection::CREATE->value,
     methods: [Request::METHOD_GET, Request::METHOD_POST],
 )]
@@ -29,13 +28,13 @@ class CreateController extends AbstractController
     public function __invoke(
         Request $request,
         #[MapEntity(mapping: [
-            'projectKey' => 'jiraKey',
+            'key' => 'jiraKey',
         ])]
         Project $project,
         #[CurrentUser]
         User $user,
     ): Response {
-        $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
+        $this->setCurrentProject($project);
         $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
 
         $form = $this->createForm(

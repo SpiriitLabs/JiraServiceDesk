@@ -185,6 +185,7 @@ project:
     alreadyExist: "Cette clé de projet est déjà utilisée."
     created: "Projet créé avec succès. Veuillez sélectionner les statuts du backlog et les rôles des utilisateurs pouvant être assignés."
     notFound: "Projet non trouvée"
+    currentNotFound: "Le projet courant n'as pas était mit en place"
   kanban:
     selectTransition:
       title: 'Sélectionner le status'

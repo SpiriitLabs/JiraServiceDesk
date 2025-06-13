@@ -4,7 +4,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-light-lighten py-2 pe-4 mb-0 d-flex flex-row justify-content-end">
         <li class="breadcrumb-item{{ not breadcrumb|length ? ' active' }}" aria-current="page">
-            <a href="{{ path('app_dashboard') }}"><i class="uil-home-alt me-1"></i> {{ 'dashboard.label'|trans }}</a>
+            <a href="#"><i class="uil-home-alt me-1"></i> {{ 'dashboard.label'|trans }}</a>
         </li>
         {% for item in breadcrumb %}
             <li class="breadcrumb-item{{ loop.last ? ' active' }}">
