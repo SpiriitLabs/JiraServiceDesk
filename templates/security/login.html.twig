@@ -18,61 +18,61 @@
     {% endblock %}
 </head>
 <body>
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xxl-4 col-lg-5">
-                <div class="card">
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
 
-                    <div class="card-header pt-2 pb-2 text-center bg-primary">
-                        <span><img src="{{ asset('build/static/images/logo/logo.svg') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
-                    </div>
-
-                    <div class="card-body p-4">
-
-                        <div class="text-center w-75 m-auto">
-                            <h4 class="text-dark-50 text-center pb-0 fw-bold">{{ 'security.login.sign_in'|trans }}</h4>
-                            <p class="text-muted mb-4">{{ 'security.login.sign_in_catch_phrase'|trans }}</p>
+                        <div class="card-header pt-2 pb-2 text-center bg-primary">
+                            <span><img src="{{ asset('build/static/images/logo/logo.svg') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
                         </div>
 
-                        {% if error %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
-                            </div>
-                        {% endif %}
+                        <div class="card-body p-4">
 
-                        <form action="{{ path('security_login') }}" method="post">
-
-                            <div class="mb-3">
-                                <label for="username" class="form-label">{{ 'user.email.label'|trans }}</label>
-                                <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center pb-0 fw-bold">{{ 'security.login.sign_in'|trans }}</h4>
+                                <p class="text-muted mb-4">{{ 'security.login.sign_in_catch_phrase'|trans }}</p>
                             </div>
 
-                            <div class="mb-3">
-                                <a href="{{ path('security_forgot_password_request') }}" tabindex="-1" class="text-muted float-end"><small>{{ 'security.reset_password_request.label'|trans }} ?</small></a>
-                                <label for="password" class="form-label">{{ 'user.password.label'|trans }}</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password" name="_password" class="form-control">
-                                    <div class="input-group-text" data-password="false">
-                                        <span class="password-eye"></span>
+                            {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                                </div>
+                            {% endif %}
+
+                            <form action="{{ path('security_login') }}" method="post">
+
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">{{ 'user.email.label'|trans }}</label>
+                                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control">
+                                </div>
+
+                                <div class="mb-3">
+                                    <a href="{{ path('security_forgot_password_request') }}" tabindex="-1" class="text-muted float-end"><small>{{ 'security.reset_password_request.label'|trans }} ?</small></a>
+                                    <label for="password" class="form-label">{{ 'user.password.label'|trans }}</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password" name="_password" class="form-control">
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="mb-3 mb-0 text-center">
-                                <button class="btn btn-primary" type="submit">{{ 'security.login.action'|trans }}</button>
-                            </div>
-                        </form>
+                                <div class="mb-3 mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit">{{ 'security.login.action'|trans }}</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<footer class="footer footer-alt">
-    2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
-</footer>
+    <footer class="footer footer-alt">
+        2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
+    </footer>
 
-</body>
+    </body>
 </html>
