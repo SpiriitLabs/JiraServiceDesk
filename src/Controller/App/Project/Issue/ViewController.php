@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Controller\App\Issue;
+namespace App\Controller\App\Project\Issue;
 
+use App\Controller\App\Project\AbstractController;
 use App\Controller\Common\GetControllerTrait;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\IssueCommentFormType;
 use App\Message\Command\App\Issue\CreateComment;
 use App\Message\Query\App\Issue\GetFullIssue;
-use App\Message\Query\App\Project\GetProjectByJiraKey;
 use App\Repository\Jira\IssueRepository;
-use App\Security\Voter\ProjectVoter;
 use App\Service\IssueHtmlProcessor;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\UX\Turbo\TurboBundle;
 
+#[Route(
+    path: '/project/{key}/issues',
+)]
 class ViewController extends AbstractController
 {
     use GetControllerTrait;
@@ -29,32 +32,23 @@ class ViewController extends AbstractController
     }
 
     #[Route(
-        path: '/issue/{keyIssue}',
+        path: '/{keyIssue}',
         name: RouteCollection::VIEW->value,
         methods: [Request::METHOD_GET, Request::METHOD_POST],
     )]
-    #[Route(
-        path: '/project/{keyProject}/issue/{keyIssue}',
-        name: RouteCollection::PROJECT_VIEW->value,
-        methods: [Request::METHOD_GET, Request::METHOD_POST],
-    )]
     public function view(
+        #[MapEntity(mapping: [
+            'key' => 'jiraKey',
+        ])]
+        Project $project,
         string $keyIssue,
         Request $request,
         #[CurrentUser]
         User $user,
-        ?string $keyProject = null,
     ): Response {
+        $this->setCurrentProject($project);
         $issue = $this->jiraIssueRepository->getFull($keyIssue);
         $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
-        if ($keyProject == null) {
-            $keyProject = $issue->fields->project->key;
-        }
-
-        $project = $this->handle(new GetProjectByJiraKey(jiraKey: $keyProject));
-        if ($project !== null) {
-            $this->denyAccessUnlessGranted(ProjectVoter::PROJECT_ACCESS, $project);
-        }
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);
@@ -69,13 +63,15 @@ class ViewController extends AbstractController
             return $this->redirectToRoute(
                 route: RouteCollection::VIEW->prefixed(),
                 parameters: [
+                    'key' => $this->getCurrentProject()
+                        ->jiraKey,
                     'keyIssue' => $keyIssue,
                 ],
             );
         }
 
         return $this->render(
-            view: 'app/issue/view.html.twig',
+            view: 'app/project/issue/view.html.twig',
             parameters: [
                 'key' => $keyIssue,
                 'issue' => $issue,
@@ -87,20 +83,25 @@ class ViewController extends AbstractController
     }
 
     #[Route(
-        path: '/issue/{keyIssue}/attachments',
+        path: '/{keyIssue}/attachments-stream',
         name: RouteCollection::VIEW_ATTACHMENTS_STREAM->value,
         methods: [Request::METHOD_GET],
     )]
     public function viewAttachments(
-        Request $request,
+        #[MapEntity(mapping: [
+            'key' => 'jiraKey',
+        ])]
+        Project $project,
         string $keyIssue,
+        Request $request,
     ): Response {
+        $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $issue = $this->handle(new GetFullIssue($keyIssue));
 
         if (count($issue->customAttachments) == 0) {
             return $this->renderBlock(
-                view: 'app/issue/issue_attachment.stream.html.twig',
+                view: 'app/project/issue/issue_attachment.stream.html.twig',
                 block: 'empty',
                 parameters: [
                     'issue' => $issue,
@@ -109,7 +110,7 @@ class ViewController extends AbstractController
         }
 
         return $this->render(
-            view: 'app/issue/issue_attachment.stream.html.twig',
+            view: 'app/project/issue/issue_attachment.stream.html.twig',
             parameters: [
                 'issue' => $issue,
             ]
