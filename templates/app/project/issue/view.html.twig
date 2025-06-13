@@ -19,7 +19,7 @@
         {{ 'action.return'|trans }}
     </a>
 
-    <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="btn btn-secondary">
+    <a href="{{ path('app_project_issue_edit', {'key': current_project.jiraKey, 'keyIssue': issue.key}) }}" class="btn btn-secondary">
         <i class="mdi mdi-pencil"></i>
         {{ 'action.edit'|trans }}
     </a>
@@ -40,7 +40,7 @@
         <div class="col-xxl-8 col-xl-7">
 
             <twig:app:issue:content
-                issue="{{ issue }}"
+                :issue="issue"
                 withActions="true"
             />
 

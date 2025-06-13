@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\App\Issue;
+namespace App\Controller\App;
 
 use App\Formatter\Jira\IssueAttachmentFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

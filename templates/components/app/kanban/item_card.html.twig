@@ -1,17 +1,17 @@
 {% trans_default_domain 'app' %}
 
 {% if issue is not null %}
-<div class="card mb-0" data-issue-id="{{ issue.id }}">
+<div class="card mb-0" data-issue-id="{{ issue.id }}" data-project-key="{{ project.jiraKey }}">
     <div class="card-body p-3">
         <small class="float-end text-muted">{{ issue.fields.created|date('d/m/Y H:i') }}</small>
         <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>
 
         <h5 class="mt-2 mb-2">
-            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="text-body">{{ issue.fields.summary }}</a>
+            <a href="{{ path('app_project_issue_view', {'key': project.jiraKey ,'keyIssue': issue.key}) }}" class="text-body">{{ issue.fields.summary }}</a>
         </h5>
 
         <p class="mb-1">
-            <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="pe-2 text-nowrap text-muted mb-2 d-inline-block">
+            <a href="{{ path('app_project_issue_view', {'key': project.jiraKey ,'keyIssue': issue.key}) }}" class="pe-2 text-nowrap text-muted mb-2 d-inline-block">
                 <i class="mdi mdi-briefcase-outline text-muted"></i>
                 {{ issue.key }}
             </a>
@@ -28,13 +28,13 @@
                 <i class="mdi mdi-dots-vertical font-18"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-end">
-                <a href="{{ path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
-                <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>{{ 'action.edit'|trans }}</a>
+                <a href="{{ path('app_project_issue_view', {'key': project.jiraKey ,'keyIssue': issue.key}) }}" class="dropdown-item"><i class="mdi mdi-eye me-1"></i>{{ 'action.view'|trans }}</a>
+                <a href="{{ path('app_project_issue_edit', {'key': project.jiraKey, 'keyIssue': issue.key}) }}" class="dropdown-item"><i class="mdi mdi-pencil me-1"></i>{{ 'action.edit'|trans }}</a>
 
                 <div class="dropdown-divider mb-1 mt-0"></div>
 
                 {% for transition in issue.transitions %}
-                    <form action="{{ path('app_issue_transition_to', {'issueId': issue.id, 'transitionId': transition.id}) }}" method="POST">
+                    <form action="{{ path('app_project_issue_transition_to', {'key': project.jiraKey, 'issueId': issue.id, 'transitionId': transition.id}) }}" method="POST">
                         <button type="submit" class="dropdown-item status-{{ transition.to.statusCategory.colorName }}">
                             {{ 'issue.transition.to'|trans }} "{{ transition.name }}"
                         </button>

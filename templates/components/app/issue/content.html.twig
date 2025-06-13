@@ -9,14 +9,14 @@
                     <i class="uil uil-ellipsis-h"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
-                    <a href="{{ path('app_issue_edit', {key: issue.key}) }}" class="dropdown-item">
+                    <a href="{{ path('app_project_issue_edit', {'key': issue.fields.project.key, 'keyIssue': issue.key}) }}" class="dropdown-item">
                         <i class="mdi mdi-pencil me-1"></i>{{ 'action.edit'|trans }}
                     </a>
 
                     <div class="dropdown-divider"></div>
 
                     {% for transition in issue.transitions %}
-                        <form action="{{ path('app_issue_transition_to', {'issueId': issue.id, 'transitionId': transition.id}) }}" method="POST">
+                        <form action="{{ path('app_project_issue_transition_to', {'key': issue.fields.project.key, 'issueId': issue.id, 'transitionId': transition.id}) }}" method="POST">
                             <button type="submit" class="dropdown-item status-{{ transition.to.statusCategory.colorName }}">
                                 {{ 'issue.transition.to'|trans }} "{{ transition.name }}"
                             </button>

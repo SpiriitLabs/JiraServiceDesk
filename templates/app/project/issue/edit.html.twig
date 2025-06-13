@@ -1,4 +1,4 @@
-{% extends 'app/issue/base.html.twig' %}
+{% extends 'app/project/issue/base.html.twig' %}
 
 {% trans_default_domain 'app' %}
 
@@ -6,7 +6,7 @@
 {% set breadcrumb = [
     {
         label: '#' ~ key,
-        href: path('app_issue_view', {keyIssue: key}),
+        href: path('app_project_issue_view', {'key': current_project.jiraKey, 'keyIssue': key}),
     },
     {
         label: 'action.edit',
@@ -18,17 +18,17 @@
         <div class="col-xxl-8 col-xl-7">
             <twig:form
                 form="{{ form }}"
-                cancelLink="{{ path('app_issue_view', {keyIssue: key}) }}"
+                cancelLink="{{ path('app_project_issue_view', {'key': current_project.jiraKey, 'keyIssue': key}) }}"
             >
                 <twig:block name="content">
-                    {% include 'app/issue/_form_content.html.twig' %}
+                    {% include 'app/project/issue/_edit_form_content.html.twig' %}
                 </twig:block>
             </twig:form>
         </div>
 
         <div class="col-xxl-4 col-xl-5">
             <twig:app:issue:content
-              issue="{{ issue }}"
+              :issue="issue"
             />
         </div>
     </div>
