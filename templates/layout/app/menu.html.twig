@@ -128,6 +128,14 @@
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                 />
 
+                                <twig:nav:item-single
+                                    path="#"
+                                    trans="dashboard.admin"
+                                    icon="uil-briefcase"
+                                    href="{{ path('admin_dashboard') }}"
+                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
                             </ul>
 
                             <div class="clearfix"></div>

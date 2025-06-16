@@ -79,7 +79,7 @@
                     {% endif %}
 
                     {% if is_granted('ROLE_USER') %}
-                        <a href="#" class="dropdown-item bg-info text-white">
+                        <a href="{{ path('app_project_select') }}" class="dropdown-item bg-info text-white">
                             <i class="uil-briefcase"></i>
                             <span>{{ 'dashboard.app'|trans }}</span>
                         </a>
