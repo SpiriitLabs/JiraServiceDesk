@@ -20,6 +20,15 @@ class SelectProjectController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
+        if ($user->defaultProject !== null) {
+            return $this->redirectToRoute(
+                'app_project_view',
+                [
+                    'key' => $user->defaultProject->jiraKey,
+                ]
+            );
+        }
+
         return $this->render(
             view: 'app/select_project.html.twig',
         );
