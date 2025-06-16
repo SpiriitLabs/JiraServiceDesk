@@ -194,6 +194,8 @@ project:
 
 issue:
   label: "Ticket(s)"
+  title:
+      backlogList: "Ticket(s) dans le backlog"
   action:
     create: "Créer un ticket"
   titles:
