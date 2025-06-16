@@ -23,7 +23,7 @@ readonly class IssueHtmlProcessor
             $src = $img->getAttribute('src');
             if (preg_match('#/rest/api/3/attachment/content/(\d+)#', $src, $matches)) {
                 $attachmentId = $matches[1];
-                $newUrl = $this->router->generate('app_issue_attachment', [
+                $newUrl = $this->router->generate('app_attachment', [
                     'attachmentId' => $attachmentId,
                 ]);
                 $img->setAttribute('src', $newUrl);
