@@ -46,6 +46,7 @@ class ListController extends AbstractController
     ): Response {
         $this->setCurrentProject($project);
         $filter->projects = [$this->getCurrentProject()];
+        $projectStatuses = $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey));
 
         $page = $request->get('page');
         $form = $this->createForm(
@@ -53,10 +54,14 @@ class ListController extends AbstractController
             data: $filter,
             options: [
                 'current_user' => $user,
-                'statuses' => $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey)),
+                'statuses' => $projectStatuses,
             ]
         );
         $form->handleRequest($request);
+
+        if ($filter->statusesIds == []) {
+            $filter->statusesIds = $projectStatuses;
+        }
 
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
