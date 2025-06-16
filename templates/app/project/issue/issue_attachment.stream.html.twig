@@ -21,10 +21,10 @@
                                     <div class="col-auto">
 
 
-                                        <button  type="button" class="btn btn-link btn-lg text-muted" data-bs-toggle="modal" data-bs-target="#full-width-modal">
+                                        <button  type="button" class="btn btn-link btn-lg text-muted" data-bs-toggle="modal" data-bs-target="#issue-{{ issue.id }}-attachment-{{ attachment.id }}">
                                             <i class="mdi mdi-eye"></i>
                                         </button>
-                                        <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+                                        <div id="issue-{{ issue.id }}-attachment-{{ attachment.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-full-width">
                                                 <div class="modal-content">
 
@@ -39,7 +39,7 @@
 
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.exit'|trans }}</button>
-                                                        <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="btn btn-primary">
+                                                        <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" download="{{ attachment.name }}" class="btn btn-primary">
                                                             <i class="ri-download-2-line"></i>
                                                             {{ 'action.download'|trans }}
                                                         </a>
