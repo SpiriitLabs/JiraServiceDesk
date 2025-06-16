@@ -54,7 +54,7 @@ class ListController extends AbstractController
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
-                sort: $request->get('_sort', 'id'),
+                sort: $request->get('_sort', '-updatedAt'),
                 user: $user,
                 filter: $filter,
                 pageToken: $page,
