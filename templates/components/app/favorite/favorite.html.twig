@@ -4,7 +4,7 @@
     >
         {% trans_default_domain 'app' %}
 
-        <div id="favorite">
+        <div id="favorite" data-turbo="true">
             {{ form_start(form) }}
                 {{ form_row(form.code) }}
                 {{ form_row(form.name) }}
@@ -25,7 +25,7 @@
     >
         {% trans_default_domain 'app' %}
 
-        <div id="favorite">
+        <div id="favorite" data-turbo="true">
             {{ form_start(form) }}
                 {{ form_row(form.code) }}
                 {{ form_row(form.name) }}
