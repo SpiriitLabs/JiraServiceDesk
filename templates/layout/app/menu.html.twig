@@ -78,6 +78,24 @@
 
                                 {% endif %}
 
+                                {% if app.user.favorites.count > 0 %}
+                                    <twig:nav:section-title
+                                            trans="sidebar.categories.favorites"
+                                            role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+                                    />
+
+                                    {% for favorite in app.user.favorites %}
+                                        <twig:nav:item-single
+                                            path="#"
+                                            icon="mdi mdi-heart"
+                                            trans="{{ favorite.name }}"
+                                            href="{{ favorite.link }}"
+                                            role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+                                        />
+                                    {% endfor %}
+
+                                {% endif %}
+
                                 <twig:nav:section-title
                                     trans="sidebar.categories.navigation"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
