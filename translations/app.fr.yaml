@@ -76,6 +76,7 @@ sidebar:
     navigation: "Navigation"
     project: "Projet"
     administration: "Administration"
+    favorites: "Vos Favoris"
 
 filter:
   label: "Filtre(s)"
