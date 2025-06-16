@@ -8,7 +8,7 @@
             "sizes": "any"
         }
     ],
-    "start_url": "/app/dashboard",
+    "start_url": "/app/projects/select",
     "display": "standalone",
     "theme_color": "#2784FF",
     "background_color": "#FAFBFE"

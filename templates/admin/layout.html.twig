@@ -9,6 +9,10 @@
     <link rel="shortcut icon" href="{{ asset('/build/static/images/logo/favicon.ico') }}" type="image/ico">
     <title>{% block title 'JiraServiceDesk' %} - {{ 'title.all'|trans }}</title>
 
+    <link rel="shortcut icon" href="{{ asset('/build/static/images/logo/favicon.ico') }}" type="image/ico">
+    <link rel="mask-icon" href="{{ asset('build/static/images/logo/icon.png') }}" color="#FAFBFE">
+    <link rel="manifest" href="{{ asset('build/static/pwa/site.webmanifest') }}">
+
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
