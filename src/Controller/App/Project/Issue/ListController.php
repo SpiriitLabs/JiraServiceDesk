@@ -8,6 +8,7 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Filter\Issue\IssueFormFilter;
 use App\Message\Query\App\Issue\SearchIssues;
+use App\Message\Query\App\Project\GetProjectStatusesByJiraKey;
 use App\Model\Filter\IssueFilter;
 use App\Model\SearchIssuesResult;
 use App\Repository\ProjectRepository;
@@ -45,10 +46,16 @@ class ListController extends AbstractController
     ): Response {
         $this->setCurrentProject($project);
         $filter->projects = [$this->getCurrentProject()];
-        $page = $request->get('page', null);
-        $form = $this->createForm(IssueFormFilter::class, $filter, [
-            'current_user' => $user,
-        ]);
+
+        $page = $request->get('page');
+        $form = $this->createForm(
+            type: IssueFormFilter::class,
+            data: $filter,
+            options: [
+                'current_user' => $user,
+                'statuses' => $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey)),
+            ]
+        );
         $form->handleRequest($request);
 
         /** @var SearchIssuesResult $searchIssueResult */
