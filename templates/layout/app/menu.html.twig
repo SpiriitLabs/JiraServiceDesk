@@ -44,15 +44,14 @@
                     <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
                         <div class="simplebar-content" style="padding: 0px;">
 {#                            <!-- Leftbar User -->#}
-{#                            <div class="leftbar-user">#}
-{#                                <a href="pages-profile.html">#}
-{#                                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">#}
-{#                                    <span class="leftbar-user-name mt-2">Dominic Keller</span>#}
-{#                                </a>#}
-{#                            </div>#}
+                            {% if current_project is defined %}
+                            <div class="leftbar-user">
+                                <p class="leftbar-user-name">{{ current_project.name }}</p>
+                            </div>
+                            {% endif %}
 
                             <!--- Sidemenu -->
-                            <ul class="side-nav mt-3">
+                            <ul class="side-nav mt-1">
 
                                 {% if current_project is defined %}
 
@@ -76,6 +75,7 @@
                                         href="{{ path('app_project_issue_list', {'key': current_project.jiraKey}) }}"
                                         role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                     />
+
                                 {% endif %}
 
                                 <twig:nav:section-title
@@ -83,12 +83,23 @@
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                 />
 
-                                <twig:nav:item-single
+                                {% set userProjects = [] %}
+                                {% for project in app.user.projects %}
+                                    {% set userProjects = [
+                                        {
+                                            path: '#',
+                                            href: path('app_project_view', {'key': project.jiraKey}),
+                                            trans: project.name,
+                                        }
+                                    ]|merge(userProjects) %}
+                                {% endfor %}
+                                <twig:nav:item-group
                                     path="app_project_select"
-                                    trans="project.label"
+                                    firstLevelTrans="project.label"
                                     icon="uil-briefcase"
-                                    href="{{ path('app_project_select') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+                                    collapse="false"
+                                    secondLevel="{{ userProjects }}"
                                 />
 
                                 <twig:nav:item-single
@@ -98,11 +109,6 @@
                                     href="{{ path('app_profil') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                 />
-
-                                <div class="help-box text-white text-center">
-                                    <h5 class="mt-1">{{ 'title.all'|trans }}</h5>
-                                    <p class="mb-0">V{{ project_version }}</p>
-                                </div>
 
                             </ul>
 
