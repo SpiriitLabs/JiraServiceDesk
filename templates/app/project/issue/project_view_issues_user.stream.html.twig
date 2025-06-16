@@ -1,6 +1,6 @@
 {% block list %}
-    <twig:Turbo:Stream:Replace 
-        target="#project_view_issues_status_backlog_container"
+    <twig:Turbo:Stream:Replace
+        target="#project_view_issues_status_user_container"
     >
         <twig:list:data-list
             :datas="searchIssuesResult.issues"
@@ -10,12 +10,12 @@
             {% trans_default_domain 'app' %}
 
             {% block container_attributes %}
-                id="project_view_issues_status_backlog_container" data-turbo-prefetch="false"
+                id="project_view_issues_status_user_container" data-turbo-prefetch="false"
             {% endblock %}
 
             {% block header %}
                 {% trans_default_domain 'app' %}
-                <h4>{{ 'project.title.backlogIssues'|trans }}</h4>
+                <h4>{{ 'project.title.userIssues'|trans }}</h4>
             {% endblock %}
 
             {% block tableTh %}
@@ -55,19 +55,20 @@
             {% endblock %}
 
             {% block tbody_attributes %}
-                id="project_view_issues_status_backlog_list_content"
+                id="project_view_issues_status_user_list_content"
             {% endblock %}
 
             {% block tableTb %}
-                {% include 'app/project/issue/_project_view_issues_backlog_content.html.twig' with {
+                {% include 'app/project/issue/_project_view_issues_user_content.html.twig' with {
                     'data': searchIssuesResult.issues,
+                    'project': project,
                 } %}
             {% endblock %}
 
             {% block pagination %}
                 <div class="pagerfanta mt-4 pagination">
                     <ul class="pagination">
-                        {% include 'app/project/issue/_project_view_issues_backlog_next.html.twig' with {
+                        {% include 'app/project/issue/_project_view_issues_user_next.html.twig' with {
                             projectKeyValue: project.jiraKey,
                             nextPageToken: searchIssuesResult.nextPageToken
                         } %}
@@ -79,18 +80,18 @@
 {% endblock %}
 
 {% block list_next %}
-    <twig:Turbo:Stream:Append 
-        target="#project_view_issues_status_backlog_list_content"
+    <twig:Turbo:Stream:Append
+        target="#project_view_issues_status_user_list_content"
     >
-        {% include 'app/project/issue/_project_view_issues_backlog_content.html.twig' with {
+        {% include 'app/project/issue/_project_view_issues_user_content.html.twig' with {
             datas: searchIssuesResult.issues
         } %}
     </twig:Turbo:Stream:Append>
 
-    <twig:Turbo:Stream:Replace 
+    <twig:Turbo:Stream:Replace
         target="#project_view_issues_status_backlog_list_pagination"
     >
-        {% include 'app/project/issue/_project_view_issues_backlog_next.html.twig' with {
+        {% include 'app/project/issue/_project_view_issues_user_next.html.twig' with {
             projectKeyValue: project.jiraKey,
             nextPageToken: searchIssuesResult.nextPageToken
         } %}
