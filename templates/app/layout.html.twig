@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
 
 <!DOCTYPE html>
-<html lang="{{ app.locale }}" data-bs-preferred-theme="{{ app.session.get('_theme') }}" data-layout="topnav">
+<html lang="{{ app.locale }}" data-bs-preferred-theme="{{ app.session.get('_theme') }}" class="menuitem-active">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -40,11 +40,11 @@
           {% endfor %}
       </div>
       <div class="wrapper">
-          {% include 'layout/app/topbar.html.twig' %}
+          {% include 'layout/app/header.html.twig' %}
           {% include 'layout/app/menu.html.twig' %}
           {% include 'layout/app/breadcrumb.html.twig' %}
 
-          <div class="content-page mt-2">
+          <div class="content-page">
               <div class="content">
                   <div class="container-fluid">
                       <div class="row mt-0">
@@ -68,8 +68,6 @@
                       </div>
                   </div>
               </div>
-
-              {#            {% include 'layout/app/footer.html.twig' %}#}
 
           </div>
       </div>
