@@ -74,6 +74,7 @@ blameable:
 sidebar:
   categories:
     navigation: "Navigation"
+    project: "Projet"
     administration: "Administration"
 
 filter:
