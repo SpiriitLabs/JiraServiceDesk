@@ -10,7 +10,6 @@ use App\Form\Filter\Issue\IssueFormFilter;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Model\Filter\IssueFilter;
 use App\Model\SearchIssuesResult;
-use App\Repository\ProjectRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
