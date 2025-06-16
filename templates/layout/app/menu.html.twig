@@ -69,10 +69,18 @@
                                     />
 
                                     <twig:nav:item-single
-                                        path="app_project_issue"
+                                        path="app_project_issue_"
                                         trans="issue.label"
                                         icon="uil-clipboard-alt"
                                         href="{{ path('app_project_issue_list', {'key': current_project.jiraKey}) }}"
+                                        role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
+                                    />
+
+                                    <twig:nav:item-single
+                                        path="app_project_issue_backlog_list"
+                                        trans="issue.title.backlogList"
+                                        icon="uil-clipboard-alt"
+                                        href="{{ path('app_project_issue_backlog_list', {'key': current_project.jiraKey}) }}"
                                         role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                     />
 

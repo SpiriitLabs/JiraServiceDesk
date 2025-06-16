@@ -11,6 +11,7 @@ enum RouteCollection: string implements RouteCollectionInterface
 
     case CREATE = 'project_issue_create';
     case LIST = 'project_issue_list';
+    case BACKLOG_LIST = 'project_issue_backlog_list';
     case VIEW = 'project_issue_view';
     case EDIT = 'project_issue_edit';
     case VIEW_ATTACHMENTS_STREAM = 'project_issue_attachments_stream';
