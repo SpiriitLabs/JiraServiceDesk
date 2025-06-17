@@ -9,12 +9,17 @@
 
     {% block filterFormRows %}
         {% if filterForm is defined and filterForm is not null %}
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 {{ form_widget(filterForm.query) }}
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 {{ form_widget(filterForm.statusesIds) }}
             </div>
+            {% if filterForm.assigneeIds is defined %}
+                <div class="col-12 col-md-3">
+                    {{ form_widget(filterForm.assigneeIds) }}
+                </div>
+            {% endif %}
         {% endif %}
     {% endblock %}
 

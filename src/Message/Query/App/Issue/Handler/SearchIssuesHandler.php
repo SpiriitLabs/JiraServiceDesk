@@ -57,6 +57,21 @@ class SearchIssuesHandler
             ;
         }
 
+        if ($query->filter !== null && $query->filter->assigneeIds !== null && count(
+            $query->filter->assigneeIds
+        ) !== 0) {
+            $assigneeJqlQuery = new JqlQuery();
+            foreach ($query->filter->assigneeIds as $assigneeId) {
+                $assigneeJqlQuery
+                    ->addExpression(JqlQuery::FIELD_ASSIGNEE, '=', strtoupper($assigneeId), JqlQuery::KEYWORD_OR)
+                ;
+            }
+
+            $jql
+                ->addAnyExpression('and (' . $assigneeJqlQuery->getQuery() . ')')
+            ;
+        }
+
         if ($query->filter !== null && $query->filter->statusesIds !== null) {
             if (count($query->filter->statusesIds) === 0) {
                 return new SearchIssuesResult(total: 0);

@@ -3,8 +3,10 @@
 namespace App\Form\Filter\Issue;
 
 use App\Entity\User;
+use App\Enum\User\Role;
 use App\Form\AbstractFilterType;
 use App\Model\Filter\IssueFilter;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IssueFormFilter extends AbstractFilterType
 {
+    public function __construct(
+        private readonly Security $security,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var User $user */
@@ -42,6 +49,22 @@ class IssueFormFilter extends AbstractFilterType
                 ])
             ;
         }
+
+        if ($this->security->isGranted(Role::ROLE_APP_CAN_ASSIGNEE) && $options['assignees'] !== []) {
+            $builder
+                ->add('assigneeIds', ChoiceType::class, [
+                    'choices' => $options['assignees'],
+                    'label' => false,
+                    'multiple' => true,
+                    'required' => false,
+                    'autocomplete' => true,
+                    'attr' => [
+                        'data-controller' => 'form-control select2',
+                        'placeholder' => 'issue.assignee.label',
+                    ],
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -51,6 +74,7 @@ class IssueFormFilter extends AbstractFilterType
             'data_class' => IssueFilter::class,
             'current_user' => null,
             'statuses' => [],
+            'assignees' => [],
         ]);
 
         $resolver->setRequired('current_user');

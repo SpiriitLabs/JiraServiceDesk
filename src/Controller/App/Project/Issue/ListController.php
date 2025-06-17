@@ -7,6 +7,7 @@ use App\Controller\Common\GetControllerTrait;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Form\Filter\Issue\IssueFormFilter;
+use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use App\Message\Query\App\Issue\SearchIssues;
 use App\Message\Query\App\Project\GetProjectStatusesByJiraKey;
 use App\Model\Filter\IssueFilter;
@@ -46,7 +47,6 @@ class ListController extends AbstractController
     ): Response {
         $this->setCurrentProject($project);
         $filter->projects = [$this->getCurrentProject()];
-        $projectStatuses = $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey));
 
         $page = $request->get('page');
         $form = $this->createForm(
@@ -54,13 +54,17 @@ class ListController extends AbstractController
             data: $filter,
             options: [
                 'current_user' => $user,
-                'statuses' => $projectStatuses,
+                'statuses' => $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey)),
+                'assignees' => $this->handle(new GetIssueAssignableUsers($project)),
             ]
         );
         $form->handleRequest($request);
 
         if ($filter->statusesIds == []) {
-            $filter->statusesIds = $projectStatuses;
+            $filter->statusesIds = null;
+        }
+        if ($filter->assigneeIds == []) {
+            $filter->assigneeIds = null;
         }
 
         /** @var SearchIssuesResult $searchIssueResult */

@@ -11,6 +11,7 @@ class IssueFilter
     public function __construct(
         public array $projects = [],
         public ?array $statusesIds = null,
+        public ?array $assigneeIds = null,
     ) {
     }
 }
