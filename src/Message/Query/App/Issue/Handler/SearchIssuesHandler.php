@@ -63,7 +63,7 @@ class SearchIssuesHandler
             $assigneeJqlQuery = new JqlQuery();
             foreach ($query->filter->assigneeIds as $assigneeId) {
                 $assigneeJqlQuery
-                    ->addExpression(JqlQuery::FIELD_ASSIGNEE, '=', strtoupper($assigneeId), JqlQuery::KEYWORD_OR)
+                    ->addExpression(JqlQuery::FIELD_ASSIGNEE, '=', $assigneeId, JqlQuery::KEYWORD_OR)
                 ;
             }
 
