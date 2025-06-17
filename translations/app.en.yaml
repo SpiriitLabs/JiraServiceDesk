@@ -1,242 +1,265 @@
 action:
-  label: "Action(s)"
-  logout: "Log out"
-  create: "Create"
-  cancel: "Cancel"
-  save: "Save"
-  list: "View list"
-  exit: "Close"
-  edit: "Edit"
-  exitImpersonation: "Exit impersonation mode"
-  view: "View"
-  add: "Add"
-  remove: "Remove"
-  download: "Download"
-  return: "Back"
-  generate: "Generate"
-  filter: "Filter"
-  next: "Next"
+    label: "Action(s)"
+    logout: "Log out"
+    create: "Create"
+    cancel: "Cancel"
+    save: "Save"
+    list: "Show list"
+    exit: "Close"
+    edit: "Edit"
+    exitImpersonation: "Exit impersonation mode"
+    view: "View"
+    add: "Add"
+    remove: "Remove"
+    download: "Download"
+    return: "Return"
+    generate: "Generate"
+    filter: "Filter"
+    next: "Next"
+
+yes: "Yes"
+no: "No"
 
 locale:
-  label: "Language"
-  fr: "French"
-  en: "English"
+    label: "Language"
+    fr: "French"
+    en: "English"
 
 theme:
-  label: "Theme"
-  light: "Light"
-  dark: "Dark"
-  auto: "Automatic"
+    label: "Theme"
+    light: "Light"
+    dark: "Dark"
+    auto: "Automatic"
 
 flash:
-  edited: "The item was successfully updated."
-  created: "The item was successfully created."
-  deleted: "The item was successfully deleted."
-  stopped: "The item was successfully stopped."
-  error: "An error has occurred."
-  custom:
-    user_no_project: "No project is associated with your user account."
+    edited: "Modification saved successfully."
+    created: "Creation completed successfully."
+    deleted: "Deletion completed successfully."
+    stopped: "Stopped successfully."
+    error: "An error occurred."
+    custom:
+        user_no_project: "No project is associated with your user account."
 
 header:
-  themeMode: "Display mode"
-  dropdown:
-    welcome: "Welcome!"
-    restart_introduction: "Restart introduction"
+    themeMode: "Display mode"
+    dropdown:
+        welcome: "Welcome!"
+        restart_introduction: "Review the introduction"
 
 title:
-  all: "Jira Service Desk"
-  short: "ServiceDesk"
+    all: "Jira Service Desk"
+    short: "ServiceDesk"
 
 list:
-  pagination:
-    previous: "Previous"
-    next: "Next"
-    empty: "No items found."
-    total: "%number% result(s)"
+    pagination:
+        previous: "Previous"
+        next: "Next"
+        empty: "No items found."
+        total: "%number% result(s)"
 
 modal:
-  delete:
-    title: "Delete Confirmation"
-    description: "Clicking this button will confirm the deletion of the selected item."
-    action: "Confirm"
-  warning:
-    title: "Warning"
-    description: "Clicking this button will confirm the execution of the selected action."
-    action: "Confirm"
+    delete:
+        title: "Delete Confirmation"
+        description: "By clicking this button, you confirm the deletion of the selected item."
+        action: "Confirm"
+    warning:
+        title: "Warning"
+        description: "This action is irreversible. Click to confirm."
+        action: "Confirm"
 
 blameable:
-  created: "Created on %date% by %user%"
-  updated: "Updated on %date% by %user%"
+    created: "Created on %date%"
+    updated: "Updated on %date%"
 
 sidebar:
-  categories:
-    navigation: "Navigation"
-    administration: "Administration"
+    categories:
+        navigation: "Navigation"
+        project: "Project"
+        administration: "Administration"
+        favorites: "Your Favorites"
 
 filter:
-  label: "Filter(s)"
-  query:
-    label: "Search"
+    label: "Filter(s)"
+    query:
+        label: "Search"
 
 dashboard:
-  label: "Dashboard"
-  welcome: "Hello %name%!"
-  admin: "Admin Dashboard"
-  app: "Application Dashboard"
-  total_of: "Total of"
-  total_of_user_notification: "User(s) with notifications"
-  favorites_and_projects: "Your favorites and your projects"
-  assignee_issues: "Your assigned ticket"
+    label: "Dashboard"
+    welcome: "Hello %name%!"
+    admin: "Admin Dashboard"
+    app: "Application Dashboard"
+    total_of: "Total number of"
+    total_of_user_notification: "User(s) with notifications"
+    favorites: "Your favorites"
+    projects: "Select a project"
+    assignee_issues: "Your tickets are assigned"
+
+select_project:
+    title: "Select your project"
 
 favorite:
-  label: "Favorite(s)"
-  action:
-    add: "Add to favorites"
-    remove: "Remove from favorites"
+    label: "Favorite(s)"
+    action:
+        add: "Add to favorites"
+        remove: "Remove from favorites"
 
 user:
-  label: "User(s)"
-  title:
-    create: "Create a user"
-    edit: "Edit user \"%email%\""
-  email:
-    label: "Email address"
-  password:
-    label: "Password"
-    new: "New password"
-    repeat: "Repeat password"
-    notice: "💡 Leave this field blank if you do not wish to change the password."
-  firstName:
-    label: "First name"
-  lastName:
-    label: "Last name"
-  company:
-    label: "Company"
-  roles:
-    label: "Role(s)"
-    role_admin: "Administrator"
-    role_user: "User"
-    role_app_can_assignee: "[APPLICATION] Can be assigned"
-    role_app_can_view_backlog: "[APPLICATION] Can view project backlog"
-  preferedLocale:
-    label: "Preferred language"
-  preferedTheme:
-    label: "Preferred theme"
-  preferenceNotification:
-    label: "Notifications"
-  preferenceNotificationIssueCreated:
-    label: "Notify on ticket creation"
-  preferenceNotificationIssueUpdated:
-    label: "Notify on ticket update"
-  preferenceNotificationCommentCreated:
-    label: "Notify on comment creation"
-  preferenceNotificationCommentUpdated:
-    label: "Notify on comment update"
+    label: "User(s)"
+    title:
+        create: "Create a new user"
+        edit: "Edit user « %email% »"
+    email:
+        label: "Email address"
+    password:
+        label: "Password"
+        new: "New password"
+        repeat: "Confirm password"
+        notice: "💡 Leave this field empty if you do not wish to change the password."
+    firstName:
+        label: "First name"
+    lastName:
+        label: "Last name"
+    company:
+        label: "Company"
+    roles:
+        label: "Role(s)"
+        role_admin: "Administrator"
+        role_user: "User"
+        role_app_can_assignee: "[APPLICATION] Can assign tickets"
+        role_app_can_view_backlog: "[APPLICATION] Access to project backlog"
+        role_app_kanban: "[APPLICATION] Can use kanbans"
+        role_app_view_kanban: "[APPLICATION] Can view kanbans"
+    preferedLocale:
+        label: "Preferred language"
+    preferedTheme:
+        label: "Preferred theme"
+    preferenceNotification:
+        label: "Notifications"
+    preferenceNotificationIssueCreated:
+        label: "Receive a notification when a ticket is created"
+    preferenceNotificationIssueUpdated:
+        label: "Receive a notification when a ticket is updated"
+    preferenceNotificationCommentCreated:
+        label: "Receive a notification when a comment is created"
+    preferenceNotificationCommentUpdated:
+        label: "Receive a notification when a comment is updated"
+    enabled:
+        label: "Active account"
+    defaultProject:
+        label: "Default project"
 
 profile:
-  label: "Profile"
-  view:
-    title: "My profile"
+    label: "Profile"
+    view:
+        title: "My profile"
 
 project:
-  label: "Project(s)"
-  title:
-    create: "Create a project from Jira"
-    edit: "Edit project \"%key%\""
-    backlogIssues: "Backlog ticket(s)"
-  name:
-    label: "Name"
-  jiraKey:
-    label: "Jira key"
-  jiraId:
-    label: "Jira ID"
-  description:
-    label: "Description"
-  users:
-    label: "Associated user(s)"
-  lead:
-    label: "Project lead"
-  assignableRolesIds:
-    label: "Assignable role(s)"
-  backlogStatusesIds:
-    label: "Backlog statuses"
-  category:
-    label: "Category"
-  boards:
-    label: "Boards"
-  board:
-    label: "Board"
-  flashes:
-    alreadyExist: "This project key already exists."
-    created: "Project created. Please select backlog statuses and user roles for ticket assignment."
-    notFound: "Project not found"
-  kanban:
-    selectTransition:
-      title: 'Select status'
+    label: "Project(s)"
+    title:
+        create: "Create a project from Jira"
+        edit: "Edit project « %key% »"
+        userIssues: "Ticket(s) assigned to you"
+    name:
+        label: "Name"
+    jiraKey:
+        label: "Jira Key"
+    jiraId:
+        label: "Jira ID"
+    description:
+        label: "Description"
+    users:
+        label: "Associated User(s)"
+    lead:
+        label: "Lead"
+    assignableRolesIds:
+        label: "Role(s) that can be assigned"
+    backlogStatusesIds:
+        label: "Backlog statuses"
+    category:
+        label: "Category"
+    defaultIssueType:
+        label: "Default type"
+    boards:
+        label: "Boards"
+    board:
+        label: "Board"
+    flashes:
+        alreadyExist: "This project key is already in use."
+        created: "Project created successfully. Please select the backlog statuses and roles of users that can be assigned."
+        notFound: "Project not found."
+        currentNotFound: "The current project has not been set up."
+    kanban:
+        selectTransition:
+            title: "Select the status"
 
 issue:
-  label: "Ticket(s)"
-  action:
-    create: "Create a ticket"
-  titles:
-    create: "Create a ticket"
-  jiraKey:
-    label: "Key"
-  assignee:
-    label: "Assigned to"
-    not_assignee: "Unassigned"
-  updated:
-    label: "Updated date"
-  status:
-    label: "Status"
-  priority:
-    label: "Priority"
-  summary:
-    label: "Title"
-  type:
-    label: "Type"
-  description:
-    label: "Description"
-    notice: "💡 Your first and last name will be added to help project managers track the ticket."
-  comment:
-    label: "Comment(s)"
-  attachment:
-    label: "Attachment(s)"
-  transition:
-    label: "Transition"
-    to: "Move to"
-  create:
-    select_project:
-      description: "Please select a project to proceed with ticket creation."
+    label: "Ticket(s)"
+    title:
+        backlogList: "Ticket(s) in the backlog"
+    action:
+        create: "Create a ticket"
+    titles:
+        create: "Create a ticket"
+    jiraKey:
+        label: "Key"
+    assignee:
+        label: "Assigned to"
+        not_assignee: "Not assigned"
+    updated:
+        label: "Date updated"
+    status:
+        label: "Status"
+    priority:
+        label: "Priority"
+    summary:
+        label: "Title"
+    type:
+        label: "Type"
+    description:
+        label: "Description"
+        notice: "💡 Your first and last name will be added for better tracking by project managers."
+    comment:
+        label: "Comment(s)"
+    attachment:
+        label: "Attachment(s)"
+        preview: "Preview"
+    transition:
+        label: "Transition"
+        to: "Move to"
+    create:
+        select_project:
+            description: "Please select a project to continue creating the ticket."
 
 priority:
-  label: "Priority(ies)"
-  name:
-    label: "Name"
-  description:
-    label: "Description"
-  iconUrl:
-    label: "Icon"
-  statusColor:
-    label: "Color"
-  flashes:
-    generated: "Items successfully retrieved."
+    label: "Priority(ies)"
+    name:
+        label: "Name"
+    description:
+        label: "Description"
+    iconUrl:
+        label: "Icon"
+    statusColor:
+        label: "Color"
+    flashes:
+        generated: "Priorities have been retrieved successfully."
 
 security:
-  login:
-    label: "Login"
-    sign_in: "Sign in"
-    sign_in_catch_phrase: "to access the application"
-    action: "Log in"
-  check_email:
-    label: "Check your email address"
-    description: "If an account matching this email exists, a reset link has been sent.<br/>This link will expire in %expire_link_time%."
-    retry: "If you haven’t received the email, please check your spam folder."
-    action: "Try again"
-  reset_password_request:
-    label: "Password reset"
-    description: "Enter your email address to receive a reset link."
-    action: "Send reset link"
-  reset_password:
-    label: "New password"
-    action: "Update"
+    login:
+        label: "Login"
+        sign_in: "Sign in"
+        sign_in_catch_phrase: "to access the application"
+        account_disable: "Your account is disabled."
+        user_account_no_projects: "You have no projects linked to your account."
+        action: "Login"
+    check_email:
+        label: "Email Verification"
+        description: "If a matching account exists, a reset email has been sent.<br/>This link will expire in %expire_link_time%."
+        retry: "If you do not receive anything, check your spam folder."
+        action: "Retry"
+    reset_password_request:
+        label: "Password Reset"
+        description: "Enter your email address to receive a reset link."
+        action: "Send link"
+    reset_password:
+        label: "New password"
+        action: "Update"
