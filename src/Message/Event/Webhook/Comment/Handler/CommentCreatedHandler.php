@@ -69,7 +69,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
                         locale: $user->preferredLocale->value,
                     ),
                 )
-                ->to(new Address($user->email, $user->fullName))
+                ->to(new Address($user->email, $user->getFullName()))
                 ->locale($user->preferredLocale->value)
             ;
 

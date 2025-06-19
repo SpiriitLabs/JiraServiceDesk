@@ -182,7 +182,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->to(new Address($user->email, $user->fullName))
+            ->to(new Address($user->email, $user->getFullName()))
             ->locale($user->preferredLocale->value ?? AppLocale::FR->value)
             ->subject(
                 $this->translator->trans(

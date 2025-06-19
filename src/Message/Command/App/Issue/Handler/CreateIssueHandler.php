@@ -95,7 +95,7 @@ class CreateIssueHandler
             'content' => [
                 [
                     'type' => 'text',
-                    'text' => $creator->fullName,
+                    'text' => $creator->getFullName(),
                 ],
             ],
         ];
