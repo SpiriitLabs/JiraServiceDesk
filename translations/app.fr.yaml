@@ -224,7 +224,7 @@ issue:
         label: "Pièce(s) jointe(s)"
         preview: "Prévisualisation"
     transition:
-        label: "Transition"
+        label: "Statut"
         to: "Passer à"
     create:
         select_project:
