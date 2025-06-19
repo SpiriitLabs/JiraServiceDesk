@@ -57,7 +57,7 @@ readonly class CreateUserHandler
         $resetUserToken = $this->resetPasswordHelper->generateResetToken($user);
 
         $email = (new TemplatedEmail())
-            ->to(new Address($user->email, $user->fullName))
+            ->to(new Address($user->email, $user->getFullName()))
             ->locale($user->preferredLocale->value ?? Locale::FR->value)
             ->subject(
                 $this->translator->trans(
