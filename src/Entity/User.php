@@ -51,13 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
 
-    public string $fullName {
-        get => sprintf('%s %s', $this->firstName, $this->lastName);
-    }
+    public ?string $fullName = null;
 
-    public string $initials {
-        get => UserNameService::initials($this->firstName, $this->lastName);
-    }
+    public string $initials = '';
 
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $company = null;
@@ -143,6 +139,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(?string $lastName): void
     {
         $this->lastName = strtoupper($lastName);
+    }
+
+    public function getFullName(): ?string
+    {
+        return sprintf('%s %s', $this->firstName, $this->lastName);
+    }
+
+    public function getInitials(): ?string
+    {
+        return UserNameService::initials($this->firstName, $this->lastName);
     }
 
     /**
