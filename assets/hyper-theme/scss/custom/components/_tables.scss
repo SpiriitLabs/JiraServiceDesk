@@ -20,6 +20,11 @@
         }
     }
 
+    .issue-link {
+        color: inherit;
+    }
+
+
     .action-icon {
         color: var(--#{$prefix}secondary-color);
         font-size: 1.2rem;
