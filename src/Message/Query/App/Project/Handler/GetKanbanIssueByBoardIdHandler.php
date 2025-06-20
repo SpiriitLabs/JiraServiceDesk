@@ -7,6 +7,7 @@ use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use App\Repository\Jira\BoardRepository;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\JqlQuery;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -15,6 +16,8 @@ readonly class GetKanbanIssueByBoardIdHandler
     public function __construct(
         private IssueKanbanFormatter $formatter,
         private BoardRepository $boardRepository,
+        #[Autowire(param: 'resolution_date')]
+        protected string $resolutionDate,
     ) {
     }
 
@@ -29,7 +32,7 @@ readonly class GetKanbanIssueByBoardIdHandler
 
         $subQuery = new JqlQuery();
         $subQuery
-          ->addExpression('resolutiondate', '>=', '-14d', JqlQuery::KEYWORD_OR)
+          ->addExpression('resolutiondate', '>=', $this->resolutionDate, JqlQuery::KEYWORD_OR)
           ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR);
 
         $boardIssues = $this->boardRepository->getBoardIssuesById(
