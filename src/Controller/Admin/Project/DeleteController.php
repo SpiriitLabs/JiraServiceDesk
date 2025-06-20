@@ -4,7 +4,7 @@ namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\DeleteControllerTrait;
 use App\Entity\Project;
-use App\Message\Command\Common\DeleteEntity;
+use App\Message\Command\Admin\Project\DeleteProject;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,9 +27,8 @@ class DeleteController extends AbstractController
         Project $project,
     ): RedirectResponse {
         $this->handle(
-            new DeleteEntity(
-                class: Project::class,
-                id: $project->getId(),
+            new DeleteProject(
+                $project,
             ),
         );
 
