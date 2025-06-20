@@ -40,7 +40,8 @@ class UserChecker implements UserCheckerInterface
         if (($this->security->isGrantedForUser(
             $user,
             Role::ROLE_ADMIN
-        ) == false) && $user->getProjects()->count() == 0) {
+        ) == false) && $user->getProjects()
+            ->count() == 0) {
             throw new CustomUserMessageAccountStatusException(message: $this->translator->trans(
                 id: 'security.login.user_account_no_projects',
                 domain: 'app',

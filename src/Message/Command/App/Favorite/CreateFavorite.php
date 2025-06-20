@@ -8,10 +8,11 @@ class CreateFavorite extends AbstractFavoriteDTO
 {
     public function __construct(
         string $code,
+        int $projectId,
+        User $user,
         public string $name,
         public string $link,
-        public User $user,
     ) {
-        parent::__construct($code);
+        parent::__construct($code, $projectId, $user);
     }
 }

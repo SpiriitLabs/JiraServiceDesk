@@ -28,6 +28,7 @@
         id="favorite"
         src="{{ path('app_favorite_stream', {
             'code': app.user.id ~ '-favorite-issue-'~key,
+            'projectId': current_project.id,
             'link': absolute_url(path('app_project_issue_view', {'key': current_project.jiraKey, 'keyIssue': key}))|url_encode,
             'name': ' #' ~ key ~ ' - "' ~ issue.fields.summary ~ '"',
         }) }}"

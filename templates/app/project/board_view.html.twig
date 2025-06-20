@@ -25,6 +25,7 @@
         id="favorite"
         src="{{ path('app_favorite_stream', {
             'code': app.user.id ~ '-favorite-project-'~entity.jiraKey~'-board-'~boardId,
+            'projectId': current_project.id,
             'link': absolute_url(path('app_project_board_view', {'key': entity.jiraKey, idBoard: boardId}))|url_encode,
             'name': 'project.board.label'|trans ~ ' ' ~ entity.name,
         }) }}"

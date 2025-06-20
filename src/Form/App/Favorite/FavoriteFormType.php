@@ -19,6 +19,7 @@ class FavoriteFormType extends AbstractType
     {
         $builder
             ->add('code', HiddenType::class)
+            ->add('projectId', HiddenType::class)
             ->add('name', HiddenType::class)
             ->add('link', HiddenType::class)
             ->setAction(
@@ -26,6 +27,7 @@ class FavoriteFormType extends AbstractType
                     RouteCollection::FAVORITE_STREAM->prefixed(),
                     [
                         'code' => $builder->getData()['code'],
+                        'projectId' => $builder->getData()['projectId'],
                     ]
                 )
             )
