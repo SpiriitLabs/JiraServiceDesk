@@ -4,6 +4,7 @@ namespace App\Message\Command\User\Handler;
 
 use App\Entity\User;
 use App\Message\Command\User\EditUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -12,6 +13,7 @@ readonly class EditUserHandler
 {
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -33,15 +35,25 @@ readonly class EditUserHandler
         $user->enabled = $command->enabled;
         $user->defaultProject = $command->defaultProject;
 
+        $deletedProjects = array_diff($user->getProjects()->toArray(), $command->projects);
         if (
-            count(array_diff($user->getProjects()->toArray(), $command->projects)) > 0
+            count($deletedProjects) > 0
             || count(array_diff($command->projects, $user->getProjects()->toArray())) > 0
         ) {
             $user->clearProjects();
 
-
             foreach ($command->projects as $project) {
                 $user->addProject($project);
+            }
+
+            foreach ($deletedProjects as $deletedProject) {
+                foreach ($user->getFavorites() as $userFavorite) {
+                    if ($userFavorite->getProject()->getId() === $deletedProject->getId()) {
+                        $user->removeFavorite($userFavorite);
+                        $this->entityManager->remove($userFavorite);
+                        $this->entityManager->flush();
+                    }
+                }
             }
         }
 
