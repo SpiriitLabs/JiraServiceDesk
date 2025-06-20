@@ -33,7 +33,8 @@ readonly class GetKanbanIssueByBoardIdHandler
         $subQuery = new JqlQuery();
         $subQuery
             ->addExpression('resolutiondate', '>=', $this->resolutionDate, JqlQuery::KEYWORD_OR)
-            ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR);
+            ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR)
+        ;
 
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
