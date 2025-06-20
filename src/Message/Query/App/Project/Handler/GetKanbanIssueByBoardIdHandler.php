@@ -27,12 +27,19 @@ readonly class GetKanbanIssueByBoardIdHandler
             id: $query->boardId
         );
 
+        $subQuery = new JqlQuery();
+        $subQuery
+          ->addExpression('resolutiondate', '>=', '-14d', JqlQuery::KEYWORD_OR)
+          ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR);
+
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
             parameters: [
                 'maxResults' => 500,
                 'jql' => new JqlQuery()
-                    ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])->getQuery(),
+                    ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])
+                    ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
+                    ->getQuery(),
                 'fields' => [
                     'description',
                     'id',
