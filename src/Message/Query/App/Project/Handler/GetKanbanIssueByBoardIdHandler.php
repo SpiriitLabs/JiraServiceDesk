@@ -16,8 +16,8 @@ readonly class GetKanbanIssueByBoardIdHandler
     public function __construct(
         private IssueKanbanFormatter $formatter,
         private BoardRepository $boardRepository,
-        #[Autowire(param: 'resolution_date')]
-        protected string $resolutionDate,
+        #[Autowire(env: 'RESOLUTIONDATE_MAX_TO_KEEP')]
+        private string $resolutionDate,
     ) {
     }
 
@@ -32,8 +32,8 @@ readonly class GetKanbanIssueByBoardIdHandler
 
         $subQuery = new JqlQuery();
         $subQuery
-          ->addExpression('resolutiondate', '>=', $this->resolutionDate, JqlQuery::KEYWORD_OR)
-          ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR);
+            ->addExpression('resolutiondate', '>=', $this->resolutionDate, JqlQuery::KEYWORD_OR)
+            ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR);
 
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
