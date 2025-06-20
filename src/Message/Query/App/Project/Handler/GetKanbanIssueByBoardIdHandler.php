@@ -7,6 +7,7 @@ use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use App\Repository\Jira\BoardRepository;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\JqlQuery;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -15,6 +16,8 @@ readonly class GetKanbanIssueByBoardIdHandler
     public function __construct(
         private IssueKanbanFormatter $formatter,
         private BoardRepository $boardRepository,
+        #[Autowire(env: 'RESOLUTIONDATE_MAX_TO_KEEP')]
+        private string $resolutionDate,
     ) {
     }
 
@@ -27,12 +30,20 @@ readonly class GetKanbanIssueByBoardIdHandler
             id: $query->boardId
         );
 
+        $subQuery = new JqlQuery();
+        $subQuery
+            ->addExpression('resolutiondate', '>=', $this->resolutionDate, JqlQuery::KEYWORD_OR)
+            ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR)
+        ;
+
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
             parameters: [
                 'maxResults' => 500,
                 'jql' => new JqlQuery()
-                    ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])->getQuery(),
+                    ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])
+                    ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
+                    ->getQuery(),
                 'fields' => [
                     'description',
                     'id',
