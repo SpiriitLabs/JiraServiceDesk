@@ -8,8 +8,9 @@ class DeleteFavorite extends AbstractFavoriteDTO
 {
     public function __construct(
         string $code,
-        public User $user,
+        int $projectId,
+        User $user,
     ) {
-        parent::__construct($code);
+        parent::__construct($code, $projectId, $user);
     }
 }

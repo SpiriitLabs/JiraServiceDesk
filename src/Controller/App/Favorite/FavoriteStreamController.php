@@ -3,11 +3,13 @@
 namespace App\Controller\App\Favorite;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Favorite\FavoriteFormType;
 use App\Message\Command\App\Favorite\CreateFavorite;
 use App\Message\Command\App\Favorite\DeleteFavorite;
 use App\Repository\FavoriteRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\UX\Turbo\TurboBundle;
 
 #[Route(
-    path: '/favorite/{code}/stream',
+    path: '/favorite/{projectId}/{code}/stream',
     name: RouteCollection::FAVORITE_STREAM->value,
 )]
 class FavoriteStreamController extends AbstractController
@@ -32,6 +34,10 @@ class FavoriteStreamController extends AbstractController
     public function __invoke(
         Request $request,
         string $code,
+        #[MapEntity(mapping: [
+            'projectId' => 'id',
+        ])]
+        Project $project,
         #[CurrentUser]
         User $user,
         #[MapQueryParameter]
@@ -44,10 +50,12 @@ class FavoriteStreamController extends AbstractController
         $favoriteEntity = $this->favoriteRepository->findOneBy([
             'code' => $code,
             'user' => $user,
+            'project' => $project,
         ]);
 
         $form = $this->createForm(FavoriteFormType::class, [
             'code' => $code,
+            'projectId' => $project->getId(),
             'link' => $link,
             'name' => $name,
         ]);
@@ -57,9 +65,11 @@ class FavoriteStreamController extends AbstractController
             if ($favoriteEntity !== null) {
                 $this->handle(
                     new DeleteFavorite(
-                        $form->get('code')
+                        code: $form->get('code')
                             ->getData(),
-                        $user,
+                        projectId: $form->get('projectId')
+                            ->getData(),
+                        user: $user,
                     ),
                 );
 
@@ -73,13 +83,15 @@ class FavoriteStreamController extends AbstractController
             }
             $this->handle(
                 new CreateFavorite(
-                    $form->get('code')
+                    code: $form->get('code')
                         ->getData(),
-                    $form->get('name')
+                    projectId: $form->get('projectId')
                         ->getData(),
-                    $form->get('link')
+                    name: $form->get('name')
                         ->getData(),
-                    $user,
+                    link: $form->get('link')
+                        ->getData(),
+                    user: $user,
                 ),
             );
 

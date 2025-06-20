@@ -29,16 +29,33 @@ class Favorite
     #[ORM\JoinColumn(nullable: false)]
     public ?User $user = null;
 
-    public function __construct(?string $name, ?string $code, ?string $link, ?User $user)
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Project $project = null;
+
+    public function __construct(?string $name, ?string $code, ?string $link, ?User $user, Project $project)
     {
         $this->name = $name;
         $this->code = $code;
         $this->link = $link;
         $this->user = $user;
+        $this->project = $project;
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): static
+    {
+        $this->project = $project;
+
+        return $this;
     }
 }
