@@ -10,6 +10,8 @@ FROM dunglas/frankenphp:1.4.2-php8.4 AS frankenphp_upstream
 
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
+ARG APP_USER_ID
+ARG APP_GROUP_ID
 
 WORKDIR /app
 
@@ -70,6 +72,12 @@ RUN set -eux; \
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
+
+# Set PROJECT USER
+RUN groupadd -g ${APP_GROUP_ID} project \
+    && useradd -l -u ${APP_USER_ID} -g project -m -s /bin/bash project
+
+USER project
 
 # Prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod
