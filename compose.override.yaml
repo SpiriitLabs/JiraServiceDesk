@@ -50,6 +50,17 @@ services:
     ports:
       - "5432"
 
+  node:
+    image: node:lts-alpine
+    tty: true
+    working_dir: /app
+    depends_on:
+      - php
+    volumes:
+      - ./:/app
+    environment:
+      NODE_ENV: development
+
 volumes:
   mailpit:
   

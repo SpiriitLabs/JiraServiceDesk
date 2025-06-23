@@ -10,7 +10,7 @@ DCE=$(DC) exec
 PHP=$(DCE) php php
 CONSOLE=$(PHP) bin/console
 COMPOSER=$(DCE) php composer
-NPM=npm
+NPM=$(DCE) node yarn
 ENV ?= dev
 
 .PHONY: help
