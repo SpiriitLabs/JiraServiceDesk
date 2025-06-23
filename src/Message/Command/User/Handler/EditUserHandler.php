@@ -47,6 +47,10 @@ readonly class EditUserHandler
             }
 
             foreach ($deletedProjects as $deletedProject) {
+                if ($user->defaultProject->getId() === $deletedProject->getId()) {
+                    $user->defaultProject = null;
+                }
+
                 foreach ($user->getFavorites() as $userFavorite) {
                     if ($userFavorite->getProject()->getId() === $deletedProject->getId()) {
                         $user->removeFavorite($userFavorite);
