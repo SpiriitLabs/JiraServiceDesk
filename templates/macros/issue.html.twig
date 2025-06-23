@@ -10,3 +10,7 @@
         <h5 class="mt-1 font-14">{{ issue.fields.priority.name }}</h5>
     </div>
 {% endmacro %}
+
+{% macro tdClickable(link) %}
+onclick="location.href='{{ link }}'" style="cursor: pointer;"
+{% endmacro %}
