@@ -14,8 +14,8 @@ RUN if getent group ${APP_GROUP_ID}; then \
     && addgroup -g ${APP_GROUP_ID} project \
     && adduser -u ${APP_USER_ID} -G project -D project
 
-#RUN addgroup -g ${APP_GROUP_ID} project && adduser -u ${APP_USER_ID} -G project -D project
-
 COPY .npmrc /home/node/./
+
+RUN ls -la
 
 USER project

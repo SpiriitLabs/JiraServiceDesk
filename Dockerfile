@@ -57,8 +57,8 @@ CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev
-#ARG APP_USER_ID
-#ARG APP_GROUP_ID
+ARG APP_USER_ID
+ARG APP_GROUP_ID
 
 ENV APP_ENV=dev XDEBUG_MODE=off
 
@@ -74,10 +74,10 @@ COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
 
 # Set PROJECT USER
-#RUN groupadd -g ${APP_GROUP_ID} project \
-#    && useradd -l -u ${APP_USER_ID} -g project -m -s /bin/bash project
-#
-#USER project
+RUN groupadd -g ${APP_GROUP_ID} project \
+    && useradd -l -u ${APP_USER_ID} -g project -m -s /bin/bash project
+
+USER project
 
 # Prod FrankenPHP image
 FROM frankenphp_base AS frankenphp_prod
