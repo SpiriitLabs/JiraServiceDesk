@@ -16,14 +16,17 @@ class JiraIssueExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('preview_attachment', $this->previewAttachmentFormat(...)),
+            new TwigFilter('preview_description', $this->previewAttachmentFormat(...)),
             new TwigFilter('parse_comment_author', $this->parseCommentAuthor(...)),
         ];
     }
 
     public function previewAttachmentFormat($renderedDescription): string
     {
-        return $this->htmlProcessor->updateImageSources($renderedDescription);
+        $result = $this->htmlProcessor->updateImageSources($renderedDescription);
+        $result = $this->htmlProcessor->updateJiraLinks($result);
+
+        return $result;
     }
 
     public function parseCommentAuthor($comment): ?string

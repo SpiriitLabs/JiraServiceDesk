@@ -17,7 +17,7 @@
 
                 <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
             </h5>
-            {{ comment.renderedBody|preview_attachment|raw }}
+            {{ comment.renderedBody|preview_description|raw }}
 
             <br>
         </div>
