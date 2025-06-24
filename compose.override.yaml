@@ -4,11 +4,8 @@ services:
     build:
       context: .
       target: frankenphp_dev
-      args:
-        - APP_USER_ID=${APP_USER_ID}
-        - APP_GROUP_ID=${APP_GROUP_ID}
     volumes:
-      - ./:/app:delegated
+      - ./:/app
       - ./frankenphp/Caddyfile:/etc/caddy/Caddyfile:ro
       - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
       # If you develop on Mac or Windows you can remove the vendor/ directory
@@ -56,11 +53,7 @@ services:
   # Node
   node:
     image: app-node
-    build:
-      context: ./.docker/node/
-      args:
-        - APP_USER_ID=${APP_USER_ID}
-        - APP_GROUP_ID=${APP_GROUP_ID}
+    build: ./.docker/node/
     tty: true
     user: ${APP_USER_ID}:${APP_GROUP_ID}
     volumes:
