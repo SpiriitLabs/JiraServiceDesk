@@ -53,5 +53,26 @@ services:
     ports:
       - "5432"
 
+  # Node
+  node:
+    image: app-node
+    tty: true
+    build:
+      context: ./.docker/node/
+      args:
+        - APP_USER_ID=${APP_USER_ID}
+        - APP_GROUP_ID=${APP_GROUP_ID}
+    user: ${APP_USER_ID}:${APP_GROUP_ID}
+    volumes:
+      - ./:/app
+      - ${PNPM_STORE}:/app/.pnpm-store
+    working_dir: /app
+    depends_on:
+      - php
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+
 volumes:
   mailpit:
