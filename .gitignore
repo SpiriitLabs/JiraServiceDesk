@@ -38,6 +38,8 @@ private/uploads/*
 ###< romainmillan/jira-service-desk ###
 
 .DS_Store
+# Ignore pnpm store
+.pnpm-store
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
