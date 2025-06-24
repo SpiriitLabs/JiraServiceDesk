@@ -39,4 +39,35 @@ readonly class IssueHtmlProcessor
 
         return $dom->saveHTML();
     }
+
+    public function updateJiraLinks(string $html): string
+    {
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        libxml_clear_errors();
+
+        $links = $dom->getElementsByTagName('a');
+        foreach ($links as $link) {
+            $href = $link->getAttribute('href');
+
+            // Match links like https://something.atlassian.net/browse/MMGS-96
+            if (preg_match('#https:\/\/([a-zA-Z0-9\-]+)\.atlassian\.net\/browse\/([A-Z]+)-(\d+)#', $href, $matches)) {
+                $domain = $matches[1];               // e.g., spiriit
+                $projectKey = $matches[2];           // e.g., MMGS
+                $issueNumber = $matches[3];          // e.g., 96
+                $issueKey = $projectKey . '-' . $issueNumber;
+
+                // Generate custom route like /jira/issue/MMGS/MMGS-96
+                $newUrl = $this->router->generate('app_project_issue_view', [
+                    'key' => $projectKey,
+                    'keyIssue' => $issueKey,
+                ]);
+
+                $link->setAttribute('href', $newUrl);
+            }
+        }
+
+        return $dom->saveHTML();
+    }
 }
