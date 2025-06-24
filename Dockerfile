@@ -10,8 +10,6 @@ FROM dunglas/frankenphp:1.4.2-php8.4 AS frankenphp_upstream
 
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
-ARG APP_USER_ID
-ARG APP_GROUP_ID
 
 WORKDIR /app
 
@@ -59,6 +57,8 @@ CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
 
 # Dev FrankenPHP image
 FROM frankenphp_base AS frankenphp_dev
+ARG APP_USER_ID
+ARG APP_GROUP_ID
 
 ENV APP_ENV=dev XDEBUG_MODE=off
 
@@ -84,12 +84,6 @@ FROM frankenphp_base AS frankenphp_prod
 
 #ENV APP_ENV=prod
 #ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
-
-# Install NodeJS for assets build
-RUN apt-get update && apt-get install -y \
-    nodejs \
-    npm \
-	&& rm -rf /var/lib/apt/lists/*
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
