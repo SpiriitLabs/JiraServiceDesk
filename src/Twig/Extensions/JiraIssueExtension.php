@@ -18,6 +18,7 @@ class JiraIssueExtension extends AbstractExtension
         return [
             new TwigFilter('preview_description', $this->previewAttachmentFormat(...)),
             new TwigFilter('parse_comment_author', $this->parseCommentAuthor(...)),
+            new TwigFilter('issue_time_estimate_in_hour', $this->timeEstimateInHour(...)),
         ];
     }
 
@@ -40,5 +41,13 @@ class JiraIssueExtension extends AbstractExtension
         }
 
         return null;
+    }
+
+    public function timeEstimateInHour($timeEstimate): ?string
+    {
+        return sprintf(
+            '%s h',
+            $timeEstimate / 3600,
+        );
     }
 }

@@ -15,10 +15,10 @@
                 <i class="mdi mdi-briefcase-outline text-muted"></i>
                 {{ issue.key }}
             </a>
-            {% if issue.fields.timeestimate is defined and issue.fields.timeestimate is not null and issue.fields.timeestimate != 0 %}
+            {% if issue.fields.timeoriginalestimate.scalar is defined and issue.fields.timeoriginalestimate.scalar is not null and issue.fields.timeoriginalestimate.scalar != 0 %}
                 <span class="text-nowrap mb-2 d-inline-block">
                     <i class="mdi mdi-timer text-muted"></i>
-                    {{ issue.fields.timeestimate / 3600 }}
+                    {{ issue.fields.timeoriginalestimate.scalar|issue_time_estimate_in_hour }}
                 </span>
             {% endif %}
         </p>
