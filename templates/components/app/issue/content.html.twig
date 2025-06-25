@@ -33,7 +33,7 @@
             <h3 class="ms-1">{{ issue.fields.summary }}</h3>
         </div>
 
-        <div class="d-flex flex-column flex-md-row col-12">
+        <div class="d-flex flex-column flex-md-row flex-wrap w-100 col-12">
 
             <div class="col-3">
                 <p class="mt-2 mb-1 text-muted fw-bold font-12 text-uppercase">{{ 'issue.jiraKey.label'|trans }}</p>
@@ -69,6 +69,19 @@
                     </div>
                 </div>
             </div>
+
+            {% if issue.fields.timeoriginalestimate.scalar is defined and issue.fields.timeoriginalestimate.scalar is not null and issue.fields.timeoriginalestimate.scalar != 0 %}
+                <div class="col-3">
+                    <p class="mt-2 mb-1 text-muted fw-bold font-12 text-uppercase">{{ 'issue.timeestimate.label'|trans }}</p>
+                    <div class="d-flex align-items-center gap-1">
+                        <div>
+                            <h5 class="mt-1 font-14">
+                                {{ issue.fields.timeoriginalestimate.scalar|issue_time_estimate_in_hour }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
 
 

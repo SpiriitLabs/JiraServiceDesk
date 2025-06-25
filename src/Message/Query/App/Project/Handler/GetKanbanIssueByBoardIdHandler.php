@@ -55,7 +55,7 @@ readonly class GetKanbanIssueByBoardIdHandler
                     'summary',
                     'created',
                     'updated',
-                    'timeestimate',
+                    'timeoriginalestimate',
                 ],
                 'expand' => 'transitions',
             ],
