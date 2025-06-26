@@ -16,6 +16,24 @@
                     <span></span>
                 </div>
             </button>
+
+            <div class="app-search dropdown d-none d-lg-block" {{ stimulus_controller('search', {searchUrl: absolute_url(path('app_search_api')), defaultEmtpyText: 'header.search.default'|trans}) }}>
+                <form>
+                    <div class="input-group">
+                        <input type="search" class="ps-2 form-control dropdown-toggle" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
+                        
+                        <button class="text-white btn btn-primary" type="submit" {{ stimulus_action('search', 'onSearchInput') }}><span class="mdi mdi-magnify"></span></button>
+                    </div>
+                </form>
+
+                <div class="dropdown-menu dropdown-menu-animated dropdown-xl" id="search-dropdown" {{ stimulus_target('search', 'dropdown') }}>
+                    
+                    <div class="dropdown-header noti-title">
+                        <h5 class="text-overflow mb-2">{{ 'header.search.default'|trans }}</h5>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
 
         <ul class="topbar-menu d-flex align-items-center gap-3">
