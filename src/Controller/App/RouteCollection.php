@@ -17,6 +17,7 @@ enum RouteCollection: string implements RouteCollectionInterface
     case PROJECT_SELECT = 'project_select';
     case ATTACHMENT_PREVIEW = 'attachment_preview';
     case ATTACHMENT = 'attachment';
+    case SEARCH_API = 'search_api';
 
     case PROFIL = 'profil';
 }

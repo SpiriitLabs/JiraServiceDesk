@@ -42,6 +42,8 @@ flash:
 
 header:
     themeMode: "Mode d’affichage"
+    search:
+        default: "Minimum 3 caractères requis."
     dropdown:
         welcome: "Bienvenue !"
         restart_introduction: "Revoir l’introduction"
