@@ -2,7 +2,7 @@
 
 namespace App\Controller\App\Project\Issue;
 
-use App\Controller\App\Issue\RouteCollection as IssueRouteCollection;
+use App\Controller\App\Project\Issue\RouteCollection as IssueRouteCollection;
 use App\Controller\App\Project\AbstractController;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\Project;
@@ -61,7 +61,7 @@ class CreateController extends AbstractController
                 return $this->redirectToRoute(
                     route: IssueRouteCollection::VIEW->prefixed(),
                     parameters: [
-                        'keyProject' => $project->jiraKey,
+                        'key' => $project->jiraKey,
                         'keyIssue' => $issue->key,
                     ]
                 );

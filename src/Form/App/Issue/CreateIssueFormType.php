@@ -71,21 +71,6 @@ class CreateIssueFormType extends AbstractIssueFormType
                 'multiple' => true,
                 'label' => 'issue.attachment.label',
             ])
-            ->add('project', EntityType::class, [
-                'class' => Project::class,
-                'required' => true,
-                'multiple' => false,
-                'autocomplete' => true,
-                'label' => 'project.label',
-                'choice_label' => 'name',
-                'query_builder' => function (ProjectRepository $projectRepository) use ($user) {
-                    return $projectRepository->getByUser($user);
-                },
-                'data' => $project,
-                'attr' => [
-                    'readonly' => 'true',
-                ],
-            ])
         ;
     }
 

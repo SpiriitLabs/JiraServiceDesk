@@ -5,26 +5,20 @@
         {{ form_row(form.summary) }}
     </div>
     <div class="col-md-6">
-        {{ form_row(form.project) }}
+        {{ form_row(form.type) }}
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-6">
-        {{ form_row(form.type) }}
-    </div>
     <div class="col-md-6">
         {{ form_row(form.priority) }}
     </div>
-</div>
-
-{% if form.assignee is defined %}
-<div class="row">
+    {% if form.assignee is defined %}
     <div class="col-md-6">
         {{ form_row(form.assignee) }}
     </div>
+    {% endif %}
 </div>
-{% endif %}
 
 <div class="row">
     {{ form_row(form.description, {
