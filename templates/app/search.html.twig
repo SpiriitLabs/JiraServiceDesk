@@ -1,0 +1,66 @@
+{% trans_default_domain 'app' %}
+
+{# <div class="dropdown-header noti-title">
+    <h5 class="text-overflow mb-2">Found <span class="text-danger">17</span> results</h5>
+</div>
+
+<a href="javascript:void(0);" class="dropdown-item notify-item">
+    <i class="uil-notes font-16 me-1"></i>
+    <span>Analytics Report</span>
+</a>
+
+<a href="javascript:void(0);" class="dropdown-item notify-item">
+    <i class="uil-life-ring font-16 me-1"></i>
+    <span>How can I help you?</span>
+</a>
+
+<a href="javascript:void(0);" class="dropdown-item notify-item">
+    <i class="uil-cog font-16 me-1"></i>
+    <span>User profile settings</span>
+</a> #}
+
+{% if issues|length > 0 %}
+<div class="dropdown-header noti-title">
+    <h6 class="text-overflow mb-2 text-uppercase">{{ 'issue.label'|trans }}</h6>
+</div>
+
+<div class="notification-list">
+
+    {% for issue in issues %}
+        <a href="{{ path('app_project_issue_view', {key: issue.fields.project.key, keyIssue: issue.key}) }}" class="dropdown-item notify-item">
+            <div class="d-flex">
+                <div class="w-100">
+                    <h5 class="m-0 font-14">{{ issue.fields.summary }}</h5>
+                    <span class="font-12 mb-0">{{ issue.key }}</span>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
+</div>
+{% endif %}
+
+{% if projects|length > 0 and issues|length > 0 %}
+<hr>
+{% endif %}
+
+{% if projects|length > 0 %}
+    <div class="dropdown-header noti-title">
+        <h6 class="text-overflow mb-2 text-uppercase">{{ 'project.label'|trans }}</h6>
+    </div>
+
+    <div class="notification-list">
+
+        {% for project in projects %}
+            <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="dropdown-item notify-item">
+                <div class="d-flex">
+                    <div class="w-100">
+                        <h5 class="m-0 font-14">{{ project.name }}</h5>
+                        <span class="font-12 mb-0">{{ project.jiraKey }}</span>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+
+    </div>
+{% endif %}
