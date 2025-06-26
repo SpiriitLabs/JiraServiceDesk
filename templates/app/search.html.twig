@@ -30,7 +30,7 @@
         <a href="{{ path('app_project_issue_view', {key: issue.fields.project.key, keyIssue: issue.key}) }}" class="dropdown-item notify-item">
             <div class="d-flex">
                 <div class="w-100">
-                    <h5 class="m-0 font-14">{{ issue.fields.summary|u.truncate(40, '...') }}</h5>
+                    <h5 class="m-0 font-14">{{ issue.fields.summary }}</h5>
                     <span class="font-12 mb-0">{{ issue.key }}</span>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <a href="{{ path('app_project_view', {key: project.jiraKey}) }}" class="dropdown-item notify-item">
                 <div class="d-flex">
                     <div class="w-100">
-                        <h5 class="m-0 font-14">{{ project.name|u.truncate(40, '...') }}</h5>
+                        <h5 class="m-0 font-14">{{ project.name }}</h5>
                         <span class="font-12 mb-0">{{ project.jiraKey }}</span>
                     </div>
                 </div>
