@@ -58,7 +58,6 @@ services:
     user: ${APP_USER_ID}:${APP_GROUP_ID}
     volumes:
       - ./:/app:delegated
-      - ${PNPM_STORE}:/app/.pnpm-store
     working_dir: /app
     depends_on:
       - php
