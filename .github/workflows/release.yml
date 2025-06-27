@@ -34,6 +34,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # PHP and Composer setup
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      # Node and Yarn asset build
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install JS dependencies and build assets
+        run: |
+          yarn install
+          yarn build
+
+      - name: Package built assets
+        run: |
+          mkdir -p release
+          zip -r release/assets-builded.zip public/build
+
+      # Docker static binary build
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -41,25 +67,26 @@ jobs:
         run: |
           docker build -f static-build.Dockerfile -t app-template .
 
-      - name: Create release directory
-        run: mkdir release
-
       - name: Copy executable to release directory
         run: |
           docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template
 
-      - name: Upload executable as artifact
+      # Optional: upload artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: executable
-          path: ./release/app-template
+          name: release-files
+          path: release/
 
+      # GitHub Release creation with assets
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           body: ${{ needs.generate-changelog.outputs.release_body }}
-          files: ./release/app-template
+          files: |
+            ./release/app-template
+            ./release/assets-builded.zip
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
