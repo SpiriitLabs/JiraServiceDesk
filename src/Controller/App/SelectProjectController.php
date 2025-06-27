@@ -29,6 +29,17 @@ class SelectProjectController extends AbstractController
             );
         }
 
+        if ($user->getProjects()->count() == 1) {
+            return $this->redirectToRoute(
+                'app_project_view',
+                [
+                    'key' => $user->getProjects()
+                        ->first()
+                        ->jiraKey,
+                ],
+            );
+        }
+
         return $this->render(
             view: 'app/select_project.html.twig',
         );
