@@ -7,8 +7,6 @@ use App\Entity\User;
 use App\Form\Type\QuillAdfType;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\PriorityRepository;
-use App\Repository\ProjectRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\FileType;

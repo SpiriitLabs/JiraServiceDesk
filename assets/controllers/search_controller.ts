@@ -24,9 +24,22 @@ export default class extends Controller {
 
     useClickOutside(this);
     useDebounce(this);
+
+    this.inputTarget.addEventListener('keydown', this.handleKeyDown);
   }
 
-  onSearchInput() {
+  disconnect(): void {
+    this.inputTarget.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  private handleKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();        // ⛔ Prevent form submission
+      this.onSearchInput();          // 🔍 Trigger search
+    }
+  }
+
+  public onSearchInput() {
     this.search(this.inputTarget.value);
   }
 

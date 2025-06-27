@@ -2,8 +2,8 @@
 
 namespace App\Controller\App\Project\Issue;
 
-use App\Controller\App\Project\Issue\RouteCollection as IssueRouteCollection;
 use App\Controller\App\Project\AbstractController;
+use App\Controller\App\Project\Issue\RouteCollection as IssueRouteCollection;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\Project;
 use App\Entity\User;
@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route(
     path: '/project/{key}/issues/create',
-    name: RouteCollection::CREATE->value,
+    name: IssueRouteCollection::CREATE->value,
     methods: [Request::METHOD_GET, Request::METHOD_POST],
 )]
 class CreateController extends AbstractController
