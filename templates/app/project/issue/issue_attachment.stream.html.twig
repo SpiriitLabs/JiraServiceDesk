@@ -34,7 +34,7 @@
                                                     </div>
 
                                                     <div class="modal-body d-flex">
-                                                        <img src="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" alt="" style="margin: auto; width: 80%;">
+                                                        <img src="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" alt="Not Found" onerror="this.src='{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}'" style="margin: auto; width: 80%;">
                                                     </div>
 
                                                     <div class="modal-footer">
