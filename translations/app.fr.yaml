@@ -116,7 +116,7 @@ user:
         label: "Mot de passe"
         new: "Nouveau mot de passe"
         repeat: "Confirmer le mot de passe"
-        notice: "Laissez vide pour conserver l'ancien mot de passe"
+        notice: "💡 Laissez vide pour conserver l'ancien mot de passe"
     firstName:
         label: "Prénom"
     lastName:
