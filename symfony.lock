@@ -76,6 +76,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "rollerworks/password-strength-bundle": {
+        "version": "v3.0.1"
+    },
     "sentry/sentry-symfony": {
         "version": "5.2",
         "recipe": {

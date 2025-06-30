@@ -2,13 +2,12 @@
 
 namespace App\Form\Security;
 
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -31,12 +30,12 @@ class ChangePasswordFormType extends AbstractType
                 ],
                 'first_options' => [
                     'constraints' => [
-                        new NotBlank(),
-                        new Length([
-                            'min' => 12,
-                            'max' => 4096,
-                        ]),
                         new NotCompromisedPassword(),
+                        new PasswordRequirements(
+                            minLength: 8,
+                            requireCaseDiff: true,
+                            requireNumbers: true,
+                        ),
                     ],
                     'label' => $this->translator->trans(
                         id: 'user.password.new',
@@ -49,7 +48,6 @@ class ChangePasswordFormType extends AbstractType
                         domain: 'app',
                     ),
                 ],
-                'invalid_message' => 'The password fields must match.',
                 'mapped' => false,
             ])
         ;

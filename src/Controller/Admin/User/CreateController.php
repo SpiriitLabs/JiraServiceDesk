@@ -23,7 +23,7 @@ class CreateController extends AbstractController
         Request $request,
     ): Response {
         $form = $this->createForm(AdminUserFormType::class, new CreateUser('', '', ''), [
-            'creating' => true,
+            'validation_groups' => ['Default', 'create'],
         ]);
         $form->handleRequest($request);
 

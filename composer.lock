@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b57af71a5df9a1b3bdbf9ffab622222",
+    "content-hash": "ab1c08b238fab11e80ec6ec5dcbbd4e5",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -2757,6 +2757,140 @@
                 "source": "https://github.com/ralouphie/getallheaders/tree/develop"
             },
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "rollerworks/password-strength-bundle",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollerworks/PasswordStrengthBundle.git",
+                "reference": "12da0d334b7a0ba429d3bfef919dc01c168def3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollerworks/PasswordStrengthBundle/zipball/12da0d334b7a0ba429d3bfef919dc01c168def3f",
+                "reference": "12da0d334b7a0ba429d3bfef919dc01c168def3f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "rollerworks/password-strength-validator": "^2.0",
+                "symfony/framework-bundle": "^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-dependency-injection-test": "^5.0 || ^v4.3.1",
+                "phpunit/phpunit": "^9.5",
+                "rollerscapes/standards": "^1.0",
+                "symfony/phpunit-bridge": "^6.0 || ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rollerworks\\Bundle\\PasswordStrengthBundle\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "test/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastiaan Stok",
+                    "email": "s.stok@rollercapes.net"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/rollerworks/PasswordStrengthBundle/contributors"
+                }
+            ],
+            "description": "Password-strength validator bundle for Symfony",
+            "keywords": [
+                "bundle",
+                "password",
+                "symfony",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/rollerworks/PasswordStrengthBundle/issues",
+                "source": "https://github.com/rollerworks/PasswordStrengthBundle/tree/v3.0.1"
+            },
+            "time": "2024-07-22T13:29:13+00:00"
+        },
+        {
+            "name": "rollerworks/password-strength-validator",
+            "version": "v2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollerworks/PasswordStrengthValidator.git",
+                "reference": "89f0c1d4b884db5f08d143517732f064c9f29623"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollerworks/PasswordStrengthValidator/zipball/89f0c1d4b884db5f08d143517732f064c9f29623",
+                "reference": "89f0c1d4b884db5f08d143517732f064c9f29623",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/config": "^6.0 || ^7.0",
+                "symfony/polyfill-mbstring": "^1.5.0",
+                "symfony/translation": "^6.0 || ^7.0",
+                "symfony/validator": "^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-phpunit": "^1.1",
+                "phpstan/phpstan-symfony": "^1.2",
+                "phpunit/phpunit": "^9.5",
+                "symfony/phpunit-bridge": "^6.0 || ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rollerworks\\Component\\PasswordStrength\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "test/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastiaan Stok",
+                    "email": "s.stok@rollercapes.net"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/rollerworks/PasswordStrengthValidator/contributors"
+                }
+            ],
+            "description": "Password-strength validator for Symfony",
+            "keywords": [
+                "password",
+                "symfony",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/rollerworks/PasswordStrengthValidator/issues",
+                "source": "https://github.com/rollerworks/PasswordStrengthValidator/tree/v2.0.3"
+            },
+            "time": "2024-12-17T20:29:28+00:00"
         },
         {
             "name": "runtime/frankenphp-symfony",
@@ -13035,15 +13169,15 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.4",
         "ext-ctype": "*",
-        "ext-iconv": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "ext-iconv": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }

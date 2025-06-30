@@ -13,6 +13,10 @@ framework:
     #fragments: true
     router:
         default_uri: 'https://127.0.0.1/'
+    
+    validation:
+        not_compromised_password:
+            enabled: true
 
 when@test:
     framework:
@@ -24,3 +28,9 @@ when@prod:
     framework:
         router:
             default_uri: '%env(ROUTER_REQUEST_CONTEXT_SCHEME)%://%env(ROUTER_REQUEST_CONTEXT_HOST)%/'
+
+when@dev:
+    framework:
+        validation:
+            not_compromised_password:
+                enabled: false
