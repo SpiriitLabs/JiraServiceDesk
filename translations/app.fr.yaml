@@ -111,7 +111,7 @@ user:
         create: "Créer un utilisateur"
         edit: "Modifier l'utilisateur « %email% »"
     email:
-        label: "Adresse électronique"
+        label: "Adresse email"
     password:
         label: "Mot de passe"
         new: "Nouveau mot de passe"
