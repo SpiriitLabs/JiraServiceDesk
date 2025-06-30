@@ -110,7 +110,7 @@ user:
     title:
         create: "Créer un utilisateur"
         edit: "Modifier l'utilisateur « %email% »"
-        email:
+    email:
         label: "Adresse électronique"
     password:
         label: "Mot de passe"
