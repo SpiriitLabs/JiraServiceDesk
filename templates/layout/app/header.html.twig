@@ -18,7 +18,7 @@
             </button>
 
             <div class="app-search dropdown d-none d-lg-block" {{ stimulus_controller('search', {searchUrl: absolute_url(path('app_search_api')), defaultEmtpyText: 'header.search.default'|trans}) }}>
-                <form>
+                <form {{ stimulus_target('search', 'form') }}>
                     <div class="input-group">
                         <input type="search" class="ps-2 form-control dropdown-toggle" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
                         
