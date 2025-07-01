@@ -40,7 +40,7 @@ class ShowUserStreamController extends AbstractController
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $page = $request->get('page', null);
-        $defaultSort = '-updatedAt';
+        $defaultSort = '-updated';
         $sort = $request->get('_sort', $defaultSort);
 
         $issueFilter = new IssueFilter(
