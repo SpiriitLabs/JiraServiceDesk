@@ -27,66 +27,88 @@ jobs:
           GITHUB_REPO: ${{ github.repository }}
 
   build:
-    name: Build and Release
-    needs: generate-changelog
+    name: Build (Assets + Binary)
     runs-on: ubuntu-latest
+    outputs:
+      assets_success: ${{ steps.assets_success.outputs.success }}
+      binary_success: ${{ steps.binary_success.outputs.success }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      # PHP and Composer setup
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-
-      - name: Install PHP dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      # Node and Yarn asset build
+      # --- Assets build ---
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install JS dependencies and build assets
+      - name: Build assets (continue on error)
+        id: build_assets
+        continue-on-error: true
         run: |
           yarn install
           yarn build
-
-      - name: Package built assets
-        run: |
           mkdir -p release
           zip -r release/assets-builded.zip public/build
 
-      # Docker static binary build
+      - name: Mark assets build status
+        id: assets_success
+        run: |
+          if [ -f release/assets-builded.zip ]; then
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
+
+      # --- Binary build ---
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image with static-build.Dockerfile
+      - name: Build binary (continue on error)
+        id: build_binary
+        continue-on-error: true
         run: |
           docker build -f static-build.Dockerfile -t app-template .
+          mkdir -p release
+          docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template || true
 
-      - name: Copy executable to release directory
+      - name: Mark binary build status
+        id: binary_success
         run: |
-          docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template
+          if [ -f release/app-template ]; then
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
 
-      # Optional: upload artifacts
-      - name: Upload artifacts
+      - name: Upload release artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: release-files
+          name: release
           path: release/
 
-      # GitHub Release creation with assets
-      - name: Create GitHub Release
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [generate-changelog, build]
+    if: always()  # S'assure qu'on passe même si build a échoué
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release
+          path: release
+
+      - name: List files for debug
+        run: ls -lh release
+
+      - name: Create GitHub Release with what exists
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
           name: "Release ${{ github.ref }}"
           body: ${{ needs.generate-changelog.outputs.release_body }}
           files: |
-            ./release/app-template
-            ./release/assets-builded.zip
+            release/app-template
+            release/assets-builded.zip
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
