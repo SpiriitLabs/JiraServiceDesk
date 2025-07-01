@@ -1,5 +1,6 @@
 {% trans_default_domain 'app' %}
-{% set sort = app.request.get('_sort') %}
+{% set default_sort = default_sort|default('') %}
+{% set sort = app.request.get('_sort')|default(default_sort) %}
 {% set current_dir = sort == property ? 'asc' : (sort == '-' ~ property ? 'desc' : null) %}
 {% set new_sort = (current_dir == 'asc') ? '-' ~ property : property %}
 
