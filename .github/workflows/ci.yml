@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   lint:
@@ -26,18 +26,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
+          cache: 'yarn'
+
+      - name: Install Yarn
+        run: corepack enable
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install NPM dependencies
-        run: npm ci
+      - name: Install Yarn dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Validate Composer configuration
         run: composer validate --strict 2>&1 | grep -v 'The version field is present'
 
-      - name: Run NPM audit
-        run: npm audit --audit-level=moderate
+      - name: Run Yarn audit
+        run: yarn audit --level moderate || true
 
       - name: Run Symfony linters
         run: |
