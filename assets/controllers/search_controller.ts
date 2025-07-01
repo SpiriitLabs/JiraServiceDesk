@@ -8,9 +8,10 @@ export default class extends Controller {
     defaultEmtpyText: String,
   }
 
-  static targets = ["input", "dropdown"];
+  static targets = ["form", "input", "dropdown"];
   static debounces = ['onSearchInput'];
 
+  declare readonly formTarget: HTMLFormElement;
   declare readonly inputTarget: HTMLInputElement;
   declare readonly dropdownTarget: HTMLDivElement;
   declare readonly searchUrlValue: String;
@@ -26,6 +27,10 @@ export default class extends Controller {
     useDebounce(this);
 
     this.inputTarget.addEventListener('keydown', this.handleKeyDown);
+    this.formTarget.addEventListener('submit', function (event: any) {
+      event.preventDefault();
+      this.onSearchInput();
+    })
   }
 
   disconnect(): void {
@@ -34,8 +39,8 @@ export default class extends Controller {
 
   private handleKeyDown = (event: KeyboardEvent): void => {
     if (event.key === 'Enter') {
-      event.preventDefault();        // ⛔ Prevent form submission
-      this.onSearchInput();          // 🔍 Trigger search
+      event.preventDefault();
+      this.onSearchInput();
     }
   }
 
