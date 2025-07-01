@@ -59,18 +59,6 @@ jobs:
           mkdir -p release
           zip -r release/assets-builded.zip public/build
 
-      # Docker static binary build
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Docker image with static-build.Dockerfile
-        run: |
-          docker build -f static-build.Dockerfile -t app-template .
-
-      - name: Copy executable to release directory
-        run: |
-          docker run --rm -v ${{ github.workspace }}/release:/out app-template cp /go/src/app/dist/frankenphp-linux-x86_64 /out/app-template
-
       # Optional: upload artifacts
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -86,7 +74,6 @@ jobs:
           name: "Release ${{ github.ref }}"
           body: ${{ needs.generate-changelog.outputs.release_body }}
           files: |
-            ./release/app-template
             ./release/assets-builded.zip
         env:
           GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
