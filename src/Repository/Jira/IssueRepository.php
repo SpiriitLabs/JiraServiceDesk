@@ -39,13 +39,27 @@ class IssueRepository
     public function getCommentForIssue(string $issueId): Comments
     {
         try {
-            return $this->service->getComments(
+            $issuesComments = $this->service->getComments(
                 issueIdOrKey: $issueId,
                 paramArray: [
                     'startAt' => 0,
                     'expand' => 'renderedBody',
                 ],
             );
+
+            $issuesComments->comments = array_filter(
+                $issuesComments->comments,
+                function ($comment) {
+                    if ($comment->visibility == null) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+            $issuesComments->total = count($issuesComments->comments);
+
+            return $issuesComments;
         } catch (JiraException $e) {
             return new Comments();
         }
