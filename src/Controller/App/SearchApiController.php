@@ -41,7 +41,7 @@ class SearchApiController extends AbstractController
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
-                sort: $request->get('_sort', '-updatedAt'),
+                sort: $request->get('_sort', '-updated'),
                 user: $user,
                 filter: $issuesFilter,
                 maxIssuesResults: 5,
@@ -51,7 +51,7 @@ class SearchApiController extends AbstractController
             /** @var SearchIssuesResult $searchIssueResult */
             $searchIssueResult = $this->handle(
                 new SearchIssues(
-                    sort: $request->get('_sort', '-updatedAt'),
+                    sort: $request->get('_sort', '-updated'),
                     user: $user,
                     maxIssuesResults: 5,
                 )
