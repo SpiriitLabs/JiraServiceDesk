@@ -47,7 +47,7 @@ readonly class EditUserHandler
             }
 
             foreach ($deletedProjects as $deletedProject) {
-                if ($user->defaultProject->getId() === $deletedProject->getId()) {
+                if ($user->defaultProject !== null && $user->defaultProject->getId() === $deletedProject->getId()) {
                     $user->defaultProject = null;
                 }
 
