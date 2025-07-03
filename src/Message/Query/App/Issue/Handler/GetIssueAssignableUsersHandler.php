@@ -7,19 +7,22 @@ use App\Repository\Jira\UserRepository;
 use JiraCloud\User\User;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
 readonly class GetIssueAssignableUsersHandler
 {
     public function __construct(
         private UserRepository $userRepository,
+        private TranslatorInterface $translator,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private string $jiraAPIAccountId,
     ) {
     }
 
-    public function __invoke(GetIssueAssignableUsers $query): array
-    {
+    public function __invoke(
+        GetIssueAssignableUsers $query,
+    ): array {
         $jiraCanAssignable = $this->userRepository->getAssignableUser(
             $query->project
         );
@@ -29,7 +32,10 @@ readonly class GetIssueAssignableUsersHandler
             /** @var User $user */
             $result[$user->accountId] = $user->displayName;
         }
-        $result[$this->jiraAPIAccountId] = 'Vous';
+        $result[$this->jiraAPIAccountId] = sprintf(
+            '%s (Support)',
+            $query->user->getFullName(),
+        );
         $result['null'] = 'Non Assignée';
 
         return array_reverse(array_flip($result));
