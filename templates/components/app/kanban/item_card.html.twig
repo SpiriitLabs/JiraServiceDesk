@@ -4,7 +4,10 @@
 <div class="card mb-0" data-issue-id="{{ issue.id }}" data-project-key="{{ project.jiraKey }}">
     <div class="card-body p-3">
         <small class="float-end text-muted">{{ issue.fields.created|date('d/m/Y H:i') }}</small>
-        <span class="badge text-bg-secondary">{{ issue.fields.priority.name }}</span>
+        <span class="badge text-bg-secondary">
+            <img src="{{ issue.fields.priority.iconUrl }}" width="15px" alt="{{ issue.fields.priority.id }}">
+            {{ issue.fields.priority.name }}
+        </span>
 
         <h5 class="mt-2 mb-2">
             <a href="{{ path('app_project_issue_view', {'key': project.jiraKey ,'keyIssue': issue.key}) }}" class="text-body">{{ issue.fields.summary }}</a>
