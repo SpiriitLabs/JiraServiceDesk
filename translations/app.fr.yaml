@@ -46,7 +46,6 @@ header:
         default: "Minimum 3 caractères requis"
     dropdown:
         welcome: "Bienvenue !"
-        restart_introduction: "Revoir l'introduction"
 
 title:
     all: "Jira Service Desk"
@@ -88,8 +87,8 @@ filter:
 dashboard:
     label: "Tableau de bord"
     welcome: "Bonjour %name% !"
-    admin: "Tableau d'administration"
-    app: "Tableau de bord"
+    admin: "Accueil Administration"
+    app: "Vue client"
     total_of: "Nombre total de"
     total_of_user_notification: "Utilisateur(s) avec notifications"
     favorites: "Vos favoris"
@@ -100,13 +99,13 @@ select_project:
     title: "Sélectionner votre projet"
 
 favorite:
-    label: "Favoris"
+    label: "Favori(s)"
     action:
         add: "Ajouter aux favoris"
         remove: "Retirer des favoris"
 
 user:
-    label: "Utilisateurs"
+    label: "Utilisateur(s)"
     title:
         create: "Créer un utilisateur"
         edit: "Modifier l'utilisateur « %email% »"
@@ -156,7 +155,7 @@ profile:
         title: "Mon profil"
 
 project:
-    label: "Projets"
+    label: "Projet(s)"
     title:
         create: "Créer un projet depuis Jira"
         edit: "Modifier le projet « %key% »"
@@ -182,7 +181,7 @@ project:
     defaultIssueType:
         label: "Type par défaut"
     boards:
-        label: "Tableaux"
+        label: "Tableaux Kanban"
     board:
         label: "Tableau"
     flashes:
@@ -195,7 +194,7 @@ project:
             title: "Sélectionner le statut"
 
 issue:
-    label: "Tickets"
+    label: "Ticket(s)"
     title:
         backlogList: "Tickets du backlog"
     action:
@@ -235,7 +234,7 @@ issue:
             description: "Sélectionnez un projet pour créer un ticket"
 
 priority:
-    label: "Priorités"
+    label: "Prioritée(s)"
     name:
         label: "Nom"
     description:
@@ -245,7 +244,7 @@ priority:
     statusColor:
         label: "Couleur"
     flashes:
-        generated: "Priorités récupérées avec succès"
+        generated: "Prioritée(s) récupérées avec succès"
 
 security:
     login:

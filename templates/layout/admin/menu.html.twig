@@ -55,13 +55,13 @@
                             <ul class="side-nav">
 
                                 <twig:nav:section-title
-                                    trans="sidebar.categories.navigation"
+                                    trans="sidebar.categories.administration"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
                                 />
 
                                 <twig:nav:item-single
                                     path="admin_dashboard"
-                                    trans="dashboard.label"
+                                    trans="dashboard.admin"
                                     icon="mdi mdi-home-city"
                                     href="{{ path('admin_dashboard') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
@@ -86,7 +86,7 @@
                                 <twig:nav:item-single
                                     path="#"
                                     trans="dashboard.app"
-                                    icon="uil-briefcase"
+                                    icon="ri-archive-drawer-line"
                                     href="{{ path('app_project_select') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                 />

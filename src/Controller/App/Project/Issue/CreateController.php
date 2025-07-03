@@ -45,11 +45,18 @@ class CreateController extends AbstractController
             ),
             options: [
                 'assignees' => $assignableUsers,
+                'referer_url' => $request->headers->get('referer'),
             ]
         );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $refererUrl = null;
+            if ($form->has('refererUrl')) {
+                $refererUrl = $form->get('refererUrl')
+                    ->getData()
+                ;
+            }
             $issue = $this->handle($form->getData());
 
             if ($issue !== null) {
@@ -57,6 +64,10 @@ class CreateController extends AbstractController
                     type: 'success',
                     message: 'flash.created',
                 );
+
+                if ($refererUrl !== null) {
+                    return $this->redirect($refererUrl);
+                }
 
                 return $this->redirectToRoute(
                     route: IssueRouteCollection::VIEW->prefixed(),
