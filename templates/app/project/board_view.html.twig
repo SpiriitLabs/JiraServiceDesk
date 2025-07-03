@@ -21,6 +21,11 @@
         {{ 'action.return'|trans }}
     </a>
 
+    <a href="{{ path('app_project_issue_create', {key: entity.jiraKey}) }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'issue.action.create'|trans }}
+    </a>
+
     <twig:Turbo:Frame
         id="favorite"
         src="{{ path('app_favorite_stream', {
