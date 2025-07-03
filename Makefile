@@ -36,7 +36,7 @@ up: build
 
 .PHONY: build
 build:
-	@$(DC) build --pull --no-cache
+	@$(DC) build
 
 QUEUE_NAME ?= async
 VERBOSITY ?= -v
