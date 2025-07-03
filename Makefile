@@ -5,7 +5,7 @@
 SHELL:=/bin/bash
 
 DOCKER=docker
-DC=$(DOCKER) compose
+DC=$(DOCKER) compose --env-file .env --env-file .env.docker
 DCE=$(DC) exec
 PHP=$(DCE) php php
 CONSOLE=$(PHP) bin/console
@@ -24,7 +24,7 @@ help:
 ##
 ## —— Environment ⚙️ ————————————————
 .PHONY: start
-start: build up vendor assets  ## Start project
+start: config build up vendor assets  ## Start project
 
 .PHONY: stop
 stop: ## Stop project
@@ -196,6 +196,10 @@ bump:
 	sed $$SED_OPT 's/"version": *"[0-9]*\.[0-9]*\.[0-9]*"/"version": "$(VERSION)"/' $(PACKAGE_FILE); \
 	sed $$SED_OPT 's/^PROJECT_VERSION=.*/PROJECT_VERSION=$(VERSION)/' $(ENV_FILE)
 
+.PHONY: config
+config:
+	@echo "📝 Copying .env.docker.dist in .env.docker"
+	@cp --update=none .env.docker.dist .env.docker
 
 SERVER ?= rmjsd.p
 DOMAIN ?= rmjsd
