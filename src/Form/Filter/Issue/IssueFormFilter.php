@@ -5,6 +5,7 @@ namespace App\Form\Filter\Issue;
 use App\Entity\User;
 use App\Enum\User\Role;
 use App\Form\AbstractFilterType;
+use App\Form\Type\SwitchType;
 use App\Model\Filter\IssueFilter;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -32,6 +33,11 @@ class IssueFormFilter extends AbstractFilterType
                     'placeholder' => 'filter.query.label',
                 ],
             ])
+            ->add('hasResolvedMasked', SwitchType::class, [
+                'required' => false,
+                'label' => 'issue.filter.hasResolvedMasked.label',
+                'data' => true,
+            ])
         ;
 
         if ($options['statuses'] !== []) {
@@ -43,7 +49,6 @@ class IssueFormFilter extends AbstractFilterType
                     'required' => false,
                     'autocomplete' => true,
                     'attr' => [
-                        'data-controller' => 'form-control select2',
                         'placeholder' => 'issue.status.label',
                     ],
                 ])
