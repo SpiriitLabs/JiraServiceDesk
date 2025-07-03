@@ -13,24 +13,6 @@
     }
 }
 
-.priority {
-    &-lowest {
-        background: url('https://spiriit.atlassian.net/images/icons/priorities/lowest.svg') no-repeat center center;
-    }
-    &-low {
-        background: url('https://spiriit.atlassian.net/images/icons/priorities/low.svg') no-repeat center center;
-    }
-    &-normal {
-        background: url('https://spiriit.atlassian.net/images/icons/priorities/medium.svg') no-repeat center center;
-    }
-    &-hight {
-        background: url('https://spiriit.atlassian.net/images/icons/priorities/high.svg') no-repeat center center;
-    }
-    &-highest {
-        background: url('https://spiriit.atlassian.net/images/icons/priorities/highest.svg') no-repeat center center;
-    }
-}
-
 .priority-icon {
     width: 15px;
 }
