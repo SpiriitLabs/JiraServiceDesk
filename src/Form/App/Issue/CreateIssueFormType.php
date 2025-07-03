@@ -10,8 +10,10 @@ use App\Repository\PriorityRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CreateIssueFormType extends AbstractIssueFormType
 {
@@ -60,6 +62,9 @@ class CreateIssueFormType extends AbstractIssueFormType
         $builder
             ->add('description', QuillAdfType::class, [
                 'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ],
                 'attr' => [
                     'style' => 'height: 250px',
                 ],
@@ -70,6 +75,17 @@ class CreateIssueFormType extends AbstractIssueFormType
                 'label' => 'issue.attachment.label',
             ])
         ;
+
+        $refererUrl = $options['referer_url'];
+        if ($refererUrl !== null) {
+            $builder
+                ->add('refererUrl', HiddenType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'data' => $refererUrl,
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -79,6 +95,7 @@ class CreateIssueFormType extends AbstractIssueFormType
             'data_class' => CreateIssue::class,
             'translation_domain' => 'app',
             'label_format' => 'issue.%name%.label',
+            'referer_url' => null,
         ]);
     }
 }
