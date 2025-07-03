@@ -234,7 +234,7 @@ issue:
             description: "Sélectionnez un projet pour créer un ticket"
 
 priority:
-    label: "Priorités"
+    label: "Prioritée(s)"
     name:
         label: "Nom"
     description:
@@ -244,7 +244,7 @@ priority:
     statusColor:
         label: "Couleur"
     flashes:
-        generated: "Priorités récupérées avec succès"
+        generated: "Prioritée(s) récupérées avec succès"
 
 security:
     login:
