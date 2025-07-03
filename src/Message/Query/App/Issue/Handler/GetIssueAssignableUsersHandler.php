@@ -7,7 +7,6 @@ use App\Repository\Jira\UserRepository;
 use JiraCloud\User\User;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
 readonly class GetIssueAssignableUsersHandler
