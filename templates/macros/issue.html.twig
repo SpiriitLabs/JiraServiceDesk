@@ -6,7 +6,7 @@
 
 {% macro issuePriority(issue) %}
     <div class="d-flex align-items-center gap-1">
-        <img src="{{ issue.fields.priority.iconUrl }}" width="15px" alt="{{ issue.fields.priority.id }}">
+        <img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
         <h5 class="mt-1 font-14">{{ issue.fields.priority.name }}</h5>
     </div>
 {% endmacro %}
