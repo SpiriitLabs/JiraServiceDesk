@@ -14,7 +14,6 @@ readonly class GetIssueAssignableUsersHandler
 {
     public function __construct(
         private UserRepository $userRepository,
-        private TranslatorInterface $translator,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private string $jiraAPIAccountId,
     ) {
