@@ -11,7 +11,7 @@ class SwitchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('row_attr', [
-            'class' => 'form-check form-switch ms-2 mb-3 p-0',
+            'class' => 'form-check form-switch ms-2 mb-2 p-0',
         ]);
         $resolver->setDefault('required', false);
     }

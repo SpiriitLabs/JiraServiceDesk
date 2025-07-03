@@ -12,6 +12,7 @@ class IssueFilter
         public array $projects = [],
         public ?array $statusesIds = null,
         public ?array $assigneeIds = null,
+        public bool $hasResolvedMasked = false,
     ) {
     }
 }

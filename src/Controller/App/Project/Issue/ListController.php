@@ -43,7 +43,7 @@ class ListController extends AbstractController
         #[CurrentUser]
         User $user,
         #[MapQueryParameter]
-        IssueFilter $filter = new IssueFilter(),
+        IssueFilter $filter = new IssueFilter(hasResolvedMasked: true),
     ): Response {
         $this->setCurrentProject($project);
         $filter->projects = [$this->getCurrentProject()];
