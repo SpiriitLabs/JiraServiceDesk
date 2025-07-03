@@ -35,7 +35,7 @@ class CreateController extends AbstractController
         User $user,
     ): Response {
         $this->setCurrentProject($project);
-        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers(user: $user, project: $project));
 
         $form = $this->createForm(
             type: CreateIssueFormType::class,

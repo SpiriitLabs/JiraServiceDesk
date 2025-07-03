@@ -55,7 +55,7 @@ class ListController extends AbstractController
             options: [
                 'current_user' => $user,
                 'statuses' => $this->handle(new GetProjectStatusesByJiraKey($project->jiraKey)),
-                'assignees' => $this->handle(new GetIssueAssignableUsers($project)),
+                'assignees' => $this->handle(new GetIssueAssignableUsers(user: $user, project: $project)),
             ]
         );
         $form->handleRequest($request);

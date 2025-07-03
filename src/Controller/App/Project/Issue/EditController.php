@@ -49,7 +49,7 @@ class EditController extends AbstractController
         $this->setCurrentProject($project);
         /** @var Issue $issue */
         $issue = $this->handle(new GetFullIssue($keyIssue));
-        $assignableUsers = $this->handle(new GetIssueAssignableUsers($project));
+        $assignableUsers = $this->handle(new GetIssueAssignableUsers(user: $user, project: $project));
 
         $issueTransitions = [];
         foreach ($issue->transitions as $issueTransition) {

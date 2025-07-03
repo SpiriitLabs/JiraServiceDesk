@@ -18,8 +18,9 @@ readonly class GetIssueAssignableUsersHandler
     ) {
     }
 
-    public function __invoke(GetIssueAssignableUsers $query): array
-    {
+    public function __invoke(
+        GetIssueAssignableUsers $query,
+    ): array {
         $jiraCanAssignable = $this->userRepository->getAssignableUser(
             $query->project
         );
@@ -29,7 +30,10 @@ readonly class GetIssueAssignableUsersHandler
             /** @var User $user */
             $result[$user->accountId] = $user->displayName;
         }
-        $result[$this->jiraAPIAccountId] = 'Vous';
+        $result[$this->jiraAPIAccountId] = sprintf(
+            '%s (Support)',
+            $query->user->getFullName(),
+        );
         $result['null'] = 'Non Assignée';
 
         return array_reverse(array_flip($result));
