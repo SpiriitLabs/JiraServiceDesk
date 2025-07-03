@@ -8,7 +8,7 @@
 {% elseif reporter is not null %}
     <span class="align-middle">
         {% if reporter.accountId == jira_account_id %}
-            {{ app.user.fullName }}
+            {{ app.user.fullName }} (Support)
         {% else %}
             <img src="{{ reporter.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
             {{ reporter.displayName }}
