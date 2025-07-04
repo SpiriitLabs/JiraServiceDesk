@@ -20,6 +20,9 @@ action:
 yes: "Oui"
 no: "Non"
 
+copy:
+    sucess: "Lien copié"
+
 locale:
     label: "Langue"
     fr: "Français"
