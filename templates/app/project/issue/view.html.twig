@@ -77,6 +77,7 @@
                         {% for comment in comments|reverse %}
                             <twig:app:issue:comment
                                 comment="{{comment}}"
+                                issueKey="{{issue.key}}"
                             >
                             </twig:app:issue:comment>
                         {% endfor %}
