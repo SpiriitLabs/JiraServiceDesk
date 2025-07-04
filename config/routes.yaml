@@ -25,3 +25,9 @@ redirect:
     path: /
     controller: App\Controller\Security\LoginController::__invoke
 
+browse_issue:
+    path: /browse/{keyIssue}
+    controller: App\Controller\BrowseIssue\BrowseController::__invoke
+    requirements:
+        keyIssue: '[A-Za-z0-9]+-\d+'
+
