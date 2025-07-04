@@ -16,3 +16,15 @@
 .priority-icon {
     width: 15px;
 }
+
+.focused-comment {
+    border-radius: 10px;
+    padding: 10px;
+    transition: background-color 0.3s;
+
+    h5 {
+        span {
+            text-decoration: underline;
+        }
+    }
+}

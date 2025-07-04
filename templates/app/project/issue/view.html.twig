@@ -73,12 +73,14 @@
 
                     <hr class="my-5">
 
-                    {% for comment in comments|reverse %}
-                        <twig:app:issue:comment
-                            comment="{{comment}}"
-                        >
-                        </twig:app:issue:comment>
-                    {% endfor %}
+                    <div {% if focusedCommentId is not null %}{{ stimulus_controller('focus_comment', {focusedCommentId: focusedCommentId}) }}{% endif %}>
+                        {% for comment in comments|reverse %}
+                            <twig:app:issue:comment
+                                comment="{{comment}}"
+                            >
+                            </twig:app:issue:comment>
+                        {% endfor %}
+                    </div>
 
                 </div>
             </div>
