@@ -1,3 +1,4 @@
+{% props comment = null, issueKey = '' %}
 {% set commentParseAuthor = comment|parse_comment_author %}
 
 <div class="d-flex mt-3 mb-2" id="{{ comment.id }}">
@@ -13,7 +14,16 @@
                 />
             {% endif %}
 
-            <small class="text-muted float-end">{{ comment.updated|date('d/m/Y H:i') }}</small>
+            {% if issueKey != '' %}
+                <twig:app:copy
+                    url="{{ absolute_url(path('browse_issue', {keyIssue: issueKey, focusedCommentId: comment.id})) }}"
+                    :hasSuccessText="true"
+                />
+            {% endif %}
+
+            <small class="text-muted float-end">
+                {{ comment.updated|date('d/m/Y H:i') }}
+            </small>
         </h5>
         {{ comment.renderedBody|preview_description|raw }}
 

@@ -14,10 +14,24 @@ export default class extends Controller {
 
     const focused = document.getElementById(this.focusedCommentIdValue);
     if (focused) {
+      const elementHeight = focused.offsetHeight;
+      const viewportHeight = window.innerHeight;
+
+      console.log(elementHeight < viewportHeight * 0.75);
+      if (elementHeight < viewportHeight * 0.75) {
         focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        focused.classList.add('focused-comment');
-        focused.classList.add('bg-secondary-subtle');
-        focused.classList.add('border-light');
+      } else {
+        const rect = focused.getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 100;
+        window.scrollTo({
+          top: offset,
+          behavior: 'smooth',
+        });
+      }
+
+      focused.classList.add('focused-comment');
+      focused.classList.add('bg-secondary-subtle');
+      focused.classList.add('border-light');
     }
   }
 

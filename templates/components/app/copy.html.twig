@@ -1,0 +1,9 @@
+{% trans_default_domain 'app' %}
+{% props url = '', successText = '', hasSuccessText = false %}
+{% if hasSuccessText == true %}
+    {% set successText = 'copy.sucess'|trans %}
+{% endif %}
+
+<a {{ stimulus_controller('copy_to_clipboard', {url: url, successText: successText}) }} {{ stimulus_target('copy_to_clipboard', 'button') }} {{ stimulus_action('copy_to_clipboard', 'copy') }} type="button" class="text-secondary action-icon {% block classAttributes '' %}">
+    <i class="ri-link" {{ stimulus_target('copy_to_clipboard', 'icon') }}></i>
+</a>
