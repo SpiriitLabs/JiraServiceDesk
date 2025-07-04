@@ -14,6 +14,7 @@ use App\Service\IssueHtmlProcessor;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\UX\Turbo\TurboBundle;
@@ -45,6 +46,8 @@ class ViewController extends AbstractController
         Request $request,
         #[CurrentUser]
         User $user,
+        #[MapQueryParameter]
+        ?string $focusedCommentId = null,
     ): Response {
         $this->setCurrentProject($project);
         $issue = $this->jiraIssueRepository->getFull($keyIssue);
@@ -78,6 +81,7 @@ class ViewController extends AbstractController
                 'project' => $project,
                 'comments' => $comments->comments,
                 'commentForm' => $form->createView(),
+                'focusedCommentId' => $focusedCommentId,
             ]
         );
     }
