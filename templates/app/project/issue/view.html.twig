@@ -45,34 +45,10 @@
                 withActions="true"
             />
 
-            <div class="card">
-                {% for type,issues in links %}
-                    <span>{{ type }}</span>
-                    {% for issue in issues %}
-                        <div class="row">
-                            <div class="col-2">
-                                <img src="{{ issue.fields.issuetype.iconUrl }}" alt="{{ issue.fields.issuetype.description }}" style="width: 12px;">
-                                <a href="{{ absolute_url(path('app_project_issue_view', {'key': issue.fields.project.key, 'keyIssue': issue.key})) }}">{{ issue.key }}</a>
-                            </div>
-                            <div class="col-6">
-                                {{ issue.fields.summary }}
-                            </div>
-                            <div class="col-1">
-                                <img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
-                            </div>
-                            <div class="col-1">
-                                <twig:app:issue:assignee
-                                    reporter="{{ issue.fields.assignee }}"
-                                />
-                            </div>
-                            <div class="col-2">
-                                {{ issue.fields.status.name }}
-                            </div>
-                        </div>
-
-                    {% endfor %}
-                {% endfor %}
-            </div>
+            <twig:app:issue:linked_issues
+                issues="{{links}}"
+            >
+            </twig:app:issue:linked_issues>
 
             <div class="card">
                 <div class="card-header">
