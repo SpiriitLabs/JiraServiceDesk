@@ -3,32 +3,31 @@
 <div class="card">
     <h3>Tickets associés</h3>
 
-    {% for type,issues in links %}
-        <div class="table-responsive">
-            <table class="table table-centered table-striped">
-                <thead>
+    <div class="table-responsive">
+        {% for type,issues in links %}
+        <div>
+            <span>{{ type }}</span>
+        </div>
+        <table class="table table-centered table-striped">
+            <tbody>
+            {% for issue in issues %}
                 <tr>
-                    <th colspan="3">{{ type }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for issue in issues %}
-                    <tr>
                     <td>
                         <img src="{{ issue.fields.issuetype.iconUrl }}" alt="{{ issue.fields.issuetype.description }}" style="width: 12px;">
-                    </td>
-                    <td>
                         <a href="{{ absolute_url(path('browse_issue', {'keyIssue': issue.key })) }}">{{ issue.key }}</a>
+                        {{ issue.fields.summary }}
                     </td>
-                    <td><img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
+                    <td align="right">
+                        <img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
                         <twig:app:issue:assignee
-                                reporter="{{ issue.fields.assignee }}"
+                            reporter="{{ issue.fields.assignee }}"
                         />
-                        {{ issueMacros.issueStatus(issue) }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% endfor %}
+                        {{ issueMacros.issueStatus(issue) }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
 </div>
