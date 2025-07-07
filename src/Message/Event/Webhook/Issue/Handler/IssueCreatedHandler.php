@@ -3,6 +3,7 @@
 namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Message\Command\Common\EmailNotification;
+use App\Message\Event\Webhook\AbstractIssueEventWebhookHandler;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
-class IssueCreatedHandler implements LoggerAwareInterface
+class IssueCreatedHandler extends AbstractIssueEventWebhookHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -27,6 +28,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
 
     public function __invoke(IssueCreated $event): void
     {
+        $this->handleIssueById($event->getPayload()['issue']['key']);
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
         $project = $this->projectRepository->findOneBy([

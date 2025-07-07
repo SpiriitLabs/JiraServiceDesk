@@ -3,6 +3,7 @@
 namespace App\Message\Event\Webhook\Comment\Handler;
 
 use App\Message\Command\Common\EmailNotification;
+use App\Message\Event\Webhook\AbstractIssueEventWebhookHandler;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
-class CommentUpdatedHandler implements LoggerAwareInterface
+class CommentUpdatedHandler extends AbstractIssueEventWebhookHandler implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -27,6 +28,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
 
     public function __invoke(CommentUpdated $event): void
     {
+        $this->handleIssueById($event->getPayload()['issue']['key']);
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
         $project = $this->projectRepository->findOneBy([
