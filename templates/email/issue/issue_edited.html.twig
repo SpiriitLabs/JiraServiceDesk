@@ -32,7 +32,7 @@
 
     <twig:email:action
         label="{{ 'issue.edited.action'|trans }}"
-        href="{{ absolute_url(path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issueKey})) }}"
+        href="{{ absolute_url(path('browse_issue', {keyIssue: issueKey})) }}"
     />
 
 {% endblock %}

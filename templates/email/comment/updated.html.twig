@@ -30,7 +30,7 @@
                                                                         style="color: #6b778c;">
                                                                             <a href="{{ absolute_url(path('app_project_view', {key: project.jiraKey})) }}">{{ project.name }}</a>
                                                                         /
-                                                                        <a href="{{ absolute_url(path('app_issue_view', {'keyIssue': issueKey})) }}">{{ issueKey }}</a>
+                                                                        <a href="{{ absolute_url(path('browse_issue', {keyIssue: issueKey})) }}">{{ issueKey }}</a>
                                                                     </span>
                                                                 </p>
                                                             </div>
@@ -176,7 +176,7 @@
 
     <twig:email:action
         label="{{ 'comment.updated.action'|trans }}"
-        href="{{ absolute_url(path('app_issue_project_view', {keyProject: project.jiraKey ,keyIssue: issueKey})) }}"
+        href="{{ absolute_url(path('browse_issue', {keyIssue: issueKey})) }}"
     />
 
 {% endblock %}
