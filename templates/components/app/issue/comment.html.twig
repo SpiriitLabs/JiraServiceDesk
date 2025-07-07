@@ -1,6 +1,5 @@
 {% props comment = null, issueKey = '' %}
 {% set commentParseAuthor = comment|parse_comment_author %}
-{%dump(comment)%}
 
 <div class="d-flex mt-3 mb-2" id="{{ comment.id }}">
     <div class="w-100">
