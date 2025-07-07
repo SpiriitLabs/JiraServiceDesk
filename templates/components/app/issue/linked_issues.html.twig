@@ -1,33 +1,40 @@
 {% import "macros/issue.html.twig" as issueMacros %}
 
-<div class="card">
-    <h3>Tickets associés</h3>
+{% trans_default_domain 'app' %}
 
-    <div class="table-responsive">
-        {% for type,issues in links %}
-        <div>
-            <span>{{ type }}</span>
-        </div>
-        <table class="table table-centered table-striped">
-            <tbody>
-            {% for issue in issues %}
-                <tr>
-                    <td>
-                        <img src="{{ issue.fields.issuetype.iconUrl }}" alt="{{ issue.fields.issuetype.description }}" style="width: 12px;">
-                        <a href="{{ absolute_url(path('browse_issue', {'keyIssue': issue.key })) }}">{{ issue.key }}</a>
-                        {{ issue.fields.summary }}
-                    </td>
-                    <td align="right">
-                        <img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
-                        <twig:app:issue:assignee
-                            reporter="{{ issue.fields.assignee }}"
-                        />
-                        {{ issueMacros.issueStatus(issue) }}
-                    </td>
-                </tr>
+<div class="card">
+    <div class="card-body">
+        <h3>{{ 'issue.links.label'|trans }}</h3>
+
+        <div class="table-responsive">
+            {% for type,issues in links %}
+                <div>
+                    <span>{{ type }}</span>
+                </div>
+                <table class="table table-centered table-striped">
+                    <tbody>
+                    {% for issue in issues %}
+                        {% set viewLink = path('browse_issue', {'keyIssue': issue.key}) %}
+                        <tr>
+                            <td {{ issueMacros.tdClickable(viewLink) }}>
+                                <img src="{{ issue.fields.issuetype.iconUrl }}" alt="{{ issue.fields.issuetype.description }}" style="width: 12px;">
+                                {{ issue.key }}
+                                {{ issue.fields.summary }}
+                            </td>
+                            <td class="text-end">
+                                <img src="{{ issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ issue.fields.priority.id }}">
+                                <div class="d-inline-block m-1">
+                                    <twig:app:issue:assignee
+                                        reporter="{{ issue.fields.assignee }}"
+                                    />
+                                </div>
+                                {{ issueMacros.issueStatus(issue) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             {% endfor %}
-            </tbody>
-        </table>
-        {% endfor %}
+        </div>
     </div>
 </div>

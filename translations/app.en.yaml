@@ -235,6 +235,8 @@ issue:
   filter:
     hasResolvedMasked:
       label: "Mask resolved tickets"
+  links:
+    label: "Related ticket(s)"
 
 priority:
   label: "Priority(ies)"
