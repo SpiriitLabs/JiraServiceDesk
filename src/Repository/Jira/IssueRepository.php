@@ -70,6 +70,11 @@ class IssueRepository
         return $this->service->addComment($id, $comment);
     }
 
+    public function getComment(string $issueId, string $commentId): Comment
+    {
+        return $this->service->getComment($issueId, $commentId);
+    }
+
     /**
      * @return Attachment[]
      */
