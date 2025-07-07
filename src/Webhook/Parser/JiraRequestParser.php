@@ -74,10 +74,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             try {
                 $jiraIssue = $this->issueRepository->getFull($payload->all()['issue']['key']);
             } catch (JiraException $jiraException) {
-                throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, sprintf(
-                    "Issue #%d has not 'from-client' label",
-                    $payload->all()['issue']['key']
-                ));
+                throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, $jiraException->getMessage());
             }
 
             if (in_array('from-client', $jiraIssue->fields->labels) == false) {
