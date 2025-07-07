@@ -4,13 +4,13 @@
 <div class="d-flex mt-3 mb-2" id="{{ comment.id }}">
     <div class="w-100">
         <h5 class="mt-0">
-            {% if commentParseAuthor is not null %}
+            {% if comment.author is not null and is_jira_account_id(comment.author.accountId) == false %}
                 <twig:app:issue:assignee
-                    reporterName="{{ commentParseAuthor|raw }}"
+                    reporter="{{ comment.author }}"
                 />
             {% else %}
                 <twig:app:issue:assignee
-                    reporter="{{ comment.author }}"
+                    reporterName="{{ commentParseAuthor|raw }}"
                 />
             {% endif %}
 
