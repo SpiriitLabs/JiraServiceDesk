@@ -4,6 +4,7 @@ namespace App\Message\Event\Webhook\Comment\Handler;
 
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
+use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -22,6 +23,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
         private readonly MessageBusInterface $commandBus,
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
+        private readonly IssueRepository $issueRepository,
     ) {
     }
 
@@ -33,7 +35,12 @@ class CommentCreatedHandler implements LoggerAwareInterface
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
+        $comment = $this->issueRepository->getComment($issueKey, $event->getPayload()['comment']['id']);
         if ($project == null) {
+            return;
+        }
+
+        if ($comment->visibility !== null) {
             return;
         }
 
