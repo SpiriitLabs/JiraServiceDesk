@@ -45,10 +45,12 @@
                 withActions="true"
             />
 
-            <twig:app:issue:linked_issues
-                issues="{{links}}"
-            >
+            {% if links|length > 0 %}
+                <twig:app:issue:linked_issues
+                    issues="{{links}}"
+                >
             </twig:app:issue:linked_issues>
+            {% endif %}
 
             <div class="card">
                 <div class="card-header">
