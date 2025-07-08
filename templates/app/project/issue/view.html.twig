@@ -45,7 +45,7 @@
                 withActions="true"
             />
 
-            {% if links %}
+            {% if links|length > 0 %}
                 <twig:app:issue:linked_issues
                     issues="{{links}}"
                 >
