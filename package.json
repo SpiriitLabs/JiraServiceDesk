@@ -11,7 +11,7 @@
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^5.1.0",
-        "core-js": "^3.38.0",
+        "core-js": "^3.44.0",
         "file-loader": "^6.2.0",
         "postinstall-postinstall": "^2.1.0",
         "regenerator-runtime": "^0.14.1",
