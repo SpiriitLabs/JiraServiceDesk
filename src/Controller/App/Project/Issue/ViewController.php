@@ -79,8 +79,8 @@ class ViewController extends AbstractController
             $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
             $fullLinkIssue->type = $type;
             $links[] = [
-              'type' => $type,
-              'issue' => $fullLinkIssue,
+                'type' => $type,
+                'issue' => $fullLinkIssue,
             ];
         }
 
