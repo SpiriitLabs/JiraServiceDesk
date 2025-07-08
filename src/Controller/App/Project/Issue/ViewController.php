@@ -77,7 +77,11 @@ class ViewController extends AbstractController
             $linkIssue = $link->inwardIssue ?? $link->outwardIssue;
             $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
             $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
-            $links[$type][] = $fullLinkIssue;
+            $fullLinkIssue->type = $type;
+            $links[] = [
+              'type' => $type,
+              'issue' => $fullLinkIssue,
+            ];
         }
 
         return $this->render(
