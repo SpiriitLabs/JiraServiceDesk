@@ -89,6 +89,9 @@ abstract class AbstractUserFormType extends AbstractType
             ->add('preferenceNotificationCommentUpdated', SwitchType::class, [
                 'required' => false,
             ])
+            ->add('preferenceNotificationCommentOnlyOnTag', SwitchType::class, [
+                'required' => false,
+            ])
         ;
 
         if (is_a($builder->getData(), EditUser::class)) {

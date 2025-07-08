@@ -43,6 +43,7 @@ readonly class CreateUserHandler
         $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
         $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
         $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
+        $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;
 
         $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
         $user->setPassword($password);
