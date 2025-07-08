@@ -237,7 +237,7 @@ issue:
             description: "Sélectionnez un projet pour créer un ticket"
     filter:
         hasResolvedMasked:
-            label: "Masquer les tickets résolue"
+            label: "Masquer les tickets résolus"
 
 priority:
     label: "Prioritée(s)"
