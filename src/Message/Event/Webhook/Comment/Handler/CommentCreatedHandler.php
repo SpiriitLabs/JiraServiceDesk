@@ -9,6 +9,7 @@ use App\Repository\ProjectRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
@@ -24,6 +25,8 @@ class CommentCreatedHandler implements LoggerAwareInterface
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
         private readonly IssueRepository $issueRepository,
+        #[Autowire(env: 'JIRA_ACCOUNT_ID')]
+        private string $jiraAPIAccountId,
     ) {
     }
 
@@ -51,6 +54,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
+        $commentBody = $event->getPayload()['comment']['body'];
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/comment/created.html.twig')
             ->context([
@@ -59,12 +63,24 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 'issueKey' => $issueKey,
                 'commentAuthorName' => $event->getPayload()['comment']['author']['displayName'],
                 'commentAuthorAvatarUrl' => array_shift($event->getPayload()['comment']['author']['avatarUrls']),
-                'commentBody' => $event->getPayload()['comment']['body'],
+                'commentBody' => $commentBody,
             ])
         ;
 
         foreach ($project->getUsers() as $user) {
-            if ($user->preferenceNotificationCommentCreated === false) {
+            if (
+                $user->preferenceNotificationCommentCreated === false
+                && false == (
+                    $user->preferenceNotificationCommentOnlyOnTag == true
+                    && str_contains(
+                        haystack: mb_strtolower($commentBody),
+                        needle: sprintf(
+                            '[~accountid:%s]',
+                            $this->jiraAPIAccountId,
+                        ),
+                    )
+                )
+            ) {
                 continue;
             }
 

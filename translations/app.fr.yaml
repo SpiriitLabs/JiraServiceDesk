@@ -147,6 +147,8 @@ user:
         label: "Notification à la création de commentaire"
     preferenceNotificationCommentUpdated:
         label: "Notification à la modification de commentaire"
+    preferenceNotificationCommentOnlyOnTag:
+        label: "Notification uniquement lors d'un tag dans les commentaires"
     enabled:
         label: "Compte actif"
     defaultProject:
