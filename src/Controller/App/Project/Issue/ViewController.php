@@ -11,12 +11,14 @@ use App\Message\Command\App\Issue\CreateComment;
 use App\Message\Query\App\Issue\GetFullIssue;
 use App\Repository\Jira\IssueRepository;
 use App\Service\IssueHtmlProcessor;
+use JiraCloud\JiraException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Webhook\Exception\RejectWebhookException;
 use Symfony\UX\Turbo\TurboBundle;
 
 #[Route(
@@ -76,8 +78,11 @@ class ViewController extends AbstractController
         foreach ($issue->fields->issuelinks as $link) {
             $linkIssue = $link->inwardIssue ?? $link->outwardIssue;
             $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
-            $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
-            $fullLinkIssue->type = $type;
+            try {
+                $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
+            } catch (JiraException $jiraException) {
+                continue;
+            }
             $links[] = [
                 'type' => $type,
                 'issue' => $fullLinkIssue,
