@@ -72,7 +72,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 $user->preferenceNotificationCommentCreated === false
                 && false == (
                     $user->preferenceNotificationCommentOnlyOnTag == true
-                    && str_contains(
+                    || str_contains(
                         haystack: mb_strtolower($commentBody),
                         needle: sprintf(
                             '[~accountid:%s]',
