@@ -72,6 +72,17 @@ class ViewController extends AbstractController
                 ],
             );
         }
+        $links = [];
+        foreach ($issue->fields->issuelinks as $link) {
+            $linkIssue = $link->inwardIssue ?? $link->outwardIssue;
+            $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
+            $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
+            $fullLinkIssue->type = $type;
+            $links[] = [
+                'type' => $type,
+                'issue' => $fullLinkIssue,
+            ];
+        }
 
         return $this->render(
             view: 'app/project/issue/view.html.twig',
@@ -79,6 +90,7 @@ class ViewController extends AbstractController
                 'key' => $keyIssue,
                 'issue' => $issue,
                 'project' => $project,
+                'links' => $links,
                 'comments' => $comments->comments,
                 'commentForm' => $form->createView(),
                 'focusedCommentId' => $focusedCommentId,
