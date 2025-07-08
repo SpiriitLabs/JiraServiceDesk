@@ -27,6 +27,7 @@ class AbstractUserDTO
         public bool $preferenceNotificationIssueUpdated = true,
         public bool $preferenceNotificationCommentCreated = true,
         public bool $preferenceNotificationCommentUpdated = true,
+        public bool $preferenceNotificationCommentOnlyOnTag = true,
         public bool $enabled = true,
         public ?Project $defaultProject = null,
     ) {

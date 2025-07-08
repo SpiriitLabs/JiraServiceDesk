@@ -32,6 +32,7 @@ readonly class EditUserHandler
         $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
         $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
         $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
+        $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;
         $user->enabled = $command->enabled;
         $user->defaultProject = $command->defaultProject;
 

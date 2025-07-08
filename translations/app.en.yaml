@@ -144,6 +144,8 @@ user:
     label: "Notification on comment creation"
   preferenceNotificationCommentUpdated:
     label: "Notification on comment update"
+  preferenceNotificationCommentOnlyOnTag:
+      label: "Notification only when a tag is added to comments"
   enabled:
     label: "Active account"
   defaultProject:
