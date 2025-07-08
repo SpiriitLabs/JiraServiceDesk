@@ -1,0 +1,28 @@
+<twig:list:data-list
+    :datas="links"
+>
+    <twig:block name="header">
+        {% trans_default_domain 'app' %}
+        <h3>{{ 'issue.links.label'|trans }}</h3>
+    </twig:block>
+
+    <twig:block name="tableTd">
+        {% set viewLink = path('browse_issue', {'keyIssue': object.issue.key}) %}
+        {% import "macros/issue.html.twig" as issueMacros %}
+        <td>{{ object.type }}</td>
+        <td {{ issueMacros.tdClickable(viewLink) }}>
+            <img src="{{ object.issue.fields.issuetype.iconUrl }}" alt="{{ object.issue.fields.issuetype.description }}" style="width: 12px;">
+            {{ object.issue.key }}
+            {{ object.issue.fields.summary }}
+        </td>
+        <td class="text-end">
+            <img src="{{ object.issue.fields.priority.iconUrl }}" class="priority-icon" alt="{{ object.issue.fields.priority.id }}">
+            <div class="d-inline-block m-1">
+                <twig:app:issue:assignee
+                    reporter="{{ object.issue.fields.assignee }}"
+                />
+            </div>
+            {{ issueMacros.issueStatus(object.issue) }}
+        </td>
+    </twig:block>
+</twig:list:data-list>

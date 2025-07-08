@@ -238,6 +238,8 @@ issue:
     filter:
         hasResolvedMasked:
             label: "Masquer les tickets résolus"
+    links:
+        label: "Ticket(s) associé(s)"
 
 priority:
     label: "Prioritée(s)"

@@ -45,6 +45,11 @@
                 withActions="true"
             />
 
+            <twig:app:issue:linked_issues
+                issues="{{links}}"
+            >
+            </twig:app:issue:linked_issues>
+
             <div class="card">
                 <div class="card-header">
                     <h4 class="my-1">{{ 'issue.comment.label'|trans }} (<span class="fst-italic">{{ comments|length }}</span>)</h4>
