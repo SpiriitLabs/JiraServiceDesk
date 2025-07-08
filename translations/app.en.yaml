@@ -189,6 +189,7 @@ project:
     created: "Project successfully created"
     notFound: "Project not found"
     currentNotFound: "No project selected"
+    backlogNotSet: "No backlog status has been selected. Please contact your administrator."
   kanban:
     selectTransition:
       title: "Select status"

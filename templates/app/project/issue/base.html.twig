@@ -8,6 +8,7 @@
         label: current_project.name,
     },
     {
+        href: path('app_project_issue_list', {key: current_project.jiraKey}),
         label: 'issue.label'|trans
     }
 ]|merge(breadcrumb|default([])) %}
