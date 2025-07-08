@@ -12,9 +12,11 @@
             <div class="col-12 col-md-5">
                 {{ form_widget(filterForm.query) }}
             </div>
+            {% if filterForm.statusesIds is defined %}
             <div class="col-12 col-md-3">
                 {{ form_widget(filterForm.statusesIds) }}
             </div>
+            {% endif %}
             {% if filterForm.assigneeIds is defined %}
                 <div class="col-12 col-md-3">
                     {{ form_widget(filterForm.assigneeIds) }}
