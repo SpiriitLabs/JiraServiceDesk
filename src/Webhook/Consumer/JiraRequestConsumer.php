@@ -9,7 +9,9 @@ use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -20,8 +22,14 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
     use LoggerAwareTrait;
     use ExceptionCatcherTrait;
 
+    // 1 minute = 300_000 ms
+    // 30 secondes = 30_000 ms
+    private const DELAY_STAMP = 300_000;
+
     public function __construct(
         private readonly MessageBusInterface $commandBus,
+        #[Autowire(env: 'APP_ENV')]
+        private readonly string $APP_ENV,
     ) {
     }
 
@@ -31,7 +39,12 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
             return;
         }
 
-        $this->commandBus->dispatch($event);
+        $this->commandBus->dispatch(
+            $event,
+            [
+                new DelayStamp(self::DELAY_STAMP),
+            ]
+        );
     }
 
     private function support(RemoteEvent $event): bool
