@@ -70,15 +70,15 @@ class CommentCreatedHandler implements LoggerAwareInterface
         foreach ($project->getUsers() as $user) {
             if (
                 $user->preferenceNotificationCommentCreated === false
-                && false == (
-                    $user->preferenceNotificationCommentOnlyOnTag == true
+                && (
+                    $user->preferenceNotificationCommentOnlyOnTag == false
                     || str_contains(
                         haystack: mb_strtolower($commentBody),
                         needle: sprintf(
                             '[~accountid:%s]',
                             $this->jiraAPIAccountId,
                         ),
-                    )
+                    ) == false
                 )
             ) {
                 continue;
