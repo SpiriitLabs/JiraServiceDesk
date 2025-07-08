@@ -72,9 +72,6 @@ class BacklogListController extends AbstractController
         );
         $form->handleRequest($request);
 
-        if ($filter->statusesIds == []) {
-            $filter->statusesIds = null;
-        }
         if ($filter->assigneeIds == []) {
             $filter->assigneeIds = null;
         }
