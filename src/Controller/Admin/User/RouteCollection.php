@@ -13,4 +13,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     case EDIT = 'user_edit';
     case CREATE = 'user_create';
     case DELETE = 'user_delete';
+    case EXPORT = 'user_export';
 }
