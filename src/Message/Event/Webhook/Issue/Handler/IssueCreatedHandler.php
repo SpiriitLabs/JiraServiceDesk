@@ -4,7 +4,9 @@ namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
+use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
+use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -22,6 +24,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
         private readonly MessageBusInterface $commandBus,
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
+        private readonly IssueRepository $issueRepository,
     ) {
     }
 
@@ -34,6 +37,12 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
         if ($project == null) {
+            return;
+        }
+
+        try {
+            $this->issueRepository->getFull($issueKey);
+        } catch (JiraException $jiraException) {
             return;
         }
 
