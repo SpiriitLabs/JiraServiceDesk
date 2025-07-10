@@ -16,6 +16,7 @@ action:
     generate: "Générer"
     filter: "Filtrer"
     next: "Suivant"
+    export: "Export"
 
 yes: "Oui"
 no: "Non"
@@ -153,6 +154,8 @@ user:
         label: "Compte actif"
     defaultProject:
         label: "Projet par défaut"
+    flashes:
+        exported: "Export réalisé avec succès"
 
 profile:
     label: "Profil"
