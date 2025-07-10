@@ -1,19 +1,19 @@
 issue:
     created:
-        title: "New ticket available!"
+        title: "[%project_name%] New ticket available!"
         description: "A new ticket \"%ticket_name%\" has been created in your project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View ticket"
     edited:
-        title: "Ticket updated!"
+        title: "[%project_name%] '%ticket_name%' ticket updated!"
         description: "Your ticket \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
         action: "View ticket"
 
 comment:
     created:
-        title: "New comment added!"
+        title: "[%project_name%] New comment added on '%ticket_name%' !"
         action: "View comment"
     updated:
-        title: "Comment updated!"
+        title: "[%project_name%] Comment updated on '%ticket_name%'!"
         action: "View comment"
 
 security:
