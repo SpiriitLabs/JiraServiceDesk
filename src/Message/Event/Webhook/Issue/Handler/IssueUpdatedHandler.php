@@ -71,6 +71,10 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 ->subject(
                     $this->translator->trans(
                         id: 'issue.edited.title',
+                        parameters: [
+                            '%project_name%' => $project->name,
+                            '%ticket_name%' => $issueSummary,
+                        ],
                         domain: 'email',
                         locale: $user->preferredLocale->value,
                     ),

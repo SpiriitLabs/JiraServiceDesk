@@ -1,19 +1,19 @@
 issue:
     created:
-        title: "Nouveau ticket disponible !"
+        title: "[%project_name%] Nouveau ticket disponible !"
         description: "Un nouveau ticket « %ticket_name% » a été créé dans votre projet « %project_name% ».<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
     edited:
-        title: "Ticket mis à jour !"
+        title: "[%project_name%] Ticket '%ticket_name%' mis à jour !"
         description: "Votre ticket « %ticket_name% » dans le projet « %project_name% » a été mis à jour.<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
 
 comment:
     created:
-        title: "Nouveau commentaire ajouté !"
+        title: "[%project_name%] Nouveau commentaire ajouté sur le ticket '%ticket_name%' !"
         action: "Voir le commentaire"
     updated:
-        title: "Commentaire modifié !"
+        title: "[%project_name%] Commentaire modifié sur le ticket '%ticket_name%' !"
         action: "Voir le commentaire"
 
 security:

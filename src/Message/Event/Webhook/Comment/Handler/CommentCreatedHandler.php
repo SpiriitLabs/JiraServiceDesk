@@ -88,6 +88,10 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 ->subject(
                     $this->translator->trans(
                         id: 'comment.created.title',
+                        parameters: [
+                            '%project_name%' => $project->name,
+                            '%ticket_name%' => $issueSummary,
+                        ],
                         domain: 'email',
                         locale: $user->preferredLocale->value,
                     ),

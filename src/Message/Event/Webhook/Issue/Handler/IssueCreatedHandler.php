@@ -71,6 +71,9 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 ->subject(
                     $this->translator->trans(
                         id: 'issue.created.title',
+                        parameters: [
+                            '%project_name%' => $project->name,
+                        ],
                         domain: 'email',
                         locale: $user->preferredLocale->value,
                     ),
