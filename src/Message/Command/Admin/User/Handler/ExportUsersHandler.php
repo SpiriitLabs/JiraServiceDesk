@@ -34,6 +34,8 @@ class ExportUsersHandler
                 'prénom' => $user->firstName,
                 'société' => $user->company,
                 'projets' => implode(', ', $projects),
+                'dernière connexion' => $user->getLastLoginAt()?->setTimezone(new \DateTimeZone('CEST'))
+                    ->format('d/m/Y H:i'),
             ];
         }
 

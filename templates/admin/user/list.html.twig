@@ -69,10 +69,17 @@
                     'property': 'enabled',
                 } %}
             </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'user.lastLogin.label'|trans,
+                    'property': 'lastLoginAt',
+                } %}
+            </th>
             <th class="min"></th>
         </twig:block>
 
         <twig:block name="tableTd">
+            {% trans_default_domain 'app' %}
             <td>{{ object.email }}</td>
             <td>{{ object.firstName }}</td>
             <td>{{ object.lastName }}</td>
@@ -85,6 +92,9 @@
             </td>
             <td>
                 <twig:bool data="{{ object.enabled }}"></twig:bool>
+            </td>
+            <td>
+                {{ object.lastLoginAt ? (object.lastLoginAt|date('d/m/Y H:i')) : 'user.lastLogin.never'|trans }}
             </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">

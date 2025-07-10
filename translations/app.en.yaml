@@ -153,6 +153,9 @@ user:
     label: "Default project"
   flashes:
     exported: "Export done successfully"
+  lastLogin:
+    label: "Last login"
+    never: "Never login"
 
 profile:
   label: "Profile"
