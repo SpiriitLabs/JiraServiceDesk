@@ -26,7 +26,7 @@ class ExportController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
-        $csv = $this->handle(new ExportUsers(user: $user));
+        $csv = $this->handle(new ExportUsers());
 
         $response = new Response($csv);
 

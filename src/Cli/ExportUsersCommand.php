@@ -53,7 +53,7 @@ class ExportUsersCommand extends Command
             'email' => $email,
         ]);
         $user = reset($users);
-        $csv = $this->handle(new ExportUsers(user: $user));
+        $csv = $this->handle(new ExportUsers());
 
         $emailToSent = (new TemplatedEmail())
             ->htmlTemplate('email/user/export.html.twig')

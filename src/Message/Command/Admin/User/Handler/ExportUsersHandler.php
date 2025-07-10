@@ -24,17 +24,17 @@ class ExportUsersHandler
 
         $content = [];
 
-        foreach ($users as $userToExport) {
+        foreach ($users as $user) {
             $projects = array_map(function ($project) {
                 return $project->jiraKey;
-            }, $userToExport->getProjects()
+            }, $user->getProjects()
                 ->toArray());
 
             $content[] = [
-                'email' => $userToExport->email,
-                'nom' => $userToExport->getLastName(),
-                'prénom' => $userToExport->firstName,
-                'société' => $userToExport->company,
+                'email' => $user->email,
+                'nom' => $user->getLastName(),
+                'prénom' => $user->firstName,
+                'société' => $user->company,
                 'projets' => implode(', ', $projects),
             ];
         }
