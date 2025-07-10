@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Cli;
 
 use App\Message\Command\Admin\User\ExportUsers;
-use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +16,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -27,10 +25,8 @@ class ExportUsersCommand extends Command
     use HandleTrait;
 
     public function __construct(
-        private readonly EncoderInterface $csvEncoder,
         private readonly MailerInterface $mailer,
         private readonly TranslatorInterface $translator,
-        private readonly UserRepository $userRepository,
     ) {
         parent::__construct();
     }
