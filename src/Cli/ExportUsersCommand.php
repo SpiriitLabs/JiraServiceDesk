@@ -4,19 +4,29 @@ declare(strict_types=1);
 
 namespace App\Cli;
 
+use App\Message\Command\Admin\User\ExportUsers;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Path;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Messenger\HandleTrait;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsCommand(name: 'app:users:export')]
 class ExportUsersCommand extends Command
 {
+    use HandleTrait;
+
     public function __construct(
+        private readonly CsvEncoder $csvEncoder,
+        private readonly MailerInterface $mailer,
+        private readonly TranslatorInterface $translator,
         private readonly UserRepository $userRepository,
     ) {
         parent::__construct();
@@ -25,51 +35,27 @@ class ExportUsersCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $progressBar = $io->createProgressBar();
 
-        $users = $this->userRepository->findAll();
+        $user = $this->userRepository->find(1);
+        $csv = $this->handle(new ExportUsers(user: $user));
 
-        $progressBar->setMaxSteps(\count($users));
-        $progressBar->start();
+        $emailToSent = (new TemplatedEmail())
+            ->htmlTemplate('email/user/export.html.twig')
+            ->attach($csv, 'user.csv')
+            ->subject(
+                $this->translator->trans(
+                    id: 'user.export.title',
+                    domain: 'email',
+                    locale: $user->preferredLocale->value,
+                ),
+            )
+            ->to(new Address($user->email, $user->getFullName()))
+            ->locale($user->preferredLocale->value)
+        ;
 
-        $filesystem = new Filesystem();
-        $csvExport = Path::makeRelative('var/users.csv', '/');
-        $filesystem->remove($csvExport);
-        $filesystem->touch($csvExport);
+        $this->mailer->send($emailToSent);
 
-        $csvWriter = fopen($csvExport, 'w');
-
-        if ($csvWriter === false) {
-            return self::FAILURE;
-        }
-
-        fputcsv($csvWriter, [
-            'email',
-            'nom',
-            'prénom',
-            'société',
-            'projets',
-        ]);
-        foreach ($users as $user) {
-            $progressBar->advance();
-
-            $projects = array_map(function ($project) {
-                return $project->jiraKey;
-            }, $user->getProjects()
-                ->toArray());
-
-            fputcsv($csvWriter, [
-                $user->email,
-                $user->getLastName(),
-                $user->firstName,
-                $user->company,
-                implode(', ', $projects),
-            ]);
-        }
-
-        $progressBar->finish();
-
-        $io->success(sprintf('Export finished : %s users exported"', count($users)));
+        $io->success('Export finished :  users exported"');
 
         return self::SUCCESS;
     }
