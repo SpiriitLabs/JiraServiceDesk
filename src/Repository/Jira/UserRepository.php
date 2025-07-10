@@ -6,6 +6,7 @@ use App\Entity\Project;
 use JiraCloud\Issue\Reporter;
 use JiraCloud\JiraException;
 use JiraCloud\Project\ProjectService;
+use JiraCloud\User\User;
 use JiraCloud\User\UserService;
 
 class UserRepository
@@ -18,6 +19,17 @@ class UserRepository
     {
         $this->service = new UserService();
         $this->projectService = new ProjectService();
+    }
+
+    public function getUserById(string $id): ?User
+    {
+        try {
+            return $this->service->get([
+                'accountId' => $id,
+            ]);
+        } catch (JiraException $e) {
+            return null;
+        }
     }
 
     /**
