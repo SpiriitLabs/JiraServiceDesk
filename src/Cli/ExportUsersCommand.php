@@ -9,18 +9,15 @@ use App\Repository\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Validation;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -30,8 +27,7 @@ class ExportUsersCommand extends Command
     use HandleTrait;
 
     public function __construct(
-        #[Autowire(service: 'serializer.encoder.csv')]
-        private readonly CsvEncoder $csvEncoder,
+        private readonly EncoderInterface $csvEncoder,
         private readonly MailerInterface $mailer,
         private readonly TranslatorInterface $translator,
         private readonly UserRepository $userRepository,
@@ -39,20 +35,19 @@ class ExportUsersCommand extends Command
         parent::__construct();
     }
 
+    protected function configure(): void
+    {
+        $this
+            ->addArgument('emails', InputArgument::REQUIRED, 'emails to send, use , to separate')
+        ;
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $emails = $input->getArgument('emails');
+        $emails = explode(',', $emails);
 
-        $email = $io->ask(
-            "A quel user envoyer l'export ?",
-            null,
-            Validation::createCallable(new NotBlank(), new Email())
-        );
-
-        $users = $this->userRepository->findBy([
-            'email' => $email,
-        ]);
-        $user = reset($users);
         $csv = $this->handle(new ExportUsers());
 
         $emailToSent = (new TemplatedEmail())
@@ -62,12 +57,15 @@ class ExportUsersCommand extends Command
                 $this->translator->trans(
                     id: 'user.export.title',
                     domain: 'email',
-                    locale: $user->preferredLocale->value,
+                    locale: 'fr',
                 ),
             )
-            ->to(new Address($user->email, $user->getFullName()))
-            ->locale($user->preferredLocale->value)
+            ->locale('fr')
         ;
+
+        foreach ($emails as $email) {
+            $emailToSent->addTo(new Address($email));
+        }
 
         $this->mailer->send($emailToSent);
 
