@@ -4,7 +4,7 @@
 {% block content %}
 
     <twig:email:title
-        text="{{ 'issue.edited.title'|trans }}"
+        text="{{ 'issue.edited.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}"
     />
 
     <twig:email:text>
