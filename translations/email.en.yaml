@@ -27,3 +27,8 @@ security:
         description: "Welcome %full_name% to your ticket management tool. To continue, please set your password by clicking the link below."
         expire_time: "This link will expire in %expire_link_time%."
         action: "Set your password"
+
+user:
+    export:
+        title: "Export users"
+        description: ""

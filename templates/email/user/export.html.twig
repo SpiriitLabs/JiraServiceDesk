@@ -1,0 +1,29 @@
+{% extends 'email/layout.html.twig' %}
+{% trans_default_domain 'email' %}
+
+{% block content %}
+
+    <twig:email:title
+        text="{{ 'user.export.title'|trans }}"
+    />
+
+    <twig:email:text>
+        {% block content %}
+            {% trans_default_domain 'email' %}
+
+            <tr>
+                <td class="r16-c nl2go-default-textstyle"
+                    align="left"
+                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                    <div>
+                        <p style="margin: 0;">
+                            {{ 'user.export.description'|trans }}
+                        </p>
+                    </div>
+                </td>
+            </tr>
+
+        {% endblock %}
+    </twig:email:text>
+
+{% endblock %}
