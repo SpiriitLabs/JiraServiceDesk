@@ -13,9 +13,11 @@ export default class extends Controller {
   declare readonly iconTarget: HTMLElement;
   declare urlValue: String;
   declare readonly successTextValue: String;
+  declare textSpan: HTMLSpanElement;
 
   connect(): void {
     console.log("📋 CopyToClipboard controller connected.");
+    this.textSpan = document.createElement('span');
 
     if (this.urlValue == '') {
       this.urlValue = window.location.href;
@@ -25,37 +27,46 @@ export default class extends Controller {
   public copy(): void
   {
     navigator.clipboard.writeText(this.urlValue.toString()).then(() => {
-      this.iconTarget.classList.remove('ri-link');
-      this.iconTarget.classList.add('ri-link-unlink-m');
-      
-      let textSpan = document.createElement('span');
-      if (this.successTextValue !== '') {
-        textSpan.classList.add('copy-text', 'ms-1');
-        this.buttonTarget.appendChild(textSpan);
-        textSpan.textContent = this.successTextValue.toString();
-      }
-
-      this.buttonTarget.classList.remove('text-secondary');
-      this.buttonTarget.classList.add('text-success');
+      this.resetButton();
+      this.copiedButton();
 
       setTimeout(() => {
-        this.iconTarget.classList.remove('ri-link-unlink-m');
-        this.iconTarget.classList.add('ri-link');
-
-        if (this.successTextValue !== '') {
-          if (textSpan) {
-            textSpan.textContent = '';
-          }
-        }
-
-        this.buttonTarget.classList.remove('text-success');
-        this.buttonTarget.classList.add('text-secondary');
+        this.resetButton();
       }, 2000);
       
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
+  }
 
+  private copiedButton(): void
+  {
+    this.iconTarget.classList.remove('ri-link');
+    this.iconTarget.classList.add('ri-link-unlink-m');
+    
+    if (this.successTextValue !== '') {
+      this.textSpan.classList.add('copy-text', 'ms-1');
+      this.buttonTarget.appendChild(this.textSpan);
+      this.textSpan.textContent = this.successTextValue.toString();
+    }
+
+    this.buttonTarget.classList.remove('text-secondary');
+    this.buttonTarget.classList.add('text-success');
+  }
+
+  private resetButton(): void
+  {
+      this.iconTarget.classList.remove('ri-link-unlink-m');
+      this.iconTarget.classList.add('ri-link');
+
+      if (this.successTextValue !== '') {
+        if (this.textSpan) {
+          this.textSpan.textContent = '';
+        }
+      }
+
+      this.buttonTarget.classList.remove('text-success');
+      this.buttonTarget.classList.add('text-secondary');
   }
 
 
