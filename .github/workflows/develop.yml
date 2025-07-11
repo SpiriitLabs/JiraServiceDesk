@@ -1,0 +1,50 @@
+name: Build on develop branch assets
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # PHP and Composer setup
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest-10 --activate
+
+      # Node and Yarn asset build
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install JS dependencies and build assets
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Package built assets
+        run: |
+          mkdir -p release
+          zip -r release/assets-builded.zip public/build
+
+      # Optional: upload artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-files
+          path: release/
