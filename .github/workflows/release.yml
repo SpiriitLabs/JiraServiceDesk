@@ -43,6 +43,11 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest-10 --activate
+
       # Node and Yarn asset build
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -51,8 +56,8 @@ jobs:
 
       - name: Install JS dependencies and build assets
         run: |
-          yarn install
-          yarn build
+          pnpm install --frozen-lockfile
+          pnpm build
 
       - name: Package built assets
         run: |
