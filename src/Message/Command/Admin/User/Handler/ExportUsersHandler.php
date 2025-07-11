@@ -31,7 +31,7 @@ class ExportUsersHandler
             $content[] = [
                 'email' => $user->email,
                 'nom' => $user->getLastName(),
-                'prénom' => $user->firstName,
+                'prénom' => $user->getFirstName(),
                 'société' => $user->company,
                 'projets' => implode(', ', $projects),
                 'dernière connexion' => $user->getLastLoginAt()?->setTimezone(new \DateTimeZone('CEST'))

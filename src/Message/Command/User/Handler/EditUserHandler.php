@@ -21,7 +21,7 @@ readonly class EditUserHandler
     {
         $user = $command->user;
 
-        $user->firstName = $command->firstName;
+        $user->setFirstName($command->firstName);
         $user->setLastName($command->lastName);
         $user->company = $command->company;
         $user->setRoles($command->roles);

@@ -12,7 +12,7 @@ class EditUser extends AbstractUserDTO
         parent::__construct(
             email: $this->user->email,
             lastName: $this->user->getLastName(),
-            firstName: $this->user->firstName,
+            firstName: $this->user->getFirstName(),
             roles: $this->user->getRoles(),
             projects: $this->user->getProjects()
                 ->toArray(),

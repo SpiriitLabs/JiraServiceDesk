@@ -110,12 +110,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         bool $enabled = true
     ) {
         $this->email = $email;
-        $this->firstName = $firstName;
         $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->enabled = $enabled;
 
+        $this->setFirstName($firstName);
         $this->setLastName($lastName);
     }
 
@@ -132,6 +132,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = ucfirst($firstName);
     }
 
     public function getLastName(): ?string

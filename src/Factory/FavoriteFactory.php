@@ -36,6 +36,7 @@ final class FavoriteFactory extends PersistentProxyObjectFactory
             'link' => self::faker()->text(),
             'name' => self::faker()->text(255),
             'user' => UserFactory::new(),
+            'project' => ProjectFactory::new(),
         ];
     }
 
