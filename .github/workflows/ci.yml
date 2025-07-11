@@ -28,20 +28,22 @@ jobs:
           node-version: '22'
           cache: 'yarn'
 
-      - name: Install Yarn
-        run: corepack enable
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest-10 --activate
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
       - name: Install Yarn dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Validate Composer configuration
         run: composer validate --strict 2>&1 | grep -v 'The version field is present'
 
       - name: Run Yarn audit
-        run: yarn audit --level moderate || true
+        run: pnpm audit --loglevel moderate || true
 
       - name: Run Symfony linters
         run: |
