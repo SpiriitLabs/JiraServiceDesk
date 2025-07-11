@@ -111,11 +111,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     ) {
         $this->email = $email;
         $this->firstName = $firstName;
-        $this->lastName = $lastName;
         $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->enabled = $enabled;
+
+        $this->setLastName($lastName);
     }
 
     public function getId(): ?int
