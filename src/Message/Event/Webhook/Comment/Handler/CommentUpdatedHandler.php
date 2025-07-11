@@ -64,8 +64,8 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
-                'commentAuthorName' => $event->getPayload()['comment']['author']['displayName'],
-                'commentAuthorAvatarUrl' => array_shift($event->getPayload()['comment']['author']['avatarUrls']),
+                'commentAuthorName' => $event->getPayload()['comment']['updateAuthor']['displayName'],
+                'commentAuthorAvatarUrl' => array_shift($event->getPayload()['comment']['updateAuthor']['avatarUrls']),
                 'commentBody' => $commentBody,
             ])
         ;
