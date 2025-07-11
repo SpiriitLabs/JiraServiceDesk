@@ -22,16 +22,16 @@ jobs:
           extensions: mbstring, intl, pdo, pdo_mysql, curl, dom, json, xml, zip
           coverage: none
 
+      - name: Install pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest-10 --activate
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
           cache: 'pnpm'
-
-      - name: Install pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest-10 --activate
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
