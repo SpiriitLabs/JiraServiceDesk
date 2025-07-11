@@ -1,34 +1,12 @@
-name: Build and Release Static Binary
+name: Build on develop branch assets
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [ develop ]
 
 jobs:
-  generate-changelog:
-    name: Generate changelog
-    runs-on: ubuntu-latest
-    outputs:
-      release_body: ${{ steps.git-cliff.outputs.content }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Generate changelog
-        uses: orhun/git-cliff-action@v4
-        id: git-cliff
-        with:
-          config: cliff.toml
-          args: --latest --strip header
-        env:
-          OUTPUT: CHANGELOG.md
-          GITHUB_REPO: ${{ github.repository }}
-
   build:
     name: Build and Release
-    needs: generate-changelog
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -70,15 +48,3 @@ jobs:
         with:
           name: release-files
           path: release/
-
-      # GitHub Release creation with assets
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref }}
-          name: "Release ${{ github.ref }}"
-          body: ${{ needs.generate-changelog.outputs.release_body }}
-          files: |
-            ./release/assets-builded.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
