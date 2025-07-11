@@ -23,17 +23,13 @@ class ExportUsersHandler
         $content = [];
 
         foreach ($users as $user) {
-            $projects = array_map(function ($project) {
-                return $project->jiraKey;
-            }, $user->getProjects()
-                ->toArray());
-
             $content[] = [
                 'email' => $user->email,
                 'nom' => $user->getLastName(),
                 'prénom' => $user->getFirstName(),
                 'société' => $user->company,
-                'projets' => implode(', ', $projects),
+                'Compte actif' => $user->enabled,
+                'projets' => $user->getProjectKeys(),
                 'dernière connexion' => $user->getLastLoginAt()?->setTimezone(new \DateTimeZone('CEST'))
                     ->format('d/m/Y H:i'),
             ];

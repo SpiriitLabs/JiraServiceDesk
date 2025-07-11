@@ -156,6 +156,8 @@ user:
   lastLogin:
     label: "Last login"
     never: "Never login"
+  projects:
+    label: "Projects"
 
 profile:
   label: "Profile"

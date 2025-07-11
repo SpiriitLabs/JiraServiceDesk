@@ -300,4 +300,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getProjectKeys(): string
+    {
+        $projects = array_map(function ($project) {
+            return $project->jiraKey;
+        }, $this->projects
+            ->toArray());
+
+        return implode(', ', $projects);
+    }
 }

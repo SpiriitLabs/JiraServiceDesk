@@ -159,6 +159,8 @@ user:
     lastLogin:
         label: "Dernière connexion"
         never: "Jamais connecté"
+    projects:
+        label: "Projets"
 
 profile:
     label: "Profil"

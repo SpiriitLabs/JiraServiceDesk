@@ -75,6 +75,7 @@
                     'property': 'lastLoginAt',
                 } %}
             </th>
+            <th>{{ 'user.projects.label'|trans }}</th>
             <th class="min"></th>
         </twig:block>
 
@@ -95,6 +96,9 @@
             </td>
             <td>
                 {{ object.lastLoginAt ? (object.lastLoginAt|date('d/m/Y H:i')) : 'user.lastLogin.never'|trans }}
+            </td>
+            <td>
+                {{ object.projectKeys }}
             </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">
