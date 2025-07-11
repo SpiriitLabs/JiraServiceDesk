@@ -87,7 +87,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
             $emailToSent = clone $templatedEmail
                 ->subject(
                     $this->translator->trans(
-                        id: 'comment.created.title',
+                        id: 'comment.updated.title',
                         parameters: [
                             '%project_name%' => $project->name,
                             '%ticket_name%' => $issueSummary,
