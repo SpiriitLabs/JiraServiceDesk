@@ -3,8 +3,8 @@
         {% import "macros/issue.html.twig" as issueMacros %}
         {% set viewLink = path('app_project_issue_view', {'key': object.fields.project.key, 'keyIssue': object.key}) %}
 
-        <td class="d-none d-md-table-cell" {{ issueMacros.tdClickable(viewLink) }}>{{ object.key }}</td>
-        <td {{ issueMacros.tdClickable(viewLink) }}>
+        <td class="d-none d-md-table-cell issue-link" {{ issueMacros.tdClickable(viewLink) }}>{{ object.key }}</td>
+        <td class="issue-link" {{ issueMacros.tdClickable(viewLink) }}>
             {{ object.fields.summary }}
 
             <div class="text-muted d-flex flex-column d-md-none gap-2 mt-2">

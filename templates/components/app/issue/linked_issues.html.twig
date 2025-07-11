@@ -10,7 +10,7 @@
         {% set viewLink = path('browse_issue', {'keyIssue': object.issue.key}) %}
         {% import "macros/issue.html.twig" as issueMacros %}
         <td>{{ object.type }}</td>
-        <td {{ issueMacros.tdClickable(viewLink) }}>
+        <td class="issue-link" {{ issueMacros.tdClickable(viewLink) }}>
             <img src="{{ object.issue.fields.issuetype.iconUrl }}" alt="{{ object.issue.fields.issuetype.description }}" style="width: 12px;">
             {{ object.issue.key }}
             {{ object.issue.fields.summary }}
