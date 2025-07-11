@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Install pnpm
         run: |
@@ -36,13 +36,13 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install Yarn dependencies
+      - name: Install pnpm dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Validate Composer configuration
         run: composer validate --strict 2>&1 | grep -v 'The version field is present'
 
-      - name: Run Yarn audit
+      - name: Run pnpm audit
         run: pnpm audit --loglevel moderate || true
 
       - name: Run Symfony linters
