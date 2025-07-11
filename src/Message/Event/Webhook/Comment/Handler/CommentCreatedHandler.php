@@ -5,8 +5,8 @@ namespace App\Message\Event\Webhook\Comment\Handler;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Repository\Jira\IssueRepository;
-use App\Repository\Jira\UserRepository;
 use App\Repository\ProjectRepository;
+use App\Service\ReplaceAccountIdByDisplayName;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -26,7 +26,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
         private readonly IssueRepository $issueRepository,
-        private readonly UserRepository $userRepository,
+        private readonly ReplaceAccountIdByDisplayName $replaceAccountIdByDisplayName,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private string $jiraAPIAccountId,
     ) {
@@ -57,15 +57,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
         ]);
 
         $commentBody = $event->getPayload()['comment']['body'];
-        if (preg_match_all('#\[~accountid:([a-zA-Z0-9\-]+)\]#', $commentBody, $matches)) {
-            $test = array_combine($matches[0], $matches[1]);
-            foreach ($test as $match => $id) {
-                $account = $this->userRepository->getUserById($id);
-                if ($account !== null) {
-                    $commentBody = str_replace($match, $account->displayName, $commentBody);
-                }
-            }
-        }
+        $commentBody = $this->replaceAccountIdByDisplayName->replaceInCommentBody($commentBody);
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/comment/created.html.twig')
             ->context([
