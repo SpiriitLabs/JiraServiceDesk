@@ -27,6 +27,22 @@
     >
         {% trans_default_domain 'app' %}
 
+        <twig:block name="tableActions">
+            {% set choices = [5, 10, 15, 20] %}
+            {% set query_parameters = app.request.query.all %}
+            <ul class="pagination">
+                {% for choice in choices %}
+                    {% set query_parameters = query_parameters|merge({ 'perPage': choice }) %}
+                    {% set updated_url = path(app.request.attributes.get('_route'), query_parameters|merge(app.request.attributes.get('_route_params'))) %}
+                    <li class="page-item{{ pagination.maxPerPage == choice ? ' active' : '' }}">
+                        <span class="page-link">
+                            <a href="{{ updated_url }}">{{ choice }}</a>
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </twig:block>
+
         <twig:block name="filterFormRows">
             <div class="col-md-2">
                 {{ form_widget(filterForm.query) }}
