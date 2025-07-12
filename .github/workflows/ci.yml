@@ -45,6 +45,9 @@ jobs:
       - name: Run pnpm audit
         run: pnpm audit --loglevel moderate || true
 
+      - name: Uni tests
+        run: APP_ENV=test php vendor/bin/phpunit
+
       - name: Run Symfony linters
         run: |
           php bin/console lint:container
