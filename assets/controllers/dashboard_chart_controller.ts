@@ -28,9 +28,7 @@ export default class extends Controller {
   }
 
   public generateNotificationPreferenceChart() {
-    const percentCreated = Math.round((this.usersCountPreferenceNotificationIssueCreatedValue / this.usersCountPreferenceNotificationValue) * 100);
-
-    var options = {
+    const options = {
 			chart: {
 				height: 280,
 				type: "radialBar"
@@ -64,7 +62,7 @@ export default class extends Controller {
       ],
 		}
 
-		var chart = new ApexCharts(this.notificationPreferenceChartTarget, options);
+		const chart = new ApexCharts(this.notificationPreferenceChartTarget, options);
 		chart.render();
   }
 
