@@ -1,0 +1,25 @@
+root: true
+parser: '@typescript-eslint/parser'
+env:
+  node: true
+  browser: true
+  jquery: true
+  es6: true
+plugins:
+  - '@typescript-eslint'
+extends:
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/recommended'
+ignorePatterns:
+  - '**/hyper-theme/js/*.js'
+  - '**/hyper-theme/js/**/*.js'
+rules:
+  '@typescript-eslint/ban-ts-comment': "off"
+  '@typescript-eslint/no-explicit-any': "off"
+  '@typescript-eslint/no-this-alias':
+    - error
+    - allowedNames:
+      - self
+      - el
+  'no-var':
+    - error
