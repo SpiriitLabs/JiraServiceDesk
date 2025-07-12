@@ -30,10 +30,15 @@ class ListController extends AbstractController
             new PaginateEntities(
                 class: Project::class,
                 sort: $request->get('_sort', 'updatedAt'),
-                page: $request->get('page', 1),
+                perPage: $request->get('perPage', 10),
                 form: $filterForm,
             ),
         );
+        $page = $request->query->get('page', 1);
+        if ($page > $pagination->getNbPages()) {
+            $page = $pagination->getNbPages();
+        }
+        $pagination->setCurrentPage($page);
 
         return $this->render(
             view: 'admin/project/list.html.twig',

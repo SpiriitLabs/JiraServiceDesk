@@ -23,6 +23,12 @@
     >
         {% trans_default_domain 'app' %}
 
+        <twig:block name="tableActions">
+            {% include 'components/list/per-page.html.twig' with {
+                'pagination': pagination,
+            } %}
+        </twig:block>
+
         <twig:block name="filterFormRows">
             <div class="col-md-2">
                 {{ form_widget(filterForm.query) }}
