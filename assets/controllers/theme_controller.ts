@@ -19,7 +19,7 @@ export default class extends Controller {
         const settings = {};
 
         const elements: Array<Element> = [...this.element.getElementsByClassName('tom-select')];
-        for (let element of elements) {
+        for (const element of elements) {
             if (!(element instanceof HTMLSelectElement)) {
                 continue;
             }
@@ -62,7 +62,7 @@ export default class extends Controller {
     }
 
     private initThemeColor(): void {
-      let preferredTheme: string|null = document.documentElement.getAttribute('data-bs-preferred-theme');
+      const preferredTheme: string|null = document.documentElement.getAttribute('data-bs-preferred-theme');
       let theme: string = preferredTheme ?? 'auto';
 
       if ('auto' === preferredTheme) {

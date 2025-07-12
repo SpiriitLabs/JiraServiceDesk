@@ -11,8 +11,8 @@ export default class extends Controller {
 
   declare readonly buttonTarget: HTMLButtonElement;
   declare readonly iconTarget: HTMLElement;
-  declare urlValue: String;
-  declare readonly successTextValue: String;
+  declare urlValue: string;
+  declare readonly successTextValue: string;
   declare textSpan: HTMLSpanElement;
 
   connect(): void {

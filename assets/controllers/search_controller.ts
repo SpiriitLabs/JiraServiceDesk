@@ -14,8 +14,8 @@ export default class extends Controller {
   declare readonly formTarget: HTMLFormElement;
   declare readonly inputTarget: HTMLInputElement;
   declare readonly dropdownTarget: HTMLDivElement;
-  declare readonly searchUrlValue: String;
-  declare readonly defaultEmtpyTextValue: String;
+  declare readonly searchUrlValue: string;
+  declare readonly defaultEmtpyTextValue: string;
   defaultEmptyResult!: string;
 
   connect(): void {
