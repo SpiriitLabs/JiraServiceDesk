@@ -61,6 +61,7 @@ list:
         next: "Suivant"
         empty: "Aucun élément trouvé"
         total: "%number% résultat(s)"
+        perPage: "Nombre d'éléments par page"
 
 modal:
     delete:
