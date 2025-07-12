@@ -2,6 +2,7 @@
 
 namespace App\Message\Command\Admin\User\Handler;
 
+use App\Enum\User\Role;
 use App\Message\Command\Admin\User\ExportUsers;
 use App\Repository\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -27,11 +28,12 @@ class ExportUsersHandler
                 'email' => $user->email,
                 'nom' => $user->getLastName(),
                 'prénom' => $user->getFirstName(),
-                'société' => $user->company,
+                'entreprise' => $user->company,
                 'Compte actif' => $user->enabled,
-                'projets' => $user->getProjectKeys(),
                 'dernière connexion' => $user->getLastLoginAt()?->setTimezone(new \DateTimeZone('CEST'))
                     ->format('d/m/Y H:i'),
+                'projets' => $user->getProjectKeys(),
+                'is_admin' => in_array(Role::ROLE_ADMIN, $user->getRoles()),
             ];
         }
 
