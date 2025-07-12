@@ -4,7 +4,6 @@ namespace App\Form\Filter;
 
 use App\Entity\Project;
 use App\Form\AbstractFilterType;
-use App\Repository\ProjectRepository;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\EntityFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\TextFilterType;
@@ -12,11 +11,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserFormFilter extends AbstractFilterType
 {
-    public function __construct(
-        private readonly ProjectRepository $projectRepository,
-    ) {
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

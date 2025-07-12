@@ -93,8 +93,8 @@ abstract class AbstractUserFormType extends AbstractType
                 ])
                 ->add('plainPassword', PasswordType::class, [
                     'label' => 'user.password.label',
+                    'required' => false,
                     'constraints' => [
-                        new NotBlank(),
                         new NotCompromisedPassword(),
                         new PasswordRequirements(
                             minLength: 8,
