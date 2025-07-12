@@ -45,19 +45,6 @@ abstract class AbstractUserFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'label' => 'user.password.label',
-                'required' => \in_array('create', $options['validation_groups'] ?? [], true),
-                'constraints' => [
-                    new NotBlank(groups: ['create']),
-                    new NotCompromisedPassword(),
-                    new PasswordRequirements(
-                        minLength: 8,
-                        requireCaseDiff: true,
-                        requireNumbers: true,
-                    ),
-                ],
-            ])
             ->add('preferedLocale', EnumType::class, [
                 'required' => true,
                 'class' => Locale::class,
@@ -103,6 +90,18 @@ abstract class AbstractUserFormType extends AbstractType
                     'query_builder' => function (ProjectRepository $projectRepository) use ($builder) {
                         return $projectRepository->getByUser($builder->getData()->user);
                     },
+                ])
+                ->add('plainPassword', PasswordType::class, [
+                    'label' => 'user.password.label',
+                    'constraints' => [
+                        new NotBlank(),
+                        new NotCompromisedPassword(),
+                        new PasswordRequirements(
+                            minLength: 8,
+                            requireCaseDiff: true,
+                            requireNumbers: true,
+                        ),
+                    ],
                 ])
             ;
         }
