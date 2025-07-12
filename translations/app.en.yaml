@@ -248,6 +248,8 @@ issue:
       label: "Mask resolved tickets"
   links:
     label: "Related ticket(s)"
+  environment:
+    label: "Environment"
 
 priority:
   label: "Priority(ies)"
