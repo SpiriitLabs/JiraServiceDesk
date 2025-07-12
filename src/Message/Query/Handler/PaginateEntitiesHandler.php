@@ -46,6 +46,7 @@ class PaginateEntitiesHandler
                 $qb,
             )
         );
+        $pagination->setMaxPerPage($query->perPage);
 
         return $pagination->setCurrentPage($query->page);
     }

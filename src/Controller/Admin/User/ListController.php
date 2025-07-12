@@ -31,6 +31,7 @@ class ListController extends AbstractController
                 class: User::class,
                 sort: $request->get('_sort', 'id'),
                 page: $request->get('page', 1),
+                perPage: $request->get('perPage', 10),
                 form: $filterForm,
             ),
         );
