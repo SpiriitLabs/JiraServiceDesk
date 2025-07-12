@@ -251,6 +251,8 @@ issue:
             label: "Masquer les tickets résolus"
     links:
         label: "Ticket(s) associé(s)"
+    environment:
+        label: "Environnement"
 
 priority:
     label: "Prioritée(s)"
