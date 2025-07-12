@@ -34,7 +34,7 @@ class ListController extends AbstractController
                 form: $filterForm,
             ),
         );
-        $page = $request->query->getInt('page', 1);
+        $page = $request->query->get('page', 1);
         if ($page > $pagination->getNbPages()) {
             $page = $pagination->getNbPages();
         }
