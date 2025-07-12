@@ -47,14 +47,14 @@
             </th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'user.firstName.label'|trans,
-                    'property': 'firstName',
+                    'label': 'user.lastName.label'|trans,
+                    'property': 'lastName',
                 } %}
             </th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'user.lastName.label'|trans,
-                    'property': 'lastName',
+                    'label': 'user.firstName.label'|trans,
+                    'property': 'firstName',
                 } %}
             </th>
             <th>
@@ -82,8 +82,8 @@
         <twig:block name="tableTd">
             {% trans_default_domain 'app' %}
             <td>{{ object.email }}</td>
-            <td>{{ object.firstName }}</td>
             <td>{{ object.lastName }}</td>
+            <td>{{ object.firstName }}</td>
             <td>
                 {% if object.company is not null %}
                     {{ object.company }}
