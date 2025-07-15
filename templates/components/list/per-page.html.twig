@@ -2,7 +2,7 @@
 {% set choices = [5, 10, 15, 20] %}
 {% set query_parameters = app.request.query.all %}
 
-<span>{{ 'list.pagination.perPage'|trans }}</span>
+<span></span>
 <ul class="pagination">
   {% for choice in choices %}
     {% set query_parameters = query_parameters|merge({ 'perPage': choice }) %}
