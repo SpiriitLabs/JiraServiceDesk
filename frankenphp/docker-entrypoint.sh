@@ -23,7 +23,7 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	fi
 
 	composer clear-cache
-	composer install --no-interaction
+	composer install --no-interaction --no-cache
 
 	# Display information about the current project
 	# Or about an error in project initialization
