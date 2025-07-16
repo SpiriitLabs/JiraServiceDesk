@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Controller } from '@hotwired/stimulus';
 
 
@@ -14,10 +13,9 @@ export default class extends Controller {
     this.selectTarget.addEventListener('change', this.change);
   }
 
-  private change = (event: any): void => {
-    console.log(this.selectTarget.selectedOptions[0].getAttribute('data-url'));
+  private change = (): void => {
+    const newUrl = this.selectTarget.selectedOptions[0].getAttribute('data-url');
 
-    let newUrl = this.selectTarget.selectedOptions[0].getAttribute('data-url');
     if (newUrl) {
       window.location.href = newUrl;
     }
