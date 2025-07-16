@@ -12,3 +12,13 @@
     </li>
   {% endfor %}
 </ul>
+<div>
+  {% set selectEltId = 'per_page' %}
+  <select name="per-page" id="per_page" {{ stimulus_controller('pagination_choice_per_page', {selectEltId}) }} {{ stimulus_target('pagination_choice_per_page', 'select') }}>
+    {% for choice in choices %}
+      {% set query_parameters = query_parameters|merge({ 'perPage': choice }) %}
+      {% set updated_url = path(app.request.attributes.get('_route'), query_parameters|merge(app.request.attributes.get('_route_params'))) %}
+      <option data-url="{{ updated_url }}" value="{{ choice }}"{{ pagination.maxPerPage == choice ? ' selected' : '' }}>{{ choice }}</option>
+    {% endfor %}
+  </select>
+</div>
