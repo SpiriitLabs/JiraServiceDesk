@@ -2,13 +2,14 @@
 {% set choices = [5, 10, 15, 20] %}
 {% set query_parameters = app.request.query.all %}
 
-<span></span>
-<ul class="pagination">
-  {% for choice in choices %}
-    {% set query_parameters = query_parameters|merge({ 'perPage': choice }) %}
-    {% set updated_url = path(app.request.attributes.get('_route'), query_parameters|merge(app.request.attributes.get('_route_params'))) %}
-    <li class="page-item{{ pagination.maxPerPage == choice ? ' active' : '' }}">
-      <a class="page-link" href="{{ updated_url }}">{{ choice }}</a>
-    </li>
-  {% endfor %}
-</ul>
+<div class="mx-1">
+  {% set selectEltId = 'per_page' %}
+  <select class="form-select" name="per-page" id="per_page" {{ stimulus_controller('pagination_choice_per_page', {selectEltId}) }} {{ stimulus_target('pagination_choice_per_page', 'select') }}>
+    {% for choice in choices %}
+      {% set query_parameters = query_parameters|merge({perPage: choice})|merge(app.request.attributes.get('_route_params')) %}
+      {% set updated_url = path(app.request.attributes.get('_route'), query_parameters) %}
+      <option data-url="{{ updated_url }}" value="{{ choice }}"{{ pagination.maxPerPage == choice ? ' selected' : '' }}>{{ choice }}</option>
+    {% endfor %}
+  </select>
+</div>
+<span>{{ 'list.pagination.perPage'|trans }}</span>

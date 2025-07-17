@@ -58,7 +58,7 @@ list:
     next: "Next"
     empty: "No items found"
     total: "%number% result(s)"
-    perPage: "Items per page"
+    perPage: "per page"
 
 modal:
   delete:
