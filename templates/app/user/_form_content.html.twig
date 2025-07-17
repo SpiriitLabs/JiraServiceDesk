@@ -40,26 +40,28 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotification) }}
+<div {{ stimulus_controller('notification_profil') }}>
+    <div class="row">
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotification) }}
+        </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationIssueCreated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationIssueUpdated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentCreated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentUpdated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentOnlyOnTag) }}
+    <div class="row">
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotificationIssueCreated) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotificationIssueUpdated) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotificationCommentCreated) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotificationCommentUpdated) }}
+        </div>
+        <div class="col-md-2">
+            {{ form_row(form.preferenceNotificationCommentOnlyOnTag) }}
+        </div>
     </div>
 </div>
