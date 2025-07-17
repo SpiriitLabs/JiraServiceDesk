@@ -23,7 +23,7 @@
     >
         {% trans_default_domain 'app' %}
 
-        <twig:block name="tableActions">
+        <twig:block name="pagination_action">
             {% include 'components/list/per-page.html.twig' with {
                 'pagination': pagination,
             } %}
