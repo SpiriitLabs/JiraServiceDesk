@@ -63,13 +63,17 @@
 
                         {% block pagination %}
                             <div class="d-flex flex-column flex-md-row justify-content-start justify-content-md-between align-items-start align-items-md-center">
-                                <p class="mb-0 h-25">
-                                    {% if pagination.count == 0 %}
-                                        {{ 'list.pagination.empty'|trans }}
-                                    {% else %}
-                                        {{ 'list.pagination.total'|trans({'%number%': pagination.count}) }}
-                                    {% endif %}
-                                </p>
+                                <div class="h-25 d-flex flex-row align-items-center">
+                                    <p class="mb-0">
+                                        {% if pagination.count == 0 %}
+                                            {{ 'list.pagination.empty'|trans }}
+                                        {% else %}
+                                            {{ 'list.pagination.total'|trans({'%number%': pagination.count}) }}
+                                        {% endif %}
+                                    </p>
+
+                                    {% block pagination_action '' %}
+                                </div>
 
                                 <div class="pagerfanta mt-4 pagination">
                                     {{ pagerfanta(pagination) }}
