@@ -22,28 +22,27 @@ jobs:
           extensions: mbstring, intl, pdo, pdo_mysql, curl, dom, json, xml, zip
           coverage: none
 
-      - name: Install pnpm
+      - name: Install Yarn
         run: |
           corepack enable
-          corepack prepare pnpm@latest-10 --activate
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
-          cache: 'pnpm'
+          cache: 'yarn'
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --no-progress
 
-      - name: Install pnpm dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install Yarn dependencies
+        run: yarn install --frozen-lockfile
 
       - name: Validate Composer configuration
         run: composer validate --strict 2>&1 | grep -v 'The version field is present'
 
-      - name: Run pnpm audit
-        run: pnpm audit --loglevel moderate || true
+      - name: Run yarn audit
+        run: yarn audit --level moderate || true
 
       - name: Uni tests
         run: APP_ENV=test php vendor/bin/phpunit
