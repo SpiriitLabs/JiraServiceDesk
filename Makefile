@@ -10,7 +10,7 @@ DCE=$(DC) exec
 PHP=$(DCE) php php
 CONSOLE=$(PHP) bin/console
 COMPOSER=$(DCE) php composer
-NPM=$(DCE) node pnpm
+NPM=$(DCE) node yarn
 ENV ?= dev
 
 .PHONY: help
@@ -75,15 +75,15 @@ cc:			## Clear cache
 ## —— Assets ✨ ————————————————
 .PHONY: assets
 assets:	npm  ## Build assets - dev version
-	$(NPM) dev
+	$(NPM) run dev
 
 .PHONY: assets-build
 assets-build: npm  ## Build assets - prod version
-	$(NPM) build
+	$(NPM) run build
 
 .PHONY: watch
 watch:		## Watch assets
-	$(NPM) watch
+	$(NPM) run watch
 
 ##
 ## —— Database 🗃️————————————————
