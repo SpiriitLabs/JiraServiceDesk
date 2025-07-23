@@ -10,11 +10,11 @@
     <link rel="icon" href="{{ asset('/build/static/images/logo/favicon.ico') }}">
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {{ vite_entry_link_tags('app') }}
     {% endblock %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ vite_entry_script_tags('app') }}
     {% endblock %}
 </head>
 <body>

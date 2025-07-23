@@ -32,10 +32,8 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress",
+        "dev": "vite",
+        "build": "vite build",
         "lint": "eslint assets --ext .js,.jsx,.ts,.tsx"
     },
     "dependencies": {
@@ -47,13 +45,15 @@
         "bootstrap": "^5.3.7",
         "dragula": "^3.7.3",
         "htmltoadf": "^0.1.10",
-        "intro.js": "^7.2.0",
         "jquery": "^3.7.1",
         "quill": "^2.0.3",
         "simplebar": "^6.3.2",
         "stimulus-use": "^0.52.3",
         "sweetalert2": "^11.22.2",
-        "tom-select": "^2.4.3"
+        "tom-select": "^2.4.3",
+        "vite": "^6.3.5",
+        "vite-plugin-static-copy": "^3.1.1",
+        "vite-plugin-symfony": "^8.2"
     },
     "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

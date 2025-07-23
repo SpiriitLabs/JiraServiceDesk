@@ -1,0 +1,20 @@
+pentatrion_vite:
+  preload: link-header
+
+  default_config: app
+  configs:
+    app:
+      build_directory: app
+      script_attributes:
+      # you can define attributes that you want to apply
+      # for all your script tags
+
+      link_attributes:
+      # you can define attributes that you want to apply
+      # for all your link tags
+
+framework:
+  assets:
+    packages:
+      app:
+        version_strategy: 'Pentatrion\ViteBundle\Asset\ViteAssetVersionStrategy'

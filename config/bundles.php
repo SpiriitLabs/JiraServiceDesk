@@ -73,4 +73,7 @@ return [
     Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle::class => [
         'all' => true,
     ],
+    Pentatrion\ViteBundle\PentatrionViteBundle::class => [
+        'all' => true,
+    ],
 ];

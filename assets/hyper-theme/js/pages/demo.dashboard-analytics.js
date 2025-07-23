@@ -240,13 +240,7 @@
             labels: ['Chrome', 'Firefox', 'Safari', 'Opera', 'Edge', 'Explorer'],
             plotOptions: {
                 radar: {
-                    size: 130,
-                    polygons: {
-                        strokeColor: '#e9e9e9',
-                        fill: {
-                            colors: ['#f8f8f8', '#fff']
-                        }
-                    }
+                    size: 130
                 }
             },
             colors: colors,

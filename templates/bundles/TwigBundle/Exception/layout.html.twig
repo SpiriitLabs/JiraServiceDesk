@@ -10,11 +10,11 @@
     <title>{% block title 'error.title'|trans %} - {{ 'title.all'|trans }}</title>
 
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+        {{ vite_entry_link_tags('app') }}
     {% endblock %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ vite_entry_script_tags('app') }}
 
         {% block mercure '' %}
         {% block notifications '' %}

@@ -51,3 +51,8 @@ private/uploads/*
 /phpunit.xml
 /.phpunit.cache/
 ###< phpunit/phpunit ###
+
+###> pentatrion/vite-bundle ###
+/node_modules/
+/public/build/
+###< pentatrion/vite-bundle ###

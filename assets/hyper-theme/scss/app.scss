@@ -1,14 +1,100 @@
-@import "icons";
-@import "app-saas";
+/*
+Template Name: Hyper - Responsive Bootstrap 5 Admin Dashboard
+Version: 5.4.2
+Author: CoderThemes
+Email: support@coderthemes.com
+File: Main Css File
+*/
 
-@import "tom-select/dist/scss/tom-select.bootstrap5";
-@import "quill/dist/quill.core.css";
-@import "quill/dist/quill.snow.css";
-@import "custom/plugins/quill-editor";
+// Core files
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
 
-@import "override/variables";
-@import "override/utilities";
-@import "override/navbar";
-@import "override/form";
-@import "override/miscellaneous";
-@import "override/stackabletables";
+@import "config/variables";
+@import "config/variables-dark";
+@import "config/variables-custom";
+@import "config/theme-mode";
+
+@import "bootstrap/scss/bootstrap";
+
+// Fonts
+@import "fonts/nunito";
+
+// Structure
+@import "structure/sidenav";
+@import "structure/topbar";
+@import "structure/page-head";
+@import "structure/footer";
+@import "structure/horizontal-nav"; // Horizontal Nav
+
+// Components
+@import "components/root";
+@import "components/utilities";
+@import "components/background";
+@import "components/accordions";
+@import "components/alert";
+@import "components/avatar";
+@import "components/breadcrumb";
+@import "components/buttons";
+@import "components/badge";
+@import "components/card";
+@import "components/custom-forms";
+@import "components/dropdown";
+@import "components/docs";
+@import "components/forms";
+@import "components/modal";
+@import "components/nav";
+@import "components/pagination";
+@import "components/popover";
+@import "components/print";
+@import "components/progress";
+@import "components/reboot";
+@import "components/ribbons";
+@import "components/switch";
+@import "components/tables";
+@import "components/type";
+@import "components/tooltip";
+@import "components/widgets";
+@import "components/social";
+@import "components/steps";
+@import "components/preloader";
+@import "components/hero";
+
+// Pages
+@import "pages/authentication";
+@import "pages/components-demo";
+@import "pages/error";
+@import "pages/faq";
+@import "pages/maintenance";
+@import "pages/tasks";
+@import "pages/email";
+@import "pages/timeline";
+
+// Plugins
+@import "plugins/apexcharts";
+@import "plugins/britechart";
+@import "plugins/calendar";
+@import "plugins/chartjs";
+@import "plugins/datatable";
+@import "plugins/daterange";
+@import "plugins/datepicker";
+@import "plugins/flatpickr";
+@import "plugins/dragula";
+@import "plugins/dropzone";
+@import "plugins/form-wizard";
+@import "plugins/maps";
+@import "plugins/quill-editor";
+@import "plugins/select2";
+@import "plugins/simplebar";
+@import "plugins/toaster";
+@import "plugins/bootstrap-touchspin";
+@import "plugins/bootstrap-timepicker";
+@import "plugins/simplemde";
+@import "plugins/typehead";
+@import "plugins/sparklines";
+@import "plugins/timepicker";
+@import "plugins/rateit";
+@import "plugins/ion-rangeslider";
+@import "plugins/jstree";
+@import "plugins/frappe-gantt";
+@import "plugins/prismjs";

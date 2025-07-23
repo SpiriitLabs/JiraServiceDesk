@@ -31,7 +31,7 @@
         }
         var options = {
             chart: {
-                height: 326,
+                height: 327,
                 type: 'bar',
                 toolbar: {
                     show: false
@@ -102,7 +102,7 @@
         }
         var options = {
             chart: {
-                height: 256,
+                height: 229,
                 type: 'donut',
             },
             legend: {

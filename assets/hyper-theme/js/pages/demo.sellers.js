@@ -4,11 +4,12 @@
  * Module/App: Sellers demo page
  */
 
-$(document).ready(function () {
-    "use strict";
+document.addEventListener('DOMContentLoaded', () => {
+    const tableElement = document.getElementById('sellers-datatable');
 
-    // Sellers revenue chart
-    var options = {
+    if (!tableElement) return;
+
+    const options = {
         chart: {
             type: 'line',
             width: 80,
@@ -25,97 +26,88 @@ $(document).ready(function () {
         markers: {
             size: 0
         },
-        colors: ["#727cf5"],
+        colors: ['#727cf5'],
         tooltip: {
-            fixed: {
-                enabled: false
-            },
-            x: {
-                show: false
-            },
+            fixed: { enabled: false },
+            x: { show: false },
             y: {
                 title: {
-                    formatter: function (seriesName) {
-                        return ''
-                    }
+                    formatter: () => ''
                 }
             },
-            marker: {
-                show: false
-            }
+            marker: { show: false }
         }
-    }
+    };
 
-    var charts = [];
-    // Default Datatable
-    var table = $('#products-datatable').DataTable({
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            },
-            "info": "Showing sellers _START_ to _END_ of _TOTAL_",
-            "lengthMenu": "Display <select class='form-select form-select-sm ms-1 me-1'>" +
-                '<option value="10">10</option>' +
-                '<option value="20">20</option>' +
-                '<option value="-1">All</option>' +
-                '</select> sellers',
-        },
-        "pageLength": 10,
-        "columns": [
+    let charts = [];
+
+    new DataTable(tableElement, {
+        columnDefs: [
             {
-                'orderable': false,
-                'render': function (data, type, row, meta) {
-                    if (type === 'display') {
-                        data = "<div class=\"form-check\"><input type=\"checkbox\" class=\"form-check-input dt-checkboxes\"><label class=\"form-check-label\">&nbsp;</label></div>";
-                    }
-                    return data;
-                },
-                'checkboxes': {
-                    'selectRow': true,
-                    'selectAllRender': '<div class=\"form-check\"><input type=\"checkbox\" class=\"form-check-input dt-checkboxes\"><label class=\"form-check-label\">&nbsp;</label></div>'
-                }
+                orderable: false,
+                render: DataTable.render.select(),
+                targets: 0
             },
-            { 'orderable': true },
-            { 'orderable': true },
-            { 'orderable': true },
-            { 'orderable': true },
-            { 'orderable': true },
-            { 'orderable': false },
-            { 'orderable': false }
-        ],
-        "select": {
-            "style": "multi"
-        },
-        "order": [[4, "desc"]],
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-            $('#products-datatable_length label').addClass('form-label');
-            // {data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54]}
-
-            // remove existing charts
-            for (var idx = 0; idx < charts.length; idx++) {
-                try { charts[idx].destroy(); } catch (e) { console.log(e) };
+            {
+                orderable: false,
+                searchable: false,
+                targets: -1
             }
+        ],
+        language: {
+            paginate: {
+                first: '<i class="ri-arrow-left-double-line"></i>',
+                previous: '<i class="ri-arrow-left-s-line"></i>',
+                next: '<i class="ri-arrow-right-s-line"></i>',
+                last: '<i class="ri-arrow-right-double-line"></i>'
+            },
+            info: 'Showing sellers _START_ to _END_ of _TOTAL_',
+            lengthMenu:
+                "Display <select class='form-select form-select-sm ms-1 me-1'>" +
+                "<option value='10'>10</option>" +
+                "<option value='20'>20</option>" +
+                "<option value='-1'>All</option>" +
+                "</select> sellers"
+        },
+        pageLength: 10,
+        select: {
+            style: 'multi',
+            selector: 'td:first-child'
+        },
+        order: [[1, 'asc']],
+        drawCallback: function () {
+            // UI enhancements
+            document
+                .querySelectorAll('.dataTables_paginate > .pagination')
+                .forEach((el) => el.classList.add('pagination-rounded'));
+
+            document
+                .querySelectorAll('#products-datatable_length label')
+                .forEach((el) => el.classList.add('form-label'));
+
+            // Destroy old charts
+            charts.forEach((chart) => {
+                try {
+                    chart.destroy();
+                } catch (e) {
+                    console.error(e);
+                }
+            });
             charts = [];
 
-            $(".spark-chart").each(function (index) {
-                var data = $(this).data()['dataset'];
-                options['series'] = [{ 'data': data }];
-                var chart = new ApexCharts($(this)[0], options)
-                charts.push(chart);
+            // Render ApexCharts sparklines
+            document.querySelectorAll('.spark-chart').forEach((el) => {
+                const dataset = el.dataset.dataset
+                    ? JSON.parse(el.dataset.dataset)
+                    : [];
+                options.series = [{ data: dataset }];
+                const chart = new ApexCharts(el, options);
                 chart.render();
+                charts.push(chart);
             });
-
-            // Col add & remove
-            // var filterDiv = document.querySelector('.dataTables_wrapper .row');
-            // filterDiv.querySelectorAll('.col-md-6').forEach(function (element) {
-            //     element.classList.add('col-sm-6');
-            //     element.classList.remove('col-sm-12');
-            //     element.classList.remove('col-md-6');
-            // });
-        },
+        }
     });
 });
+
 
 

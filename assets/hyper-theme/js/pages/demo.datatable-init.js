@@ -5,178 +5,137 @@
  */
 
 
-$(document).ready(function () {
-    "use strict";
-
-    // Default Datatable
-    $('#basic-datatable').DataTable({
-        keys: true,
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+//
+// Basic Datatables
+//
+new DataTable('#basic-datatable', {
+    language: {
+        paginate: {
+            first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+            previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+            next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+            last: '<i class="ri-arrow-right-double-line align-middle"></i>'
         }
-    });
+    }
+});
 
-    // Buttons examples
-    var table = $('#datatable-buttons').DataTable({
-        lengthChange: false,
-        buttons: ['copy', 'print'],
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+//
+// Buttons Options
+//
+document.addEventListener('DOMContentLoaded', () => {
+    const exportDataTable = document.querySelector('#datatable-buttons');
+    if (exportDataTable) {
+        new DataTable(exportDataTable, {
+            dom: "<'d-md-flex justify-content-between align-items-center my-2'Bf>" +
+                "rt" +
+                "<'d-md-flex justify-content-between align-items-center mt-2'ip>",
+            responsive: true,
+            buttons: [
+                {extend: 'copy', className: 'btn btn-sm btn-secondary'},
+                {extend: 'csv', className: 'btn btn-sm btn-secondary active'},
+                {extend: 'excel', className: 'btn btn-sm btn-secondary'},
+                {extend: 'print', className: 'btn btn-sm btn-secondary active'},
+                {extend: 'pdf', className: 'btn btn-sm btn-secondary'}
+            ],
+            language: {
+                paginate: {
+                    first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+                    previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+                    next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+                    last: '<i class="ri-arrow-right-double-line align-middle"></i>'
+                }
             }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
+        });
+    }
+});
+
+//
+// Select Options
+//
+document.addEventListener('DOMContentLoaded', () => {
+    const exportDataTable = document.querySelector('#selection-datatable');
+    if (exportDataTable) {
+        new DataTable(exportDataTable, {
+            pageLength: 7,
+            lengthMenu: [7, 10, 25, 50, -1],
+            select: "multi", //single, or 'os', items: 'cell' also available
+            language: {
+                paginate: {
+                    first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+                    previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+                    next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+                    last: '<i class="ri-arrow-right-double-line align-middle"></i>'
+                },
+                lengthMenu: '_MENU_ Items per page',
+                info: 'Showing <span class="fw-semibold">_START_</span> to <span class="fw-semibold">_END_</span> of <span class="fw-semibold">_TOTAL_</span> Items'
+            }
+        });
+    }
+});
+
+//
+// Scroll Options
+//
+document.addEventListener('DOMContentLoaded', function () {
+    const tableElement = document.getElementById('scroll-datatable');
+    if (tableElement) {
+        new DataTable(tableElement, {
+            paging: false,              // Disable pagination
+            scrollCollapse: true,       // Allow table to collapse
+            scrollY: '320px',           // Vertical scrolling
+        });
+
+        new DataTable('#horizontal-scroll', {
+            scrollX: true,
+            language: {
+                paginate: {
+                    first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+                    previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+                    next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+                    last: '<i class="ri-arrow-right-double-line align-middle"></i>'
+                },
+                lengthMenu: '_MENU_ Items per page',
+                info: 'Showing <span class="fw-semibold">_START_</span> to <span class="fw-semibold">_END_</span> of <span class="fw-semibold">_TOTAL_</span> Items'
+            }
+        });
+    }
+})
+
+//
+// Complex Header 
+//
+new DataTable('#complex-header-datatable', {
+    language: {
+        paginate: {
+            first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+            previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+            next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+            last: '<i class="ri-arrow-right-double-line align-middle"></i>'
         }
-    });
-
-    // Multi Selection Datatable
-    $('#selection-datatable').DataTable({
-        select: {
-            style: 'multi'
-        },
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    table.buttons().container()
-        .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
-
-
-    // Alternative Pagination Datatable
-    $('#alternative-page-datatable').DataTable({
-        "pagingType": "full_numbers",
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    // Scroll Vertical Datatable
-    $('#scroll-vertical-datatable').DataTable({
-        "scrollY": "350px",
-        "scrollCollapse": true,
-        "paging": false,
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    // Scroll Vertical Datatable
-    $('#scroll-horizontal-datatable').DataTable({
-        "scrollX": true,
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    // Complex headers with column visibility Datatable
-    $('#complex-header-datatable').DataTable({
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        },
-        "columnDefs": [{
-            "visible": false,
-            "targets": -1
-        }]
-    });
-
-    // Row created callback Datatable
-    $('#row-callback-datatable').DataTable({
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        },
-        "createdRow": function (row, data, index) {
-            if (data[5].replace(/[\$,]/g, '') * 1 > 150000) {
-                $('td', row).eq(5).addClass('text-danger');
-            }
-        }
-    });
-
-    // State Saving Datatable
-    $('#state-saving-datatable').DataTable({
-        stateSave: true,
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
-            }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    // Fixed header Datatable
-    // $('#fixed-header-datatable').DataTable( {
-    //     fixedHeader: true,
-    // });
-
-    // Fixed Columns Datatable
-    $('#fixed-columns-datatable').DataTable({
-        scrollY: 300,
-        scrollX: true,
-        scrollCollapse: true,
-        paging: false,
-        fixedColumns: true
-    });
-
-    $(".dataTables_length select").addClass('form-select form-select-sm');
-    $(".dataTables_length label").addClass('form-label');
-
+    }
 });
 
 
-$(document).ready(function () {
-    var table = $('#fixed-header-datatable').DataTable({
-        responsive: true,
-        "language": {
-            "paginate": {
-                "previous": "<i class='mdi mdi-chevron-left'>",
-                "next": "<i class='mdi mdi-chevron-right'>"
+//
+// Fixed Header 
+//
+document.addEventListener('DOMContentLoaded', () => {
+    const tableElement = document.getElementById('fixed-header-datatable');
+    if (tableElement) {
+        new DataTable(tableElement, {
+            fixedHeader: {
+                header: true,
+                headerOffset: 70
+            },
+            pageLength: 15,
+            language: {
+                paginate: {
+                    first: '<i class="ri-arrow-left-double-line align-middle"></i>',
+                    previous: '<i class="ri-arrow-left-s-line align-middle"></i>',
+                    next: '<i class="ri-arrow-right-s-line align-middle"></i>',
+                    last: '<i class="ri-arrow-right-double-line align-middle"></i>'
+                }
             }
-        },
-        "drawCallback": function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-rounded');
-        }
-    });
-
-    new $.fn.dataTable.FixedHeader(table);
-});
+        });
+    }
+})
