@@ -1,11 +1,12 @@
-import './bootstrap.ts';
+import './stimulus/bootstrap.ts';
+
+const images = import.meta.glob('./static/images/**/*', {
+    eager: true,
+    import: 'default',
+});
 
 import './styles/app.scss';
-import './hyper-theme/hyper.js';
+import './theme';
 
 import 'simplebar';
-
 import 'dragula';
-
-import 'intro.js';
-import '../node_modules/intro.js/introjs.css';

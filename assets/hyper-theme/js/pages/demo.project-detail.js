@@ -111,9 +111,12 @@
                     tension: 0.3,
                     scales: {
                         x: {
-
                             grid: {
                                 color: "rgba(0,0,0,0.05)"
+                            },
+                            border: {
+                                display: false,             // Hides Y axis line (left)
+                                dash: [5, 5]
                             }
                         },
                         y: {
@@ -124,7 +127,12 @@
                             borderDash: [5, 5],
                             grid: {
                                 color: "rgba(0,0,0,0)",
+                                drawBorder: false,          // Hides Y axis border line
                                 fontColor: '#fff'
+                            },
+                            border: {
+                                display: false,             // Hides Y axis line (left)
+                                dash: [5, 5]
                             }
                         }
                     }

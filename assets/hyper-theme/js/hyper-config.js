@@ -26,7 +26,7 @@
         },
 
         menu: {
-            color: "light",
+            color: "dark",
         },
 
         // This option for only vertical (left Sidebar) layout
@@ -36,33 +36,32 @@
         },
     };
 
+    // html = document.getElementsByTagName('html')[0];
 
-    this.html = document.getElementsByTagName('html')[0];
+    var config = Object.assign(JSON.parse(JSON.stringify(defaultConfig)), {});
 
-    config = Object.assign(JSON.parse(JSON.stringify(defaultConfig)), {});
-
-    var layoutColor = this.html.getAttribute('data-bs-theme');
+    var layoutColor = html.getAttribute('data-bs-theme');
     config['theme'] = layoutColor !== null ? layoutColor : defaultConfig.theme;
 
-    var layoutNav = this.html.getAttribute('data-layout');
+    var layoutNav = html.getAttribute('data-layout');
     config['nav'] = layoutNav !== null ? layoutNav === 'topnav' ? 'horizontal' : 'vertical' : defaultConfig.nav;
 
-    var layoutSize = this.html.getAttribute('data-layout-mode');
+    var layoutSize = html.getAttribute('data-layout-mode');
     config['layout']['mode'] = layoutSize !== null ? layoutSize : defaultConfig.layout.mode;
 
-    var layoutMode = this.html.getAttribute('data-layout-position');
+    var layoutMode = html.getAttribute('data-layout-position');
     config['layout']['position'] = layoutMode !== null ? layoutMode : defaultConfig.layout.position;
 
-    var topbarColor = this.html.getAttribute('data-topbar-color');
+    var topbarColor = html.getAttribute('data-topbar-color');
     config['topbar']['color'] = topbarColor != null ? topbarColor : defaultConfig.topbar.color;
 
-    var leftbarSize = this.html.getAttribute('data-sidenav-size');
+    var leftbarSize = html.getAttribute('data-sidenav-size');
     config['sidenav']['size'] = leftbarSize !== null ? leftbarSize : defaultConfig.sidenav.size;
 
-    var sidebarUser = this.html.getAttribute('data-sidenav-user')
+    var sidebarUser = html.getAttribute('data-sidenav-user')
     config['sidenav']['user'] = sidebarUser !== null ? true : defaultConfig.sidenav.user;
 
-    var menuColor = this.html.getAttribute('data-menu-color');
+    var menuColor = html.getAttribute('data-menu-color');
     config['menu']['color'] = menuColor !== null ? menuColor : defaultConfig.menu.color;
 
     window.defaultConfig = JSON.parse(JSON.stringify(config));
@@ -80,7 +79,6 @@
     }
 
     if (config) {
-      console.log(config);
         html.setAttribute("data-bs-theme", config.theme);
         html.setAttribute("data-layout-mode", config.layout.mode);
         html.setAttribute("data-menu-color", config.menu.color);

@@ -1119,14 +1119,14 @@ var options = {
     },
     dataLabels: {
         enabled: true,
-        textAnchor: 'start',
+        textAnchor: 'none',
         style: {
             colors: ['#fff']
         },
         formatter: function (val, opt) {
             return opt.w.globals.labels[opt.dataPointIndex]
         },
-        offsetX: 0,
+        offsetX: 10,
         dropShadow: {
             enabled: true
         }

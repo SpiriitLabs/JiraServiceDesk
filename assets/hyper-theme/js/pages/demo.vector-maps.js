@@ -29,6 +29,14 @@ class VectorMap {
 				initial: { fill: "#3e60d5" },
 				selected: { fill: "#3e60d56e" }
 			},
+			regionStyle: {
+				initial: {
+					stroke: "#9ca3af",
+					strokeWidth: 0.25,
+					fill: '#aab9d14d',
+					fillOpacity: 1,
+				},
+			},
 			labels: {
 				markers: {
 					render: marker => marker.name
@@ -118,7 +126,7 @@ class VectorMap {
 				initial: {
 					stroke: "#9ca3af",
 					strokeWidth: 0.25,
-					fill: '#9ca3af69',
+					fill: '#aab9d14d',
 					fillOpacity: 1,
 				},
 			},

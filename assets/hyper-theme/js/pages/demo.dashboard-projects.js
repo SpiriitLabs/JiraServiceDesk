@@ -80,6 +80,10 @@
                         x: {
                             grid: {
                                 color: "rgba(0,0,0,0.05)"
+                            },
+                            border: {
+                                display: false,             // Hides Y axis line (left)
+                                dash: [5, 5]
                             }
                         }, y: {
                             ticks: {

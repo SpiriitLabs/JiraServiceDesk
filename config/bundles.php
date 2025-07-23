@@ -4,9 +4,6 @@ return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => [
         'all' => true,
     ],
-    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => [
-        'all' => true,
-    ],
     Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => [
         'all' => true,
     ],
@@ -71,6 +68,9 @@ return [
         'test' => true,
     ],
     Rollerworks\Bundle\PasswordStrengthBundle\RollerworksPasswordStrengthBundle::class => [
+        'all' => true,
+    ],
+    Pentatrion\ViteBundle\PentatrionViteBundle::class => [
         'all' => true,
     ],
 ];

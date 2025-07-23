@@ -22,17 +22,17 @@
             <form {{ stimulus_target('search', 'form') }} style="max-width: 100%;">
                 <div class="input-group">
                     <input type="search" class="ps-2 form-control dropdown-toggle" style="width: 90%" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
-                    
+
                     <button class="text-white btn btn-primary" type="submit" {{ stimulus_action('search', 'onSearchInput') }}><span class="mdi mdi-magnify"></span></button>
                 </div>
             </form>
 
             <div class="dropdown-menu dropdown-menu-animated" style="width: 40%" id="search-dropdown" {{ stimulus_target('search', 'dropdown') }}>
-                
+
                 <div class="dropdown-header noti-title">
                     <h5 class="text-overflow mb-2">{{ 'header.search.default'|trans }}</h5>
                 </div>
-                
+
             </div>
         </div>
 
@@ -40,18 +40,18 @@
 
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('build/static/images/locale/'~app.locale~'.jpg') }}" alt="user-image" class="me-0 me-sm-1" height="12">
+                    <img src="{{ asset('assets/static/images/locale/'~app.locale~'.jpg', 'app') }}" alt="user-image" class="me-0 me-sm-1" height="12">
                     <span class="align-middle d-none d-lg-inline-block">{{ app.locale == 'fr' ? 'locale.fr'|trans : 'locale.en'|trans }}</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" style="">
 
                     {% if app.locale == 'fr' %}
                         <a href="{{ path('app_locale_en') }}" class="dropdown-item">
-                            <img src="{{ asset('build/static/images/locale/en.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.en'|trans }}</span>
+                            <img src="{{ asset('assets/static/images/locale/en.jpg', 'app') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.en'|trans }}</span>
                         </a>
                     {% else %}
                         <a href="{{ path('app_locale_fr') }}" class="dropdown-item">
-                            <img src="{{ asset('build/static/images/locale/fr.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.fr'|trans }}</span>
+                            <img src="{{ asset('assets/static/images/locale/fr.jpg', 'app') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.fr'|trans }}</span>
                         </a>
                     {% endif %}
 
