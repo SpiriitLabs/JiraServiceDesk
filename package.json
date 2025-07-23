@@ -28,7 +28,8 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "dev": "vite",
+        "watch": "vite",
+        "dev": "vite build --mode dev",
         "build": "vite build",
         "lint": "eslint assets --ext .js,.jsx,.ts,.tsx"
     },
