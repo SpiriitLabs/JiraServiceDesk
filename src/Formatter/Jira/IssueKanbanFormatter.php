@@ -23,7 +23,8 @@ class IssueKanbanFormatter
                 'transitionId' => 0,
             ],
         ];
-        $result = $this->formatResult($project, $columnsConfiguration, $issues[0]);
+        $firstIssue = $issues[0] ?? null;
+        $result = $this->formatResult($project, $columnsConfiguration, $firstIssue);
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
@@ -59,12 +60,14 @@ class IssueKanbanFormatter
             if (! $allBacklog) {
                 $transitions = [];
                 foreach ($columnConfiguration->statuses as $status) {
-                    foreach ($firstIssue->transitions as $transition) {
-                        if ($transition->to->id === $status->id) {
-                            $transitions[] = [
-                                'id' => $transition->id,
-                                'name' => $transition->to->name,
-                            ];
+                    if (null !== $firstIssue) {
+                        foreach ($firstIssue->transitions as $transition) {
+                            if ($transition->to->id === $status->id) {
+                                $transitions[] = [
+                                    'id' => $transition->id,
+                                    'name' => $transition->to->name,
+                                ];
+                            }
                         }
                     }
                 }
