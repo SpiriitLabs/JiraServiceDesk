@@ -13,7 +13,7 @@
         "ext-iconv": "*",
         "babdev/pagerfanta-bundle": "^4.5",
         "cweagans/composer-patches": "^1.7.3",
-        "doctrine/dbal": "^4.3.0",
+        "doctrine/dbal": "^4.3.1",
         "doctrine/doctrine-bundle": "^2.15.0",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.5.0",
