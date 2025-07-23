@@ -41,8 +41,8 @@ readonly class GetKanbanIssueByBoardIdHandler
             ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
         ;
 
-        if ($query->assignee !== '') {
-            $jql->addInExpression('assignee', [$query->assignee]);
+        if ($query->assigneeId !== '') {
+            $jql->addInExpression('assignee', [$query->assigneeId]);
         }
 
         $boardIssues = $this->boardRepository->getBoardIssuesById(
