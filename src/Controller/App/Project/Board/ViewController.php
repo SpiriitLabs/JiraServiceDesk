@@ -78,7 +78,7 @@ class ViewController extends AbstractController
         }
         $assignees[$this->jiraAPIAccountId] = [
             'displayName' => sprintf('%s (Support)', $user->getFullName()),
-            'accountId' =>  $this->jiraAPIAccountId,
+            'accountId' => $this->jiraAPIAccountId,
             'avatarUrls' => null,
         ];
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);

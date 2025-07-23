@@ -60,7 +60,7 @@ class IssueKanbanFormatter
             if (! $allBacklog) {
                 $transitions = [];
                 foreach ($columnConfiguration->statuses as $status) {
-                    if (null !== $firstIssue) {
+                    if ($firstIssue !== null) {
                         foreach ($firstIssue->transitions as $transition) {
                             if ($transition->to->id === $status->id) {
                                 $transitions[] = [
