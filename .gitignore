@@ -54,5 +54,6 @@ private/uploads/*
 
 ###> pentatrion/vite-bundle ###
 /node_modules/
-/public/build/
+/public/app/
+public/app/*
 ###< pentatrion/vite-bundle ###
