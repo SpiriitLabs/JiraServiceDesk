@@ -14,7 +14,7 @@
                 {% if assignee.avatarUrls is not null %}
                     <img title="{{ assignee.displayName }}" src="{{ assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
                 {% else %}
-                    <img title="{{ assignee.displayName }}" src="{{ asset('assets/static/images/people.svg', 'app') }}" alt="user-img" class="avatar-xs rounded-circle me-1" height="15">
+                    <img title="{{ assignee.displayName }}" src="{{ asset('assets/static/images/user.svg', 'app') }}" alt="user-img" class="avatar-xs rounded-circle me-1" height="15">
                 {% endif %}
             </a>
         {% endfor %}
