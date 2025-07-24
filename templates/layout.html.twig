@@ -11,7 +11,7 @@
 
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png', 'app') }}">
     <link rel="mask-icon" href="{{ asset('assets/images/logo/icon.png', 'app') }}" color="#FAFBFE">
-    {# <link rel="manifest" href="{{ asset('assets/pwa/site.webmanifest') }}"> #}
+    <link rel="manifest" href="{{ asset('app/static/pwa/site.webmanifest') }}">
 
     {% block stylesheets %}
         {{ vite_entry_link_tags('app', [], 'app') }}
