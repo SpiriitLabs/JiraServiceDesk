@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import symfonyPlugin from "vite-plugin-symfony";
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
@@ -27,6 +28,14 @@ export default defineConfig({
         symfonyPlugin({
             stimulus: './assets/stimulus/controllers.json',
             viteDevServerHostname: 'localhost',
+        }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: './assets/static/',
+                    dest: '.',
+                },
+            ],
         }),
     ],
     build: {
