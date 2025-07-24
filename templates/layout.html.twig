@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="{{ asset('app/static/images/logo/favicon.ico') }}" type="image/ico">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.ico', 'app') }}" type="image/ico">
     <title>{% block title 'JiraServiceDesk' %} - {{ 'title.all'|trans }}</title>
 
-    <link rel="shortcut icon" href="{{ asset('app/static/images/logo/logo.png') }}">
-    <link rel="mask-icon" href="{{ asset('app/static/images/logo/icon.png') }}" color="#FAFBFE">
-    <link rel="manifest" href="{{ asset('app/static/pwa/site.webmanifest') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png', 'app') }}">
+    <link rel="mask-icon" href="{{ asset('assets/images/logo/icon.png', 'app') }}" color="#FAFBFE">
+    {# <link rel="manifest" href="{{ asset('assets/pwa/site.webmanifest') }}"> #}
 
     {% block stylesheets %}
         {{ vite_entry_link_tags('app', [], 'app') }}
@@ -28,7 +28,7 @@
             {% for message in messages %}
                 <div id="liveToast" {{ stimulus_target('flash', 'container') }} class="toast show text-bg-{{ type }}" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
-                        <img src="{{ asset('app/static/images/logo/favicon.ico') }}" class="rounded me-2" style="width: 25px" alt="RomainMILLAN">
+                        <img src="{{ asset('assets/images/logo/favicon.ico') }}" class="rounded me-2" style="width: 25px" alt="RomainMILLAN">
                         <strong class="me-auto">{{ 'title.all'|trans }}</strong>
                         <button type="button" {{ stimulus_action('flash', 'close') }} class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>

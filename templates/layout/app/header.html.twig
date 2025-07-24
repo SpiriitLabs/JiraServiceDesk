@@ -40,18 +40,18 @@
 
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('app/static/images/locale/'~app.locale~'.jpg') }}" alt="user-image" class="me-0 me-sm-1" height="12">
+                    <img src="{{ asset('assets/images/locale/'~app.locale~'.jpg', 'app') }}" alt="user-image" class="me-0 me-sm-1" height="12">
                     <span class="align-middle d-none d-lg-inline-block">{{ app.locale == 'fr' ? 'locale.fr'|trans : 'locale.en'|trans }}</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated" style="">
 
                     {% if app.locale == 'fr' %}
                         <a href="{{ path('app_locale_en') }}" class="dropdown-item">
-                            <img src="{{ asset('app/static/images/locale/en.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.en'|trans }}</span>
+                            <img src="{{ asset('assets/images/locale/en.jpg', 'app') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.en'|trans }}</span>
                         </a>
                     {% else %}
                         <a href="{{ path('app_locale_fr') }}" class="dropdown-item">
-                            <img src="{{ asset('app/static/images/locale/fr.jpg') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.fr'|trans }}</span>
+                            <img src="{{ asset('assets/images/locale/fr.jpg', 'app') }}" alt="user-image" class="me-1" height="12"> <span class="align-middle">{{ 'locale.fr'|trans }}</span>
                         </a>
                     {% endif %}
 
