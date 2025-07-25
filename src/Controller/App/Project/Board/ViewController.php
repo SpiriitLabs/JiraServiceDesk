@@ -93,6 +93,7 @@ class ViewController extends AbstractController
                 'boardId' => $idBoard,
                 'kanbanIssues' => $kanbanIssuesFormatted,
                 'assignees' => $assignees,
+                'assigneeId' => $request->get('assignee', ''),
             ],
         );
     }

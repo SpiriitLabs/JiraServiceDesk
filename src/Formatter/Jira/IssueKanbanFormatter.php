@@ -15,16 +15,8 @@ class IssueKanbanFormatter
      */
     public function format(array $issues, Project $project, ?BoardColumnConfig $columnsConfiguration = null): array
     {
-        $result = [
-            'À faire' => [
-                'issues' => [],
-                'min' => 0,
-                'max' => 0,
-                'transitionId' => 0,
-            ],
-        ];
         $firstIssue = $issues[0] ?? null;
-        $result = $this->formatResult($project, $columnsConfiguration, $firstIssue);
+        $result = $this->initResult($project, $columnsConfiguration, $firstIssue);
 
         foreach ($issues as $issue) {
             /** @var Issue $issue */
@@ -39,7 +31,7 @@ class IssueKanbanFormatter
         return $result;
     }
 
-    private function formatResult(
+    private function initResult(
         Project $project,
         ?BoardColumnConfig $columnsConfiguration = null,
         ?Issue $firstIssue = null

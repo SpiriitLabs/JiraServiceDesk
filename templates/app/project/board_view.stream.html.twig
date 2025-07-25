@@ -7,15 +7,14 @@
         {% set columnsNames = columnsNames|merge([columnName|lower|u.ascii|u.replace(' ', '-')]) %}
     {% endfor %}
     {% set query_parameters = app.request.query.all %}
-    <div class="col-12">
+    <div class="col-12 mb-2 assignee-list">
         {% for assignee in assignees %}
             {% set query_parameters = query_parameters|merge({assignee: assignee.accountId})|merge(app.request.attributes.get('_route_params')) %}
             <a href="{{ path('app_project_board_view', query_parameters) }}">
-                {% if assignee.avatarUrls is not null %}
-                    <img title="{{ assignee.displayName }}" src="{{ assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
-                {% else %}
-                    <img title="{{ assignee.displayName }}" src="{{ asset('assets/static/images/user.svg', 'app') }}" alt="user-img" class="avatar-xs rounded-circle me-1" height="15">
-                {% endif %}
+                <span class="assigne-item{{ assigneeId == assignee.accountId ? ' selected' : '' }}">
+                    {% set imgSrc = assignee.avatarUrls is not null ? assignee.avatarUrls|first : asset('assets/images/user.svg', 'app') %}
+                    <img title="{{ assignee.displayName }}" src="{{ imgSrc }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                </span>
             </a>
         {% endfor %}
     </div>

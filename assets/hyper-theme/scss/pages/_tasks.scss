@@ -8,6 +8,19 @@
     overflow-x: auto;
 }
 
+.assignee-list {
+    span {
+        display: inline-block;
+        height: 1.7rem;
+        width: 1.7rem;
+
+        &.selected {
+            border: 2px solid green;
+            border-radius: 50%;
+        }
+    }
+}
+
 .tasks {
     display: inline-block;
     width: 22rem;
