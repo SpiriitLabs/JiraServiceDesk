@@ -13,9 +13,14 @@
             {% set query_parameters = query_parameters|merge({assignee: assign_param})|merge(app.request.attributes.get('_route_params')) %}
             <a href="{{ path('app_project_board_view', query_parameters) }}">
                 <span class="assigne-item{{ assigneeId == assignee.accountId ? ' selected' : '' }}">
-                    {% set imgSrc = assignee.avatarUrls is not null ? assignee.avatarUrls|first : asset('assets/images/user.svg', 'app') %}
-                    <img title="{{ assignee.displayName }}" src="{{ imgSrc }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                    {% if assignee.avatarUrls is not null  %}
+                        <img title="{{ assignee.displayName }}" src="{{ assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                    {% else %}
+                        <svg class="icon avatar-xs rounded-circle me-1">
+                            <use xlink:href="{{ asset('assets/images/user.svg', 'app') }}"></use>
+                        </svg>
                 </span>
+                    {% endif %}
             </a>
         {% endfor %}
     </div>
