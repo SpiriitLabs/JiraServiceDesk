@@ -36,14 +36,20 @@ readonly class GetKanbanIssueByBoardIdHandler
             ->addIsNullExpression('resolutiondate', JqlQuery::KEYWORD_OR)
         ;
 
+        $jql = new JqlQuery()
+            ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])
+            ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
+        ;
+
+        if ($query->assigneeId !== '') {
+            $jql->addInExpression('assignee', [$query->assigneeId]);
+        }
+
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
             parameters: [
                 'maxResults' => 500,
-                'jql' => new JqlQuery()
-                    ->addInExpression(JqlQuery::FIELD_LABELS, ['from-client'])
-                    ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
-                    ->getQuery(),
+                'jql' => $jql->getQuery(),
                 'fields' => [
                     'description',
                     'id',

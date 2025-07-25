@@ -8,6 +8,23 @@
     overflow-x: auto;
 }
 
+.assignee-list {
+    .assigne-item {
+        display: inline-block;
+        height: 1.7rem;
+        width: 1.7rem;
+
+        &.selected {
+            border: 2px solid green;
+            border-radius: 50%;
+        }
+    }
+
+    .icon {
+        fill: $menu-item-color;
+    }
+}
+
 .tasks {
     display: inline-block;
     width: 22rem;
