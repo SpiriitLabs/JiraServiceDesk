@@ -1,6 +1,6 @@
 import './stimulus/bootstrap.ts';
 
-const images = import.meta.glob('./static/images/**/*', {
+const images = import.meta.glob('./images/**/*', {
     eager: true,
     import: 'default',
 });

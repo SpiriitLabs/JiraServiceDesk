@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/build/pwa/service_worker.js')
+  navigator.serviceWorker.register('/app/static/pwa/service_worker.js')
     .then((registration) => {
       console.log(`Service worker registration succeeded:`, registration);
     })
