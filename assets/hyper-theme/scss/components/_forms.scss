@@ -48,13 +48,9 @@ select.form-control-sm {
 // Show/Hide Password
 .eye-off {
     display: none;
-    width: 1.375rem;
-    height: 1.375rem;
 }
 .eye-on {
     display: inline-block;
-    width: 1.125rem;
-    height: 1.125rem;
 }
 .eye-on, .eye-off {
     cursor: pointer;
