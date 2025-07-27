@@ -198,8 +198,12 @@ bump:
 
 .PHONY: config
 config:
-	@echo "📝 Copying .env.docker.dist in .env.docker"
-	@cp --update=none .env.docker.dist .env.docker
+	@echo "📝 Copying .env.docker.dist to .env.docker (only if missing)"
+	@if [ ! -f .env.docker ]; then \
+		cp .env.docker.dist .env.docker; \
+	else \
+		echo ".env.docker already exists, skipping"; \
+	fi
 
 SERVER ?= rmjsd.p
 DOMAIN ?= rmjsd
