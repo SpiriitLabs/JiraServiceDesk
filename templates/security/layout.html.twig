@@ -1,0 +1,46 @@
+{% trans_default_domain 'app' %}
+
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title 'security.login.label'|trans %} - {{ 'title.all'|trans }}</title>
+    <link rel="icon" href="{{ asset('assets/images/logo/favicon.ico', 'app') }}">
+
+    {% block stylesheets %}
+        {{ vite_entry_link_tags('app', [], 'app') }}
+        {{ vite_entry_link_tags('theme', [], 'app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ vite_entry_script_tags('app', [], 'app') }}
+    {% endblock %}
+</head>
+<body>
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+
+                        <div class="card-header pt-2 pb-2 text-center bg-primary">
+                            <span><img src="{{ asset('assets/images/logo/logo.svg', 'app') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
+                        </div>
+
+                        <div class="card-body p-4">
+                            {% block content '' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer footer-alt">
+        2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
+    </footer>
+
+    </body>
+</html>

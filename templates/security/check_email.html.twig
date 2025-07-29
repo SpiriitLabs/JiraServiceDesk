@@ -1,55 +1,16 @@
+{% extends 'security/layout.html.twig' %}
 {% trans_default_domain 'app' %}
+{% block title 'security.check_email.label'|trans %}
 
-<!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title 'security.check_email.label'|trans %} - {{ 'title.all'|trans }}</title>
-    <link rel="icon" href="{{ asset('assets/images/logo/favicon.ico', 'app') }}">
-
-    {% block stylesheets %}
-        {{ vite_entry_link_tags('app') }}
-    {% endblock %}
-
-    {% block javascripts %}
-        {{ vite_entry_script_tags('app') }}
-    {% endblock %}
-</head>
-<body>
-<div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xxl-4 col-lg-5">
-                <div class="card">
-
-                    <div class="card-header pt-2 pb-2 text-center bg-primary">
-                        <span><img src="{{ asset('assets/images/logo/logo.svg', 'app') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
-                    </div>
-
-                    <div class="card-body p-4">
-
-                        <div class="text-center w-75 m-auto">
-                            <h4 class="text-dark-50 text-center pb-0 fw-bold">{{ 'security.check_email.label'|trans }}</h4>
-                            <p class="text-muted mt-2">{{ 'security.check_email.description'|trans({'%expire_link_time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')})|raw }}</p>
-                            <p class="text-muted mb-4">{{ 'security.check_email.retry'|trans }}</p>
-                        </div>
-
-
-                        <div class="mb-3 mb-0 text-center">
-                            <a href="{{ path('security_forgot_password_request') }}" class="btn btn-primary" type="submit">{{ 'security.check_email.action'|trans }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% block content %}
+    <div class="text-center w-75 m-auto">
+        <h4 class="text-dark-50 text-center pb-0 fw-bold">{{ 'security.check_email.label'|trans }}</h4>
+        <p class="text-muted mt-2">{{ 'security.check_email.description'|trans({'%expire_link_time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')})|raw }}</p>
+        <p class="text-muted mb-4">{{ 'security.check_email.retry'|trans }}</p>
     </div>
-</div>
 
-<footer class="footer footer-alt">
-    2025{% if 'now' | date('Y') != 2025 %}-{{ 'now' | date('Y') }}{% endif%} © {{ 'title.all'|trans }}
-</footer>
 
-</body>
-</html>
+    <div class="mb-3 mb-0 text-center">
+        <a href="{{ path('security_forgot_password_request') }}" class="btn btn-primary" type="submit">{{ 'security.check_email.action'|trans }}</a>
+    </div>
+{% endblock %}
