@@ -1,7 +1,16 @@
-@use '_override.scss';
-@use '_environment.scss';
-@use 'common/buttons.scss';
-@use '_issue.scss';
+@import '../hyper-theme/scss/app.scss';
+
+@import '_override.scss';
+@import '_environment.scss';
+@import 'common/buttons.scss';
+@import '_issue.scss';
+
+@import 'override/form';
+@import 'override/miscellaneous';
+@import 'override/navbar';
+@import 'override/stackabletables';
+@import 'override/utilities';
+@import 'override/variables';
 
 .button-no-style {
     background: none;

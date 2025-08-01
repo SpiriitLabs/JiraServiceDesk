@@ -1,0 +1,79 @@
+.ts-dropdown {
+    z-index: 2000;
+    background-color: white !important;
+}
+
+.ts-dropdown > * {
+    z-index: 2000;
+}
+
+[data-bs-theme="dark"] {
+    .ts-dropdown {
+        border-color: var(--bs-gray-600);
+        z-index: 2000;
+        background-color: white !important;
+
+        .option {
+            color: var(--bs-light);
+
+            &:hover, &.active {
+                background-color: var(--bs-gray-700);
+                color: var(--bs-light);
+            }
+        }
+
+        * {
+            z-index: 2000;
+        }
+    }
+
+    .ts-control {
+        background-color: var(--bs-dark);
+        border-color: var(--bs-gray-600);
+        color: var(--bs-light);
+
+        input {
+            color: var(--bs-light) !important;
+        }
+
+        .item {
+            background-color: var(--bs-primary);
+            color: var(--bs-light);
+            border-color: var(--bs-primary);
+        }
+    }
+}
+
+select[readonly] {
+    & + .form-select {
+        pointer-events: none;
+        background-color: $form-select-disabled-bg;
+        border-color: $form-select-disabled-border-color;
+
+        .ts-control .item {
+            color: $form-select-disabled-color;
+        }
+    }
+}
+
+.form-check:not(.form-switch) {
+    @include media-breakpoint-up(md) {
+        margin-top: 2.4rem;
+    }
+}
+
+.form-check-no-margin-top {
+    .form-check {
+        margin-top: 0;
+    }
+}
+
+.#{$select-ns}-dropdown,
+.#{$select-ns}-control,
+.#{$select-ns}-control input {
+   color: unset;
+}
+
+.table-action {
+    width: 150px !important;
+}

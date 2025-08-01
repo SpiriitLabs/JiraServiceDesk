@@ -5,7 +5,7 @@ const images = import.meta.glob('./images/**/*', {
     import: 'default',
 });
 
-import './styles/app.scss';
+// import './styles/app.scss';
 import './theme';
 
 import 'simplebar';
