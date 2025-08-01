@@ -3,10 +3,6 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
 
-  static targets = ["select"];
-
-  declare readonly selectTarget: HTMLSelectElement;
-
   connect(): void {
     console.log("📋 Scrollbar Top controller connected.");
 
