@@ -25,7 +25,10 @@
         {% endfor %}
     </div>
 
-    <div class="board">
+    <div class="scrollbar-top" id="scrollbar-top">
+        <div class="scroll-inner" id="scrollbar-top-inner"></div>
+    </div>
+    <div class="board" id="scrollbar-bottom" {{ stimulus_controller('scrollbar_top') }}>
         {% for columnName , columnValues in kanbanIssues %}
             <div class="tasks" {% if loop.first and is_granted('ROLE_APP_KANBAN') %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode, selectInputTitle: 'project.kanban.selectTransition.title'|trans}) }}{% endif %}>
                 <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
