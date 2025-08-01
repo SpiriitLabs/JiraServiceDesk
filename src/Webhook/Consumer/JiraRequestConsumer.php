@@ -6,6 +6,7 @@ use App\Controller\Traits\ExceptionCatcherTrait;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Message\Event\Webhook\Issue\IssueCreated;
+use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -52,6 +53,7 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
         return match (true) {
             is_a($event, IssueCreated::class)
             || is_a($event, IssueUpdated::class)
+            || is_a($event, IssueDeleted::class)
             || is_a($event, CommentCreated::class)
             || is_a($event, CommentUpdated::class) => true,
             default => false,
