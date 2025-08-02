@@ -25,25 +25,28 @@
         {% endfor %}
     </div>
 
-    <div class="scrollbar-top" id="scrollbar-top">
-        <div class="scroll-inner" id="scrollbar-top-inner"></div>
-    </div>
-    <div class="board" id="scrollbar-bottom" {{ stimulus_controller('scrollbar_top') }}>
-        {% for columnName , columnValues in kanbanIssues %}
-            <div class="tasks" {% if loop.first and is_granted('ROLE_APP_KANBAN') %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode, selectInputTitle: 'project.kanban.selectTransition.title'|trans}) }}{% endif %}>
-                <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
+    <div {{ stimulus_controller('scrollbar_top') }}>
+        <div class="scrollbar-top" {{ stimulus_target('scrollbar_top', 'scrollbarTop') }}>
+            <div class="scroll-inner" {{ stimulus_target('scrollbar_top', 'scrollbarTopInner') }}></div>
+        </div>
 
-                <div id="{{ columnName|lower|u.ascii|u.replace(' ', '-') }}" data-kanban-transition-ids='{{ columnValues.transitionIds|json_encode|e('html_attr') }}' class="task-list-items">
+        <div class="board" {{ stimulus_target('scrollbar_top', 'scrollbarBottom') }}>
+            {% for columnName , columnValues in kanbanIssues %}
+                <div class="tasks" {% if loop.first and is_granted('ROLE_APP_KANBAN') %}{{ stimulus_controller('kanban', {columns: columnsNames|json_encode, selectInputTitle: 'project.kanban.selectTransition.title'|trans}) }}{% endif %}>
+                    <h5 class="mt-0 task-header text-uppercase">{{ columnName }} (<span class="fst-italic">{{ columnValues.issues|length }}</span>)</h5>
 
-                    {% for issue in columnValues.issues %}
-                        <twig:app:kanban:item_card
-                            :issue="issue"
-                            :project="current_project"
-                        />
-                    {% endfor %}
+                    <div id="{{ columnName|lower|u.ascii|u.replace(' ', '-') }}" data-kanban-transition-ids='{{ columnValues.transitionIds|json_encode|e('html_attr') }}' class="task-list-items">
 
+                        {% for issue in columnValues.issues %}
+                            <twig:app:kanban:item_card
+                                :issue="issue"
+                                :project="current_project"
+                            />
+                        {% endfor %}
+
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </twig:Turbo:Stream:Replace>

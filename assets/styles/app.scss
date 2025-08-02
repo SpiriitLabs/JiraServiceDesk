@@ -1,10 +1,10 @@
-@import '../hyper-theme/scss/app.scss';
+@import '../hyper-theme/scss/app';
 
-@import '_override.scss';
-@import '_environment.scss';
-@import 'common/buttons.scss';
-@import '_issue.scss';
-@import '_board.scss';
+@import '_override';
+@import '_environment';
+@import 'common/buttons';
+@import '_issue';
+@import '_scrollbar-top';
 
 @import 'override/form';
 @import 'override/miscellaneous';

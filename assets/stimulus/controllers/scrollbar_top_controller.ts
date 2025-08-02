@@ -2,34 +2,30 @@ import { Controller } from '@hotwired/stimulus';
 
 
 export default class extends Controller {
+  static targets = ["scrollbarTop", "scrollbarTopInner", "scrollbarBottom"];
+
+  declare readonly scrollbarTopTarget: HTMLDivElement;
+  declare readonly scrollbarTopInnerTarget: HTMLDivElement;
+  declare readonly scrollbarBottomTarget: HTMLDivElement;
 
   connect(): void {
     console.log("📋 Scrollbar Top controller connected.");
 
-    const scrollbarTop = document.getElementById('scrollbar-top');
-    if (scrollbarTop) {
-      scrollbarTop.addEventListener('scroll', () => {
-        const target = document.getElementById('scrollbar-bottom');
-        if (target) {
-          target.scrollLeft = scrollbarTop.scrollLeft;
-        }
-      });
+    this.listener();
+    if (this.scrollbarTopInnerTarget && '' == this.scrollbarTopInnerTarget.style.width) {
+      this.scrollbarTopInnerTarget.style.width = this.scrollbarBottomTarget.scrollWidth + 'px';
     }
+  }
 
-    const scrollbarBottom = document.getElementById('scrollbar-bottom');
-    if (scrollbarBottom) {
-      scrollbarBottom.addEventListener('scroll', () => {
-        const target = document.getElementById('scrollbar-top');
-        if (target) {
-          target.scrollLeft = scrollbarBottom.scrollLeft;
-        }
-      });
-      // init top width.
-      const topInner = document.getElementById('scrollbar-top-inner');
-      if (topInner && '' == topInner.style.width) {
-        topInner.style.width = scrollbarBottom.scrollWidth + 'px';
-      }
-    }
+  private listener(): void
+  {
+    this.scrollbarTopTarget.addEventListener('scroll', () => {
+      this.scrollbarBottomTarget.scrollLeft = this.scrollbarTopTarget.scrollLeft;
+    });
+
+    this.scrollbarBottomTarget.addEventListener('scroll', () => {
+      this.scrollbarTopTarget.scrollLeft = this.scrollbarBottomTarget.scrollLeft;
+    });
   }
 
 }
