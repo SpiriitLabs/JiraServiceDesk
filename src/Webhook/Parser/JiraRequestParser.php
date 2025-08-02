@@ -5,6 +5,7 @@ namespace App\Webhook\Parser;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Message\Event\Webhook\Issue\IssueCreated;
+use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use JiraCloud\JiraException;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\RequestMatcher\IsJsonRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
 use Symfony\Component\Webhook\Client\AbstractRequestParser;
 use Symfony\Component\Webhook\Exception\RejectWebhookException;
@@ -25,6 +27,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
     use LoggerAwareTrait;
 
     public function __construct(
+        private readonly MessageBusInterface $commandBus,
         private readonly IssueRepository $issueRepository,
     ) {
     }
@@ -66,28 +69,26 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             'event' => $payload->get('webhookEvent'),
         ]);
 
-        if ($payload->has('issue')) {
+        if (
+            $payload->has('issue')
+            && $payload->get('webhookEvent') !== 'jira:issue_deleted'
+        ) {
             $this->logger->debug('WEBHOOK', [
                 'payload_check_issue' => $payload->has('issue'),
                 'issue_key' => json_encode($payload->all()['issue']['key']),
             ]);
+
             try {
-                $jiraIssue = $this->issueRepository->getFull($payload->all()['issue']['key']);
+                $this->issueRepository->getFull($payload->all()['issue']['key']);
             } catch (JiraException $jiraException) {
                 throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, $jiraException->getMessage());
-            }
-
-            if (in_array('from-client', $jiraIssue->fields->labels) == false) {
-                throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, sprintf(
-                    "Issue #%d has not 'from-client' label",
-                    $payload->all()['issue']['key']
-                ));
             }
         }
 
         $event = match ($payload->get('webhookEvent')) {
             'jira:issue_created' => new IssueCreated(payload: $payload->all()),
             'jira:issue_updated' => new IssueUpdated(payload: $payload->all()),
+            'jira:issue_deleted' => new IssueDeleted(payload: $payload->all()),
             'comment_created' => new CommentCreated(payload: $payload->all()),
             'comment_updated' => new CommentUpdated(payload: $payload->all()),
             default => new RejectWebhookException(message: 'Invalid webhook event.'),
