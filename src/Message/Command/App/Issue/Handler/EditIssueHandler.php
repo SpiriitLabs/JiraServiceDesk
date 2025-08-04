@@ -50,13 +50,21 @@ class EditIssueHandler
         if ($jiraIssueKey == null) {
             return null;
         }
-
-        $this->handle(
-            new TransitionTo(
-                $command->issue->id,
-                $command->transition,
-            ),
-        );
+        $transitionToApply = null;
+        foreach ($command->issue->transitions as $issueTransition) {
+            if ($command->transition == $issueTransition->id) {
+                $transitionToApply = $issueTransition;
+            }
+        }
+        // Handle transition change only if needed.
+        if ($transitionToApply->to->id !== $command->issue->fields->status->id) {
+            $this->handle(
+                new TransitionTo(
+                    $command->issue->id,
+                    $command->transition,
+                ),
+            );
+        }
 
         return $command->issue;
     }
