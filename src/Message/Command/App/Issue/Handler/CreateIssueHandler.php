@@ -53,12 +53,6 @@ class CreateIssueHandler
         $jiraPriority->id = (string) $command->priority->jiraId;
         $issue->priority = $jiraPriority;
 
-        if ($command->assignee !== 'null') {
-            $issue->setAssigneeAccountId($command->assignee);
-        } else {
-            $issue->setAssigneeToUnassigned();
-        }
-
         $jiraIssue = $this->issueRepository->create($issue);
 
         foreach ($command->attachments as $attachment) {

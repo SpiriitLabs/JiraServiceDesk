@@ -9,7 +9,6 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
-use App\Message\Query\App\Issue\GetIssueAssignableUsers;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +34,6 @@ class CreateController extends AbstractController
         User $user,
     ): Response {
         $this->setCurrentProject($project);
-        $assignableUsers = $this->handle(new GetIssueAssignableUsers(user: $user, project: $project));
 
         $form = $this->createForm(
             type: CreateIssueFormType::class,
@@ -44,7 +42,6 @@ class CreateController extends AbstractController
                 creator: $user,
             ),
             options: [
-                'assignees' => $assignableUsers,
                 'referer_url' => $request->headers->get('referer'),
             ]
         );
