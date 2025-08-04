@@ -7,7 +7,6 @@ use App\Entity\Priority;
 use App\Message\Command\App\Issue\AbstractIssueDTO;
 use App\Repository\IssueTypeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,11 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AbstractIssueFormType extends AbstractType
 {
-    public function __construct(
-        private readonly Security $security,
-    ) {
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
