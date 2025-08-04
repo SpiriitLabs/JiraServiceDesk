@@ -15,14 +15,13 @@ class EditIssue extends AbstractIssueDTO
         IssueType $issueType,
         Priority $priority,
         public string $transition,
-        ?string $assignee = null,
+        public ?string $assignee = 'null',
     ) {
         parent::__construct(
             summary: $this->issue->fields->summary,
             project: $project,
             priority: $priority,
             type: $issueType,
-            assignee: $assignee,
         );
     }
 }

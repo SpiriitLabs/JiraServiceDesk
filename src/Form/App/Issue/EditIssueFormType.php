@@ -2,13 +2,20 @@
 
 namespace App\Form\App\Issue;
 
+use App\Enum\User\Role;
 use App\Message\Command\App\Issue\EditIssue;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditIssueFormType extends AbstractIssueFormType
 {
+    public function __construct(
+        private readonly Security $security,
+    ) {
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -19,6 +26,15 @@ class EditIssueFormType extends AbstractIssueFormType
                 'choices' => $options['transitions'],
             ])
         ;
+
+        if ($this->security->isGranted(Role::ROLE_APP_CAN_ASSIGNEE)) {
+            $builder
+                ->add('assignee', ChoiceType::class, [
+                    'required' => true,
+                    'choices' => $options['assignees'],
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -30,6 +46,7 @@ class EditIssueFormType extends AbstractIssueFormType
             'label_format' => 'issue.%name%.label',
             'projectId' => null,
             'transitions' => [],
+            'assignees' => [],
         ]);
     }
 }
