@@ -57,7 +57,7 @@ jobs:
       - name: Package built assets
         run: |
           mkdir -p release
-          zip -r release/assets-builded.zip public/build
+          zip -r release/assets-builded.zip public/app
 
       # Optional: upload artifacts
       - name: Upload artifacts
