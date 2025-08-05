@@ -9,7 +9,7 @@
     {% set query_parameters = app.request.query.all %}
     <div class="col-12 mb-2 assignee-list">
         {% for assignee in assignees %}
-            {% set assign_param = assigneeId == assignee.accountId ? 'null' : assignee.accountId %}
+            {% set assign_param = assigneeId == assignee.accountId ? '' : assignee.accountId %}
             {% set query_parameters = query_parameters|merge({assignee: assign_param})|merge(app.request.attributes.get('_route_params')) %}
             <a href="{{ path('app_project_board_view', query_parameters) }}">
                 <span class="assigne-item{{ assigneeId == assignee.accountId ? ' selected' : '' }}">
