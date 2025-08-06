@@ -23,7 +23,6 @@ class CreateIssueFormType extends AbstractIssueFormType
         private readonly string $defaultPriorityName,
         private readonly PriorityRepository $priorityRepository,
     ) {
-        parent::__construct($security);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
