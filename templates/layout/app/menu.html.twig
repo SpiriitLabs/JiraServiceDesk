@@ -1,7 +1,7 @@
 {% trans_default_domain 'app' %}
 {% set currentRoute = app.request.attributes.get('_route') %}
 
-<div class="leftside-menu menuitem-active">
+<div class="leftside-menu menuitem-active" {{ stimulus_controller('install_pwa') }}>
 
     <!-- Brand Logo Light -->
     <a href="{{ path('app_project_select') }}" class="logo logo-light pt-4">
@@ -146,7 +146,12 @@
 
                             </ul>
 
-                            <div class="clearfix"></div>
+                            <div class="help-box text-white text-center">
+{#                                <img src="assets/images/svg/help-icon.svg" height="90" alt="Helper Icon Image">#}
+                                <h5 class="mt-1">{{ 'pwa.label'|trans }}</h5>
+                                <p class="mb-3">{{ 'pwa.description'|trans }}</p>
+                                <a href="#" {{ stimulus_action('install_pwa', 'installApp') }} class="btn btn-secondary btn-sm">{{ 'action.download'|trans }}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
