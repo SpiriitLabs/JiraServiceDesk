@@ -45,6 +45,7 @@ class ShowUserStreamController extends AbstractController
 
         $issueFilter = new IssueFilter(
             projects: [$project],
+            hasResolvedMasked: true,
         );
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(

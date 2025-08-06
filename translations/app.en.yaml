@@ -170,7 +170,7 @@ project:
   title:
     create: "Create a project from Jira"
     edit: "Edit project « %key% »"
-    userIssues: "Assigned tickets"
+    userIssues: "My tickets"
   name:
     label: "Name"
   jiraKey:

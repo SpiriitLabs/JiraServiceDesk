@@ -173,7 +173,7 @@ project:
     title:
         create: "Créer un projet depuis Jira"
         edit: "Modifier le projet « %key% »"
-        userIssues: "Tickets assignés"
+        userIssues: "Mes tickets"
     name:
         label: "Nom"
     jiraKey:
