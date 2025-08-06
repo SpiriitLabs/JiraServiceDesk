@@ -22,7 +22,6 @@ class DashboardController extends AbstractController
         private readonly ProjectRepository $projectRepository,
         private readonly PriorityRepository $priorityRepository,
         private readonly UserRepository $userRepository,
-        private readonly TranslatorInterface $translator,
     ) {
     }
 

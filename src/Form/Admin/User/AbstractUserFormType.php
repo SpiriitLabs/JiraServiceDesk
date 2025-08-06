@@ -3,6 +3,7 @@
 namespace App\Form\Admin\User;
 
 use App\Entity\Project;
+use App\Entity\UserNotificationPreferences;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Form\Type\SwitchType;
@@ -61,47 +62,9 @@ abstract class AbstractUserFormType extends AbstractType
                 ],
                 'choice_label' => fn (Theme $theme) => $theme->label(),
             ])
-            ->add('preferenceNotification', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'all',
-                    'data-action' => 'notification-profil#toggleAll',
-                ],
-            ])
-            ->add('preferenceNotificationIssueCreated', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'issueCreated',
-                    'data-action' => 'notification-profil#notification',
-                ],
-            ])
-            ->add('preferenceNotificationIssueUpdated', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'issueUpdated',
-                    'data-action' => 'notification-profil#notification',
-                ],
-            ])
-            ->add('preferenceNotificationCommentCreated', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentCreated',
-                    'data-action' => 'notification-profil#notification notification-profil#commentCreatedOrUpdated',
-                ],
-            ])
-            ->add('preferenceNotificationCommentUpdated', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentUpdated',
-                    'data-action' => 'notification-profil#notification notification-profil#commentCreatedOrUpdated',
-                ],
-            ])
-            ->add('preferenceNotificationCommentOnlyOnTag', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentTagOnly',
-                    'data-action' => 'notification-profil#notification notification-profil#commentTagOnly',
-                ],
+            ->add('preferencesEmailNotification', UserNotificationPreferences::class)
+            ->add('preferencesPushNotification', UserNotificationPreferences::class, [
+                'has_global' => false,
             ])
         ;
 

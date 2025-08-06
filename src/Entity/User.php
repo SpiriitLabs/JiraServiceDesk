@@ -73,24 +73,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $favorites;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotification = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationIssueCreated = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationIssueUpdated = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentCreated = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentUpdated = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentOnlyOnTag = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
     public bool $hasCompletedIntroduction = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
@@ -101,6 +83,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(name: 'last_login_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $lastLoginAt = null;
+
+    #[ORM\Embedded()]
+    public UserNotificationPreferences $preferencesEmailNotification;
+
+    #[ORM\Embedded()]
+    public UserNotificationPreferences $preferencesPushNotification;
 
     #[ORM\Embedded()]
     public UserPushNotificationInfo $pushNotificationInfo;
