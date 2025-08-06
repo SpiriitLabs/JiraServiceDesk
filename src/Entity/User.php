@@ -16,6 +16,8 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use function Symfony\Component\String\u;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
@@ -151,7 +153,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setLastName(?string $lastName): void
     {
-        $this->lastName = strtoupper($lastName);
+        $this->lastName = u($lastName)
+            ->upper()
+        ;
     }
 
     public function getFullName(): ?string
