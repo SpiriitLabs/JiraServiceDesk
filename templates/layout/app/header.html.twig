@@ -1,10 +1,10 @@
 {% trans_default_domain 'app' %}
 
-<div class="navbar-custom gain-header">
+<div class="navbar-custom">
     <div class="topbar container-fluid">
         <div class="d-flex align-items-center gap-lg-2 gap-1">
             <!-- Sidebar Menu Toggle Button -->
-            <button class="button-toggle-menu d-flex flex-row justify-content-start align-items-center gain-header-menu-button">
+            <button class="button-toggle-menu d-flex flex-row justify-content-start align-items-center">
                 <i class="mdi mdi-menu"></i>
             </button>
 
@@ -59,8 +59,14 @@
             </li>
 
             <li class="d-sm-inline-block">
+                <a role="button" class="btn p-0 action-icon" data-bs-toggle="modal" data-bs-target="#initialize-notification-modal">
+                    <i class="ri-notification-3-line font-22"></i>
+                </a>
+            </li>
+
+            <li class="d-sm-inline-block">
                 <a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
-                    <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
+                    <div clas="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
                         <i class="ri-moon-line font-22"></i>
                     </div>
                 </a>
@@ -110,5 +116,20 @@
                 </div>
             </li>
         </ul>
+    </div>
+</div>
+
+<div id="initialize-notification-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="ri-alert-line h1 text-warning"></i>
+                    <h4 class="mt-2">{{ 'notification.label'|trans }}</h4>
+                    <p class="mt-3">{{ 'notification.initialize.description'|trans }}</p>
+                    <button type="button" class="btn btn-warning my-2" data-bs-dismiss="modal" {{ stimulus_action('notification', 'initialize') }}>{{ 'action.save'|trans }}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

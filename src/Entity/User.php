@@ -102,6 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(name: 'last_login_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $lastLoginAt = null;
 
+    #[ORM\Embedded()]
+    public UserPushNotificationInfo $pushNotificationInfo;
+
     public function __construct(
         ?string $email,
         ?string $firstName,

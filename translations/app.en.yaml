@@ -48,6 +48,12 @@ header:
   dropdown:
     welcome: "Welcome!"
 
+notification:
+    label: "Notifications"
+    initialize:
+        description: "Set up push notifications on your device. Please note that if you use push notifications on another device, they will be disabled."
+
+
 title:
   all: "Jira Service Desk"
   short: "ServiceDesk"

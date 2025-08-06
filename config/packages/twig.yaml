@@ -10,6 +10,7 @@ twig:
         project_version: '%env(PROJECT_VERSION)%'
         jira_account_id: '%env(JIRA_ACCOUNT_ID)%'
         marker_io_project_id: '%env(MARKER_IO_PROJECT_ID)%'
+        notification_vapid_public_key: '%env(VAPID_PUBLIC_KEY)%'
     date:
         timezone: Europe/Paris
         format: d/m/Y

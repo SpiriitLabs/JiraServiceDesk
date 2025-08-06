@@ -28,6 +28,8 @@ RUN set -eux; \
 	install-php-extensions \
 		@composer \
 		apcu \
+		bcmath \
+		gmp \
 		intl \
 		opcache \
 		zip \

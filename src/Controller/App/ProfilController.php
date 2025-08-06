@@ -6,6 +6,7 @@ use App\Controller\Common\EditControllerTrait;
 use App\Entity\User;
 use App\Form\Admin\User\UserProfileFormType;
 use App\Message\Command\User\EditUser;
+use Minishlink\WebPush\VAPID;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

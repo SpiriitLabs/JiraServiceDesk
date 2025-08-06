@@ -19,6 +19,7 @@
         "doctrine/orm": "^3.5.1",
         "gedmo/doctrine-extensions": "^3.20",
         "lesstif/jira-cloud-restapi": "^1.8",
+        "minishlink/web-push": "^9.0",
         "pagerfanta/doctrine-dbal-adapter": "^4.7.1",
         "pagerfanta/doctrine-orm-adapter": "^4.7.1",
         "pagerfanta/pagerfanta": "^2.0.1",
