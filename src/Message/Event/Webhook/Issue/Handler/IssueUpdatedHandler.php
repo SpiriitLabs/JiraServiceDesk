@@ -41,9 +41,26 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         }
 
         try {
-            $this->issueRepository->getFull($issueKey);
+            $issue = $this->issueRepository->getFull($issueKey);
         } catch (JiraException $jiraException) {
             return;
+        }
+
+        $history = $issue->changelog->histories;
+        $changes = [];
+        foreach ($history as $item) {
+            $fiveMinutesAgo = time() - 300;
+            if (strtotime($item->created) < $fiveMinutesAgo) {
+                continue;
+            }
+            switch ($item->items[0]->field) {
+                case 'status':
+                    $changes['status'][] = [
+                        'from' => $item->items[0]->fromString,
+                        'to' => $item->items[0]->toString,
+                    ];
+                    break;
+            }
         }
 
         $this->logger->info('WEBHOOK/IssueUpdated', [
@@ -59,6 +76,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
+                'changes' => $changes,
             ])
         ;
 

@@ -7,6 +7,8 @@ issue:
         title: "[%project_name%] Ticket '%ticket_name%' mis à jour !"
         description: "Votre ticket « %ticket_name% » dans le projet « %project_name% » a été mis à jour.<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
+    status:
+        updated: "Le statut est passé de %previous_status% à %next_status%"
 
 comment:
     created:

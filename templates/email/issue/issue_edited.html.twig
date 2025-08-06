@@ -22,6 +22,19 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td class="r16-c nl2go-default-textstyle"
+                    align="left"
+                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                    <div>
+                        <ul>
+                            {% for change in changes.status %}
+                                <li>{{ 'issue.status.updated'|trans({'%previous_status%': change.from, '%next_status%': change.to}) }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
 
         {% endblock %}
     </twig:email:text>

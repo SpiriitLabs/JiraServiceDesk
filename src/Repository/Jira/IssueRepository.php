@@ -25,7 +25,7 @@ class IssueRepository
         $issue = $this->service->get(
             issueIdOrKey: $issueId,
             paramArray: [
-                'expand' => 'renderedFields,transitions',
+                'expand' => 'renderedFields,transitions,changelog',
             ]
         );
 

@@ -7,6 +7,8 @@ issue:
         title: "[%project_name%] '%ticket_name%' ticket updated!"
         description: "Your ticket \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
         action: "View ticket"
+    status:
+        updated: "The status has changed from %previous_status% to %next_status%"
 
 comment:
     created:
