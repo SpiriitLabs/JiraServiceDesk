@@ -9,6 +9,10 @@ issue:
         action: "View ticket"
     status:
         updated: "The status has changed from %previous_status% to %next_status%"
+    assignee:
+        updated: "The assignee has change from %previous_assignee% to %next_assignee%"
+        set: "The assignee has to %next_assignee%"
+        unset: "The assignee has removed from %previous_assignee%"
 
 comment:
     created:

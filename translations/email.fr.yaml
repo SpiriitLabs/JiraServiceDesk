@@ -9,6 +9,10 @@ issue:
         action: "Voir le ticket"
     status:
         updated: "Le statut est passé de %previous_status% à %next_status%"
+    assignee:
+        updated: "L'assignation est passé de %previous_assignee% à %next_assignee%"
+        set: "Assignation mise à %next_assignee%"
+        unset: "Assignation retiré de %previous_assignee%"
 
 comment:
     created:

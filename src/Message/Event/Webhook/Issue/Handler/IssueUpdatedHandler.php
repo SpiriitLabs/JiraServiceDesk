@@ -60,6 +60,13 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                         'to' => $item->items[0]->toString,
                     ];
                     break;
+
+                case 'assignee':
+                    $changes['assignee'][] = [
+                        'from' => $item->items[0]->fromString,
+                        'to' => $item->items[0]->toString,
+                    ];
+                    break;
             }
         }
 
