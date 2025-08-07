@@ -54,15 +54,9 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 continue;
             }
             switch ($item->items[0]->field) {
-                case 'status':
-                    $changes['status'][] = [
-                        'from' => $item->items[0]->fromString,
-                        'to' => $item->items[0]->toString,
-                    ];
-                    break;
-
                 case 'assignee':
-                    $changes['assignee'][] = [
+                case 'status':
+                    $changes[$item->items[0]->field][] = [
                         'from' => $item->items[0]->fromString,
                         'to' => $item->items[0]->toString,
                     ];
