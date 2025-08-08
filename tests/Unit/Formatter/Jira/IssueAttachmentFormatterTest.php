@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class IssueAttachmentFormatterTest extends TestCase
 {
     private Filesystem $filesystem;
+
     private IssueAttachmentFormatter $formatter;
 
     protected function setUp(): void
@@ -43,9 +44,13 @@ class IssueAttachmentFormatterTest extends TestCase
         $issue->fields->attachment = $attachments;
 
         if (empty($filesystemExistsReturns)) {
-            $this->filesystem->method('exists')->willReturn(false);
+            $this->filesystem->method('exists')
+                ->willReturn(false)
+            ;
         } else {
-            $this->filesystem->method('exists')->willReturnOnConsecutiveCalls(...$filesystemExistsReturns);
+            $this->filesystem->method('exists')
+                ->willReturnOnConsecutiveCalls(...$filesystemExistsReturns)
+            ;
         }
 
         $result = $this->formatter->format($issue);
@@ -75,7 +80,9 @@ class IssueAttachmentFormatterTest extends TestCase
                     'id' => 123,
                     'filename' => 'test.png',
                     'self' => 'https://jira.example.com/attachment/123',
-                    'author' => (object) ['displayName' => 'Test User'],
+                    'author' => (object) [
+                        'displayName' => 'Test User',
+                    ],
                 ],
             ],
             'expectedCustomAttachments' => [
@@ -113,13 +120,17 @@ class IssueAttachmentFormatterTest extends TestCase
                     'id' => 101,
                     'filename' => 'image1.jpg',
                     'self' => 'https://jira.example.com/attachment/101',
-                    'author' => (object) ['displayName' => 'User One'],
+                    'author' => (object) [
+                        'displayName' => 'User One',
+                    ],
                 ],
                 (object) [
                     'id' => 202,
                     'filename' => 'doc1.pdf',
                     'self' => 'https://jira.example.com/attachment/202',
-                    'author' => (object) ['displayName' => 'User Two'],
+                    'author' => (object) [
+                        'displayName' => 'User Two',
+                    ],
                 ],
             ],
             'expectedCustomAttachments' => [
@@ -143,7 +154,9 @@ class IssueAttachmentFormatterTest extends TestCase
                     'id' => 404,
                     // filename missing
                     'self' => 'https://jira.example.com/attachment/404',
-                    'author' => (object) ['displayName' => 'No Name User'],
+                    'author' => (object) [
+                        'displayName' => 'No Name User',
+                    ],
                 ],
             ],
             'expectedCustomAttachments' => [

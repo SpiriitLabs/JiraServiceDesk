@@ -10,7 +10,6 @@ use Zenstruck\Foundry\InMemory\AsInMemoryTest;
 #[AsInMemoryTest]
 class UserNameServiceTest extends TestCase
 {
-
     #[Test]
     public function testItMustBeReturnQuestionMark(): void
     {

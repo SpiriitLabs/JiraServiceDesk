@@ -9,11 +9,11 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Serializer\Encoder\EncoderInterface;
 
 #[AsMessageHandler]
-class ExportUsersHandler
+readonly class ExportUsersHandler
 {
     public function __construct(
-        private readonly EncoderInterface $csvEncoder,
-        private readonly UserRepository $userRepository,
+        private EncoderInterface $csvEncoder,
+        private UserRepository $userRepository,
     ) {
     }
 

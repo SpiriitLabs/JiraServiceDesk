@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class ReplaceAccountIdByDisplayNameTest extends TestCase
 {
-
     private UserRepository|MockObject $userRepository;
 
     protected function setUp(): void
@@ -18,7 +17,7 @@ class ReplaceAccountIdByDisplayNameTest extends TestCase
         $this->userRepository = $this->createMock(UserRepository::class);
     }
 
-    public function testReplaceInCommentBody()
+    public function testReplaceInCommentBody(): void
     {
         $user1 = $this->createMock(User::class);
         $user1->displayName = 'John Doe';
@@ -34,9 +33,10 @@ class ReplaceAccountIdByDisplayNameTest extends TestCase
                 ],
                 [
                     '13',
-                    $user2
-                ]
-            ]);
+                    $user2,
+                ],
+            ])
+        ;
 
         $comment = '[~accountid:12] et [~accountid:13]';
         $service = $this->generate();
