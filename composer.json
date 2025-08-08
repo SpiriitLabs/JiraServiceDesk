@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "description": "A jira service desk client application.",
-    "version": "0.28.0",
+    "version": "v0.28.5",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
