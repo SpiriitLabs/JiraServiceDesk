@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class IssueKanbanFormatterTest extends TestCase
 {
-
     private IssueKanbanFormatter|MockObject $formatter;
+
     private Project $project;
 
     protected function setUp(): void
@@ -50,12 +50,17 @@ class IssueKanbanFormatterTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
-
     #[Test]
     public function testFormatWithColumnsConfiguration(): void
     {
-        $transitionToStatus = (object)['id' => '20001', 'name' => 'Done'];
-        $transition = (object)['id' => '30001', 'to' => $transitionToStatus];
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
 
         $issue = $this->createMock(Issue::class);
         $issue->transitions = [$transition];
@@ -64,7 +69,9 @@ class IssueKanbanFormatterTest extends TestCase
         $issue->fields->status->id = '20001';
         $issue->fields->status->name = 'Done';
 
-        $status = (object)['id' => '20001'];
+        $status = (object) [
+            'id' => '20001',
+        ];
         $columnConfig = $this->createMock(BoardColumn::class);
         $columnConfig->statuses = [$status];
         $columnConfig->min = 1;
@@ -97,5 +104,4 @@ class IssueKanbanFormatterTest extends TestCase
         $result = $this->formatter->format([$issue], $this->project, null);
         $this->assertSame([], $result);
     }
-
 }

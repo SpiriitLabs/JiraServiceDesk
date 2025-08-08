@@ -2,7 +2,6 @@
 
 namespace App\Tests\Unit\Message\Command\Common;
 
-use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Command\Common\Handler\EmailNotificationHandler;
@@ -40,11 +39,14 @@ class EmailNotificationHandlerTest extends TestCase
     #[DataProvider('emailNotificationDataProvider')]
     public function testDoSendEmailNotification(bool $userHasPreferenceNotification): void
     {
-        $user = UserFactory::createOne(['preferenceNotification' => $userHasPreferenceNotification]);
+        $user = UserFactory::createOne([
+            'preferenceNotification' => $userHasPreferenceNotification,
+        ]);
 
         $this->mailer
             ->expects($userHasPreferenceNotification ? self::once() : self::never())
-            ->method('send');
+            ->method('send')
+        ;
 
         $handler = $this->generate();
         $handler(
@@ -61,5 +63,4 @@ class EmailNotificationHandlerTest extends TestCase
             mailer: $this->mailer,
         );
     }
-
 }

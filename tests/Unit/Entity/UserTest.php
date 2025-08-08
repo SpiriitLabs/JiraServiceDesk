@@ -50,6 +50,15 @@ class UserTest extends TestCase
 
         self::assertSame('FirstName', $user->getFirstName());
         self::assertSame('TESTOFLASTNAME', $user->getLastName());
-    }
 
+        // User with special letters.
+        $user = new User(
+            email: 'email@email.tld',
+            firstName: 'firstName',
+            lastName: 'Désirè',
+        );
+
+        self::assertSame('FirstName', $user->getFirstName());
+        self::assertSame('DÉSIRÈ', $user->getLastName());
+    }
 }
