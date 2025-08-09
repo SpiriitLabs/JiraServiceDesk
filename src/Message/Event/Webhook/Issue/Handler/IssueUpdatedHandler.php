@@ -2,6 +2,7 @@
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Formatter\Jira\IssueHistoryFormatter;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
@@ -25,6 +26,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
         private readonly IssueRepository $issueRepository,
+        private readonly IssueHistoryFormatter $issueHistoryFormatter,
     ) {
     }
 
@@ -41,7 +43,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         }
 
         try {
-            $this->issueRepository->getFull($issueKey);
+            $issue = $this->issueRepository->getFull($issueKey);
         } catch (JiraException $jiraException) {
             return;
         }
@@ -59,6 +61,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
+                'changes' => $this->issueHistoryFormatter->format($issue),
             ])
         ;
 
