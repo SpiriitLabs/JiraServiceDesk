@@ -73,4 +73,7 @@ return [
     Pentatrion\ViteBundle\PentatrionViteBundle::class => [
         'all' => true,
     ],
+    Symfony\UX\TogglePassword\TogglePasswordBundle::class => [
+        'all' => true,
+    ],
 ];

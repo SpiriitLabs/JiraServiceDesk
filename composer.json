@@ -47,6 +47,7 @@
         "symfony/translation": "7.3.*",
         "symfony/twig-bundle": "7.3.*",
         "symfony/ux-autocomplete": "^2.28.2",
+        "symfony/ux-toggle-password": "^2.29",
         "symfony/ux-turbo": "^2.28.2",
         "symfony/ux-twig-component": "^2.28.2",
         "symfony/validator": "7.3.*",

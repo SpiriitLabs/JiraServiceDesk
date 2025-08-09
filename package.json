@@ -9,6 +9,7 @@
         "@hotwired/turbo": "^8.0.13",
         "@symfony/stimulus-bridge": "^3.2.3",
         "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
+        "@symfony/ux-toggle-password": "file:vendor/symfony/ux-toggle-password/assets",
         "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "core-js": "^3.44.0",
         "eslint": "^8.57.1",

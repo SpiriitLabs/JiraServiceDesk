@@ -1321,6 +1321,9 @@
 "@symfony/ux-autocomplete@file:vendor/symfony/ux-autocomplete/assets":
   version "2.28.1"
 
+"@symfony/ux-toggle-password@file:vendor/symfony/ux-toggle-password/assets":
+  version "2.29.0"
+
 "@symfony/ux-turbo@file:vendor/symfony/ux-turbo/assets":
   version "2.28.1"
 
