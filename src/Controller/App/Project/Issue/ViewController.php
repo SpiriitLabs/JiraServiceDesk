@@ -51,7 +51,13 @@ class ViewController extends AbstractController
         ?string $focusedCommentId = null,
     ): Response {
         $this->setCurrentProject($project);
-        $issue = $this->jiraIssueRepository->getFull($keyIssue);
+
+        try {
+            $issue = $this->jiraIssueRepository->getFull($keyIssue);
+        } catch (JiraException $jiraException) {
+            throw $this->createNotFoundException();
+        }
+
         $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
