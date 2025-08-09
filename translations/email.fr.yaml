@@ -7,12 +7,16 @@ issue:
         title: "[%project_name%] Ticket '%ticket_name%' mis à jour !"
         description: "Votre ticket « %ticket_name% » dans le projet « %project_name% » a été mis à jour.<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
+    history:
+        title: 'Changements récents'
     status:
         updated: "Le statut est passé de %previous_status% à %next_status%"
     assignee:
         updated: "L'assignation est passé de %previous_assignee% à %next_assignee%"
         set: "Assignation mise à %next_assignee%"
         unset: "Assignation retiré de %previous_assignee%"
+    description:
+        updated: "La description a été mise à jour"
 
 comment:
     created:

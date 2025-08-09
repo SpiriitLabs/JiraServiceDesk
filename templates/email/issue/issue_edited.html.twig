@@ -27,6 +27,9 @@
                     align="left"
                     style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
                     <div>
+                        <p style="margin: 0;">
+                            {{ 'issue.history.title'|trans }}:
+                        </p>
                         <ul>
                             {% for change in changes.status %}
                                 <li>{{ 'issue.status.updated'|trans({'%previous_status%': change.from, '%next_status%': change.to}) }}</li>
@@ -39,6 +42,9 @@
                                 {% elseif change.to %}
                                     <li>{{ 'issue.assignee.set'|trans({'%next_assignee%': change.to}) }}</li>
                                 {% endif %}
+                            {% endfor %}
+                            {% for change in changes.description %}
+                                <li>{{ 'issue.description.updated'|trans }}</li>
                             {% endfor %}
                         </ul>
                     </div>

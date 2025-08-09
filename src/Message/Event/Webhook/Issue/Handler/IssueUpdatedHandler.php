@@ -50,6 +50,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         $changes = [
             'assignee' => [],
             'status' => [],
+            'description' => [],
         ];
         foreach ($history as $item) {
             $fiveMinutesAgo = time() - 300;

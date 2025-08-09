@@ -7,12 +7,16 @@ issue:
         title: "[%project_name%] '%ticket_name%' ticket updated!"
         description: "Your ticket \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
         action: "View ticket"
+    history:
+        title: 'Recent changes'
     status:
         updated: "The status has changed from %previous_status% to %next_status%"
     assignee:
         updated: "The assignee has change from %previous_assignee% to %next_assignee%"
         set: "The assignee has to %next_assignee%"
         unset: "The assignee has removed from %previous_assignee%"
+    description:
+        updated: "The description has been updated"
 
 comment:
     created:
