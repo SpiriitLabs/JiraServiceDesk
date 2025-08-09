@@ -47,21 +47,22 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         }
 
         $history = $issue->changelog->histories;
-        $changes = [];
+        $changes = [
+            'assignee' => [],
+            'status' => [],
+        ];
         foreach ($history as $item) {
             $fiveMinutesAgo = time() - 300;
-            if (strtotime($item->created) < $fiveMinutesAgo) {
+            if (
+                strtotime($item->created) < $fiveMinutesAgo
+                || ! isset($changes[$item->items[0]->field])
+            ) {
                 continue;
             }
-            switch ($item->items[0]->field) {
-                case 'assignee':
-                case 'status':
-                    $changes[$item->items[0]->field][] = [
-                        'from' => $item->items[0]->fromString,
-                        'to' => $item->items[0]->toString,
-                    ];
-                    break;
-            }
+            $changes[$item->items[0]->field][] = [
+                'from' => $item->items[0]->fromString,
+                'to' => $item->items[0]->toString,
+            ];
         }
 
         $this->logger->info('WEBHOOK/IssueUpdated', [

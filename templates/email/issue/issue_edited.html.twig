@@ -28,22 +28,18 @@
                     style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
                     <div>
                         <ul>
-                            {% if changes.status is defined and changes.status %}
-                                {% for change in changes.status %}
-                                    <li>{{ 'issue.status.updated'|trans({'%previous_status%': change.from, '%next_status%': change.to}) }}</li>
-                                {% endfor %}
-                            {% endif %}
-                            {% if changes.assignee is defined and changes.assignee %}
-                                {% for change in changes.assignee %}
-                                    {% if change.from and change.to %}
-                                        <li>{{ 'issue.assignee.updated'|trans({'%previous_assignee%': change.from, '%next_assignee%': change.to}) }}</li>
-                                    {% elseif change.from %}
-                                        <li>{{ 'issue.assignee.unset'|trans({'%previous_assignee%': change.from}) }}</li>
-                                    {% elseif change.to %}
-                                        <li>{{ 'issue.assignee.set'|trans({'%next_assignee%': change.to}) }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
+                            {% for change in changes.status %}
+                                <li>{{ 'issue.status.updated'|trans({'%previous_status%': change.from, '%next_status%': change.to}) }}</li>
+                            {% endfor %}
+                            {% for change in changes.assignee %}
+                                {% if change.from and change.to %}
+                                    <li>{{ 'issue.assignee.updated'|trans({'%previous_assignee%': change.from, '%next_assignee%': change.to}) }}</li>
+                                {% elseif change.from %}
+                                    <li>{{ 'issue.assignee.unset'|trans({'%previous_assignee%': change.from}) }}</li>
+                                {% elseif change.to %}
+                                    <li>{{ 'issue.assignee.set'|trans({'%next_assignee%': change.to}) }}</li>
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
                 </td>
