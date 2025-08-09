@@ -2,6 +2,7 @@
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Formatter\Jira\IssueHistoryFormatter;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
@@ -25,6 +26,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
         private readonly IssueRepository $issueRepository,
+        private readonly IssueHistoryFormatter $issueHistoryFormatter,
     ) {
     }
 
@@ -46,26 +48,6 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             return;
         }
 
-        $history = $issue->changelog->histories;
-        $changes = [
-            'assignee' => [],
-            'status' => [],
-            'description' => [],
-        ];
-        foreach ($history as $item) {
-            $fiveMinutesAgo = time() - 300;
-            if (
-                strtotime($item->created) < $fiveMinutesAgo
-                || ! isset($changes[$item->items[0]->field])
-            ) {
-                continue;
-            }
-            $changes[$item->items[0]->field][] = [
-                'from' => $item->items[0]->fromString,
-                'to' => $item->items[0]->toString,
-            ];
-        }
-
         $this->logger->info('WEBHOOK/IssueUpdated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,
@@ -79,7 +61,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
-                'changes' => $changes,
+                'changes' => $this->issueHistoryFormatter->format($issue),
             ])
         ;
 
