@@ -77,3 +77,9 @@ select[readonly] {
 .table-action {
     width: 150px !important;
 }
+
+// User form - edit or profile
+.toggle-password-container .toggle-password-button {
+    top: 0;
+    padding: 1.2rem 0.5rem;
+}
