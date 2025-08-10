@@ -255,6 +255,10 @@ issue:
     environment:
         label: "Environnement"
 
+comment:
+    created:
+        label: "(modifié)"
+
 priority:
     label: "Prioritée(s)"
     name:
