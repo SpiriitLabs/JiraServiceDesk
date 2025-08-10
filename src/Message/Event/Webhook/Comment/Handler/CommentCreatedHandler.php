@@ -75,13 +75,13 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 $user->preferenceNotificationCommentCreated === false
                 && (
                     $user->preferenceNotificationCommentOnlyOnTag == false
-                    || str_contains(
-                        haystack: mb_strtolower($commentBody),
+                    || ! str_contains(
+                        haystack: mb_strtolower($event->getPayload()['comment']['body']),
                         needle: sprintf(
                             '[~accountid:%s]',
                             $this->jiraAPIAccountId,
                         ),
-                    ) == false
+                    )
                 )
             ) {
                 continue;

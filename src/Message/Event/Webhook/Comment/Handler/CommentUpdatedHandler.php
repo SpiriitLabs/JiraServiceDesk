@@ -72,16 +72,16 @@ class CommentUpdatedHandler implements LoggerAwareInterface
 
         foreach ($project->getUsers() as $user) {
             if (
-                $user->preferenceNotificationCommentCreated === false
+                $user->preferenceNotificationCommentUpdated === false
                 && (
                     $user->preferenceNotificationCommentOnlyOnTag == false
-                    || str_contains(
-                        haystack: mb_strtolower($commentBody),
+                    || ! str_contains(
+                        haystack: mb_strtolower($event->getPayload()['comment']['body']),
                         needle: sprintf(
                             '[~accountid:%s]',
                             $this->jiraAPIAccountId,
                         ),
-                    ) == false
+                    )
                 )
             ) {
                 continue;
