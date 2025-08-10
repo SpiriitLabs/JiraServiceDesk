@@ -1,3 +1,4 @@
+{% trans_default_domain 'app' %}
 {% props comment = null, issueKey = '' %}
 {% set commentParseAuthor = comment|parse_comment_author %}
 
@@ -22,7 +23,10 @@
             {% endif %}
 
             <small class="text-muted float-end">
-                {{ comment.updated|date('d/m/Y H:i') }}
+                {{ comment.created|date('d/m/Y H:i') }}
+                {% if comment.created != comment.updated %}
+                    {{ 'comment.created.label'|trans }}
+                {% endif %}
             </small>
         </h5>
         {{ comment.renderedBody|preview_description|raw }}
