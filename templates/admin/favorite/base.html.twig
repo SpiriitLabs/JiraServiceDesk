@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+{% extends 'admin/layout.html.twig' %}
+{% block title 'favorite.label'|trans %}
+
+{% set breadcrumb = [{
+    href: path('admin_favorite_list'),
+    label: 'favorite.label'|trans,
+}]|merge(breadcrumb|default([])) %}

@@ -105,6 +105,14 @@ favorite:
   action:
     add: "Add to favorites"
     remove: "Remove from favorites"
+  name:
+    label: "Name"
+  user:
+    label: "User"
+  code:
+    label: "Code"
+  flashes:
+    deleted: "Favorite deleted successfully"
 
 user:
   label: "User(s)"

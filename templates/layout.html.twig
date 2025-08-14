@@ -27,7 +27,7 @@
             {% for message in messages %}
                 <div id="liveToast" {{ stimulus_target('flash', 'container') }} class="toast show text-bg-{{ type }}" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
-                        <img src="{{ asset('assets/images/logo/favicon.ico') }}" class="rounded me-2" style="width: 25px" alt="RomainMILLAN">
+                        <img src="{{ asset('assets/images/logo/favicon.ico', 'app') }}" class="rounded me-2" style="width: 25px" alt="RomainMILLAN">
                         <strong class="me-auto">{{ 'title.all'|trans }}</strong>
                         <button type="button" {{ stimulus_action('flash', 'close') }} class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>

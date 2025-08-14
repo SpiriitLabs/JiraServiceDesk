@@ -1,0 +1,45 @@
+{% extends 'admin/favorite/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'favorite.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+
+{% block content %}
+    <twig:list:list
+        :filterFormResetPath="path('admin_favorite_list')"
+        :filterForm="filterForm"
+    >
+        {% trans_default_domain 'app' %}
+
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+        </twig:block>
+
+        {% block tableTh %}
+            {% trans_default_domain 'app' %}
+            <th class="d-none d-md-table-cell">{{ 'favorite.user.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'favorite.name.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'favorite.code.label'|trans }}</th>
+            <th class="min"></th>
+        {% endblock %}
+
+        {% block tableTd %}
+            <td>{{ object.user.fullName }}</td>
+            <td>{{ object.name }}</td>
+            <td>{{ object.code }}</td>
+            <td class="d-flex flex-row">
+                {% include 'components/modal/delete.html.twig' with {
+                    id: object.id,
+                    button_link: path('admin_favorite_delete', {id: object.id}),
+                } %}
+            </td>
+        {% endblock %}
+    </twig:list:list>
+{% endblock %}

@@ -108,6 +108,14 @@ favorite:
     action:
         add: "Ajouter aux favoris"
         remove: "Retirer des favoris"
+    name:
+      label: "Nom"
+    user:
+      label: "Utilisateur"
+    code:
+      label: "Code"
+    flashes:
+      deleted: "Favori supprimé avec succès"
 
 user:
     label: "Utilisateur(s)"
