@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Form\Type\QuillAdfType;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\PriorityRepository;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -18,7 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CreateIssueFormType extends AbstractIssueFormType
 {
     public function __construct(
-        Security $security,
         #[Autowire(env: 'DEFAULT_PRIORITY_NAME')]
         private readonly string $defaultPriorityName,
         private readonly PriorityRepository $priorityRepository,
