@@ -76,6 +76,14 @@
                                 />
 
                                 <twig:nav:item-single
+                                    path="admin_favorite"
+                                    trans="favorite.label"
+                                    icon="mdi mdi-heart"
+                                    href="{{ path('admin_favorite_list') }}"
+                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
+                                <twig:nav:item-single
                                     path="admin_project"
                                     trans="project.label"
                                     icon="uil-briefcase"
