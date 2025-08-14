@@ -10,8 +10,17 @@
 ] %}
 
 {% block content %}
-    <twig:list:list>
+    <twig:list:list
+        :filterFormResetPath="path('admin_favorite_list')"
+        :filterForm="filterForm"
+    >
         {% trans_default_domain 'app' %}
+
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+        </twig:block>
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
@@ -22,7 +31,7 @@
         {% endblock %}
 
         {% block tableTd %}
-            <td>{{ object.user.fullName  }}</td>
+            <td>{{ object.user.fullName }}</td>
             <td>{{ object.name }}</td>
             <td>{{ object.code }}</td>
             <td class="d-flex flex-row">
