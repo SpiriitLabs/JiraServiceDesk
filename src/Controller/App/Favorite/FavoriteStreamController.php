@@ -87,11 +87,11 @@ class FavoriteStreamController extends AbstractController
                         ->getData(),
                     projectId: $form->get('projectId')
                         ->getData(),
+                    user: $user,
                     name: $form->get('name')
                         ->getData(),
                     link: $form->get('link')
                         ->getData(),
-                    user: $user,
                 ),
             );
 
