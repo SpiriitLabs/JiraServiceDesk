@@ -2,7 +2,6 @@
 
 namespace App\Tests\Unit\Form\Admin\User;
 
-use App\Entity\Project;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Factory\UserFactory;
@@ -11,7 +10,6 @@ use App\Message\Command\User\EditUser;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,9 +59,6 @@ class UserProfileFormTypeTest extends TypeTestCase
         $em->method('getRepository')
             ->willReturn($projectRepository)
         ;
-        $em->method('getClassMetadata')
-            ->willReturn(new ClassMetadata(Project::class))
-        ;
 
         // Mock ManagerRegistry
         $managerRegistry = $this->createMock(ManagerRegistry::class);
@@ -75,7 +70,6 @@ class UserProfileFormTypeTest extends TypeTestCase
             new PreloadedExtension(
                 [
                     new UserProfileFormType(),
-                    new PasswordType(),
                 ],
                 [
                     PasswordType::class => [
@@ -92,14 +86,15 @@ class UserProfileFormTypeTest extends TypeTestCase
     public function testSubmitValidData(): void
     {
         $formData = [
+            'email' => 'test+update@local.lan',
             'preferedLocale' => Locale::FR->value,
             'preferedTheme' => Theme::AUTO->value,
             'firstName' => 'Pierre',
-            'lastName' => 'DUPONT',
+            'lastName' => 'DUPOND',
             'preferenceNotification' => true,
             'preferenceNotificationIssueCreated' => true,
             'preferenceNotificationIssueUpdated' => true,
-            'preferenceNotificationCommentUpdated' => true,
+            'preferenceNotificationCommentUpdated' => false,
             'preferenceNotificationCommentCreated' => true,
         ];
 
@@ -116,8 +111,10 @@ class UserProfileFormTypeTest extends TypeTestCase
             'preferenceNotificationCommentCreated' => true,
         ]);
         $updateUser = (clone $user);
-        $updateUser->setLastName('DUPONT');
+        $updateUser->setLastName('DUPOND');
         $updateUser->setFirstName('Pierre');
+        $updateUser->email = 'test+update@local.lan';
+        $updateUser->preferenceNotificationCommentUpdated = false;
 
         $model = new EditUser(
             user: $user,
