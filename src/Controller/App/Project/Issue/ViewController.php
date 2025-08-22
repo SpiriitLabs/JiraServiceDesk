@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\App\Issue\IssueCommentFormType;
 use App\Message\Command\App\Issue\CreateComment;
 use App\Message\Query\App\Issue\GetFullIssue;
+use App\Model\SortParams;
 use App\Repository\Jira\IssueRepository;
 use App\Service\IssueHtmlProcessor;
 use JiraCloud\JiraException;
@@ -58,7 +59,10 @@ class ViewController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
+        $comments = $this->jiraIssueRepository->getCommentForIssue(
+            issueId: $keyIssue,
+            sort: new SortParams('created', '-')
+        );
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);

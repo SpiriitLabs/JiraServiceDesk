@@ -2,6 +2,7 @@
 
 namespace App\Repository\Jira;
 
+use App\Model\SortParams;
 use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
 use JiraCloud\Issue\Comments;
@@ -36,7 +37,7 @@ class IssueRepository
         return $issue;
     }
 
-    public function getCommentForIssue(string $issueId): Comments
+    public function getCommentForIssue(string $issueId, SortParams $sort): Comments
     {
         try {
             $issuesComments = $this->service->getComments(
@@ -44,6 +45,7 @@ class IssueRepository
                 paramArray: [
                     'startAt' => 0,
                     'expand' => 'renderedBody',
+                    'orderBy' => $sort,
                 ],
             );
 

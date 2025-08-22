@@ -81,7 +81,7 @@
                     <hr class="my-5">
 
                     <div {% if focusedCommentId is not null %}{{ stimulus_controller('focus_comment', {focusedCommentId: focusedCommentId}) }}{% endif %}>
-                        {% for comment in comments|reverse %}
+                        {% for comment in comments %}
                             <twig:app:issue:comment
                                 comment="{{comment}}"
                                 issueKey="{{issue.key}}"
