@@ -44,6 +44,7 @@ class IssueRepository
                 paramArray: [
                     'startAt' => 0,
                     'expand' => 'renderedBody',
+                    'orderBy' => '-created',
                 ],
             );
 
