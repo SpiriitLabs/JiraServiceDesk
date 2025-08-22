@@ -26,4 +26,9 @@ class SortParams
 
         return new self($sort, self::DIR_ASC);
     }
+
+    public function __toString()
+    {
+        return $this->dir . $this->by;
+    }
 }

@@ -45,7 +45,7 @@ class IssueRepository
                 paramArray: [
                     'startAt' => 0,
                     'expand' => 'renderedBody',
-                    'orderBy' => $sort->dir . $sort->by,
+                    'orderBy' => $sort,
                 ],
             );
 
