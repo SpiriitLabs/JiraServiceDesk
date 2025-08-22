@@ -12,7 +12,7 @@ class SortParams
 
     public string $dir;
 
-    private function __construct(string $by, string $dir)
+    public function __construct(string $by, string $dir)
     {
         $this->by = $by;
         $this->dir = $dir;
