@@ -36,7 +36,7 @@ class IssueRepository
         return $issue;
     }
 
-    public function getCommentForIssue(string $issueId): Comments
+    public function getCommentForIssue(string $issueId, string $sortBy): Comments
     {
         try {
             $issuesComments = $this->service->getComments(
@@ -44,7 +44,7 @@ class IssueRepository
                 paramArray: [
                     'startAt' => 0,
                     'expand' => 'renderedBody',
-                    'orderBy' => '-created',
+                    'orderBy' => $sortBy,
                 ],
             );
 

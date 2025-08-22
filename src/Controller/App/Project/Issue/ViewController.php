@@ -58,7 +58,7 @@ class ViewController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $comments = $this->jiraIssueRepository->getCommentForIssue($keyIssue);
+        $comments = $this->jiraIssueRepository->getCommentForIssue(issueId: $keyIssue, sortBy: '-created');
 
         $form = $this->createForm(IssueCommentFormType::class, new CreateComment($issue, '', [], $user));
         $form->handleRequest($request);
