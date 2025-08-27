@@ -61,6 +61,19 @@ class IssueRepository
             );
             $issuesComments->total = count($issuesComments->comments);
 
+            $formatedComments = [];
+            foreach ($issuesComments->comments as $comment) {
+                $formatedComments[$comment->id] = $comment;
+                $formatedComments[$comment->id]->childs = [];
+            }
+            foreach (array_reverse($formatedComments) as $comment) {
+                if (! empty($comment->parentId)) {
+                    $formatedComments[$comment->parentId]->childs[] = $comment;
+                    unset($formatedComments[$comment->id]);
+                }
+            }
+            $issuesComments->comments = $formatedComments;
+
             return $issuesComments;
         } catch (JiraException $e) {
             return new Comments();
