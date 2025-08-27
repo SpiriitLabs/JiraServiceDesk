@@ -87,6 +87,14 @@
                                 issueKey="{{issue.key}}"
                             >
                             </twig:app:issue:comment>
+                            {% for child in comment.childs %}
+                                <twig:app:issue:comment
+                                    comment="{{child}}"
+                                    issueKey="{{issue.key}}"
+                                    child="true"
+                                >
+                                </twig:app:issue:comment>
+                            {% endfor %}
                         {% endfor %}
                     </div>
 

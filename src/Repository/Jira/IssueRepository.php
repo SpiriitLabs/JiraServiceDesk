@@ -2,6 +2,7 @@
 
 namespace App\Repository\Jira;
 
+use App\Formatter\Jira\IssueCommentsFormatter;
 use App\Model\SortParams;
 use JiraCloud\Issue\Attachment;
 use JiraCloud\Issue\Comment;
@@ -16,8 +17,9 @@ class IssueRepository
 {
     private IssueService $service;
 
-    public function __construct()
-    {
+    public function __construct(
+        protected readonly IssueCommentsFormatter $issueCommentsFormatter
+    ) {
         $this->service = new IssueService();
     }
 
@@ -49,19 +51,7 @@ class IssueRepository
                 ],
             );
 
-            $issuesComments->comments = array_filter(
-                $issuesComments->comments,
-                function ($comment) {
-                    if ($comment->visibility == null) {
-                        return true;
-                    }
-
-                    return false;
-                }
-            );
-            $issuesComments->total = count($issuesComments->comments);
-
-            return $issuesComments;
+            return $this->issueCommentsFormatter->format($issuesComments);
         } catch (JiraException $e) {
             return new Comments();
         }

@@ -135,6 +135,4 @@ class AdfHardBreakFormatterTest extends TestCase
             AdfHardBreakFormatter::format($input),
         );
     }
-
-
 }
