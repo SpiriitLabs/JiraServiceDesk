@@ -54,7 +54,7 @@
         "symfony/web-link": "7.3.*",
         "symfony/webhook": "7.3.*",
         "symfony/yaml": "7.3.*",
-        "symfonycasts/reset-password-bundle": "^1.23.1",
+        "symfonycasts/reset-password-bundle": "^1.23.2",
         "twig/extra-bundle": "^2.12|^3.21",
         "twig/string-extra": "^3.21",
         "twig/twig": "^2.12|^3.21.1",
