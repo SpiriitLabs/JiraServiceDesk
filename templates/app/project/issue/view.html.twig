@@ -82,19 +82,21 @@
 
                     <div {% if focusedCommentId is not null %}{{ stimulus_controller('focus_comment', {focusedCommentId: focusedCommentId}) }}{% endif %}>
                         {% for comment in comments %}
-                            <twig:app:issue:comment
-                                comment="{{comment}}"
-                                issueKey="{{issue.key}}"
-                            >
-                            </twig:app:issue:comment>
-                            {% for child in comment.childs %}
+                            <div class="comment--container{% if comment.childs|length > 0 %} comment_answer--container{% endif %}">
                                 <twig:app:issue:comment
-                                    comment="{{child}}"
+                                    comment="{{comment}}"
                                     issueKey="{{issue.key}}"
-                                    child="true"
                                 >
                                 </twig:app:issue:comment>
-                            {% endfor %}
+                                {% for child in comment.childs %}
+                                    <twig:app:issue:comment
+                                        comment="{{child}}"
+                                        issueKey="{{issue.key}}"
+                                        child="true"
+                                    >
+                                    </twig:app:issue:comment>
+                                {% endfor %}
+                            </div>
                         {% endfor %}
                     </div>
 

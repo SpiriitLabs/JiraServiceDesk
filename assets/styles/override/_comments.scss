@@ -1,3 +1,16 @@
-.comment-answer {
-  padding-left: 2rem;
+.comment_answer {
+    &--container {
+        border-left: 1px var(--ct-border-style) var(--ct-border-color);
+    }
+
+    &--comment {
+        padding-left: 2rem;
+    }
+}
+
+
+.comment {
+    &--container {
+        padding-left: .5rem;
+    }
 }
