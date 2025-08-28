@@ -17,11 +17,10 @@
                                     <div class="col ps-2">
                                         <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
                                         <p class="mb-0 text-muted">
-                                            {% if attachment.author.accountId == jira_account_id %}
-                                                {{ app.user.fullName }} (Support)
-                                            {% else %}
-                                                {{ attachment.author.displayName }}
-                                            {% endif %}
+                                            <twig:app:issue:assignee
+                                                reporter="{{ attachment.author }}"
+                                                hasImage="{{ false }}"
+                                            />
                                         </p>
                                     </div>
                                     <div class="col-auto">
