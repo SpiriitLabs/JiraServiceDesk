@@ -62,6 +62,8 @@ class EditController extends AbstractController
                 break;
             }
         }
+        $assigneesOptions = $assignableUsers;
+        $assigneesOptions[$issue->fields->assignee->displayName] = $issue->fields->assignee->accountId;
 
         $form = $this->createForm(
             type: EditIssueFormType::class,
@@ -81,7 +83,8 @@ class EditController extends AbstractController
             options: [
                 'projectId' => $project->getId(),
                 'transitions' => $issueTransitions,
-                'assignees' => $assignableUsers,
+                'assignee_editable' => in_array($issue->fields->assignee->accountId, $assignableUsers),
+                'assignees' => $assigneesOptions,
             ]
         );
         $form->handleRequest($request);

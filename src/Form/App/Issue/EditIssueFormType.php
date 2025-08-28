@@ -32,6 +32,7 @@ class EditIssueFormType extends AbstractIssueFormType
                 ->add('assignee', ChoiceType::class, [
                     'required' => true,
                     'choices' => $options['assignees'],
+                    'disabled' => !$options['assignee_editable'],
                 ])
             ;
         }
@@ -46,6 +47,7 @@ class EditIssueFormType extends AbstractIssueFormType
             'label_format' => 'issue.%name%.label',
             'projectId' => null,
             'transitions' => [],
+            'assignee_editable' => true,
             'assignees' => [],
         ]);
     }
