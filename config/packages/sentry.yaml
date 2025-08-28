@@ -4,6 +4,16 @@ parameters:
 
 sentry:
   dsn: '%env(SENTRY_DSN)%'
+  tracing:
+      enabled: true
+      dbal: # DB queries
+          enabled: true
+      cache: # cache pools
+          enabled: true
+      twig: # templating engine
+          enabled: true
+      http_client: # Symfony HTTP client
+          enabled: true
   options:
     in_app_include:
       - '%kernel.project_dir%'
