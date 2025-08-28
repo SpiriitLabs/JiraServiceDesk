@@ -1,4 +1,4 @@
-# Jira Service Desk — by Romain MILLAN
+# Jira Service Desk
 
 A self-hosted web portal that connects to the Jira Cloud API and simplifies issue tracking for multiple users through a single authenticated account.  
 Built with Symfony 7.2, Docker, and FrankenPHP, this project includes project/user management, ticket interaction, Kanban boards, notifications, and more.
@@ -81,9 +81,11 @@ JIRAAPI_V3_PERSONAL_ACCESS_TOKEN=your-jira-token
 JIRAAPI_V3_HOST=https://your-domain.atlassian.net
 ###< lesstif/php-jira-rest-client ###
 
-###> romainmillan/jira-service-desk ###
-JIRA_ACCOUNT_ID=account-id-from-jira
-###< romainmillan/jira-service-desk ###
+###> spiriitlabs/jira-service-desk ###
+JIRA_ACCOUNT_ID=''
+DEFAULT_PRIORITY_NAME=''
+NOT_AVAILABLE_TYPES_JIRA_ID="[]"
+###< spiriitlabs/jira-service-desk ###
 ```
 
 ---
@@ -154,13 +156,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Symfony](https://symfony.com/) — MIT License  
 - [FrankenPHP](https://github.com/dunglas/frankenphp) — MIT License  
 - [php-JiraCloud-RESTAPI](https://github.com/lesstif/php-JiraCloud-RESTAPI) — Apache 2.0 License  
-
----
-
-## 📫 Contact
-
-Created by **Romain MILLAN**  
-📧 [contact@romainmillan.fr](mailto:contact@romainmillan.fr)  
-🌍 [https://romainmillan.fr](https://romainmillan.fr)
 
 ---
