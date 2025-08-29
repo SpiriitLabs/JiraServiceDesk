@@ -59,6 +59,9 @@ list:
     empty: "No items found"
     total: "%number% result(s)"
     perPage: "per page"
+pwa:
+    label: "Your Application"
+    description: "Install the app on your device for an optimal experience."
 
 modal:
   delete:

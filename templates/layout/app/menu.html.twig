@@ -147,10 +147,9 @@
                             </ul>
 
                             <div class="help-box text-white text-center">
-                                {#                                <img src="assets/images/svg/help-icon.svg" height="90" alt="Helper Icon Image">#}
                                 <h5 class="mt-1">{{ 'pwa.label'|trans }}</h5>
                                 <p class="mb-3">{{ 'pwa.description'|trans }}</p>
-                                <a href="#" {{ stimulus_action('install_pwa', 'installApp') }} class="btn btn-secondary btn-sm">{{ 'action.download'|trans }}</a>
+                                <a role="button" {{ stimulus_action('install_pwa', 'installApp') }} class="btn btn-secondary btn-sm">{{ 'action.download'|trans }}</a>
                             </div>
 
                             <div class="clearfix"></div>
