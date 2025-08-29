@@ -42,6 +42,11 @@
             border-color: var(--bs-primary);
         }
     }
+
+    .form-select:disabled {
+        cursor: not-allowed;
+        background-color: $input-disabled-bg;
+    }
 }
 
 select[readonly] {
