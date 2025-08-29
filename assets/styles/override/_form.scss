@@ -45,7 +45,7 @@
 
     .form-select:disabled {
         cursor: not-allowed;
-        background-color: var(--bs-gray-600);
+        background-color: $input-disabled-bg;
     }
 }
 
