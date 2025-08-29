@@ -61,7 +61,7 @@ class IssueAttachmentFormatterTest extends TestCase
         foreach ($expectedCustomAttachments as $index => $expectedAttachment) {
             foreach ($expectedAttachment as $key => $value) {
                 $this->assertArrayHasKey($key, $result->customAttachments[$index]);
-                $this->assertSame($value, $result->customAttachments[$index][$key]);
+                $this->assertEquals($value, $result->customAttachments[$index][$key]);
             }
         }
     }
@@ -89,7 +89,9 @@ class IssueAttachmentFormatterTest extends TestCase
                 [
                     'id' => 123,
                     'name' => 'test.png',
-                    'author' => 'Test User',
+                    'author' => (object) [
+                        'displayName' => 'Test User',
+                    ],
                 ],
             ],
             'filesystemExistsReturns' => [false, false],
@@ -137,12 +139,16 @@ class IssueAttachmentFormatterTest extends TestCase
                 [
                     'id' => 101,
                     'name' => 'image1.jpg',
-                    'author' => 'User One',
+                    'author' => (object) [
+                        'displayName' => 'User One',
+                    ],
                 ],
                 [
                     'id' => 202,
                     'name' => 'doc1.pdf',
-                    'author' => 'User Two',
+                    'author' => (object) [
+                        'displayName' => 'User Two',
+                    ],
                 ],
             ],
             'filesystemExistsReturns' => [true, true, false, false],
@@ -163,7 +169,9 @@ class IssueAttachmentFormatterTest extends TestCase
                 [
                     'id' => 404,
                     'name' => null,
-                    'author' => 'No Name User',
+                    'author' => (object) [
+                        'displayName' => 'No Name User',
+                    ],
                 ],
             ],
             'filesystemExistsReturns' => [false, false],

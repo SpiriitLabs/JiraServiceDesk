@@ -1,5 +1,5 @@
 {% trans_default_domain 'app' %}
-{% props reporter = null, reporterName = null %}
+{% props reporter = null, reporterName = null, hasImage = true %}
 
 {% if reporterName is not null %}
     <span class="align-middle">
@@ -10,7 +10,9 @@
         {% if reporter.accountId == jira_account_id %}
             {{ app.user.fullName }} (Support)
         {% else %}
-            <img src="{{ reporter.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+            {% if hasImage %}
+                <img src="{{ reporter.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+            {% endif %}
             {{ reporter.displayName }}
         {% endif %}
     </span>

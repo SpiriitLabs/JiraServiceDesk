@@ -54,7 +54,7 @@ class IssueAttachmentFormatter
             $issueAttachment[] = [
                 'id' => $attachment->id,
                 'name' => $attachment->filename ?? null,
-                'author' => $attachment->author->displayName ?? null,
+                'author' => $attachment->author,
                 'url' => sprintf('/%s', strstr($attachmentPath, 'uploads/')),
                 'thumbnailUrl' => sprintf(
                     '/%s',

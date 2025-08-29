@@ -16,7 +16,12 @@
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col ps-2">
                                         <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
-                                        <p class="mb-0 text-muted">{{ attachment.author }}</p>
+                                        <p class="mb-0 text-muted">
+                                            <twig:app:issue:assignee
+                                                reporter="{{ attachment.author }}"
+                                                hasImage="{{ false }}"
+                                            />
+                                        </p>
                                     </div>
                                     <div class="col-auto">
 
