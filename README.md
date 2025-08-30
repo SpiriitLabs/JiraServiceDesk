@@ -6,7 +6,7 @@ Built with Symfony 7.2, Docker, and FrankenPHP, this project includes project/us
 ![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
 ![Symfony 7.2](https://img.shields.io/badge/Symfony-7.2-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.3+-orange.svg)
-![Latest Release](https://img.shields.io/github/v/release/RomainMILLAN/JiraServiceDesk?color=blue)
+![Latest Release](https://img.shields.io/github/v/release/spiriitlabs/JiraServiceDesk?color=blue)
 
 ---
 

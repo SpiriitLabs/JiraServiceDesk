@@ -25,10 +25,10 @@
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 
-###> romainmillan/jira-service-desk ###
+###> spiriitlabs/jira-service-desk ###
 src/Cli/SandboxCommand.php
 private/uploads/*
-###< romainmillan/jira-service-desk ###
+###< spiriitlabs/jira-service-desk ###
 
 .DS_Store
 # Ignore pnpm store
