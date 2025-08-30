@@ -280,6 +280,15 @@ priority:
     flashes:
         generated: "Prioritée(s) récupérées avec succès"
 
+emaillog:
+    label: "Log de mail"
+    recipient:
+        label: "Desinataire(s)"
+    subject:
+        label: "Sujet"
+    sentAt:
+        label: "Envoyé à"
+
 security:
     login:
         label: "Connexion"
