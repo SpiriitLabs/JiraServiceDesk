@@ -29,7 +29,7 @@ class ListController extends AbstractController
         $pagination = $this->handle(
             new PaginateEntities(
                 class: EmailLog::class,
-                sort: $request->get('_sort', 'id'),
+                sort: $request->get('_sort', '-id'),
                 page: $request->get('page', 1),
                 form: $filterForm,
             ),

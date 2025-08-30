@@ -19,6 +19,9 @@ class MessageSubscriber implements EventSubscriberInterface
 
     public function onMessage(MessageEvent $event): void
     {
+        if (! $event->isQueued()) {
+            return;
+        }
         $message = $event->getMessage();
         if (! $message instanceof Email) {
             return;
