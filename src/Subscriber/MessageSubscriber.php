@@ -2,6 +2,8 @@
 
 namespace App\Subscriber;
 
+use App\Entity\EmailLog;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Event\MessageEvent;
@@ -10,7 +12,8 @@ use Symfony\Component\Mime\Email;
 class MessageSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -20,10 +23,17 @@ class MessageSubscriber implements EventSubscriberInterface
         if (! $message instanceof Email) {
             return;
         }
+        $to = implode(', ', array_map(fn ($a) => $a->getAddress(), $message->getTo()));
         $this->logger->info('Email envoyé', [
-            'to' => implode(', ', array_map(fn ($a) => $a->getAddress(), $message->getTo())),
+            'to' => $to,
             'subject' => $message->getSubject(),
         ]);
+        $emailLog = new EmailLog(
+            recipient: $to,
+            subject: $message->getSubject(),
+        );
+        $this->entityManager->persist($emailLog);
+        $this->entityManager->flush();
     }
 
     public static function getSubscribedEvents()
