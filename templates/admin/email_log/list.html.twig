@@ -16,6 +16,12 @@
     >
         {% trans_default_domain 'app' %}
 
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+        </twig:block>
+
         {% block tableTh %}
             {% trans_default_domain 'app' %}
             <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
