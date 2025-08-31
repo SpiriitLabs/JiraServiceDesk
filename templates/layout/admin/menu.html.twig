@@ -92,14 +92,6 @@
                                 />
 
                                 <twig:nav:item-single
-                                    path="#"
-                                    trans="dashboard.app"
-                                    icon="ri-archive-drawer-line"
-                                    href="{{ path('app_project_select') }}"
-                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
-                                />
-
-                                <twig:nav:item-single
                                     path="admin_priority"
                                     trans="priority.label"
                                     icon="mdi mdi-list-status"
@@ -110,9 +102,19 @@
                                 <twig:nav:item-single
                                     path="admin_log_entry"
                                     trans="logs.label"
-                                    icon="mdi mdi-list-status"
+                                    icon="mdi mdi-information"
                                     href="{{ path('admin_log_entry_list') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
+                                <hr>
+
+                                <twig:nav:item-single
+                                        path="#"
+                                        trans="dashboard.app"
+                                        icon="ri-archive-drawer-line"
+                                        href="{{ path('app_project_select') }}"
+                                        role="{{ constant('App\\Enum\\User\\Role::ROLE_USER') }}"
                                 />
 
                                 <div class="help-box text-white text-center">

@@ -34,7 +34,10 @@
         {% endblock %}
 
         {% block tableTd %}
-            <td>{{ object.logType }}</td>
+            <td>
+                <i class="mdi mdi-{{ object.logType }}"></i>
+                {{ object.logType }}
+            </td>
             <td>{{ object.recipient }}</td>
             <td>{{ object.subject }}</td>
             <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
