@@ -2,7 +2,7 @@
 
 {% trans_default_domain 'app' %}
 
-{% block pageTitle 'emaillog.label'|trans %}
+{% block pageTitle 'emailLog.label'|trans %}
 {% set breadcrumb = [
     {
         label: 'action.list',
@@ -18,9 +18,9 @@
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
-            <th class="d-none d-md-table-cell">{{ 'emaillog.recipient.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emaillog.subject.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emaillog.sentAt.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'emailLog.subject.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'emailLog.sentAt.label'|trans }}</th>
         {% endblock %}
 
         {% block tableTd %}

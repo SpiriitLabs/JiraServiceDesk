@@ -280,7 +280,7 @@ priority:
     flashes:
         generated: "Prioritée(s) récupérées avec succès"
 
-emaillog:
+emailLog:
     label: "Log de mail"
     recipient:
         label: "Desinataire(s)"

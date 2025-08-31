@@ -277,7 +277,7 @@ priority:
   flashes:
     generated: "Priority(ies) successfully retrieved"
 
-emaillog:
+emailLog:
   label: "Email log"
   recipient:
     label: "Recipient"
