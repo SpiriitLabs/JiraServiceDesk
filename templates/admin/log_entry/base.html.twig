@@ -1,8 +1,8 @@
 {% trans_default_domain 'app' %}
 {% extends 'admin/layout.html.twig' %}
-{% block title 'emailLog.label'|trans %}
+{% block title 'logs.label'|trans %}
 
 {% set breadcrumb = [{
-    href: path('admin_email_log_list'),
-    label: 'emailLog.label'|trans,
+    href: path('admin_log_entry_list'),
+    label: 'logs.label'|trans,
 }]|merge(breadcrumb|default([])) %}

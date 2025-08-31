@@ -5,13 +5,19 @@ namespace App\Form\Filter;
 use App\Form\AbstractFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\TextFilterType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EmailLogFormFilter extends AbstractFilterType
+class LogEntryFormFilter extends AbstractFilterType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('logType', ChoiceType::class, [
+                'required' => true,
+                'choices' => $options['logTypes'],
+            ])
             ->add('query', TextFilterType::class, [
                 'required' => false,
                 'label' => false,
@@ -36,5 +42,13 @@ class EmailLogFormFilter extends AbstractFilterType
                 },
             ])
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+        $resolver->setDefaults([
+            'logTypes' => [],
+        ]);
     }
 }

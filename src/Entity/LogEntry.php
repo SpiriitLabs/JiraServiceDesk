@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\EmailLogRepository;
+use App\Repository\LogEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EmailLogRepository::class)]
-class EmailLog
+#[ORM\Entity(repositoryClass: LogEntryRepository::class)]
+class LogEntry
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 255, nullable: false)]
+    private string $logType;
 
     #[ORM\Column(length: 255)]
     private ?string $recipient = null;
@@ -23,9 +26,11 @@ class EmailLog
     private ?\DateTimeImmutable $sendAt = null;
 
     public function __construct(
+        string $logType,
         ?string $recipient = '',
         ?string $subject = '',
     ) {
+        $this->logType = $logType;
         $this->recipient = $recipient;
         $this->subject = $subject;
         $this->sendAt = new \DateTimeImmutable();
@@ -34,6 +39,11 @@ class EmailLog
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getLogType(): string
+    {
+        return $this->logType;
     }
 
     public function getSubject(): ?string

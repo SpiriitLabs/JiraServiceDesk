@@ -2,7 +2,8 @@
 
 namespace App\Subscriber;
 
-use App\Entity\EmailLog;
+use App\Entity\LogEntry;
+use App\Enum\LogEntry\LogType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -31,7 +32,8 @@ class MessageSubscriber implements EventSubscriberInterface
             'to' => $to,
             'subject' => $message->getSubject(),
         ]);
-        $emailLog = new EmailLog(
+        $emailLog = new LogEntry(
+            logType: LogType::EMAIL->value,
             recipient: $to,
             subject: $message->getSubject(),
         );

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controller\Admin\EmailLog;
+namespace App\Controller\Admin\LogEntry;
 
 use App\Controller\Common\GetControllerTrait;
-use App\Entity\EmailLog;
-use App\Form\Filter\EmailLogFormFilter;
+use App\Entity\LogEntry;
+use App\Form\Filter\LogEntryFormFilter;
 use App\Message\Query\PaginateEntities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(
-    path: '/email-log',
+    path: '/log-entry',
     name: RouteCollection::LIST->value,
     methods: [Request::METHOD_GET],
 )]
@@ -23,12 +23,20 @@ class ListController extends AbstractController
     public function __invoke(
         Request $request,
     ): Response {
-        $filterForm = $this->createForm(EmailLogFormFilter::class);
+        $filterForm = $this->createForm(
+            type: LogEntryFormFilter::class,
+            options: [
+                'logTypes' => [
+                    'Tout' => null,
+                    'email' => 'email',
+                ],
+            ]
+        );
         $filterForm->handleRequest($request);
 
         $pagination = $this->handle(
             new PaginateEntities(
-                class: EmailLog::class,
+                class: LogEntry::class,
                 sort: $request->get('_sort', '-id'),
                 page: $request->get('page', 1),
                 form: $filterForm,
@@ -36,7 +44,7 @@ class ListController extends AbstractController
         );
 
         return $this->render(
-            view: 'admin/email_log/list.html.twig',
+            view: 'admin/log_entry/list.html.twig',
             parameters: [
                 'pagination' => $pagination,
                 'filterForm' => $filterForm,

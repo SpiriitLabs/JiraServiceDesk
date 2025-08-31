@@ -2,17 +2,17 @@
 
 namespace App\Repository;
 
-use App\Entity\EmailLog;
+use App\Entity\LogEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<EmailLog>
+ * @extends ServiceEntityRepository<LogEntry>
  */
-class EmailLogRepository extends AbstractEntityRepository
+class LogEntryRepository extends AbstractEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EmailLog::class);
+        parent::__construct($registry, LogEntry::class);
     }
 }

@@ -1,8 +1,8 @@
-{% extends 'admin/email_log/base.html.twig' %}
+{% extends 'admin/log_entry/base.html.twig' %}
 
 {% trans_default_domain 'app' %}
 
-{% block pageTitle 'emailLog.label'|trans %}
+{% block pageTitle 'logs.label'|trans %}
 {% set breadcrumb = [
     {
         label: 'action.list',
@@ -11,12 +11,15 @@
 
 {% block content %}
     <twig:list:list
-        :filterFormResetPath="path('admin_email_log_list')"
+        :filterFormResetPath="path('admin_log_entry_list')"
         :filterForm="filterForm"
     >
         {% trans_default_domain 'app' %}
 
         <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.logType) }}
+            </div>
             <div class="col-md-2">
                 {{ form_widget(filterForm.query) }}
             </div>
@@ -24,12 +27,14 @@
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
+            <th class="d-none d-md-table-cell">{{ 'logs.type.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.subject.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.sentAt.label'|trans }}</th>
         {% endblock %}
 
         {% block tableTd %}
+            <td>{{ object.logType }}</td>
             <td>{{ object.recipient }}</td>
             <td>{{ object.subject }}</td>
             <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
