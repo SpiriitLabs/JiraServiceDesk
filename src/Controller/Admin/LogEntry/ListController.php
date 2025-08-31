@@ -4,6 +4,7 @@ namespace App\Controller\Admin\LogEntry;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\LogEntry;
+use App\Enum\LogEntry\LogType;
 use App\Form\Filter\LogEntryFormFilter;
 use App\Message\Query\PaginateEntities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,10 +27,7 @@ class ListController extends AbstractController
         $filterForm = $this->createForm(
             type: LogEntryFormFilter::class,
             options: [
-                'logTypes' => [
-                    'Tout' => null,
-                    'email' => 'email',
-                ],
+                'logTypes' => LogType::getSearchList(),
             ]
         );
         $filterForm->handleRequest($request);
