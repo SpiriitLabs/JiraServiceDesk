@@ -282,8 +282,10 @@ priority:
 
 logs:
     label: "Logs"
-    type:
-        label: "Type de log"
+
+logType:
+    label: "LogType"
+    email: "Email"
 
 emailLog:
     recipient:

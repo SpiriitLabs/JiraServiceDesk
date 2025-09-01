@@ -33,7 +33,7 @@ class MessageSubscriber implements EventSubscriberInterface
             'subject' => $message->getSubject(),
         ]);
         $emailLog = new LogEntry(
-            logType: LogType::EMAIL->value,
+            logType: LogType::EMAIL,
             recipient: $to,
             subject: $message->getSubject(),
         );

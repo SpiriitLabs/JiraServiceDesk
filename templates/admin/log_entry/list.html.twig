@@ -27,16 +27,17 @@
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
-            <th class="d-none d-md-table-cell">{{ 'logs.type.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'logType.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.subject.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.sentAt.label'|trans }}</th>
         {% endblock %}
 
         {% block tableTd %}
+            {% trans_default_domain 'app' %}
             <td>
-                <i class="mdi mdi-{{ object.logType }}"></i>
-                {{ object.logType }}
+                <i class="mdi mdi-{{ object.logType.label|trans }}"></i>
+                {{ object.logType.label|trans }}
             </td>
             <td>{{ object.recipient }}</td>
             <td>{{ object.subject }}</td>

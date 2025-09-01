@@ -2,18 +2,16 @@
 
 namespace App\Enum\LogEntry;
 
-enum LogType: string
+use App\Enum\Contracts\LabeledValueInterface;
+use App\Enum\Trait\ValueCasesTrait;
+
+enum LogType: string implements LabeledValueInterface
 {
+    use ValueCasesTrait;
     case EMAIL = 'email';
 
-    /**
-     * @return array<string,string>
-     */
-    public static function getSearchList(): array
+    public function label(): string
     {
-        return [
-            'Tout' => null,
-            self::EMAIL->value => self::EMAIL->value,
-        ];
+        return sprintf('logType.%s', mb_strtolower($this->name));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\LogEntry\LogType;
 use App\Repository\LogEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -13,8 +14,8 @@ class LogEntry
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: false)]
-    private string $logType;
+    #[ORM\Column(nullable: false, enumType: LogType::class)]
+    public ?LogType $logType = null;
 
     #[ORM\Column(length: 255)]
     private ?string $recipient = null;
@@ -26,7 +27,7 @@ class LogEntry
     private ?\DateTimeImmutable $sendAt = null;
 
     public function __construct(
-        string $logType,
+        LogType $logType,
         ?string $recipient = '',
         ?string $subject = '',
     ) {
@@ -39,11 +40,6 @@ class LogEntry
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLogType(): string
-    {
-        return $this->logType;
     }
 
     public function getSubject(): ?string

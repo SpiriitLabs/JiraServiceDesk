@@ -4,7 +4,6 @@ namespace App\Controller\Admin\LogEntry;
 
 use App\Controller\Common\GetControllerTrait;
 use App\Entity\LogEntry;
-use App\Enum\LogEntry\LogType;
 use App\Form\Filter\LogEntryFormFilter;
 use App\Message\Query\PaginateEntities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,12 +23,7 @@ class ListController extends AbstractController
     public function __invoke(
         Request $request,
     ): Response {
-        $filterForm = $this->createForm(
-            type: LogEntryFormFilter::class,
-            options: [
-                'logTypes' => LogType::getSearchList(),
-            ]
-        );
+        $filterForm = $this->createForm(LogEntryFormFilter::class);
         $filterForm->handleRequest($request);
 
         $pagination = $this->handle(
