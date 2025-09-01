@@ -41,8 +41,11 @@ class MessageSubscriber implements EventSubscriberInterface
         $this->handle(
             new CreateLogEntry(
                 logType: LogType::EMAIL,
-                recipient: $to,
-                subject: $message->getSubject(),
+                subject: 'Email envoyé',
+                datas: [
+                    'to' => $to,
+                    'subject' => $message->getSubject(),
+                ],
             )
         );
     }

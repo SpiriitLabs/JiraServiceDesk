@@ -1,0 +1,27 @@
+{% extends 'admin/log_entry/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'logs.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block content %}
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <ul>
+                <li>{{ 'logType.label'|trans }} : {{ entity.logType.label|trans }}</li>
+                <li>{{ 'logType.subject.label'|trans }} : {{ entity.subject }}</li>
+                <li>{{ 'logType.logAt.label'|trans }} : {{ entity.logAt|date('d/m/Y H:i:s') }}</li>
+                <li>{{ 'logType.logAt.label'|trans }} : {{ entity.logAt|date('d/m/Y H:i:s') }}</li>
+                <li>{{ 'logType.datas.label'|trans }} : {% for key,value in entity.datas %}<span>{{ key }}:{{ value }}</span>{% endfor %}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -28,9 +28,9 @@
         {% block tableTh %}
             {% trans_default_domain 'app' %}
             <th class="d-none d-md-table-cell">{{ 'logType.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emailLog.subject.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emailLog.logAt.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'logType.subject.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'logType.logAt.label'|trans }}</th>
+            <th class="min"></th>
         {% endblock %}
 
         {% block tableTd %}
@@ -39,9 +39,13 @@
                 <i class="mdi mdi-{{ object.logType.label|trans }}"></i>
                 {{ object.logType.label|trans }}
             </td>
-            <td>{{ object.recipient }}</td>
             <td>{{ object.subject }}</td>
             <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
+            <td>
+                <a class="action-icon text-secondary" href="{{ path('admin_log_entry_view', {id: object.id}) }}">
+                    <i class="mdi mdi-eye"></i>
+                </a>
+            </td>
         {% endblock %}
     </twig:list:list>
 {% endblock %}

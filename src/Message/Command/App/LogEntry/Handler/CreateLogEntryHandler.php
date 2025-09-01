@@ -19,8 +19,8 @@ readonly class CreateLogEntryHandler
     {
         $logEntry = new LogEntry(
             logType: $command->logType,
-            recipient: $command->recipient,
             subject: $command->subject,
+            datas: $command->datas,
         );
 
         $this->entityManager->persist($logEntry);

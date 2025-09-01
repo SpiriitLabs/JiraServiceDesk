@@ -18,22 +18,26 @@ class LogEntry
     public ?LogType $logType = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $recipient = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $subject = null;
 
     #[ORM\Column(name: 'log_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $logAt = null;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $datas = null;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    public ?User $user = null;
+
     public function __construct(
         LogType $logType,
-        ?string $recipient = '',
-        ?string $subject = '',
+        string $subject,
+        array $datas,
     ) {
         $this->logType = $logType;
-        $this->recipient = $recipient;
         $this->subject = $subject;
+        $this->datas = $datas;
         $this->logAt = new \DateTimeImmutable();
     }
 
@@ -47,13 +51,13 @@ class LogEntry
         return $this->subject;
     }
 
-    public function getRecipient(): ?string
-    {
-        return $this->recipient;
-    }
-
     public function getLogAt(): ?\DateTimeImmutable
     {
         return $this->logAt;
+    }
+
+    public function getDatas(): ?array
+    {
+        return $this->datas;
     }
 }

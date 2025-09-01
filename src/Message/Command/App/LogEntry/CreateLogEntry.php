@@ -8,8 +8,8 @@ class CreateLogEntry
 {
     public function __construct(
         public LogType $logType,
-        public ?string $recipient = '',
         public ?string $subject = '',
+        public array $datas,
     ) {
     }
 }

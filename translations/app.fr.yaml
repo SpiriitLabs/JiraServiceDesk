@@ -286,14 +286,12 @@ logs:
 logType:
     label: "LogType"
     email: "Email"
-
-emailLog:
-    recipient:
-        label: "Desinataire(s)"
     subject:
         label: "Sujet"
     logAt:
         label: "Envoyé à"
+    datas:
+        label: "Détail"
 
 security:
     login:
