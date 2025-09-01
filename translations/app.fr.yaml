@@ -282,6 +282,8 @@ priority:
 
 logs:
     label: "Logs"
+    title:
+        view: "Voir Log %id%"
 
 logType:
     label: "LogType"
