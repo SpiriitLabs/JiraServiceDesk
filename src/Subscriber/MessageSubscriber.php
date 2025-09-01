@@ -2,20 +2,26 @@
 
 namespace App\Subscriber;
 
-use App\Entity\LogEntry;
 use App\Enum\LogEntry\LogType;
+use App\Message\Command\App\LogEntry\CreateLogEntry;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Messenger\HandleTrait;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Email;
 
 class MessageSubscriber implements EventSubscriberInterface
 {
+    use HandleTrait;
+
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly LoggerInterface $logger,
+        MessageBusInterface $commandBus,
     ) {
+        $this->messageBus = $commandBus;
     }
 
     public function onMessage(MessageEvent $event): void
@@ -32,13 +38,13 @@ class MessageSubscriber implements EventSubscriberInterface
             'to' => $to,
             'subject' => $message->getSubject(),
         ]);
-        $emailLog = new LogEntry(
-            logType: LogType::EMAIL,
-            recipient: $to,
-            subject: $message->getSubject(),
+        $this->handle(
+            new CreateLogEntry(
+                logType: LogType::EMAIL,
+                recipient: $to,
+                subject: $message->getSubject(),
+            )
         );
-        $this->entityManager->persist($emailLog);
-        $this->entityManager->flush();
     }
 
     public static function getSubscribedEvents()

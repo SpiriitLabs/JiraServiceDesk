@@ -292,7 +292,7 @@ emailLog:
         label: "Desinataire(s)"
     subject:
         label: "Sujet"
-    sentAt:
+    logAt:
         label: "Envoyé à"
 
 security:

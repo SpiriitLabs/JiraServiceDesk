@@ -289,7 +289,7 @@ emailLog:
     label: "Recipient"
   subject:
     label: "Subject"
-  sentAt:
+  logAt:
     label: "Sent At"
 
 security:

@@ -23,8 +23,8 @@ class LogEntry
     #[ORM\Column(length: 255)]
     private ?string $subject = null;
 
-    #[ORM\Column(name: 'send_at', type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $sendAt = null;
+    #[ORM\Column(name: 'log_at', type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $logAt = null;
 
     public function __construct(
         LogType $logType,
@@ -34,7 +34,7 @@ class LogEntry
         $this->logType = $logType;
         $this->recipient = $recipient;
         $this->subject = $subject;
-        $this->sendAt = new \DateTimeImmutable();
+        $this->logAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -52,8 +52,8 @@ class LogEntry
         return $this->recipient;
     }
 
-    public function getSendAt(): ?\DateTimeImmutable
+    public function getLogAt(): ?\DateTimeImmutable
     {
-        return $this->sendAt;
+        return $this->logAt;
     }
 }

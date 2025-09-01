@@ -30,7 +30,7 @@
             <th class="d-none d-md-table-cell">{{ 'logType.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.recipient.label'|trans }}</th>
             <th class="d-none d-md-table-cell">{{ 'emailLog.subject.label'|trans }}</th>
-            <th class="d-none d-md-table-cell">{{ 'emailLog.sentAt.label'|trans }}</th>
+            <th class="d-none d-md-table-cell">{{ 'emailLog.logAt.label'|trans }}</th>
         {% endblock %}
 
         {% block tableTd %}
@@ -41,7 +41,7 @@
             </td>
             <td>{{ object.recipient }}</td>
             <td>{{ object.subject }}</td>
-            <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
+            <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
         {% endblock %}
     </twig:list:list>
 {% endblock %}
