@@ -63,6 +63,10 @@ list:
         total: "%number% résultat(s)"
         perPage: "par page"
 
+pwa:
+    label: "Votre Application"
+    description: "Installez l'application sur votre appareil pour une expérience optimale"
+
 modal:
     delete:
         title: "Confirmation de suppression"
