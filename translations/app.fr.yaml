@@ -280,6 +280,21 @@ priority:
     flashes:
         generated: "Prioritée(s) récupérées avec succès"
 
+logs:
+    label: "Logs"
+    title:
+        view: "Voir Log %id%"
+
+logType:
+    label: "LogType"
+    email: "Email"
+    subject:
+        label: "Sujet"
+    logAt:
+        label: "Envoyé à"
+    datas:
+        label: "Détail"
+
 security:
     login:
         label: "Connexion"

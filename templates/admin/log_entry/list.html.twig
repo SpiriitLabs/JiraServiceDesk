@@ -1,0 +1,51 @@
+{% extends 'admin/log_entry/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'logs.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+
+{% block content %}
+    <twig:list:list
+        :filterFormResetPath="path('admin_log_entry_list')"
+        :filterForm="filterForm"
+    >
+        {% trans_default_domain 'app' %}
+
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.logType) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+        </twig:block>
+
+        {% block tableTh %}
+            {% trans_default_domain 'app' %}
+            <th>{{ 'logType.label'|trans }}</th>
+            <th>{{ 'logType.subject.label'|trans }}</th>
+            <th>{{ 'logType.logAt.label'|trans }}</th>
+            <th class="min"></th>
+        {% endblock %}
+
+        {% block tableTd %}
+            {% trans_default_domain 'app' %}
+            <td>
+                <i class="mdi mdi-{{ object.logType.label|trans }}"></i>
+                {{ object.logType.label|trans }}
+            </td>
+            <td>{{ object.subject }}</td>
+            <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
+            <td>
+                <a class="action-icon text-secondary" href="{{ path('admin_log_entry_view', {id: object.id}) }}">
+                    <i class="mdi mdi-eye"></i>
+                </a>
+            </td>
+        {% endblock %}
+    </twig:list:list>
+{% endblock %}
