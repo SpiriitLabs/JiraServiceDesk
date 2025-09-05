@@ -21,6 +21,8 @@ class DeleteOldLogEntryCommand extends Command
 {
     use HandleTrait;
 
+    private const string DELAY_EXPIRE = '- 7 days';
+
     public function __construct(
         private readonly LogEntryRepository $logEntryRepository,
     ) {
@@ -32,7 +34,7 @@ class DeleteOldLogEntryCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $currentDate = new \DateTimeImmutable();
-        $expireDate = $currentDate->add(\DateInterval::createFromDateString('-7 days'));
+        $expireDate = $currentDate->add(\DateInterval::createFromDateString(self::DELAY_EXPIRE));
 
         $qb = $this->logEntryRepository->createQueryBuilder('l');
         $logs = $qb
