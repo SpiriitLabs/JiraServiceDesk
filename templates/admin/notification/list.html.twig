@@ -1,0 +1,47 @@
+{% extends 'admin/notification/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'notifications.label'|trans %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    }
+] %}
+
+{% block content %}
+    <twig:list:list
+        :filterFormResetPath="path('admin_notification_list')"
+        :filterForm="filterForm"
+    >
+        {% trans_default_domain 'app' %}
+
+        <twig:block name="filterFormRows">
+            <div class="col-md-2">
+                {{ form_widget(filterForm.notificationType) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.query) }}
+            </div>
+        </twig:block>
+
+        {% block tableTh %}
+            {% trans_default_domain 'app' %}
+            <th>{{ 'notificationType.label'|trans }}</th>
+            <th>{{ 'notification.subject.label'|trans }}</th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'notification.sendAt.label'|trans,
+                    'property': 'sendAt',
+                } %}
+            </th>
+        {% endblock %}
+
+        {% block tableTd %}
+            {% trans_default_domain 'app' %}
+            <td>{{ object.notificationType.label|trans }}</td>
+            <td>{{ object.subject }}</td>
+            <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
+        {% endblock %}
+    </twig:list:list>
+{% endblock %}

@@ -2,7 +2,9 @@
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Enum\Notification\NotificationType;
 use App\Formatter\Jira\IssueHistoryFormatter;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
@@ -70,18 +72,18 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 continue;
             }
 
+            $subject = $this->translator->trans(
+                id: 'issue.edited.title',
+                parameters: [
+                    '%project_name%' => $project->name,
+                    '%ticket_name%' => $issueSummary,
+                ],
+                domain: 'email',
+                locale: $user->preferredLocale->value,
+            );
+
             $emailToSent = clone $templatedEmail
-                ->subject(
-                    $this->translator->trans(
-                        id: 'issue.edited.title',
-                        parameters: [
-                            '%project_name%' => $project->name,
-                            '%ticket_name%' => $issueSummary,
-                        ],
-                        domain: 'email',
-                        locale: $user->preferredLocale->value,
-                    ),
-                )
+                ->subject($subject)
                 ->to(new Address($user->email, $user->getFullName()))
                 ->locale($user->preferredLocale->value)
             ;
@@ -94,6 +96,14 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                     user: $user,
                     email: $emailToSent,
                 ),
+            );
+            $this->commandBus->dispatch(
+                new CreateNotification(
+                    notificationType: NotificationType::ISSUE_UPDATED,
+                    subject: $subject,
+                    body: $issueSummary,
+                    user: $user,
+                )
             );
         }
     }

@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Event;
 
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Message\Event\Webhook\Comment\Handler\CommentUpdatedHandler;
@@ -107,12 +108,19 @@ class CommentUpdatedHandlerTest extends TestCase
         ;
 
         $this->commandBus
-            ->expects($expectDispatch ? self::once() : self::never())
+            ->expects($expectDispatch ? self::exactly(2) : self::never())
             ->method('dispatch')
-            ->with(
-                self::isInstanceOf(EmailNotification::class),
-            )
-            ->willReturn(new Envelope($this->createMock(EmailNotification::class)))
+            ->willReturnCallback(function ($command) {
+                if ($command instanceof EmailNotification) {
+                    return new Envelope($this->createMock(EmailNotification::class));
+                }
+
+                if ($command instanceof CreateNotification) {
+                    return new Envelope($this->createMock(CreateNotification::class));
+                }
+
+                throw new \InvalidArgumentException('Unexpected command '.get_class($command));
+            })
         ;
 
         $handler = $this->generate();

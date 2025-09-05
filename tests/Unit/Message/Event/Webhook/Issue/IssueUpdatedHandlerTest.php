@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Formatter\Jira\IssueHistoryFormatter;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\Handler\IssueUpdatedHandler;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
@@ -82,12 +83,19 @@ class IssueUpdatedHandlerTest extends TestCase
         ;
 
         $this->commandBus
-            ->expects($userHasPreferenceNotificationIssueUpdated ? self::once() : self::never())
+            ->expects($userHasPreferenceNotificationIssueUpdated ? self::exactly(2) : self::never())
             ->method('dispatch')
-            ->with(
-                self::isInstanceOf(EmailNotification::class),
-            )
-            ->willReturn(new Envelope($this->createMock(EmailNotification::class)))
+            ->willReturnCallback(function ($command) {
+                if ($command instanceof EmailNotification) {
+                    return new Envelope($this->createMock(EmailNotification::class));
+                }
+
+                if ($command instanceof CreateNotification) {
+                    return new Envelope($this->createMock(CreateNotification::class));
+                }
+
+                throw new \InvalidArgumentException('Unexpected command '.get_class($command));
+            })
         ;
 
         $handler = $this->generate();

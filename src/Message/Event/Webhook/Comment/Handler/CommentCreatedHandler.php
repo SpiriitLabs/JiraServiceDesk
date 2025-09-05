@@ -2,6 +2,8 @@
 
 namespace App\Message\Event\Webhook\Comment\Handler;
 
+use App\Enum\Notification\NotificationType;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Repository\Jira\IssueRepository;
@@ -87,18 +89,18 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 continue;
             }
 
+            $subject = $this->translator->trans(
+                id: 'comment.created.title',
+                parameters: [
+                    '%project_name%' => $project->name,
+                    '%ticket_name%' => $issueSummary,
+                ],
+                domain: 'email',
+                locale: $user->preferredLocale->value,
+            );
+
             $emailToSent = clone $templatedEmail
-                ->subject(
-                    $this->translator->trans(
-                        id: 'comment.created.title',
-                        parameters: [
-                            '%project_name%' => $project->name,
-                            '%ticket_name%' => $issueSummary,
-                        ],
-                        domain: 'email',
-                        locale: $user->preferredLocale->value,
-                    ),
-                )
+                ->subject($subject)
                 ->to(new Address($user->email, $user->getFullName()))
                 ->locale($user->preferredLocale->value)
             ;
@@ -111,6 +113,14 @@ class CommentCreatedHandler implements LoggerAwareInterface
                     user: $user,
                     email: $emailToSent,
                 ),
+            );
+            $this->commandBus->dispatch(
+                new CreateNotification(
+                    notificationType: NotificationType::COMMENT_CREATED,
+                    subject: $subject,
+                    body: $commentBody,
+                    user: $user,
+                )
             );
         }
     }
