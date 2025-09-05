@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "description": "A jira service desk client application.",
-    "version": "0.31.0",
+    "version": "0.31.5",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -13,8 +13,8 @@
         "ext-iconv": "*",
         "babdev/pagerfanta-bundle": "^4.5",
         "cweagans/composer-patches": "^1.7.3",
-        "doctrine/dbal": "^4.3.2",
-        "doctrine/doctrine-bundle": "^2.15.1",
+        "doctrine/dbal": "^4.3.3",
+        "doctrine/doctrine-bundle": "^2.16.1",
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.5.2",
         "gedmo/doctrine-extensions": "^3.20",
@@ -120,7 +120,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7.1",
-        "phpunit/phpunit": "^12.3.7",
+        "phpunit/phpunit": "^12.3.8",
         "slevomat/coding-standard": "^8.21.1",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
