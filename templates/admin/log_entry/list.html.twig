@@ -29,7 +29,12 @@
             {% trans_default_domain 'app' %}
             <th>{{ 'logType.label'|trans }}</th>
             <th>{{ 'logType.subject.label'|trans }}</th>
-            <th>{{ 'logType.logAt.label'|trans }}</th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'logType.logAt.label'|trans,
+                    'property': 'logAt',
+                } %}
+            </th>
             <th class="min"></th>
         {% endblock %}
 

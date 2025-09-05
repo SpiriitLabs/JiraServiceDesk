@@ -18,13 +18,13 @@ class LogEntry
     public ?LogType $logType = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $subject = null;
+    private ?string $subject;
 
     #[ORM\Column(name: 'log_at', type: 'datetime_immutable', nullable: true)]
-    private ?\DateTimeImmutable $logAt = null;
+    private ?\DateTimeImmutable $logAt;
 
     #[ORM\Column(type: 'json', nullable: true)]
-    private ?array $datas = null;
+    private ?array $datas;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
