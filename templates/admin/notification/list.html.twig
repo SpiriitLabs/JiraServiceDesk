@@ -29,6 +29,7 @@
             {% trans_default_domain 'app' %}
             <th>{{ 'notificationType.label'|trans }}</th>
             <th>{{ 'notification.subject.label'|trans }}</th>
+            <th>{{ 'notification.user.label'|trans }}</th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'notification.sendAt.label'|trans,
@@ -41,6 +42,7 @@
             {% trans_default_domain 'app' %}
             <td>{{ object.notificationType.label|trans }}</td>
             <td>{{ object.subject }}</td>
+            <td>{{ object.user.fullName }}</td>
             <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
         {% endblock %}
     </twig:list:list>

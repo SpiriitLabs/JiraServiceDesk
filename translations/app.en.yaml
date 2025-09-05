@@ -299,6 +299,8 @@ notification:
   label: "Notification"
   subject:
     label: "Subject"
+  user:
+    label: "User"
   sendAt:
     label: "Send At"
 

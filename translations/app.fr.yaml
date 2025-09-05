@@ -303,6 +303,8 @@ notification:
     label: "Notification"
     subject:
         label: "Subject"
+    user:
+        label: "Utilisateur"
     sendAt:
         label: "Envoyé à"
 
