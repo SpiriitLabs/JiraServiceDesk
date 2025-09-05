@@ -36,6 +36,15 @@
             </div>
         </div>
 
+        {% if current_project is defined %}
+            <div>
+                <a href="{{ path('app_project_issue_create', {key: current_project.jiraKey}) }}" class="btn btn-success">
+                    <i class="mdi mdi-plus"></i>
+                    {{ 'issue.action.create'|trans }}
+                </a>
+            </div>
+        {% endif %}
+
         <ul class="topbar-menu d-flex align-items-center gap-3">
 
             <li class="dropdown">
