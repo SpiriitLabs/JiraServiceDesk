@@ -19,5 +19,6 @@ readonly class DeleteEntityHandler
         $entity = $this->entityManager->find($command->class, $command->id);
 
         $this->entityManager->remove($entity);
+        $this->entityManager->flush();
     }
 }
