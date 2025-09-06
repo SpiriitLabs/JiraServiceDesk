@@ -39,7 +39,7 @@ class NotificationStreamController extends AbstractController
             [
                 'id' => 'DESC',
             ],
-            4
+            10
         );
 
         return $this->render(
