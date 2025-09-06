@@ -19,6 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -36,6 +37,8 @@ class IssueUpdatedHandlerTest extends TestCase
 
     private readonly IssueHistoryFormatter|MockObject $issueHistoryFormatter;
 
+    private readonly RouterInterface|MockObject $router;
+
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
@@ -43,6 +46,7 @@ class IssueUpdatedHandlerTest extends TestCase
         $this->translator = $this->createMock(TranslatorInterface::class);
         $this->issueRepository = $this->createMock(IssueRepository::class);
         $this->issueHistoryFormatter = $this->createMock(IssueHistoryFormatter::class);
+        $this->router = $this->createMock(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -94,7 +98,7 @@ class IssueUpdatedHandlerTest extends TestCase
                     return new Envelope($this->createMock(CreateNotification::class));
                 }
 
-                throw new \InvalidArgumentException('Unexpected command '.get_class($command));
+                throw new \InvalidArgumentException('Unexpected command ' . get_class($command));
             })
         ;
 
@@ -125,6 +129,7 @@ class IssueUpdatedHandlerTest extends TestCase
             translator: $this->translator,
             issueRepository: $this->issueRepository,
             issueHistoryFormatter: $this->issueHistoryFormatter,
+            router: $this->router,
         );
         $logger = $this->createMock(LoggerInterface::class);
         $handler->setLogger($logger);

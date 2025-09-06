@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
@@ -31,6 +33,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
         private readonly ReplaceAccountIdByDisplayName $replaceAccountIdByDisplayName,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private string $jiraAPIAccountId,
+        private readonly RouterInterface $router,
     ) {
     }
 
@@ -114,11 +117,16 @@ class CommentCreatedHandler implements LoggerAwareInterface
                     email: $emailToSent,
                 ),
             );
+            $link = $this->router->generate('browse_issue', [
+                'keyIssue' => $issueKey,
+                'focusedCommentId' => $comment->id,
+            ], UrlGenerator::ABSOLUTE_URL);
             $this->commandBus->dispatch(
                 new CreateNotification(
                     notificationType: NotificationType::COMMENT_CREATED,
                     subject: $subject,
                     body: $commentBody,
+                    link: $link,
                     user: $user,
                 )
             );

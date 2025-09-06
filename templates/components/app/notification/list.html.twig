@@ -5,7 +5,7 @@
 
     <div id="notifications" data-turbo="true">
         {% for notification in notifications %}
-            <a href="#" class="dropdown-item notify-item">
+            <a href="{{ notification.link }}" class="dropdown-item notify-item">
                 <div class="d-flex">
                     <div class="flex-shrink-0 me-2">
                         <i class="mdi mdi-information text-warning fs-20"></i>

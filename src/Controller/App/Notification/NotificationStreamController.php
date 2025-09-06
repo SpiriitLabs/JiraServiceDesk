@@ -32,11 +32,13 @@ class NotificationStreamController extends AbstractController
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 
-        $notifications = $this->notificationRepository->findBy([
-            'user' => $user,
-        ],[
-            'id' => 'DESC',
-        ],
+        $notifications = $this->notificationRepository->findBy(
+            [
+                'user' => $user,
+            ],
+            [
+                'id' => 'DESC',
+            ],
             4
         );
 

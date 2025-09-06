@@ -24,6 +24,9 @@ class Notification
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $body;
 
+    #[ORM\Column(type: Types::TEXT)]
+    public ?string $link = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
     public ?User $user = null;
@@ -35,11 +38,13 @@ class Notification
         NotificationType $notificationType,
         string $subject,
         string $body,
+        string $link,
         User $user
     ) {
         $this->notificationType = $notificationType;
         $this->subject = $subject;
         $this->body = $body;
+        $this->link = $link;
         $this->user = $user;
         $this->sendAt = new \DateTimeImmutable();
     }

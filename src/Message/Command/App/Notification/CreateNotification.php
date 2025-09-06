@@ -11,6 +11,7 @@ class CreateNotification
         public NotificationType $notificationType,
         public string $subject,
         public string $body,
+        public string $link,
         public User $user
     ) {
     }

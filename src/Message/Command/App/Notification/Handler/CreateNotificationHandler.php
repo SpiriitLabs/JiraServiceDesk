@@ -21,6 +21,7 @@ readonly class CreateNotificationHandler
             notificationType: $command->notificationType,
             subject: $command->subject,
             body: $command->body,
+            link: $command->link,
             user: $command->user,
         );
 

@@ -20,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -37,6 +38,8 @@ class CommentCreatedHandlerTest extends TestCase
 
     private readonly ReplaceAccountIdByDisplayName|MockObject $replaceAccountIdByDisplayName;
 
+    private readonly RouterInterface|MockObject $router;
+
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
@@ -44,6 +47,7 @@ class CommentCreatedHandlerTest extends TestCase
         $this->translator = $this->createMock(TranslatorInterface::class);
         $this->issueRepository = $this->createMock(IssueRepository::class);
         $this->replaceAccountIdByDisplayName = $this->createMock(ReplaceAccountIdByDisplayName::class);
+        $this->router = $this->createMock(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -156,6 +160,15 @@ class CommentCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
+        $comment = new Comment();
+        $comment->id = 1;
+        $comment->visibility = null;
+        $this->issueRepository
+            ->method('getComment')
+            ->with('issueKey', 'commentId')
+            ->willReturn($comment)
+        ;
+
         $this->commandBus
             ->expects($expectDispatch ? self::exactly(2) : self::never())
             ->method('dispatch')
@@ -168,7 +181,7 @@ class CommentCreatedHandlerTest extends TestCase
                     return new Envelope($this->createMock(CreateNotification::class));
                 }
 
-                throw new \InvalidArgumentException('Unexpected command '.get_class($command));
+                throw new \InvalidArgumentException('Unexpected command ' . get_class($command));
             })
         ;
 
@@ -209,6 +222,7 @@ class CommentCreatedHandlerTest extends TestCase
             issueRepository: $this->issueRepository,
             replaceAccountIdByDisplayName: $this->replaceAccountIdByDisplayName,
             jiraAPIAccountId: '1234-5678',
+            router: $this->router,
         );
         $logger = $this->createMock(LoggerInterface::class);
         $handler->setLogger($logger);
