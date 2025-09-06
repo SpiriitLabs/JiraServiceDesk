@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+{% extends 'admin/layout.html.twig' %}
+{% block title 'notifications.label'|trans %}
+
+{% set breadcrumb = [{
+    href: path('admin_notification_list'),
+    label: 'notifications.label'|trans,
+}]|merge(breadcrumb|default([])) %}

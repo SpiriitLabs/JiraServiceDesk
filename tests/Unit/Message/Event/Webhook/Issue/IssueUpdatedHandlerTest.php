@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Formatter\Jira\IssueHistoryFormatter;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\Handler\IssueUpdatedHandler;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
@@ -18,6 +19,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -35,6 +37,8 @@ class IssueUpdatedHandlerTest extends TestCase
 
     private readonly IssueHistoryFormatter|MockObject $issueHistoryFormatter;
 
+    private readonly RouterInterface|MockObject $router;
+
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
@@ -42,6 +46,7 @@ class IssueUpdatedHandlerTest extends TestCase
         $this->translator = $this->createMock(TranslatorInterface::class);
         $this->issueRepository = $this->createMock(IssueRepository::class);
         $this->issueHistoryFormatter = $this->createMock(IssueHistoryFormatter::class);
+        $this->router = $this->createMock(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -82,12 +87,19 @@ class IssueUpdatedHandlerTest extends TestCase
         ;
 
         $this->commandBus
-            ->expects($userHasPreferenceNotificationIssueUpdated ? self::once() : self::never())
+            ->expects($userHasPreferenceNotificationIssueUpdated ? self::exactly(2) : self::never())
             ->method('dispatch')
-            ->with(
-                self::isInstanceOf(EmailNotification::class),
-            )
-            ->willReturn(new Envelope($this->createMock(EmailNotification::class)))
+            ->willReturnCallback(function ($command) {
+                if ($command instanceof EmailNotification) {
+                    return new Envelope($this->createMock(EmailNotification::class));
+                }
+
+                if ($command instanceof CreateNotification) {
+                    return new Envelope($this->createMock(CreateNotification::class));
+                }
+
+                throw new \InvalidArgumentException('Unexpected command ' . get_class($command));
+            })
         ;
 
         $handler = $this->generate();
@@ -117,6 +129,7 @@ class IssueUpdatedHandlerTest extends TestCase
             translator: $this->translator,
             issueRepository: $this->issueRepository,
             issueHistoryFormatter: $this->issueHistoryFormatter,
+            router: $this->router,
         );
         $logger = $this->createMock(LoggerInterface::class);
         $handler->setLogger($logger);

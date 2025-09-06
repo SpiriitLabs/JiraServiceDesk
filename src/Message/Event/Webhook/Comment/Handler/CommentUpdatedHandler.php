@@ -2,6 +2,8 @@
 
 namespace App\Message\Event\Webhook\Comment\Handler;
 
+use App\Enum\Notification\NotificationType;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Repository\Jira\IssueRepository;
@@ -14,6 +16,8 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
@@ -29,6 +33,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
         private readonly ReplaceAccountIdByDisplayName $replaceAccountIdByDisplayName,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private string $jiraAPIAccountId,
+        private readonly RouterInterface $router,
     ) {
     }
 
@@ -87,18 +92,18 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                 continue;
             }
 
+            $subject = $this->translator->trans(
+                id: 'comment.updated.title',
+                parameters: [
+                    '%project_name%' => $project->name,
+                    '%ticket_name%' => $issueSummary,
+                ],
+                domain: 'email',
+                locale: $user->preferredLocale->value,
+            );
+
             $emailToSent = clone $templatedEmail
-                ->subject(
-                    $this->translator->trans(
-                        id: 'comment.updated.title',
-                        parameters: [
-                            '%project_name%' => $project->name,
-                            '%ticket_name%' => $issueSummary,
-                        ],
-                        domain: 'email',
-                        locale: $user->preferredLocale->value,
-                    ),
-                )
+                ->subject($subject)
                 ->to(new Address($user->email, $user->getFullName()))
                 ->locale($user->preferredLocale->value)
             ;
@@ -111,6 +116,19 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                     user: $user,
                     email: $emailToSent,
                 ),
+            );
+            $link = $this->router->generate('browse_issue', [
+                'keyIssue' => $issueKey,
+                'focusedCommentId' => $comment->id,
+            ], UrlGenerator::ABSOLUTE_URL);
+            $this->commandBus->dispatch(
+                new CreateNotification(
+                    notificationType: NotificationType::COMMENT_UPDATED,
+                    subject: $subject,
+                    body: $commentBody,
+                    link: $link,
+                    user: $user,
+                )
             );
         }
     }

@@ -2,6 +2,8 @@
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Enum\Notification\NotificationType;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
@@ -13,6 +15,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
@@ -25,6 +29,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
         private readonly ProjectRepository $projectRepository,
         private readonly TranslatorInterface $translator,
         private readonly IssueRepository $issueRepository,
+        private readonly RouterInterface $router,
     ) {
     }
 
@@ -67,17 +72,17 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 continue;
             }
 
+            $subject = $this->translator->trans(
+                id: 'issue.created.title',
+                parameters: [
+                    '%project_name%' => $project->name,
+                ],
+                domain: 'email',
+                locale: $user->preferredLocale->value,
+            );
+
             $emailToSent = clone $templatedEmail
-                ->subject(
-                    $this->translator->trans(
-                        id: 'issue.created.title',
-                        parameters: [
-                            '%project_name%' => $project->name,
-                        ],
-                        domain: 'email',
-                        locale: $user->preferredLocale->value,
-                    ),
-                )
+                ->subject($subject)
                 ->to(new Address($user->email, $user->getFullName()))
                 ->locale($user->preferredLocale->value)
             ;
@@ -90,6 +95,18 @@ class IssueCreatedHandler implements LoggerAwareInterface
                     user: $user,
                     email: $emailToSent,
                 ),
+            );
+            $link = $this->router->generate('browse_issue', [
+                'keyIssue' => $issueKey,
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $this->commandBus->dispatch(
+                new CreateNotification(
+                    notificationType: NotificationType::ISSUE_CREATED,
+                    subject: $subject,
+                    body: $issueSummary,
+                    link: $link,
+                    user: $user,
+                )
             );
         }
     }

@@ -43,14 +43,6 @@
                 <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
                     <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
                         <div class="simplebar-content" style="padding: 0px;">
-{#                            <!-- Leftbar User -->#}
-{#                            <div class="leftbar-user">#}
-{#                                <a href="pages-profile.html">#}
-{#                                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">#}
-{#                                    <span class="leftbar-user-name mt-2">Dominic Keller</span>#}
-{#                                </a>#}
-{#                            </div>#}
-
                             <!--- Sidemenu -->
                             <ul class="side-nav">
 
@@ -104,6 +96,14 @@
                                     trans="logs.label"
                                     icon="mdi mdi-information"
                                     href="{{ path('admin_log_entry_list') }}"
+                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
+                                <twig:nav:item-single
+                                    path="admin_notification"
+                                    trans="notifications.label"
+                                    icon="mdi mdi-information"
+                                    href="{{ path('admin_notification_list') }}"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
                                 />
 

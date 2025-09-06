@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Event;
 
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
+use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\EmailNotification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Message\Event\Webhook\Comment\Handler\CommentCreatedHandler;
@@ -19,6 +20,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
@@ -36,6 +38,8 @@ class CommentCreatedHandlerTest extends TestCase
 
     private readonly ReplaceAccountIdByDisplayName|MockObject $replaceAccountIdByDisplayName;
 
+    private readonly RouterInterface|MockObject $router;
+
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
@@ -43,6 +47,7 @@ class CommentCreatedHandlerTest extends TestCase
         $this->translator = $this->createMock(TranslatorInterface::class);
         $this->issueRepository = $this->createMock(IssueRepository::class);
         $this->replaceAccountIdByDisplayName = $this->createMock(ReplaceAccountIdByDisplayName::class);
+        $this->router = $this->createMock(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -155,13 +160,29 @@ class CommentCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
+        $comment = new Comment();
+        $comment->id = 1;
+        $comment->visibility = null;
+        $this->issueRepository
+            ->method('getComment')
+            ->with('issueKey', 'commentId')
+            ->willReturn($comment)
+        ;
+
         $this->commandBus
-            ->expects($expectDispatch ? self::once() : self::never())
+            ->expects($expectDispatch ? self::exactly(2) : self::never())
             ->method('dispatch')
-            ->with(
-                self::isInstanceOf(EmailNotification::class),
-            )
-            ->willReturn(new Envelope($this->createMock(EmailNotification::class)))
+            ->willReturnCallback(function ($command) {
+                if ($command instanceof EmailNotification) {
+                    return new Envelope($this->createMock(EmailNotification::class));
+                }
+
+                if ($command instanceof CreateNotification) {
+                    return new Envelope($this->createMock(CreateNotification::class));
+                }
+
+                throw new \InvalidArgumentException('Unexpected command ' . get_class($command));
+            })
         ;
 
         $handler = $this->generate();
@@ -201,6 +222,7 @@ class CommentCreatedHandlerTest extends TestCase
             issueRepository: $this->issueRepository,
             replaceAccountIdByDisplayName: $this->replaceAccountIdByDisplayName,
             jiraAPIAccountId: '1234-5678',
+            router: $this->router,
         );
         $logger = $this->createMock(LoggerInterface::class);
         $handler->setLogger($logger);

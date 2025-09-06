@@ -299,6 +299,28 @@ logType:
     datas:
         label: "Détail"
 
+notification:
+    label: "Notification"
+    subject:
+        label: "Subject"
+    user:
+        label: "Utilisateur"
+    sendAt:
+        label: "Envoyé à"
+
+notifications:
+    label: "Notifications"
+
+notificationType:
+    label: "Type de notification"
+    issue:
+        created: "Nouveau ticket"
+        updated: "Ticket mis à jour"
+        deleted: "Ticket supprimé"
+    comment:
+        created: "Nouveau commentaire"
+        updated: "Commentaire modifié"
+
 security:
     login:
         label: "Connexion"
