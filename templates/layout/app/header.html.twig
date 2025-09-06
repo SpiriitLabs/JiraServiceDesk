@@ -67,6 +67,36 @@
                 </div>
             </li>
 
+            <li class="dropdown">
+                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    <i class="mdi mdi-bell d-none d-sm-inline-block align-middle"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
+                    <div class="dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">{{ 'notifications.label'|trans }}</h6>
+                    </div>
+                    <twig:Turbo:Frame
+                            id="notifications"
+                            src="{{ path('app_notification_stream') }}"
+                    >
+                        <div id="notifications">
+                            <a href="#" class="dropdown-item notify-item">
+                                <div class="d-flex">
+                                    <div class="flex-shrink-0 me-2">
+                                        <i class="mdi mdi-information text-primary fs-20"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">Nouveau message</h6>
+                                        <p class="mb-0 text-muted">Vous avez reçu un email de Marie Dupont.</p>
+                                        <small class="text-muted">il y a 5 min</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </twig:Turbo:Frame>
+                </div>
+            </li>
+
             <li class="d-sm-inline-block">
                 <a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
                     <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">

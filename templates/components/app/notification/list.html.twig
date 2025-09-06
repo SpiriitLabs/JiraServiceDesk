@@ -1,0 +1,22 @@
+<twig:Turbo:Stream:Replace
+    target="#notifications"
+>
+    {% trans_default_domain 'app' %}
+
+    <div id="notifications" data-turbo="true">
+        {% for notification in notifications %}
+            <a href="#" class="dropdown-item notify-item">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-2">
+                        <i class="mdi mdi-information text-warning fs-20"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">{{ notification.subject }}</h6>
+                        <p class="mb-0 text-muted">{{ notification.body }}</p>
+                        <small class="text-muted">{{ notification.sendAt|date('d/m/Y H:i:s') }}</small>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</twig:Turbo:Stream:Replace>
