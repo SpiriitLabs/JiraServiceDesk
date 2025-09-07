@@ -23,7 +23,7 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
     use LoggerAwareTrait;
     use ExceptionCatcherTrait;
 
-    // 1 minute = 300_000 ms
+    // 5 minutes = 300_000 ms
     // 30 secondes = 30_000 ms
     private const DELAY_STAMP = 300_000;
 
