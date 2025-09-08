@@ -3,7 +3,7 @@
 >
     {% trans_default_domain 'app' %}
 
-    <div id="notifications"{% if notifications %} class="notifications-list"{% endif%} data-turbo="true">
+    <div id="notifications"{% if notifications %} class="notifications-list"{% endif %} data-turbo="true">
         {% for notification in notifications %}
             <a href="{{ notification.link }}" class="dropdown-item notify-item">
                 <div class="d-flex align-items-center">
