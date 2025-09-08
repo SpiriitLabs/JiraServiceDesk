@@ -310,6 +310,8 @@ notification:
 
 notifications:
     label: "Notifications"
+    empty:
+        label: "Pas de notifications"
 
 notificationType:
     label: "Type de notification"
