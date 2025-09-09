@@ -301,6 +301,8 @@ logType:
 
 notification:
     label: "Notification"
+    title:
+        view: "Voir notification %id%"
     subject:
         label: "Subject"
     user:
