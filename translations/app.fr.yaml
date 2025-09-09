@@ -1,347 +1,347 @@
 action:
-    label: "Actions"
-    logout: "Déconnexion"
-    create: "Créer"
-    cancel: "Annuler"
-    save: "Enregistrer"
-    list: "Liste"
-    exit: "Fermer"
-    edit: "Modifier"
-    exitImpersonation: "Quitter l'usurpation d'identité"
-    view: "Afficher"
-    add: "Ajouter"
-    remove: "Supprimer"
-    download: "Télécharger"
-    return: "Retour"
-    generate: "Générer"
-    filter: "Filtrer"
-    next: "Suivant"
-    export: "Export"
+  label: "Actions"
+  logout: "Déconnexion"
+  create: "Créer"
+  cancel: "Annuler"
+  save: "Enregistrer"
+  list: "Liste"
+  exit: "Fermer"
+  edit: "Modifier"
+  exitImpersonation: "Quitter l'usurpation d'identité"
+  view: "Afficher"
+  add: "Ajouter"
+  remove: "Supprimer"
+  download: "Télécharger"
+  return: "Retour"
+  generate: "Générer"
+  filter: "Filtrer"
+  next: "Suivant"
+  export: "Export"
 
 yes: "Oui"
 no: "Non"
 
 copy:
-    sucess: "Lien copié"
+  sucess: "Lien copié"
 
 locale:
-    label: "Langue"
-    fr: "Français"
-    en: "Anglais"
+  label: "Langue"
+  fr: "Français"
+  en: "Anglais"
 
 theme:
-    label: "Thème"
-    light: "Clair"
-    dark: "Sombre"
-    auto: "Automatique"
+  label: "Thème"
+  light: "Clair"
+  dark: "Sombre"
+  auto: "Automatique"
 
 flash:
-    edited: "Modification enregistrée avec succès"
-    created: "Création effectuée avec succès"
-    deleted: "Suppression effectuée avec succès"
-    stopped: "Arrêt effectué avec succès"
-    error: "Une erreur est survenue"
-    custom:
-        user_no_project: "Aucun projet n'est associé à votre compte"
+  edited: "Modification enregistrée avec succès"
+  created: "Création effectuée avec succès"
+  deleted: "Suppression effectuée avec succès"
+  stopped: "Arrêt effectué avec succès"
+  error: "Une erreur est survenue"
+  custom:
+    user_no_project: "Aucun projet n'est associé à votre compte"
 
 header:
-    themeMode: "Mode d'affichage"
-    search:
-        default: "Minimum 3 caractères requis"
-    dropdown:
-        welcome: "Bienvenue !"
+  themeMode: "Mode d'affichage"
+  search:
+    default: "Minimum 3 caractères requis"
+  dropdown:
+    welcome: "Bienvenue !"
 
 title:
-    all: "Jira Service Desk"
-    short: "ServiceDesk"
+  all: "Jira Service Desk"
+  short: "ServiceDesk"
 
 list:
-    pagination:
-        previous: "Précédent"
-        next: "Suivant"
-        empty: "Aucun élément trouvé"
-        total: "%number% résultat(s)"
-        perPage: "par page"
+  pagination:
+    previous: "Précédent"
+    next: "Suivant"
+    empty: "Aucun élément trouvé"
+    total: "%number% résultat(s)"
+    perPage: "par page"
 
 pwa:
-    label: "Votre Application"
-    description: "Installez l'application sur votre appareil pour une expérience optimale"
+  label: "Votre Application"
+  description: "Installez l'application sur votre appareil pour une expérience optimale"
 
 modal:
-    delete:
-        title: "Confirmation de suppression"
-        description: "En confirmant, vous supprimerez définitivement l'élément sélectionné"
-        action: "Confirmer"
-    warning:
-        title: "Attention"
-        description: "Cette action est irréversible. Confirmez pour continuer"
-        action: "Confirmer"
+  delete:
+    title: "Confirmation de suppression"
+    description: "En confirmant, vous supprimerez définitivement l'élément sélectionné"
+    action: "Confirmer"
+  warning:
+    title: "Attention"
+    description: "Cette action est irréversible. Confirmez pour continuer"
+    action: "Confirmer"
 
 blameable:
-    created: "Créé le %date%"
-    updated: "Modifié le %date%"
+  created: "Créé le %date%"
+  updated: "Modifié le %date%"
 
 sidebar:
-    categories:
-        navigation: "Navigation"
-        project: "Projet"
-        administration: "Administration"
-        favorites: "Vos favoris"
+  categories:
+    navigation: "Navigation"
+    project: "Projet"
+    administration: "Administration"
+    favorites: "Vos favoris"
 
 filter:
-    label: "Filtres"
-    query:
-        label: "Recherche"
+  label: "Filtres"
+  query:
+    label: "Recherche"
 
 dashboard:
-    label: "Tableau de bord"
-    welcome: "Bonjour %name% !"
-    admin: "Accueil Administration"
-    app: "Vue client"
-    total_of: "Nombre total de"
-    total_of_user_notification: "Utilisateur(s) avec notifications"
-    favorites: "Vos favoris"
-    projects: "Sélectionner un projet"
-    assignee_issues: "Tickets qui vous sont assignés"
+  label: "Tableau de bord"
+  welcome: "Bonjour %name% !"
+  admin: "Accueil Administration"
+  app: "Vue client"
+  total_of: "Nombre total de"
+  total_of_user_notification: "Utilisateur(s) avec notifications"
+  favorites: "Vos favoris"
+  projects: "Sélectionner un projet"
+  assignee_issues: "Tickets qui vous sont assignés"
 
 select_project:
-    title: "Sélectionner votre projet"
+  title: "Sélectionner votre projet"
 
 favorite:
-    label: "Favori(s)"
-    action:
-        add: "Ajouter aux favoris"
-        remove: "Retirer des favoris"
-    name:
-      label: "Nom"
-    user:
-      label: "Utilisateur"
-    code:
-      label: "Code"
-    flashes:
-      deleted: "Favori supprimé avec succès"
+  label: "Favori(s)"
+  action:
+    add: "Ajouter aux favoris"
+    remove: "Retirer des favoris"
+  name:
+    label: "Nom"
+  user:
+    label: "Utilisateur"
+  code:
+    label: "Code"
+  flashes:
+    deleted: "Favori supprimé avec succès"
 
 user:
-    label: "Utilisateur(s)"
-    title:
-        create: "Créer un utilisateur"
-        edit: "Modifier l'utilisateur « %email% »"
-    email:
-        label: "Adresse email"
-    password:
-        label: "Mot de passe"
-        new: "Nouveau mot de passe"
-        repeat: "Confirmer le mot de passe"
-        notice: "💡 Laissez vide pour conserver l'ancien mot de passe"
-    firstName:
-        label: "Prénom"
-    lastName:
-        label: "Nom"
-    company:
-        label: "Entreprise"
-    roles:
-        label: "Rôles"
-        role_admin: "Administrateur"
-        role_user: "Utilisateur"
-        role_app_can_assignee: "Peut assigner des tickets"
-        role_app_can_view_backlog: "Accès au backlog des projets"
-        role_app_kanban: "Peut utiliser les kanbans"
-        role_app_view_kanban: "Peut visualiser les kanbans"
-    preferedLocale:
-        label: "Langue préférée"
-    preferedTheme:
-        label: "Thème préféré"
-    preferenceNotification:
-        label: "Activer les notifications"
-    preferenceNotificationIssueCreated:
-        label: "Notification à la création de ticket"
-    preferenceNotificationIssueUpdated:
-        label: "Notification à la mise à jour de ticket"
-    preferenceNotificationCommentCreated:
-        label: "Notification à la création de commentaire"
-    preferenceNotificationCommentUpdated:
-        label: "Notification à la modification de commentaire"
-    preferenceNotificationCommentOnlyOnTag:
-        label: "Notification uniquement lors d'un tag dans les commentaires"
-    enabled:
-        label: "Compte actif"
-    defaultProject:
-        label: "Projet par défaut"
-    flashes:
-        exported: "Export réalisé avec succès"
-    lastLogin:
-        label: "Dernière connexion"
-        never: "Jamais connecté"
-    projects:
-        label: "Projets"
+  label: "Utilisateur(s)"
+  title:
+    create: "Créer un utilisateur"
+    edit: "Modifier l'utilisateur « %email% »"
+  email:
+    label: "Adresse email"
+  password:
+    label: "Mot de passe"
+    new: "Nouveau mot de passe"
+    repeat: "Confirmer le mot de passe"
+    notice: "💡 Laissez vide pour conserver l'ancien mot de passe"
+  firstName:
+    label: "Prénom"
+  lastName:
+    label: "Nom"
+  company:
+    label: "Entreprise"
+  roles:
+    label: "Rôles"
+    role_admin: "Administrateur"
+    role_user: "Utilisateur"
+    role_app_can_assignee: "Peut assigner des tickets"
+    role_app_can_view_backlog: "Accès au backlog des projets"
+    role_app_kanban: "Peut utiliser les kanbans"
+    role_app_view_kanban: "Peut visualiser les kanbans"
+  preferedLocale:
+    label: "Langue préférée"
+  preferedTheme:
+    label: "Thème préféré"
+  preferenceNotification:
+    label: "Activer les notifications"
+  preferenceNotificationIssueCreated:
+    label: "Notification à la création de ticket"
+  preferenceNotificationIssueUpdated:
+    label: "Notification à la mise à jour de ticket"
+  preferenceNotificationCommentCreated:
+    label: "Notification à la création de commentaire"
+  preferenceNotificationCommentUpdated:
+    label: "Notification à la modification de commentaire"
+  preferenceNotificationCommentOnlyOnTag:
+    label: "Notification uniquement lors d'un tag dans les commentaires"
+  enabled:
+    label: "Compte actif"
+  defaultProject:
+    label: "Projet par défaut"
+  flashes:
+    exported: "Export réalisé avec succès"
+  lastLogin:
+    label: "Dernière connexion"
+    never: "Jamais connecté"
+  projects:
+    label: "Projets"
 
 profile:
-    label: "Profil"
-    view:
-        title: "Mon profil"
+  label: "Profil"
+  view:
+    title: "Mon profil"
 
 project:
-    label: "Projet(s)"
-    title:
-        create: "Créer un projet depuis Jira"
-        edit: "Modifier le projet « %key% »"
-        userIssues: "Mes tickets"
-    name:
-        label: "Nom"
-    jiraKey:
-        label: "Clé Jira"
-    jiraId:
-        label: "Identifiant Jira"
-    description:
-        label: "Description"
-    users:
-        label: "Utilisateurs associés"
-    lead:
-        label: "Responsable"
-    assignableRolesIds:
-        label: "Rôles assignables"
-    backlogStatusesIds:
-        label: "Statuts du backlog"
-    category:
-        label: "Catégorie"
-    defaultIssueType:
-        label: "Type par défaut"
-    boards:
-        label: "Tableaux Kanban"
-    board:
-        label: "Tableau"
-    flashes:
-        alreadyExist: "Cette clé de projet existe déjà"
-        created: "Projet créé avec succès"
-        notFound: "Projet non trouvé"
-        currentNotFound: "Aucun projet sélectionné"
-        backlogNotSet: "Aucun statut de backlog n'a été sélectionné. Merci de contacter votre administrateur."
-    kanban:
-        selectTransition:
-            title: "Sélectionner le statut"
+  label: "Projet(s)"
+  title:
+    create: "Créer un projet depuis Jira"
+    edit: "Modifier le projet « %key% »"
+    userIssues: "Mes tickets"
+  name:
+    label: "Nom"
+  jiraKey:
+    label: "Clé Jira"
+  jiraId:
+    label: "Identifiant Jira"
+  description:
+    label: "Description"
+  users:
+    label: "Utilisateurs associés"
+  lead:
+    label: "Responsable"
+  assignableRolesIds:
+    label: "Rôles assignables"
+  backlogStatusesIds:
+    label: "Statuts du backlog"
+  category:
+    label: "Catégorie"
+  defaultIssueType:
+    label: "Type par défaut"
+  boards:
+    label: "Tableaux Kanban"
+  board:
+    label: "Tableau"
+  flashes:
+    alreadyExist: "Cette clé de projet existe déjà"
+    created: "Projet créé avec succès"
+    notFound: "Projet non trouvé"
+    currentNotFound: "Aucun projet sélectionné"
+    backlogNotSet: "Aucun statut de backlog n'a été sélectionné. Merci de contacter votre administrateur."
+  kanban:
+    selectTransition:
+      title: "Sélectionner le statut"
 
 issue:
-    label: "Ticket(s)"
-    title:
-        backlogList: "Tickets du backlog"
-    action:
-        create: "Créer un ticket"
-    titles:
-        create: "Nouveau ticket"
-    jiraKey:
-        label: "Clé"
-    assignee:
-        label: "Assigné à"
-        not_assignee: "Non assigné"
-    updated:
-        label: "Dernière mise à jour"
-    status:
-        label: "Statut"
-    priority:
-        label: "Priorité"
-    summary:
-        label: "Titre"
-    type:
-        label: "Type"
-    description:
-        label: "Description"
-        notice: "Votre nom sera automatiquement ajouté pour le suivi"
-    timeestimate:
-        label: "Estimation (heures)"
-    comment:
-        label: "Commentaires"
-    attachment:
-        label: "Pièces jointes"
-        preview: "Prévisualisation"
-    transition:
-        label: "Statut"
-        to: "Passer à"
-    create:
-        select_project:
-            description: "Sélectionnez un projet pour créer un ticket"
-    filter:
-        hasResolvedMasked:
-            label: "Masquer les tickets résolus"
-    links:
-        label: "Ticket(s) associé(s)"
-    environment:
-        label: "Environnement"
+  label: "Ticket(s)"
+  title:
+    backlogList: "Tickets du backlog"
+  action:
+    create: "Créer un ticket"
+  titles:
+    create: "Nouveau ticket"
+  jiraKey:
+    label: "Clé"
+  assignee:
+    label: "Assigné à"
+    not_assignee: "Non assigné"
+  updated:
+    label: "Dernière mise à jour"
+  status:
+    label: "Statut"
+  priority:
+    label: "Priorité"
+  summary:
+    label: "Titre"
+  type:
+    label: "Type"
+  description:
+    label: "Description"
+    notice: "Votre nom sera automatiquement ajouté pour le suivi"
+  timeestimate:
+    label: "Estimation (heures)"
+  comment:
+    label: "Commentaires"
+  attachment:
+    label: "Pièces jointes"
+    preview: "Prévisualisation"
+  transition:
+    label: "Statut"
+    to: "Passer à"
+  create:
+    select_project:
+      description: "Sélectionnez un projet pour créer un ticket"
+  filter:
+    hasResolvedMasked:
+      label: "Masquer les tickets résolus"
+  links:
+    label: "Ticket(s) associé(s)"
+  environment:
+    label: "Environnement"
 
 comment:
-    created:
-        label: "(modifié)"
+  created:
+    label: "(modifié)"
 
 priority:
-    label: "Prioritée(s)"
-    name:
-        label: "Nom"
-    description:
-        label: "Description"
-    iconUrl:
-        label: "Icône"
-    statusColor:
-        label: "Couleur"
-    flashes:
-        generated: "Prioritée(s) récupérées avec succès"
+  label: "Prioritée(s)"
+  name:
+    label: "Nom"
+  description:
+    label: "Description"
+  iconUrl:
+    label: "Icône"
+  statusColor:
+    label: "Couleur"
+  flashes:
+    generated: "Prioritée(s) récupérées avec succès"
 
 logs:
-    label: "Logs"
-    title:
-        view: "Voir Log %id%"
+  label: "Logs"
+  title:
+    view: "Voir Log %id%"
 
 logType:
-    label: "LogType"
-    email: "Email"
-    subject:
-        label: "Sujet"
-    logAt:
-        label: "Envoyé à"
-    datas:
-        label: "Détail"
+  label: "LogType"
+  email: "Email"
+  subject:
+    label: "Sujet"
+  logAt:
+    label: "Envoyé à"
+  datas:
+    label: "Détail"
 
 notification:
-    label: "Notification"
-    title:
-        view: "Voir notification %id%"
-    subject:
-        label: "Sujet"
-    user:
-        label: "Utilisateur"
-    sendAt:
-        label: "Envoyé à"
+  label: "Notification"
+  title:
+    view: "Voir notification %id%"
+  subject:
+    label: "Sujet"
+  user:
+    label: "Utilisateur"
+  sendAt:
+    label: "Envoyé à"
 
 notifications:
-    label: "Notifications"
-    empty:
-        label: "Pas de notifications"
+  label: "Notifications"
+  empty:
+    label: "Pas de notifications"
 
 notificationType:
-    label: "Type de notification"
-    issue:
-        created: "Nouveau ticket"
-        updated: "Ticket mis à jour"
-        deleted: "Ticket supprimé"
-    comment:
-        created: "Nouveau commentaire"
-        updated: "Commentaire modifié"
+  label: "Type de notification"
+  issue:
+    created: "Nouveau ticket"
+    updated: "Ticket mis à jour"
+    deleted: "Ticket supprimé"
+  comment:
+    created: "Nouveau commentaire"
+    updated: "Commentaire modifié"
 
 security:
-    login:
-        label: "Connexion"
-        sign_in: "Se connecter"
-        sign_in_catch_phrase: "Accéder à l'application"
-        account_disable: "Compte désactivé"
-        user_account_no_projects: "Aucun projet associé à votre compte"
-        action: "Connexion"
-    check_email:
-        label: "Vérification de l'email"
-        description: "Un email de réinitialisation a été envoyé si un compte existe. Le lien expire dans %expire_link_time%"
-        retry: "Vérifiez vos courriers indésirables"
-        action: "Renvoyer"
-    reset_password_request:
-        label: "Réinitialisation du mot de passe"
-        description: "Saisissez votre email pour recevoir un lien de réinitialisation"
-        action: "Envoyer le lien"
-    reset_password:
-        label: "Nouveau mot de passe"
-        action: "Mettre à jour"
+  login:
+    label: "Connexion"
+    sign_in: "Se connecter"
+    sign_in_catch_phrase: "Accéder à l'application"
+    account_disable: "Compte désactivé"
+    user_account_no_projects: "Aucun projet associé à votre compte"
+    action: "Connexion"
+  check_email:
+    label: "Vérification de l'email"
+    description: "Un email de réinitialisation a été envoyé si un compte existe. Le lien expire dans %expire_link_time%"
+    retry: "Vérifiez vos courriers indésirables"
+    action: "Renvoyer"
+  reset_password_request:
+    label: "Réinitialisation du mot de passe"
+    description: "Saisissez votre email pour recevoir un lien de réinitialisation"
+    action: "Envoyer le lien"
+  reset_password:
+    label: "Nouveau mot de passe"
+    action: "Mettre à jour"
