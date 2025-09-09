@@ -290,7 +290,7 @@ logs:
     view: "Voir Log %id%"
 
 logType:
-  label: "LogType"
+  label: "Type de log"
   email: "Email"
   subject:
     label: "Sujet"
