@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "description": "A jira service desk client application.",
-    "version": "0.32.0",
+    "version": "0.33.0",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -26,7 +26,7 @@
         "pentatrion/vite-bundle": "^8.2.1",
         "rollerworks/password-strength-bundle": "^3.0.1",
         "runtime/frankenphp-symfony": "^0.2.0",
-        "sentry/sentry-symfony": "^5.4.0",
+        "sentry/sentry-symfony": "^5.4.1",
         "spiriitlabs/form-filter-bundle": "^12.0.1",
         "stof/doctrine-extensions-bundle": "^1.14",
         "symfony/console": "7.3.*",
