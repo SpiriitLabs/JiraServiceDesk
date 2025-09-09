@@ -2,8 +2,10 @@
 
 namespace App\Form\Filter;
 
+use App\Entity\User;
 use App\Form\AbstractFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
+use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\EntityFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\TextFilterType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -36,6 +38,17 @@ class ProjectFormFilter extends AbstractFilterType
 
                     return $query->createCondition((string) $condition);
                 },
+            ])
+            ->add('users', EntityFilterType::class, [
+                'class' => User::class,
+                'required' => false,
+                'multiple' => true,
+                'autocomplete' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'user.label',
+                ],
+                'choice_label' => 'fullName',
             ])
         ;
     }
