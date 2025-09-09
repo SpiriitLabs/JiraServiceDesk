@@ -304,7 +304,7 @@ notification:
     title:
         view: "Voir notification %id%"
     subject:
-        label: "Subject"
+        label: "Sujet"
     user:
         label: "Utilisateur"
     sendAt:
