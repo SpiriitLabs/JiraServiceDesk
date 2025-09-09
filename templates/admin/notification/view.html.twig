@@ -1,0 +1,30 @@
+{% extends 'admin/notification/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'notification.title.view'|trans({'%id%': entity.id}) %}
+{% set breadcrumb = [
+    {
+        label: 'action.list',
+    },
+    {
+        label: 'action.view',
+    }
+] %}
+
+{% block content %}
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <ul>
+                        <li>{{ 'notificationType.label'|trans }} : {{ entity.notificationType.label|trans }}</li>
+                        <li>{{ 'notification.subject.label'|trans }} : {{ entity.subject }}</li>
+                        <li>{{ 'notification.user.label'|trans }} : {{ entity.user.fullName }}</li>
+                        <li>{{ 'notification.sendAt.label'|trans }} : {{ entity.sendAt|date('d/m/Y H:i:s') }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -36,6 +36,7 @@
                     'property': 'sendAt',
                 } %}
             </th>
+            <th class="min"></th>
         {% endblock %}
 
         {% block tableTd %}
@@ -44,6 +45,11 @@
             <td>{{ object.subject }}</td>
             <td>{{ object.user.fullName }}</td>
             <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
+            <td>
+                <a class="action-icon text-secondary" href="{{ path('admin_notification_view', {id: object.id}) }}">
+                    <i class="mdi mdi-eye"></i>
+                </a>
+            </td>
         {% endblock %}
     </twig:list:list>
 {% endblock %}

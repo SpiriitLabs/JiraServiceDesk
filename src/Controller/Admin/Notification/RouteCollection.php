@@ -10,4 +10,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     use AdminRouteCollectionTrait;
 
     case LIST = 'notification_list';
+    case VIEW = 'notification_view';
 }
