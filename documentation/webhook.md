@@ -20,6 +20,7 @@ Select the following events to be monitored and processed by the Service Desk we
 
 - **Issue → Created**
 - **Issue → Updated**
+- **Issue → Deleted**
 - **Comment → Created**
 - **Comment → Updated**
 
