@@ -18,32 +18,40 @@
             </button>
         </div>
 
-        <div class="app-search dropdown d-none d-lg-block" style="width: 50%" {{ stimulus_controller('search', {searchUrl: absolute_url(path('app_search_api')), defaultEmtpyText: 'header.search.default'|trans}) }}>
-            <form {{ stimulus_target('search', 'form') }} style="max-width: 100%;">
-                <div class="input-group">
-                    <input type="search" class="ps-2 form-control dropdown-toggle" style="width: 90%" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
+        <div class="app-search dropdown d-none d-lg-flex flex-row align-items-center gap-3" style="width: 50%" >
+            <div class="d-lg-block" style="width: 75%" {{ stimulus_controller('search', {searchUrl: absolute_url(path('app_search_api')), defaultEmtpyText: 'header.search.default'|trans}) }}>
+                <form {{ stimulus_target('search', 'form') }} style="max-width: 100%;">
+                    <div class="input-group">
+                        <input type="search" class="ps-2 form-control dropdown-toggle" style="width: 90%" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
 
-                    <button class="text-white btn btn-primary" type="submit" {{ stimulus_action('search', 'onSearchInput') }}><span class="mdi mdi-magnify"></span></button>
+                        <button class="text-white btn btn-primary" type="submit" {{ stimulus_action('search', 'onSearchInput') }}><span class="mdi mdi-magnify"></span></button>
+                    </div>
+                </form>
+
+                <div class="dropdown-menu dropdown-menu-animated" style="width: 40%" id="search-dropdown" {{ stimulus_target('search', 'dropdown') }}>
+
+                    <div class="dropdown-header noti-title">
+                        <h5 class="text-overflow mb-2">{{ 'header.search.default'|trans }}</h5>
+                    </div>
+
                 </div>
-            </form>
-
-            <div class="dropdown-menu dropdown-menu-animated" style="width: 40%" id="search-dropdown" {{ stimulus_target('search', 'dropdown') }}>
-
-                <div class="dropdown-header noti-title">
-                    <h5 class="text-overflow mb-2">{{ 'header.search.default'|trans }}</h5>
-                </div>
-
             </div>
-        </div>
 
-        {% if current_project is defined %}
-            <div>
-                <a href="{{ path('app_project_issue_create', {key: current_project.jiraKey}) }}" class="btn btn-success">
+            {% if current_project is defined or app.user.projects|length == 1 %}
+                {% set project = current_project ?? app.user.projects[0] %}
+                <div>
+                    <a href="{{ path('app_project_issue_create', {key: project.jiraKey}) }}" class="btn btn-success">
+                        <i class="mdi mdi-plus"></i>
+                        {{ 'issue.action.create'|trans }}
+                    </a>
+                </div>
+            {% else %}
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#issueCreateSelectProject">
                     <i class="mdi mdi-plus"></i>
                     {{ 'issue.action.create'|trans }}
-                </a>
-            </div>
-        {% endif %}
+                </button>
+            {% endif %}
+        </div>
 
         <ul class="topbar-menu d-flex align-items-center gap-3">
 
@@ -135,5 +143,31 @@
                 </div>
             </li>
         </ul>
+    </div>
+</div>
+
+
+<div id="issueCreateSelectProject" class="modal fade"  role="dialog" aria-labelledby="issueCreateSelectProjectLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="standard-modalLabel">{{ 'select_project.title'|trans }}</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body">
+
+                {% for project in app.user.projects %}
+                    <a class="card bg-secondary-subtle d-flex flex-row justify-content-between align-items-center px-2 py-1 my-0" href="{{ path('app_project_issue_create', {key: project.jiraKey}) }}">
+                        <h5>{{ project.name }}</h5>
+
+                        <i class="mdi mdi-arrow-right"></i>
+                    </a>
+                {% endfor %}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.close'|trans }}</button>
+            </div>
+        </div>
     </div>
 </div>
