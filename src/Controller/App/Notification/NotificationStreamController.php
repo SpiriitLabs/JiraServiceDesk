@@ -37,7 +37,7 @@ class NotificationStreamController extends AbstractController
                 'user' => $user,
             ],
             [
-                'id' => 'DESC',
+                'sendAt' => 'DESC',
             ],
             10
         );

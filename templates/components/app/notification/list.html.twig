@@ -3,30 +3,31 @@
 >
     {% trans_default_domain 'app' %}
 
-    <div id="notifications"{% if notifications %} class="notifications-list"{% endif %} data-turbo="true">
+    <div id="notifications" class="simplebar-content" style="padding: 0px 12px;" data-turbo="true">
+
+        {% if notifications|length == 0 %}
+            <h5 class="text-muted font-12 text-uppercase mt-2">{{ 'list.pagination.empty'|trans }}</h5>
+        {% endif %}
+
         {% for notification in notifications %}
-            <a href="{{ notification.link }}" class="dropdown-item notify-item">
+            <a href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
                 <div class="card-body">
+{#                    <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>#}
                     <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 me-2">
-                            <i class="mdi mdi-information text-warning fs-20"></i>
+                        <div class="flex-shrink-0">
+                            <div class="notify-icon bg-primary">
+                                <i class="ri-chat-quote-line font-18"></i>
+                            </div>
                         </div>
-                        <div class="flex-grow-1 truncate">
-                            <h6 class="mb-1 text-wrap">{{ notification.subject }}</h6>
-                            <p class="mb-0 text-wrap">{{ notification.body }}</p>
-                            <small class="text-muted">{{ notification.sendAt|date('d/m/Y H:i:s') }}</small>
+                        <div class="flex-grow-1 ms-2 w-100" style="min-width:0; white-space:normal; overflow:visible;">
+                            <h5 class="noti-item-title fw-semibold font-14" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.subject }} <small class="fw-normal text-muted ms-1">{{ notification.sendAt|date('d/m/Y') }}</small></h5>
+                            <small class="noti-item-subtitle text-muted" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.body }}</small>
                         </div>
                     </div>
                 </div>
             </a>
-        {% else %}
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1 ms-2">{{ 'notifications.empty.label'|trans }}</h6>
-                    </div>
-                </div>
-            </div>
         {% endfor %}
+
     </div>
+
 </twig:Turbo:Stream:Replace>

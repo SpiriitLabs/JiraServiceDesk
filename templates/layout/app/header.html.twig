@@ -91,6 +91,76 @@
                 </div>
             </li>
 
+            <li class="dropdown notification-list">
+                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
+                    <i class="ri-notification-3-line font-22"></i>
+                    <span class="noti-icon-badge"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg py-0" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate3d(0px, 72px, 0px);" data-popper-placement="bottom-end">
+                    <div class="p-2 border-top-0 border-start-0 border-end-0 border-dashed border">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="m-0 font-16 fw-semibold">{{ 'notifications.label'|trans }}</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-2 simplebar-scrollable-y" style="max-height: 300px;" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px -12px;">
+                            <div class="simplebar-height-auto-observer-wrapper">
+                                <div class="simplebar-height-auto-observer"></div>
+                            </div>
+                            <div class="simplebar-mask">
+                                <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                    <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
+                                        <div class="simplebar-content" style="padding: 0px 12px;">
+
+
+                                            <twig:Turbo:Frame
+                                                id="notifications"
+                                                src="{{ path('app_notification_stream') }}"
+                                            >
+                                                <div class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+                                                    <div class="card-body">
+                                                        <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="flex-shrink-0">
+                                                                <div class="notify-icon bg-primary">
+                                                                    <i class="ri-chat-quote-line font-18"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-grow-1 text-truncate ms-2">
+                                                                <h5 class="noti-item-title fw-semibold font-14"><span class="placeholder col-5"> <small class="fw-normal text-muted ms-1"><span class="placeholder col-3"></small></h5>
+                                                                <small class="noti-item-subtitle text-muted"><span class="placeholder col-12"></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <i class="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
+                                                </div>
+                                            </twig:Turbo:Frame>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="simplebar-placeholder" style="width: 319px; height: 508px;"></div>
+                        </div>
+                        <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                            <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                        </div>
+                        <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                            <div class="simplebar-scrollbar" style="height: 177px; display: block; transform: translate3d(0px, 0px, 0px);"></div>
+                        </div>
+                    </div>
+
+{#                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item border-top py-2">#}
+{#                        View All#}
+{#                    </a>#}
+
+                </div>
+            </li>
+
             <li class="d-sm-inline-block">
                 <a href="{% if app.session.get('_theme') == 'dark' %}{{ path('app_theme_light') }}{% else %}{{ path('app_theme_dark') }}{% endif %}">
                     <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="{{ 'header.themeMode'|trans }}" data-bs-original-title="{{ 'header.themeMode'|trans }}">
