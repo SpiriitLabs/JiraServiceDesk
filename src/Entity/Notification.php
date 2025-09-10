@@ -27,7 +27,7 @@ class Notification
     #[ORM\Column(type: Types::TEXT)]
     public ?string $link = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'notifications')]
     #[ORM\JoinColumn(nullable: true)]
     public ?User $user = null;
 
