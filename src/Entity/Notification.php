@@ -31,6 +31,9 @@ class Notification
     #[ORM\JoinColumn(nullable: true)]
     public ?User $user = null;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    public bool $isViewed = false;
+
     #[ORM\Column(name: 'send_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $sendAt;
 
