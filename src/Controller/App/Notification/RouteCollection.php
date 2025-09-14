@@ -10,4 +10,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     use AppRouteCollectionTrait;
 
     case NOTIFICATION_STREAM = 'notification_stream';
+    case NOTIFICATION_API_READ = 'notification_api_read';
 }
