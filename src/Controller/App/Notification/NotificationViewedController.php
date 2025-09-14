@@ -20,10 +20,10 @@ class NotificationViewedController extends AbstractController
 
     #[Route(
         path: '/api',
-        name: RouteCollection::NOTIFICATION_API_READ->value,
+        name: RouteCollection::NOTIFICATION_API_VIEWED->value,
         methods: [Request::METHOD_POST],
     )]
-    public function apiSetReadNotification(
+    public function apiSetViewedNotification(
         Notification $notification,
     ): Response {
         try {
