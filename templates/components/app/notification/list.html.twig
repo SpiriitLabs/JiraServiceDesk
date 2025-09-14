@@ -9,23 +9,25 @@
             <h5 class="text-muted font-12 text-uppercase mt-2">{{ 'list.pagination.empty'|trans }}</h5>
         {% endif %}
 
-        {% for notification in notifications %}
-            <a href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0">
-                            <div class="notify-icon bg-primary">
-                                <i class="ri-chat-quote-line font-18"></i>
+        <div {{ stimulus_controller('notification_view') }}>
+            {% for notification in notifications %}
+                <a data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="notify-icon bg-primary">
+                                    <i class="ri-chat-quote-line font-18"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-2 w-100" style="min-width:0; white-space:normal; overflow:visible;">
+                                <h5 class="noti-item-title fw-semibold font-14" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.subject }} <small class="fw-normal text-muted ms-1">{{ notification.sendAt|date('d/m/Y') }}</small></h5>
+                                <small class="noti-item-subtitle text-muted" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.body }}</small>
                             </div>
                         </div>
-                        <div class="flex-grow-1 ms-2 w-100" style="min-width:0; white-space:normal; overflow:visible;">
-                            <h5 class="noti-item-title fw-semibold font-14" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.subject }} <small class="fw-normal text-muted ms-1">{{ notification.sendAt|date('d/m/Y') }}</small></h5>
-                            <small class="noti-item-subtitle text-muted" style="white-space:normal; overflow:visible; word-break:break-word;">{{ notification.body }}</small>
-                        </div>
                     </div>
-                </div>
-            </a>
-        {% endfor %}
+                </a>
+            {% endfor %}
+        </div>
 
     </div>
 
