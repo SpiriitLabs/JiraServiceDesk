@@ -29,7 +29,6 @@ final class UserFactory extends PersistentProxyObjectFactory
             'email' => self::faker()->text(180),
             'enabled' => self::faker()->boolean(),
             'firstName' => self::faker()->text(255),
-            'hasCompletedIntroduction' => self::faker()->boolean(),
             'lastName' => self::faker()->text(255),
             'password' => self::faker()->text(),
             'preferenceNotification' => self::faker()->boolean(),

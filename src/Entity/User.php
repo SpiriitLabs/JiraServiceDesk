@@ -93,9 +93,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public bool $preferenceNotificationCommentOnlyOnTag = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $hasCompletedIntroduction = false;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
     public bool $enabled = true;
 
     #[ORM\ManyToOne]
