@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c53a2cdceb2478fc2690fdc4fda75b79",
+    "content-hash": "75165f0140eda3ee8db870e0ad1898da",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1433,16 +1433,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v3.20.0",
+            "version": "v3.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine-extensions/DoctrineExtensions.git",
-                "reference": "ea1d37586b8e4bae2a815feb38b177894b12c44c"
+                "reference": "3ca38e8fa4439c4849c8bd5f75bfdde41239c0a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/ea1d37586b8e4bae2a815feb38b177894b12c44c",
-                "reference": "ea1d37586b8e4bae2a815feb38b177894b12c44c",
+                "url": "https://api.github.com/repos/doctrine-extensions/DoctrineExtensions/zipball/3ca38e8fa4439c4849c8bd5f75bfdde41239c0a0",
+                "reference": "3ca38e8fa4439c4849c8bd5f75bfdde41239c0a0",
                 "shasum": ""
             },
             "require": {
@@ -1539,7 +1539,7 @@
             "support": {
                 "docs": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/main/doc",
                 "issues": "https://github.com/doctrine-extensions/DoctrineExtensions/issues",
-                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.20.0"
+                "source": "https://github.com/doctrine-extensions/DoctrineExtensions/tree/v3.20.1"
             },
             "funding": [
                 {
@@ -1559,7 +1559,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-04T17:19:27+00:00"
+            "time": "2025-09-14T06:37:47+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -3151,16 +3151,16 @@
         },
         {
             "name": "sentry/sentry-symfony",
-            "version": "5.4.1",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-symfony.git",
-                "reference": "5a52fb16fb8743e1f84aa1072075bdabeb56e2de"
+                "reference": "8cb52299b0b5538f759a596f2a411edbc46c642a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/5a52fb16fb8743e1f84aa1072075bdabeb56e2de",
-                "reference": "5a52fb16fb8743e1f84aa1072075bdabeb56e2de",
+                "url": "https://api.github.com/repos/getsentry/sentry-symfony/zipball/8cb52299b0b5538f759a596f2a411edbc46c642a",
+                "reference": "8cb52299b0b5538f759a596f2a411edbc46c642a",
                 "shasum": ""
             },
             "require": {
@@ -3237,7 +3237,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-symfony/issues",
-                "source": "https://github.com/getsentry/sentry-symfony/tree/5.4.1"
+                "source": "https://github.com/getsentry/sentry-symfony/tree/5.5.0"
             },
             "funding": [
                 {
@@ -3249,7 +3249,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2025-09-09T12:12:59+00:00"
+            "time": "2025-09-11T14:31:09+00:00"
         },
         {
             "name": "spiriitlabs/form-filter-bundle",
@@ -11089,16 +11089,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.3.10",
+            "version": "12.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0d401d0df2e3c1703be425ecdc2d04f5c095938d"
+                "reference": "6a62f2b394e042884e4997ddc8b8db1ce56a0009"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0d401d0df2e3c1703be425ecdc2d04f5c095938d",
-                "reference": "0d401d0df2e3c1703be425ecdc2d04f5c095938d",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6a62f2b394e042884e4997ddc8b8db1ce56a0009",
+                "reference": "6a62f2b394e042884e4997ddc8b8db1ce56a0009",
                 "shasum": ""
             },
             "require": {
@@ -11117,7 +11117,7 @@
                 "phpunit/php-invoker": "^6.0.0",
                 "phpunit/php-text-template": "^5.0.0",
                 "phpunit/php-timer": "^8.0.0",
-                "sebastian/cli-parser": "^4.0.0",
+                "sebastian/cli-parser": "^4.1.0",
                 "sebastian/comparator": "^7.1.3",
                 "sebastian/diff": "^7.0.0",
                 "sebastian/environment": "^8.0.3",
@@ -11166,7 +11166,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.3.10"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.3.11"
             },
             "funding": [
                 {
@@ -11190,7 +11190,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-11T10:35:19+00:00"
+            "time": "2025-09-14T06:21:44+00:00"
         },
         {
             "name": "react/cache",
@@ -11720,16 +11720,16 @@
         },
         {
             "name": "sebastian/cli-parser",
-            "version": "4.0.0",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/cli-parser.git",
-                "reference": "6d584c727d9114bcdc14c86711cd1cad51778e7c"
+                "reference": "90f41072d220e5c40df6e8635f5dafba2d9d4d04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/cli-parser/zipball/6d584c727d9114bcdc14c86711cd1cad51778e7c",
-                "reference": "6d584c727d9114bcdc14c86711cd1cad51778e7c",
+                "url": "https://api.github.com/repos/sebastianbergmann/cli-parser/zipball/90f41072d220e5c40df6e8635f5dafba2d9d4d04",
+                "reference": "90f41072d220e5c40df6e8635f5dafba2d9d4d04",
                 "shasum": ""
             },
             "require": {
@@ -11741,7 +11741,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "4.0-dev"
+                    "dev-main": "4.2-dev"
                 }
             },
             "autoload": {
@@ -11765,15 +11765,27 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/cli-parser/issues",
                 "security": "https://github.com/sebastianbergmann/cli-parser/security/policy",
-                "source": "https://github.com/sebastianbergmann/cli-parser/tree/4.0.0"
+                "source": "https://github.com/sebastianbergmann/cli-parser/tree/4.2.0"
             },
             "funding": [
                 {
                     "url": "https://github.com/sebastianbergmann",
                     "type": "github"
+                },
+                {
+                    "url": "https://liberapay.com/sebastianbergmann",
+                    "type": "liberapay"
+                },
+                {
+                    "url": "https://thanks.dev/u/gh/sebastianbergmann",
+                    "type": "thanks_dev"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/sebastian/cli-parser",
+                    "type": "tidelift"
                 }
             ],
-            "time": "2025-02-07T04:53:50+00:00"
+            "time": "2025-09-14T09:36:45+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -12593,16 +12605,16 @@
         },
         {
             "name": "slevomat/coding-standard",
-            "version": "8.22.0",
+            "version": "8.22.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slevomat/coding-standard.git",
-                "reference": "a4cef983bad2e70125612d22b2f6e2bd1333d5c2"
+                "reference": "1dd80bf3b93692bedb21a6623c496887fad05fec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/a4cef983bad2e70125612d22b2f6e2bd1333d5c2",
-                "reference": "a4cef983bad2e70125612d22b2f6e2bd1333d5c2",
+                "url": "https://api.github.com/repos/slevomat/coding-standard/zipball/1dd80bf3b93692bedb21a6623c496887fad05fec",
+                "reference": "1dd80bf3b93692bedb21a6623c496887fad05fec",
                 "shasum": ""
             },
             "require": {
@@ -12614,11 +12626,11 @@
             "require-dev": {
                 "phing/phing": "3.0.1|3.1.0",
                 "php-parallel-lint/php-parallel-lint": "1.4.0",
-                "phpstan/phpstan": "2.1.22",
+                "phpstan/phpstan": "2.1.24",
                 "phpstan/phpstan-deprecation-rules": "2.0.3",
                 "phpstan/phpstan-phpunit": "2.0.7",
                 "phpstan/phpstan-strict-rules": "2.0.6",
-                "phpunit/phpunit": "9.6.8|10.5.48|11.4.4|11.5.36|12.3.8"
+                "phpunit/phpunit": "9.6.8|10.5.48|11.4.4|11.5.36|12.3.10"
             },
             "type": "phpcodesniffer-standard",
             "extra": {
@@ -12642,7 +12654,7 @@
             ],
             "support": {
                 "issues": "https://github.com/slevomat/coding-standard/issues",
-                "source": "https://github.com/slevomat/coding-standard/tree/8.22.0"
+                "source": "https://github.com/slevomat/coding-standard/tree/8.22.1"
             },
             "funding": [
                 {
@@ -12654,7 +12666,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-06T09:14:48+00:00"
+            "time": "2025-09-13T08:53:30+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
