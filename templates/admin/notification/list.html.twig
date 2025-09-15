@@ -36,6 +36,7 @@
                     'property': 'sendAt',
                 } %}
             </th>
+            <th>{{ 'notification.isViewed.label'|trans }}</th>
             <th class="min"></th>
         {% endblock %}
 
@@ -45,6 +46,11 @@
             <td>{{ object.subject }}</td>
             <td>{{ object.user.fullName }}</td>
             <td>{{ object.sendAt|date('d/m/Y H:i') }}</td>
+            <td>
+                {% include 'components/bool.html.twig' with {
+                    'data': object.isViewed,
+                } %}
+            </td>
             <td>
                 <a class="action-icon text-secondary" href="{{ path('admin_notification_view', {id: object.id}) }}">
                     <i class="mdi mdi-eye"></i>

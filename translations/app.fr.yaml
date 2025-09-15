@@ -309,6 +309,8 @@ notification:
     label: "Utilisateur"
   sendAt:
     label: "Envoyé à"
+  isViewed:
+    label: "A été vue"
 
 notifications:
   label: "Notifications"
