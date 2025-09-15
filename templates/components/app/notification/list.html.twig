@@ -11,15 +11,12 @@
 
         <div {{ stimulus_controller('notification_view') }}>
             {% for notification in notifications %}
-                <a data-is-viewed="{{ notification.isViewed }}" data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+                <a data-is-viewed="{{ notification.isViewed }}" data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card {% if notification.isViewed %}read-noti{% else %}unread-noti{% endif%} shadow-none mb-1">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
                                 <div class="notify-icon bg-primary">
                                     <i class="ri-chat-quote-line font-18"></i>
-                                    {% if not notification.isViewed %}
-                                        <span class="noti-icon-badge"></span>
-                                    {% endif %}
                                 </div>
                             </div>
                             <div class="flex-grow-1 ms-2 w-100" style="min-width:0; white-space:normal; overflow:visible;">
