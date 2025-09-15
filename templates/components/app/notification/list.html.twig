@@ -11,7 +11,7 @@
 
         <div {{ stimulus_controller('notification_view') }}>
             {% for notification in notifications %}
-                <a data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
+                <a data-is-viewed="{{ notification.isViewed }}" data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0">
@@ -28,7 +28,6 @@
                 </a>
             {% endfor %}
         </div>
-
     </div>
 
 </twig:Turbo:Stream:Replace>

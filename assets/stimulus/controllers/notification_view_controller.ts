@@ -9,6 +9,10 @@ export default class extends Controller {
         const elements: Array<Element> = [...this.element.getElementsByClassName('notify-item')];
 
         for (const element of elements) {
+            let isViewed = element.getAttribute('data-is-viewed');
+            if (isViewed) {
+                continue;
+            }
             element.addEventListener('mouseenter', async (e) => {
                 let id = element.getAttribute('data-id');
 
@@ -21,7 +25,7 @@ export default class extends Controller {
                     if (!response.ok) throw new Error('Failed to update notification');
 
                 } catch (error) {
-                    console.error("❌ Failed to update issue transition:", error);
+                    console.error("❌ Failed to update notification:", error);
                     window.location.reload();
                 }
             })
