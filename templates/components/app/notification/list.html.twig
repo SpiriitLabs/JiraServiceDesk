@@ -17,6 +17,9 @@
                             <div class="flex-shrink-0">
                                 <div class="notify-icon bg-primary">
                                     <i class="ri-chat-quote-line font-18"></i>
+                                    {% if not notification.isViewed %}
+                                        <span class="noti-icon-badge"></span>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="flex-grow-1 ms-2 w-100" style="min-width:0; white-space:normal; overflow:visible;">
