@@ -3,7 +3,7 @@
 >
     {% trans_default_domain 'app' %}
 
-    <div id="notifications" class="simplebar-content" style="padding: 0px 12px;" data-turbo="true">
+    <div id="notifications" class="simplebar-content notifications-list" data-turbo="true">
 
         {% if notifications|length == 0 %}
             <h5 class="text-muted font-12 text-uppercase mt-2">{{ 'list.pagination.empty'|trans }}</h5>

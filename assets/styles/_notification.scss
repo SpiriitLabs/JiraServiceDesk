@@ -1,4 +1,11 @@
 .notifications-list {
-    max-height: 600px;
-    overflow-y: scroll;
+    padding: 0px 12px;
+
+    .notify-item {
+        .noti-item-title, .noti-item-subtitle {
+            white-space:normal;
+            overflow:visible;
+            word-break:break-word;
+        }
+    }
 }
