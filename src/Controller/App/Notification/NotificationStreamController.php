@@ -32,15 +32,7 @@ class NotificationStreamController extends AbstractController
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
 
-        $notifications = $this->notificationRepository->findBy(
-            [
-                'user' => $user,
-            ],
-            [
-                'sendAt' => 'DESC',
-            ],
-            10
-        );
+        $notifications = $this->notificationRepository->getLastsByUser($user);
 
         return $this->render(
             view: 'components/app/notification/list.html.twig',

@@ -19,15 +19,7 @@ class UserHasNewNotificationsExtension
     )]
     public function userHasNewNotifications(User $user): bool
     {
-        $notifications = $this->notificationRepository->findBy(
-            [
-                'user' => $user,
-            ],
-            [
-                'sendAt' => 'DESC',
-            ],
-            10
-        );
+        $notifications = $this->notificationRepository->getLastsByUser($user);
         $notifications = array_filter($notifications, function (Notification $notification) {
             return $notification->isViewed === false;
         });
