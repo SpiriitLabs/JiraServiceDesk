@@ -24,6 +24,7 @@ class NotificationRepository extends AbstractEntityRepository
         return $this->findBy(
             [
                 'user' => $user,
+                'isViewed' => false,
             ],
             [
                 'sendAt' => 'DESC',
