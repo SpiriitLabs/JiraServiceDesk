@@ -17,6 +17,7 @@ action:
   filter: "Filtrer"
   next: "Suivant"
   export: "Export"
+  clear_all: "Tout effacer"
 
 yes: "Oui"
 no: "Non"

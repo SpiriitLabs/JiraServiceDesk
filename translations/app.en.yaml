@@ -17,6 +17,7 @@ action:
   filter: "Filter"
   next: "Next"
   export: "Export"
+  clear_all: "Clear all"
 
 yes: "Yes"
 no: "No"

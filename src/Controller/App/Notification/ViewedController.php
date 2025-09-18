@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(
     path: '/notification/{id}/viewed',
 )]
-class NotificationViewedController extends AbstractController
+class ViewedController extends AbstractController
 {
     use EditControllerTrait;
 

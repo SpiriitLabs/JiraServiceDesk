@@ -3,9 +3,11 @@
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Favorite;
+use App\Entity\Notification;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Factory\FavoriteFactory;
+use App\Factory\NotificationFactory;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use PHPUnit\Framework\Attributes\Test;
@@ -60,5 +62,42 @@ class UserTest extends TestCase
 
         self::assertSame('FirstName', $user->getFirstName());
         self::assertSame('DÉSIRÈ', $user->getLastName());
+    }
+
+    #[Test]
+    public function testItMustBeHasNotViewedNotifications(): void
+    {
+        /** @var User $user */
+        $user = UserFactory::createOne()->_set('id', 1);
+
+        /** @var Notification $notification */
+        $notification = NotificationFactory::createOne([
+            'user' => $user,
+            'isViewed' => false,
+        ]);
+
+        self::assertTrue($user->hasNotViewedNotifications());
+    }
+
+    #[Test]
+    public function testItMustBeGetOnlyNotViewedNotifications(): void
+    {
+        /** @var User $user */
+        $user = UserFactory::createOne()->_set('id', 1);
+
+        NotificationFactory::createOne([
+            'user' => $user,
+            'isViewed' => false,
+        ]);
+        NotificationFactory::createOne([
+            'user' => $user,
+            'isViewed' => false,
+        ]);
+        NotificationFactory::createOne([
+            'user' => $user,
+            'isViewed' => true,
+        ]);
+
+        self::assertCount(2, $user->getNotViewedNotifications());
     }
 }

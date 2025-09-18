@@ -16,7 +16,7 @@ use Symfony\UX\Turbo\TurboBundle;
     path: '/notification/stream',
     name: RouteCollection::NOTIFICATION_STREAM->value,
 )]
-class NotificationStreamController extends AbstractController
+class StreamController extends AbstractController
 {
     use CreateControllerTrait;
 

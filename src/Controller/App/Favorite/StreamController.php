@@ -22,7 +22,7 @@ use Symfony\UX\Turbo\TurboBundle;
     path: '/favorite/{projectId}/{code}/stream',
     name: RouteCollection::FAVORITE_STREAM->value,
 )]
-class FavoriteStreamController extends AbstractController
+class StreamController extends AbstractController
 {
     use CreateControllerTrait;
 

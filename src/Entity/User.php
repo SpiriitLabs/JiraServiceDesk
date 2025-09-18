@@ -27,31 +27,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 180)]
     public ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column(nullable: true)]
-    private ?string $password = null;
-
     #[ORM\Column(length: 255)]
     public ?string $firstName = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $company = null;
@@ -61,18 +41,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: false, enumType: Theme::class)]
     public Theme $preferredTheme = Theme::AUTO;
-
-    /**
-     * @var Collection<int, Project>
-     */
-    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'users')]
-    private Collection $projects;
-
-    /**
-     * @var Collection<int, Favorite>
-     */
-    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $favorites;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     public bool $preferenceNotification = false;
@@ -98,6 +66,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne]
     public ?Project $defaultProject = null;
 
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column(nullable: true)]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
+
+    /**
+     * @var Collection<int, Project>
+     */
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'users')]
+    private Collection $projects;
+
+    /**
+     * @var Collection<int, Favorite>
+     */
+    #[ORM\OneToMany(targetEntity: Favorite::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $favorites;
+
     #[ORM\Column(name: 'last_login_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $lastLoginAt = null;
 
@@ -112,12 +112,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         ?string $firstName,
         ?string $lastName,
         ?string $company = null,
-        bool $enabled = true
+        bool $enabled = true,
     ) {
         $this->email = $email;
         $this->company = $company;
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
         $this->enabled = $enabled;
 
         $this->setFirstName($firstName);
@@ -172,9 +173,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     *
      * @return list<string>
+     *
+     * @see UserInterface
      */
     public function getRoles(): array
     {
@@ -237,19 +238,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeProject(Project $project): static
+    public function clearProjects(): static
     {
-        if ($this->projects->removeElement($project)) {
-            $project->removeUser($this);
+        foreach ($this->projects as $project) {
+            $this->removeProject($project);
         }
 
         return $this;
     }
 
-    public function clearProjects(): static
+    public function removeProject(Project $project): static
     {
-        foreach ($this->projects as $project) {
-            $this->removeProject($project);
+        if ($this->projects->removeElement($project)) {
+            $project->removeUser($this);
         }
 
         return $this;
@@ -310,11 +311,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getProjectKeys(): string
     {
-        $projects = array_map(function ($project) {
+        $projects = array_map(function (
+            $project,
+        ) {
             return $project->jiraKey;
         }, $this->projects
             ->toArray());
 
         return implode(', ', $projects);
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): static
+    {
+        if (! $this->notifications->contains($notification)) {
+            $this->notifications->add($notification);
+            $notification->user = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): static
+    {
+        if ($this->notifications->removeElement($notification)) {
+            if ($notification->user === $this) {
+                $notification->user = null;
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNotViewedNotifications(): array
+    {
+        return array_filter($this->notifications->toArray(), function (
+            Notification $notification,
+        ) {
+            return $notification->isViewed == false;
+        });
+    }
+
+    public function hasNotViewedNotifications(): bool
+    {
+        return count($this->getNotViewedNotifications()) > 0;
     }
 }

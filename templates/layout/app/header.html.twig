@@ -78,7 +78,7 @@
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="true">
                     <i class="ri-notification-3-line font-22"></i>
-                    {% if user_has_new_notifications(app.user) %}
+                    {% if app.user.hasNotViewedNotifications %}
                         <span class="noti-icon-badge" id="notifications-icon-badge"></span>
                     {% endif %}
                 </a>
@@ -88,6 +88,13 @@
                             <div class="col">
                                 <h6 class="m-0 font-16 fw-semibold">{{ 'notifications.label'|trans }}</h6>
                             </div>
+                            {% if app.user.notViewedNotifications %}
+                                <div class="col-auto">
+                                    <a href="{{ path('app_notification_clear_all') }}" class="text-dark text-decoration-underline">
+                                        <small>{{ 'action.clear_all'|trans }}</small>
+                                    </a>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
 

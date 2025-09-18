@@ -32,4 +32,19 @@ class NotificationRepository extends AbstractEntityRepository
             self::LIMIT_USER_NOTIFICATIONS
         );
     }
+
+    public function clearByUser(User $user): void
+    {
+        $this->createQueryBuilder('n')
+            ->update()
+            ->set('n.isViewed', ':viewed')
+            ->where('n.user = :user')
+            ->andWhere('n.isViewed = :currentViewed')
+            ->setParameter('viewed', true)
+            ->setParameter('user', $user)
+            ->setParameter('currentViewed', false)
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }
