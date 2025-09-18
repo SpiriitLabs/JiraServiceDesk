@@ -9,12 +9,13 @@
             <h5 class="text-muted font-12 text-uppercase mt-2">{{ 'list.pagination.empty'|trans }}</h5>
         {% endif %}
 
-        <div {{ stimulus_controller('notification_view') }}>
+        <div id="notifications-list">
             {% for notification in notifications %}
-                <a data-is-viewed="{{ notification.isViewed }}" data-id="{{ notification.id }}" href="{{ notification.link }}" aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card {% if notification.isViewed %}read-noti{% else %}unread-noti{% endif%} shadow-none mb-1">
+                <div {{ stimulus_controller('notification', {id: notification.id, link: notification.link}) }} {{ stimulus_target('notification', 'notification')}} aria-label="{{ notification.body }}" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-1">
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
+                        <span role="button" tabindex="0" class="float-end noti-close-btn text-muted" {{ stimulus_action('notification', 'close', 'click') }}><i class="mdi mdi-close"></i></span>
+                        <div role="button" tabindex="0" class="d-flex align-items-center" {{ stimulus_action('notification', 'open', 'click')}}>
+                            <div class="flex-shrink-0" >
                                 <div class="notify-icon bg-primary">
                                     <i class="ri-chat-quote-line font-18"></i>
                                 </div>
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             {% endfor %}
         </div>
     </div>
