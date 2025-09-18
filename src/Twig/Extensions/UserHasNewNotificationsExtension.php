@@ -2,7 +2,6 @@
 
 namespace App\Twig\Extensions;
 
-use App\Entity\Notification;
 use App\Entity\User;
 use App\Repository\NotificationRepository;
 use Twig\Attribute\AsTwigFunction;
@@ -10,7 +9,7 @@ use Twig\Attribute\AsTwigFunction;
 class UserHasNewNotificationsExtension
 {
     public function __construct(
-        private NotificationRepository $notificationRepository,
+        private readonly NotificationRepository $notificationRepository,
     ) {
     }
 
@@ -20,9 +19,6 @@ class UserHasNewNotificationsExtension
     public function userHasNewNotifications(User $user): bool
     {
         $notifications = $this->notificationRepository->getLastsByUser($user);
-        $notifications = array_filter($notifications, function (Notification $notification) {
-            return $notification->isViewed === false;
-        });
 
         return ! empty($notifications);
     }
