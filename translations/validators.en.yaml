@@ -1,0 +1,3 @@
+user:
+    unique_email:
+        message: "This email address is already in use."

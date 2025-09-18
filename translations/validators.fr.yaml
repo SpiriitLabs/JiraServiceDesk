@@ -1,0 +1,3 @@
+user:
+    unique_email:
+        message: "Cette adresse e-mail est déjà utilisée."

@@ -9,6 +9,7 @@ use App\Form\Type\SwitchType;
 use App\Message\Command\User\AbstractUserDTO;
 use App\Message\Command\User\EditUser;
 use App\Repository\ProjectRepository;
+use App\Validator\User\UniqueEmail;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -29,9 +30,16 @@ abstract class AbstractUserFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => \in_array('create', $options['validation_groups'] ?? [], true),
                 'disabled' => \in_array('create', $options['validation_groups'] ?? [], true) == false,
-                'constraints' => [
-                    new NotBlank(),
-                ],
+                'constraints' => array_merge(
+                    [
+                        new NotBlank(),
+                    ],
+                    \in_array('create', $options['validation_groups'] ?? [], true)
+                        ? [
+                            new UniqueEmail(),
+                        ]
+                        : []
+                ),
             ])
             ->add('firstName', TextType::class, [
                 'required' => true,
