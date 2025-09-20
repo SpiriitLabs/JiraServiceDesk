@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab02e2a3d5fb1336e86276934fb651ff",
+    "content-hash": "c2f517679aa35224d8758d91fd64815b",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -1801,16 +1801,16 @@
         },
         {
             "name": "lesstif/jira-cloud-restapi",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lesstif/php-JiraCloud-RESTAPI.git",
-                "reference": "256ec65118bedc34d66fa5f6486a990fc1abc192"
+                "reference": "61b5dd36d40502d85ac49d94c7f811f4a1b4335b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lesstif/php-JiraCloud-RESTAPI/zipball/256ec65118bedc34d66fa5f6486a990fc1abc192",
-                "reference": "256ec65118bedc34d66fa5f6486a990fc1abc192",
+                "url": "https://api.github.com/repos/lesstif/php-JiraCloud-RESTAPI/zipball/61b5dd36d40502d85ac49d94c7f811f4a1b4335b",
+                "reference": "61b5dd36d40502d85ac49d94c7f811f4a1b4335b",
                 "shasum": ""
             },
             "require": {
@@ -1818,7 +1818,7 @@
                 "ext-curl": "*",
                 "ext-json": "*",
                 "monolog/monolog": "^2.0|^3.0",
-                "netresearch/jsonmapper": "^3.0|^4.0",
+                "netresearch/jsonmapper": "^3.0|^4.0|^5.0",
                 "php": "^8.1",
                 "vlucas/phpdotenv": "^5.0|^6.0"
             },
@@ -1862,9 +1862,9 @@
             ],
             "support": {
                 "issues": "https://github.com/lesstif/php-JiraCloud-RESTAPI/issues",
-                "source": "https://github.com/lesstif/php-JiraCloud-RESTAPI/tree/1.8.0"
+                "source": "https://github.com/lesstif/php-JiraCloud-RESTAPI/tree/1.9.0"
             },
-            "time": "2025-04-05T12:48:47+00:00"
+            "time": "2025-09-20T04:39:28+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1971,16 +1971,16 @@
         },
         {
             "name": "netresearch/jsonmapper",
-            "version": "v4.5.0",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cweiske/jsonmapper.git",
-                "reference": "8e76efb98ee8b6afc54687045e1b8dba55ac76e5"
+                "reference": "8c64d8d444a5d764c641ebe97e0e3bc72b25bf6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/8e76efb98ee8b6afc54687045e1b8dba55ac76e5",
-                "reference": "8e76efb98ee8b6afc54687045e1b8dba55ac76e5",
+                "url": "https://api.github.com/repos/cweiske/jsonmapper/zipball/8c64d8d444a5d764c641ebe97e0e3bc72b25bf6c",
+                "reference": "8c64d8d444a5d764c641ebe97e0e3bc72b25bf6c",
                 "shasum": ""
             },
             "require": {
@@ -2016,9 +2016,9 @@
             "support": {
                 "email": "cweiske@cweiske.de",
                 "issues": "https://github.com/cweiske/jsonmapper/issues",
-                "source": "https://github.com/cweiske/jsonmapper/tree/v4.5.0"
+                "source": "https://github.com/cweiske/jsonmapper/tree/v5.0.0"
             },
-            "time": "2024-09-08T10:13:13+00:00"
+            "time": "2024-09-08T10:20:00+00:00"
         },
         {
             "name": "pagerfanta/core",
@@ -10755,16 +10755,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "12.3.7",
+            "version": "12.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "bbede0f5593dad37af3be6a6f8e6ae1885e8a0a9"
+                "reference": "99e692c6a84708211f7536ba322bbbaef57ac7fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/bbede0f5593dad37af3be6a6f8e6ae1885e8a0a9",
-                "reference": "bbede0f5593dad37af3be6a6f8e6ae1885e8a0a9",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/99e692c6a84708211f7536ba322bbbaef57ac7fc",
+                "reference": "99e692c6a84708211f7536ba322bbbaef57ac7fc",
                 "shasum": ""
             },
             "require": {
@@ -10820,7 +10820,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.3.7"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/12.3.8"
             },
             "funding": [
                 {
@@ -10840,7 +10840,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-10T09:59:06+00:00"
+            "time": "2025-09-17T11:31:43+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -13648,16 +13648,16 @@
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v2.6.3",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "7c951226c9cb09c8d57818c0f1ec84d6d484ed57"
+                "reference": "883cbb424e9a7f96e85f638ab3a0f2cc158aec95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/7c951226c9cb09c8d57818c0f1ec84d6d484ed57",
-                "reference": "7c951226c9cb09c8d57818c0f1ec84d6d484ed57",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/883cbb424e9a7f96e85f638ab3a0f2cc158aec95",
+                "reference": "883cbb424e9a7f96e85f638ab3a0f2cc158aec95",
                 "shasum": ""
             },
             "require": {
@@ -13687,16 +13687,19 @@
                 "doctrine/orm": "^2.16|^3.0",
                 "doctrine/persistence": "^2.0|^3.0|^4.0",
                 "phpunit/phpunit": "^9.5.0 || ^10.0 || ^11.0 || ^12.0",
+                "symfony/browser-kit": "^6.4|^7.0|^8.0",
                 "symfony/console": "^6.4|^7.0|^8.0",
                 "symfony/dotenv": "^6.4|^7.0|^8.0",
                 "symfony/framework-bundle": "^6.4|^7.0|^8.0",
                 "symfony/maker-bundle": "^1.55",
                 "symfony/phpunit-bridge": "^6.4|^7.0|^8.0",
+                "symfony/routing": "^6.4|^7.0|^8.0",
                 "symfony/runtime": "^6.4|^7.0|^8.0",
                 "symfony/translation-contracts": "^3.4",
                 "symfony/uid": "^6.4|^7.0|^8.0",
                 "symfony/var-dumper": "^6.4|^7.0|^8.0",
-                "symfony/yaml": "^6.4|^7.0|^8.0"
+                "symfony/yaml": "^6.4|^7.0|^8.0",
+                "webmozart/assert": "^1.11"
             },
             "type": "library",
             "extra": {
@@ -13717,7 +13720,8 @@
                 ],
                 "psr-4": {
                     "Zenstruck\\Foundry\\": "src/",
-                    "Zenstruck\\Foundry\\Psalm\\": "utils/psalm"
+                    "Zenstruck\\Foundry\\Psalm\\": "utils/psalm",
+                    "Zenstruck\\Foundry\\Utils\\Rector\\": "utils/rector/src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -13747,7 +13751,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zenstruck/foundry/issues",
-                "source": "https://github.com/zenstruck/foundry/tree/v2.6.3"
+                "source": "https://github.com/zenstruck/foundry/tree/v2.7.0"
             },
             "funding": [
                 {
@@ -13759,7 +13763,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-28T05:57:45+00:00"
+            "time": "2025-09-17T15:34:40+00:00"
         }
     ],
     "aliases": [],

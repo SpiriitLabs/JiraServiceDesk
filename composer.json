@@ -18,7 +18,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.4.2",
         "doctrine/orm": "^3.5.2",
         "gedmo/doctrine-extensions": "^3.20.1",
-        "lesstif/jira-cloud-restapi": "^1.8",
+        "lesstif/jira-cloud-restapi": "^1.9",
         "pagerfanta/doctrine-dbal-adapter": "^4.7.1",
         "pagerfanta/doctrine-orm-adapter": "^4.7.1",
         "pagerfanta/pagerfanta": "^2.0.1",
@@ -103,19 +103,14 @@
         ]
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "squizlabs/php_codesniffer": ">=4.0"
     },
     "extra": {
         "symfony": {
             "allow-contrib": false,
             "require": "7.3.*",
             "docker": true
-        },
-        "patches": {
-            "lesstif/jira-cloud-restapi": {
-                "Issue #91: update search() to work with search/jql": ".composer/patches/lesstif/jira-cloud-restapi/97.patch",
-                "feat(project): Adding fetching roles datas for a project": ".composer/patches/lesstif/jira-cloud-restapi/98.patch"
-            }
         }
     },
     "require-dev": {
@@ -131,6 +126,6 @@
         "symfony/web-profiler-bundle": "7.3.*",
         "symplify/coding-standard": "^12.4.3",
         "symplify/easy-coding-standard": "^12.6.0",
-        "zenstruck/foundry": "^2.6.3"
+        "zenstruck/foundry": "^2.7.0"
     }
 }
