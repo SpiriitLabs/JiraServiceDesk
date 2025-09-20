@@ -192,17 +192,17 @@
                         </a>
                     {% endif %}
 
-                    <a href="{{ path('security_logout') }}" class="dropdown-item">
-                        <i class="mdi mdi-logout"></i>
-                        <span>{{ 'action.logout'|trans }}</span>
-                    </a>
-
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('admin_dashboard') }}" class="dropdown-item bg-warning text-white">
                             <i class="uil-briefcase"></i>
                             <span>{{ 'dashboard.admin'|trans }}</span>
                         </a>
                     {% endif %}
+
+                    <a href="{{ path('security_logout') }}" class="dropdown-item">
+                        <i class="mdi mdi-logout"></i>
+                        <span>{{ 'action.logout'|trans }}</span>
+                    </a>
                 </div>
             </li>
         </ul>
