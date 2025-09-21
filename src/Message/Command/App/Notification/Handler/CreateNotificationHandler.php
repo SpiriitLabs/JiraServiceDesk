@@ -17,6 +17,9 @@ readonly class CreateNotificationHandler
 
     public function __invoke(CreateNotification $command): ?Notification
     {
+        if ($command->user->enabled === false) {
+            return null;
+        }
         $notification = new Notification(
             notificationType: $command->notificationType,
             subject: $command->subject,

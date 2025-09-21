@@ -41,6 +41,7 @@ class EmailNotificationHandlerTest extends TestCase
     {
         $user = UserFactory::createOne([
             'preferenceNotification' => $userHasPreferenceNotification,
+            'enabled' => true,
         ]);
 
         $this->mailer

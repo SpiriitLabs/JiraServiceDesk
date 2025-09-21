@@ -19,6 +19,9 @@ readonly class EmailNotificationHandler
         if ($command->user->preferenceNotification === false) {
             return;
         }
+        if ($command->user->enabled === false) {
+            return;
+        }
 
         $this->mailer->send(
             $command->email,
