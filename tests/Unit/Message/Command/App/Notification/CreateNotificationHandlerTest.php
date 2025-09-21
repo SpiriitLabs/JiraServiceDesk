@@ -39,8 +39,9 @@ class CreateNotificationHandlerTest extends TestCase
     #[DataProvider('createNotificationDataProvider')]
     public function testDoCreateNotification(bool $userEnabled): void
     {
-        $user = UserFactory::createOne();
-        $user->enabled = $userEnabled;
+        $user = UserFactory::createOne([
+            'enabled' => $userEnabled,
+        ]);
 
         $this->entityManager
             ->expects($userEnabled ? self::once() : self::never())

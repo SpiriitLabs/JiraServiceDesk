@@ -48,8 +48,8 @@ class EmailNotificationHandlerTest extends TestCase
     {
         $user = UserFactory::createOne([
             'preferenceNotification' => $userHasPreferenceNotification,
+            'enabled' => $userEnabled,
         ]);
-        $user->enabled = $userEnabled;
         $expectSendNotification = $userEnabled && $userHasPreferenceNotification;
 
         $this->mailer
