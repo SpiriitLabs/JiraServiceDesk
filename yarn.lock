@@ -3986,9 +3986,9 @@ vite-plugin-static-copy@^3.1.2:
     tinyglobby "^0.2.14"
 
 vite-plugin-symfony@^8.2:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-symfony/-/vite-plugin-symfony-8.2.1.tgz#45cb61ea3b39dcffffe81f950449c9452ba0cbc3"
-  integrity sha512-SORT6RlGRwyC7224kIjODAZwfQUxcpba11QtJ3IfalrUoXxQP/AIphbq2Ans99AkTjKGvbaq24k3hE3Jj2Rzpw==
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-symfony/-/vite-plugin-symfony-8.2.2.tgz#c3cea469422a3592c893a32af87ba9b493b15ad2"
+  integrity sha512-oYzfcOiPtHoLbLCshM5qWFVNOypIljOdfP2zDerEzWUgjgvn4tBF0JqvEIbkal0eorJHaZw1Q0zr8YAZC+s3gw==
   dependencies:
     debug "^4.4.1"
     fast-glob "^3.3.3"
