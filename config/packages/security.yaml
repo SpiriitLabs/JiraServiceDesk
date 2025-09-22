@@ -26,7 +26,7 @@ security:
                 path: security_logout
             remember_me:
                 secret: '%kernel.secret%'
-                always_remember_me: true
+                lifetime: 86400
             switch_user: true
 
             # activate different ways to authenticate
