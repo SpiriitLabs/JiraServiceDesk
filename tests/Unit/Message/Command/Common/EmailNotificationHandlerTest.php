@@ -28,24 +28,32 @@ class EmailNotificationHandlerTest extends TestCase
     {
         yield 'can send notification' => [
             true,
+            true,
         ];
 
-        yield 'can\'t send notification' => [
+        yield 'can\'t send notification because user preference' => [
+            false,
+            true,
+        ];
+
+        yield 'can\'t send notification because user inactive' => [
+            true,
             false,
         ];
     }
 
     #[Test]
     #[DataProvider('emailNotificationDataProvider')]
-    public function testDoSendEmailNotification(bool $userHasPreferenceNotification): void
+    public function testDoSendEmailNotification(bool $userHasPreferenceNotification, bool $userEnabled): void
     {
         $user = UserFactory::createOne([
             'preferenceNotification' => $userHasPreferenceNotification,
-            'enabled' => true,
+            'enabled' => $userEnabled,
         ]);
+        $expectSendNotification = $userEnabled && $userHasPreferenceNotification;
 
         $this->mailer
-            ->expects($userHasPreferenceNotification ? self::once() : self::never())
+            ->expects($expectSendNotification ? self::once() : self::never())
             ->method('send')
         ;
 
