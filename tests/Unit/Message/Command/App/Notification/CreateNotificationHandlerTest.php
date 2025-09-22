@@ -27,7 +27,7 @@ class CreateNotificationHandlerTest extends TestCase
     public static function createNotificationDataProvider(): \Generator
     {
         yield 'can send notification' => [
-            false,
+            true,
         ];
 
         yield 'can\'t send notification' => [
@@ -41,12 +41,18 @@ class CreateNotificationHandlerTest extends TestCase
     {
         $user = UserFactory::createOne([
             'enabled' => $userEnabled,
-        ]);
+        ])->_set('id', 1);
 
         $this->entityManager
             ->expects($userEnabled ? self::once() : self::never())
             ->method('persist')
         ;
+
+        $this->entityManager
+            ->expects($userEnabled ? self::once() : self::never())
+            ->method('flush')
+        ;
+
 
         $handler = $this->generate();
         $handler(
