@@ -145,6 +145,30 @@ You can follow the detailed setup instructions in [`documentation/deployment.md`
 
 ---
 
+## 🎨 Custom Branding
+
+You can personalize the application’s branding by customizing the project name and logos.
+
+### Project Name
+- Set the `PROJECT_NAME` environment variable to change the displayed name throughout the app.
+
+### Custom Logos
+- Use the `LOGOS_PATH` environment variable to define paths for your custom logos (light, dark, and icon variants).
+- Place your SVG files in the `/assets/images/logo/custom/` directory. For example:
+  - `/assets/images/logo/custom/my_custom_logo-light.svg`
+  - `/assets/images/logo/custom/my_custom_logo-dark.svg`
+  - `/assets/images/logo/custom/my_custom_icon.svg`
+
+#### Example `LOGOS_PATH` value
+In your `.env` file (escape quotes as needed):
+```
+LOGOS_PATH="{\"light\":\"assets/images/logo/custom/my_custom_logo-light.svg\",\"dark\":\"assets/images/logo/custom/my_custom_logo-dark.svg\",\"icon\":\"assets/images/logo/custom/my_custom_icon.svg\"}"
+```
+- The paths should be relative to the `assets/` directory (e.g., `assets/images/logo/custom/...`).
+- The application will automatically use these paths for branding in the UI.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -156,5 +180,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Symfony](https://symfony.com/) — MIT License  
 - [FrankenPHP](https://github.com/dunglas/frankenphp) — MIT License  
 - [php-JiraCloud-RESTAPI](https://github.com/lesstif/php-JiraCloud-RESTAPI) — Apache 2.0 License  
-
----
