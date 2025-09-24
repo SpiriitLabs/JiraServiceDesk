@@ -53,5 +53,5 @@ public/app/*
 ###< pentatrion/vite-bundle ###
 
 ###> spiriitlabs/jira-service-desk ###
-#assets/images/logo/custom/*
+assets/images/logo/custom/*
 ###< spiriitlabs/jira-service-desk ###
