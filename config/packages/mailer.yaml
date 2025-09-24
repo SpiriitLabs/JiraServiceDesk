@@ -4,4 +4,4 @@ framework:
         envelope:
             sender: '%env(FROM_EMAIL)%'
         headers:
-            From: 'NoReply JiraServiceDesk <%env(FROM_EMAIL)%>'
+            From: '%env(FROM_NAME)%'

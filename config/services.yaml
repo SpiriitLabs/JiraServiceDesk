@@ -5,6 +5,10 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     upload_dir: "%env(resolve:ISSUE_ATTACHMENTS_DIRECTORY)%"
+    project_name: "%env(PROJECT_NAME)%"
+    logo_light_path: '%env(key:light:json:LOGOS_PATH)%'
+    logo_dark_path: '%env(key:dark:json:LOGOS_PATH)%'
+    logo_icon_path: '%env(key:icon:json:LOGOS_PATH)%'
 
 services:
     # default configuration for services in *this* file
