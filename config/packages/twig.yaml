@@ -12,8 +12,8 @@ twig:
         jira_account_id: '%env(JIRA_ACCOUNT_ID)%'
         marker_io_project_id: '%env(MARKER_IO_PROJECT_ID)%'
         logo_light_path: '%logo_light_path%'
-        logo_dark_path: '%logo_dark_path%'
         logo_icon_path: '%logo_icon_path%'
+        logo_favicon_path: '%logo_favicon_path%'
         
     date:
         timezone: Europe/Paris
