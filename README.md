@@ -158,6 +158,9 @@ You can personalize the application’s branding by customizing the project name
   - `/assets/images/logo/custom/my_custom_logo-light.svg`
   - `/assets/images/logo/custom/my_custom_logo-dark.svg`
   - `/assets/images/logo/custom/my_custom_icon.svg`
+- **Recommended sizes:**
+  - Logo: 1800x650px ratio (SVG, scalable)
+  - Icon: 64x64px ratio (SVG, scalable)
 
 #### Example `LOGOS_PATH` value
 In your `.env` file (escape quotes as needed):
@@ -179,4 +182,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - [Symfony](https://symfony.com/) — MIT License  
 - [FrankenPHP](https://github.com/dunglas/frankenphp) — MIT License  
-- [php-JiraCloud-RESTAPI](https://github.com/lesstif/php-JiraCloud-RESTAPI) — Apache 2.0 License  
+- [php-JiraCloud-RESTAPI](https://github.com/lesstif/php-JiraCloud-RESTAPI) — Apache 2.0 License
