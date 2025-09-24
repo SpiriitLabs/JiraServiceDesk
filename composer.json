@@ -27,6 +27,7 @@
         "rollerworks/password-strength-bundle": "^3.0.1",
         "runtime/frankenphp-symfony": "^0.2.0",
         "sentry/sentry-symfony": "^5.5.0",
+        "spiriitlabs/auth-log-bundle": "^1.0",
         "spiriitlabs/form-filter-bundle": "^12.0.1",
         "stof/doctrine-extensions-bundle": "^1.14",
         "symfony/console": "7.3.*",
@@ -55,6 +56,7 @@
         "symfony/yaml": "7.3.*",
         "symfonycasts/reset-password-bundle": "^1.23.2",
         "twig/extra-bundle": "^2.12|^3.21",
+        "twig/intl-extra": "^3.21",
         "twig/string-extra": "^3.21",
         "twig/twig": "^2.12|^3.21.1",
         "vlucas/phpdotenv": "^5.6.2"
