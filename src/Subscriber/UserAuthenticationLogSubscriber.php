@@ -11,7 +11,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class UserAuthenticationLogSubscriber implements EventSubscriberInterface
 {
-
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
     ) {
@@ -30,7 +29,9 @@ class UserAuthenticationLogSubscriber implements EventSubscriberInterface
         $userInfo = $event->getUserInformation();
 
         $userAuthenticationLog = new UserAuthenticationLog(
-            user: $this->entityManager->getRepository(User::class)->findOneBy(['id' => $userReference->id]),
+            user: $this->entityManager->getRepository(User::class)->findOneBy([
+                'id' => $userReference->id,
+            ]),
             userInformation: $userInfo
         );
         $this->entityManager->persist($userAuthenticationLog);
