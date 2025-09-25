@@ -22,7 +22,7 @@
             <div class="d-lg-block" style="width: 75%" {{ stimulus_controller('search', {searchUrl: absolute_url(path('app_search_api')), defaultEmtpyText: 'header.search.default'|trans}) }}>
                 <form {{ stimulus_target('search', 'form') }} style="max-width: 100%;">
                     <div class="input-group">
-                        <input type="search" class="ps-2 form-control dropdown-toggle" style="width: 90%" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
+                        <input type="search" class="ps-2 form-control dropdown-toggle" style="width: 75%" placeholder="{{ 'filter.query.label'|trans }}..." id="top-search" {{ stimulus_target('search', 'input') }} {{ stimulus_action('search', 'onSearchInput') }}>
 
                         <button class="text-white btn btn-primary" type="submit" {{ stimulus_action('search', 'onSearchInput') }}><span class="mdi mdi-magnify"></span></button>
                     </div>
