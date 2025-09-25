@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
 class UserProfileFormTypeTest extends TypeTestCase
@@ -29,7 +28,6 @@ class UserProfileFormTypeTest extends TypeTestCase
     protected function getExtensions(): array
     {
         $validator = Validation::createValidator();
-        $translator = $this->createMock(TranslatorInterface::class);
 
         // Mock ProjectRepository
         $queryBuilder = $this->createMock(QueryBuilder::class);
