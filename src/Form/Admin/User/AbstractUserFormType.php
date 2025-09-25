@@ -126,9 +126,6 @@ abstract class AbstractUserFormType extends AbstractType
                 ->add('plainPassword', PasswordType::class, [
                     'label' => 'user.password.label',
                     'required' => false,
-                    'toggle' => true,
-                    'hidden_label' => '',
-                    'visible_label' => '',
                     'constraints' => [
                         new NotCompromisedPassword(),
                         new PasswordRequirements(

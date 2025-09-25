@@ -15,13 +15,11 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\UX\TogglePassword\Form\TogglePasswordTypeExtension;
 use Zenstruck\Foundry\Test\Factories;
 
 class UserProfileFormTypeTest extends TypeTestCase
@@ -71,11 +69,7 @@ class UserProfileFormTypeTest extends TypeTestCase
                 [
                     new UserProfileFormType(),
                 ],
-                [
-                    PasswordType::class => [
-                        new TogglePasswordTypeExtension($translator),
-                    ],
-                ]
+                []
             ),
             new ValidatorExtension($validator),
             new DoctrineOrmExtension($managerRegistry),
