@@ -4,12 +4,13 @@
 <html lang="{{ app.locale }}" data-bs-preferred-theme="{{ app.session.get('_theme') }}" class="menuitem-active">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="{{ asset('assets/images/logo/favicon.ico', 'app') }}" type="image/ico">
-    <title>{% block title 'JiraServiceDesk' %} - {{ 'title.all'|trans }}</title>
+    <link rel="shortcut icon" href="{{ asset(logo_favicon_path, 'app') }}" type="image/ico">
+    <title>{% block title '' %} - {{ project_name }}</title>
 
-    <link rel="mask-icon" href="{{ asset('assets/images/logo/icon.png', 'app') }}" color="#FAFBFE">
+    <link rel="mask-icon" href="{{ asset(logo_icon_path, 'app') }}" color="#FAFBFE">
     <link rel="manifest" href="{{ asset('app/static/pwa/site.webmanifest') }}">
 
     {% block stylesheets %}
@@ -21,25 +22,30 @@
         {{ vite_entry_script_tags('app', [], 'app') }}
     {% endblock %}
 </head>
-<body {% block turbo %} data-turbo="false"{% endblock %} {{ stimulus_controller('theme install_pwa marker_io') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }} id="body">
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" {{ stimulus_controller('flash') }} id="toastsNotifications">
-        {% for type, messages in app.flashes %}
-            {% for message in messages %}
-                <div id="liveToast" {{ stimulus_target('flash', 'container') }} class="toast show text-bg-{{ type }}" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <img src="{{ asset('assets/images/logo/favicon.ico', 'app') }}" class="rounded me-2" style="width: 25px" alt="RomainMILLAN">
-                        <strong class="me-auto">{{ 'title.all'|trans }}</strong>
-                        <button type="button" {{ stimulus_action('flash', 'close') }} class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        {{ message|trans }}
-                    </div>
+<body {% block turbo %} data-turbo="false"{% endblock %} {{ stimulus_controller('theme install_pwa marker_io') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }}
+    id="body">
+<div class="toast-container position-fixed bottom-0 end-0 p-3" {{ stimulus_controller('flash') }}
+     id="toastsNotifications">
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div id="liveToast" {{ stimulus_target('flash', 'container') }} class="toast show text-bg-{{ type }}"
+                 role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="{{ asset(logo_favicon_path, 'app') }}" class="rounded me-2" style="width: 25px"
+                         alt="{{ project_name }}">
+                    <strong class="me-auto">{{ project_name }}</strong>
+                    <button type="button" {{ stimulus_action('flash', 'close') }} class="btn-close"
+                            data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
-            {% endfor %}
+                <div class="toast-body">
+                    {{ message|trans }}
+                </div>
+            </div>
         {% endfor %}
-    </div>
-    <div class="wrapper">
-        {% block wrapper '' %}
-    </div>
+    {% endfor %}
+</div>
+<div class="wrapper">
+    {% block wrapper '' %}
+</div>
 </body>
 </html>

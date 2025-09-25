@@ -8,12 +8,18 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> spiriitlabs/developer-tools ###
 /database_data/
 ./database_data
 ./database_data/*
 /uploads/line-attachments/
 /.idea/
 .phpactor.json
+.DS_Store
+# Ignore pnpm store
+.pnpm-store
+###< spiriitlabs/developer-tools ###
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
@@ -25,14 +31,10 @@
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 
-###> spiriitlabs/jira-service-desk ###
+###> spiriitlabs/sandbox ###
 src/Cli/SandboxCommand.php
 private/uploads/*
-###< spiriitlabs/jira-service-desk ###
-
-.DS_Store
-# Ignore pnpm store
-.pnpm-store
+###< spiriitlabs/sandbox ###
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
@@ -49,3 +51,7 @@ private/uploads/*
 /public/app/
 public/app/*
 ###< pentatrion/vite-bundle ###
+
+###> spiriitlabs/jira-service-desk ###
+assets/images/logo/custom/*
+###< spiriitlabs/jira-service-desk ###
