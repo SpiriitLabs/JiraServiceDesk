@@ -20,15 +20,6 @@
                 "enabled": false,
                 "fetch": "eager"
             }
-        },
-        "@symfony/ux-toggle-password": {
-            "toggle-password": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "@symfony/ux-toggle-password/dist/style.min.css": true
-                }
-            }
         }
     },
     "entrypoints": []
