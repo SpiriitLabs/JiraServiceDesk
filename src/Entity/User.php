@@ -378,6 +378,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
 
     public function getAuthenticationLogsToEmailName(): string
     {
-        return $this->getFullName() ?? $this->getFirstName() ?? $this->email;
+        return $this->getFullName();
     }
 }

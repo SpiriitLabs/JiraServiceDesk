@@ -31,7 +31,6 @@ framework:
         routing:
             # Route your messages to the transports
             App\Message\AsyncCommandInterface: async
-#            Spiriit\Bundle\AuthLogBundle\Messenger\AuthLoginMessage\AuthLoginMessage: async
         
         default_bus: command.bus
 
