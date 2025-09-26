@@ -27,6 +27,7 @@
         "rollerworks/password-strength-bundle": "^3.0.1",
         "runtime/frankenphp-symfony": "^0.2.0",
         "sentry/sentry-symfony": "^5.5.0",
+        "spiriitlabs/auth-log-bundle": "^1.0",
         "spiriitlabs/form-filter-bundle": "^12.0.1",
         "stof/doctrine-extensions-bundle": "^1.14",
         "symfony/console": "7.3.*",

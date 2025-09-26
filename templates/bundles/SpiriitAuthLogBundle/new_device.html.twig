@@ -1,0 +1,77 @@
+{% extends 'email/layout.html.twig' %}
+{% trans_default_domain 'email' %}
+
+{% block content %}
+
+    <twig:email:title
+        text="{{ 'security.new_device.title'|trans() }}"
+    />
+
+    <twig:email:text>
+        {% block content %}
+            {% trans_default_domain 'email' %}
+
+            <tr>
+                <td class="r16-c nl2go-default-textstyle"
+                    align="left"
+                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                    <div>
+                        <p style="margin: 0;">
+                            {{ 'security.new_device.description'|trans()|raw }}
+                        </p>
+                    </div>
+                </td>
+            </tr>
+
+        {% endblock %}
+    </twig:email:text>
+
+    <twig:email:text>
+        {% block content %}
+            {% trans_default_domain 'email' %}
+
+            <tr>
+                <td class="r16-c nl2go-default-textstyle"
+                    align="left"
+                    style="color: #414141; font-family: Arial; font-size: 16px; line-height: 1.5; word-break: break-word; text-align: left; valign: top;">
+                    <div>
+                        <ul>
+                            <li>{{ 'security.new_device.ip_address'|trans() }}:
+                                <strong>{{ userInformation.ipAddress ?? '-' }}</strong></li>
+                            <li>{{ 'security.new_device.device'|trans() }}:
+                                <strong>{{ userInformation.userAgent ?? '-' }}</strong></li>
+                            <li>{{ 'security.new_device.date'|trans() }}:
+                                <strong>{{ userInformation.loginAt ? userInformation.loginAt|date('d/m/Y') : '-' }}</strong>
+                            </li>
+                            <li>
+                                {{ 'security.new_device.location'|trans() }}: <strong>
+                                    {% if userInformation.location is not empty %}
+                                        {{ userInformation.location.city ?? '-' }}, {{ userInformation.location.country ?? '-' }}
+                                        {% if userInformation.location.latitude and userInformation.location.longitude %}
+                                            (<a
+                                            href="https://www.google.com/maps?q={{ userInformation.location.latitude }},{{ userInformation.location.longitude }}"
+                                            target="_blank">
+                                            map
+                                        </a>)
+                                        {% endif %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </strong>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endblock %}
+    </twig:email:text>
+{% endblock %}
+
+{% block action %}
+
+    <twig:email:action
+        label="{{ 'security.new_device.action'|trans }}"
+        href="{{ absolute_url(path('security_forgot_password_request')) }}"
+    />
+
+{% endblock %}

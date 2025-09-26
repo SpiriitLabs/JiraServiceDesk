@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d1f801231b66afa30d5bc478bd43b45",
+    "content-hash": "16857d141568abf8c05689580794da57",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -3202,6 +3202,72 @@
                 }
             ],
             "time": "2025-09-11T14:31:09+00:00"
+        },
+        {
+            "name": "spiriitlabs/auth-log-bundle",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SpiriitLabs/auth-log-bundle.git",
+                "reference": "c46862e6faee5d52fa23bc73bfc82ed9e2ace6c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SpiriitLabs/auth-log-bundle/zipball/c46862e6faee5d52fa23bc73bfc82ed9e2ace6c8",
+                "reference": "c46862e6faee5d52fa23bc73bfc82ed9e2ace6c8",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "3.* || ^4.0",
+                "php": ">=8.2",
+                "symfony/config": "^6.4|^7.0",
+                "symfony/dependency-injection": "^6.4|^7.0",
+                "symfony/event-dispatcher": "^6.4|^7.0",
+                "symfony/framework-bundle": "^6.0 || ^7.0",
+                "symfony/http-client": "^6.0 || ^7.0",
+                "symfony/mailer": "^6.0 || ^7.0",
+                "symfony/messenger": "^6.4|^7.0",
+                "symfony/security-bundle": "^6.4|^7.0",
+                "symfony/translation": "^7.3",
+                "symfony/translation-contracts": "^1.0|^2.0|^3.0",
+                "symfony/twig-bundle": "^6.4|^7.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.64",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-symfony": "^2.0",
+                "rector/rector": "^2.1",
+                "symfony/phpunit-bridge": "^7.3",
+                "symfony/yaml": "^7.3"
+            },
+            "suggest": {
+                "geoip2/geoip2": "Required if you want to enrich logs with geolocation"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Spiriit\\Bundle\\AuthLogBundle\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spiriit",
+                    "email": "dev@spiriit.com"
+                }
+            ],
+            "description": "A Symfony bundle to log authentication events",
+            "support": {
+                "issues": "https://github.com/SpiriitLabs/auth-log-bundle/issues",
+                "source": "https://github.com/SpiriitLabs/auth-log-bundle/tree/v1.0.0"
+            },
+            "time": "2025-09-09T12:52:34+00:00"
         },
         {
             "name": "spiriitlabs/form-filter-bundle",

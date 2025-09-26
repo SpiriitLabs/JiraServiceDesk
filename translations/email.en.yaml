@@ -39,6 +39,15 @@ security:
         description: "Welcome %full_name% to your ticket management tool. To continue, please set your password by clicking the link below."
         expire_time: "This link will expire in %expire_link_time%."
         action: "Set your password"
+    
+    new_device:
+        title: "New login detected"
+        description: "Hello, a new login has been detected on your account from a new device or location.<br/>If you did not initiate this login, we recommend that you change your password immediately."
+        action: "Change my password"
+        ip_address: "IP address"
+        device: "Device"
+        date: "Date"
+        location: "Location"
 
 user:
     export:

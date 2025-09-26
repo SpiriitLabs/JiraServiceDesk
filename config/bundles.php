@@ -73,4 +73,7 @@ return [
     Pentatrion\ViteBundle\PentatrionViteBundle::class => [
         'all' => true,
     ],
+    Spiriit\Bundle\AuthLogBundle\SpiriitAuthLogBundle::class => [
+        'all' => true,
+    ],
 ];

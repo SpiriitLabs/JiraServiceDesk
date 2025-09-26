@@ -39,6 +39,14 @@ security:
         description: "Bienvenue %full_name% sur votre outil de gestion de ticket, pour continuer merci de mettre en place un mot de passe en cliquant sur le lien ci-dessous."
         expire_time: "Ce lien expirera dans %expire_link_time%."
         action: "Mettre en place votre mot de passe"
+    new_device:
+        title: "Nouvelle connexion détectée"
+        description: "Bonjour, une nouvelle connexion a été détectée sur votre compte depuis un nouvel appareil ou une nouvelle localisation.<br/>Si vous n'êtes pas à l'origine de cette connexion, nous vous invitons à modifier votre mot de passe immédiatement."
+        action: "Modifier mon mot de passe"
+        ip_address: "Adresse IP"
+        device: "Appareil"
+        date: "Date"
+        location: "Localisation"
 
 user:
     export:

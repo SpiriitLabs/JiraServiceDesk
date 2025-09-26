@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\SoftDeleteable;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Spiriit\Bundle\AuthLogBundle\Entity\AuthenticableLogInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -22,7 +23,7 @@ use function Symfony\Component\String\u;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
 #[SoftDeleteable]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, AuthenticableLogInterface
 {
     use TimestampableEntity;
     use SoftDeleteableEntity;
@@ -362,5 +363,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function hasNotViewedNotifications(): bool
     {
         return count($this->getNotViewedNotifications()) > 0;
+    }
+
+    public function getAuthenticationLogFactoryName(): string
+    {
+        return 'user';
+    }
+
+    public function getAuthenticationLogsToEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getAuthenticationLogsToEmailName(): string
+    {
+        return $this->getFullName();
     }
 }

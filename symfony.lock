@@ -100,6 +100,18 @@
             "config/packages/sentry.yaml"
         ]
     },
+    "spiriitlabs/auth-log-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "15cdf786467adfb74a41d1c14bdb6d8f214991cd"
+        },
+        "files": [
+            "config/packages/spiriit_auth_log.yaml"
+        ]
+    },
     "spiriitlabs/form-filter-bundle": {
         "version": "v11.0.6"
     },
