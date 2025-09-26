@@ -18,7 +18,7 @@ class UserAuthenticationLogFactory implements AuthenticationLogFactoryInterface
 
     public function supports(): string
     {
-        return 'admin';
+        return 'user';
     }
 
     public function createUserReference(string $userIdentifier): UserReference

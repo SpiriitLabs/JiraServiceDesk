@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Enum\User\Locale;
-use App\Enum\User\Role;
 use App\Enum\User\Theme;
 use App\Repository\UserRepository;
 use App\Service\UserNameService;
@@ -368,7 +367,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
 
     public function getAuthenticationLogFactoryName(): string
     {
-        return in_array(Role::ROLE_ADMIN, $this->roles) ? 'admin' : 'user';
+        return 'user';
     }
 
     public function getAuthenticationLogsToEmail(): string
