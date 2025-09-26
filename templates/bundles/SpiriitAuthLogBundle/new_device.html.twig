@@ -41,7 +41,7 @@
                             <li>{{ 'security.new_device.device'|trans() }}:
                                 <strong>{{ userInformation.userAgent ?? '-' }}</strong></li>
                             <li>{{ 'security.new_device.date'|trans() }}:
-                                <strong>{{ userInformation.loginAt ? userInformation.loginAt|format_date('short') : '-' }}</strong>
+                                <strong>{{ userInformation.loginAt ? userInformation.loginAt|date('d/m/Y') : '-' }}</strong>
                             </li>
                             <li>
                                 {{ 'security.new_device.location'|trans() }}: <strong>
