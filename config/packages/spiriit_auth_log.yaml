@@ -2,7 +2,7 @@ spiriit_auth_log:
     # Email notification settings
     transports:
         sender_email: '%env(FROM_EMAIL)%'
-        sender_name: 'NoReply JiraServiceDesk <%env(FROM_EMAIL)%>'
+        sender_name: '%env(FROM_NAME)% <%env(FROM_EMAIL)%>'
 
     location:
         provider: 'ipApi'
