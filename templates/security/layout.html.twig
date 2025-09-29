@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title 'security.login.label'|trans %} - {{ project_name }}</title>
-    <link rel="icon" href="{{ asset('assets/images/logo/favicon.ico', 'app') }}">
+    <link rel="shortcut icon" href="{{ asset(logo_favicon_path, 'app') }}" type="image/ico">
 
     {% block stylesheets %}
         {{ vite_entry_link_tags('app', [], 'app') }}
@@ -26,7 +26,7 @@
                     <div class="card">
 
                         <div class="card-header pt-2 pb-2 text-center bg-primary">
-                            <span><img src="{{ asset(logo_light_path, 'app') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
+                            <span><img class="py-2" src="{{ asset(logo_light_path, 'app') }}" alt="Logo {{ 'title.short'|trans }}" height="74"></span>
                         </div>
 
                         <div class="card-body p-4">
