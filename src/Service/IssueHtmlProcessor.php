@@ -18,6 +18,18 @@ readonly class IssueHtmlProcessor
         $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         libxml_clear_errors();
 
+        $links = $dom->getElementsByTagName('a');
+        foreach ($links as $link) {
+            $href = $link->getAttribute('href');
+            if (preg_match('#/rest/api/3/attachment/content/(\d+)#', $href, $matches)) {
+                $attachmentId = $matches[1];
+                $newUrl = $this->router->generate('app_attachment', [
+                    'attachmentId' => $attachmentId,
+                ]);
+                $link->setAttribute('href', $newUrl);
+            }
+        }
+
         $images = $dom->getElementsByTagName('img');
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
