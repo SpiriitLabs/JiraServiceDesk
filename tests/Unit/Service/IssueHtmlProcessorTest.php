@@ -21,20 +21,34 @@ class IssueHtmlProcessorTest extends TestCase
     public function testUpdateImageSources(): void
     {
         $body = '<div>Some text and image <img src="/rest/api/3/attachment/content/1234" height="12"></div>';
+        $body .= '<div><a href="/rest/api/3/attachment/content/2003">a link</a></div>';
 
         $this->router
-            ->expects(self::once())
+            ->expects(self::exactly(2))
             ->method('generate')
-            ->with('app_attachment', [
-                'attachmentId' => 1234,
+            ->willReturnMap([
+                [
+                    'app_attachment',
+                    [
+                        'attachmentId' => '1234',
+                    ],
+                    '/app/attachment/1234',
+                ],
+                [
+                    'app_attachment',
+                    [
+                        'attachmentId' => '2003',
+                    ],
+                    '/app/attachment/2003',
+                ],
             ])
-            ->willReturn('/app/attachment/1234')
         ;
 
         $service = $this->generate();
         $updatedBody = $service->updateImageSources($body);
 
         $this->assertStringContainsString('app/attachment/1234', $updatedBody);
+        $this->assertStringContainsString('app/attachment/2003', $updatedBody);
         $this->assertStringContainsString('max-width: 100%;', $updatedBody);
         $this->assertStringNotContainsString('height', $updatedBody);
     }
