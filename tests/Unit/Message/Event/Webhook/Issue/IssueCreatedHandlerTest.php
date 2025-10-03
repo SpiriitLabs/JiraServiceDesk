@@ -4,8 +4,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
-use App\Message\Command\App\Notification\CreateNotification;
-use App\Message\Command\Common\EmailNotification;
+use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\Handler\IssueCreatedHandler;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
@@ -83,19 +82,9 @@ class IssueCreatedHandlerTest extends TestCase
         ;
 
         $this->commandBus
-            ->expects($userHasPreferenceNotificationIssueCreated ? self::exactly(2) : self::never())
+            ->expects($userHasPreferenceNotificationIssueCreated ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturnCallback(function ($command) {
-                if ($command instanceof EmailNotification) {
-                    return new Envelope($this->createMock(EmailNotification::class));
-                }
-
-                if ($command instanceof CreateNotification) {
-                    return new Envelope($this->createMock(CreateNotification::class));
-                }
-
-                throw new \InvalidArgumentException('Unexpected command ' . get_class($command));
-            })
+            ->willReturn(new Envelope($this->createMock(Notification::class)))
         ;
 
         $handler = $this->generate();

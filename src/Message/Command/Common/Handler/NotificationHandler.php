@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Message\Command\App\Notification\Handler;
+namespace App\Message\Command\Common\Handler;
 
-use App\Entity\Notification;
-use App\Message\Command\App\Notification\CreateNotification;
+use App\Entity\Notification as NotificationEntity;
+use App\Message\Command\Common\Notification;
 use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsMessageHandler]
-readonly class CreateNotificationHandler
+readonly class NotificationHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -19,10 +20,13 @@ readonly class CreateNotificationHandler
     ) {
     }
 
-    public function __invoke(CreateNotification $command): ?Notification
+    public function __invoke(Notification $command): void
     {
+        if ($command->user->preferenceNotification === false) {
+            return;
+        }
         if ($command->user->enabled === false) {
-            return null;
+            return;
         }
 
         if ($command->email) {
@@ -54,7 +58,5 @@ readonly class CreateNotificationHandler
 
         $this->entityManager->persist($notification);
         $this->entityManager->flush();
-
-        return $notification;
     }
 }
