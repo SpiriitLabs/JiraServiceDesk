@@ -1,26 +1,38 @@
 <?php
 
-namespace App\Message\Command\App\Notification\Handler;
+namespace App\Message\Command\Common\Handler;
 
-use App\Entity\Notification;
-use App\Message\Command\App\Notification\CreateNotification;
+use App\Entity\Notification as NotificationEntity;
+use App\Message\Command\Common\Notification;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class CreateNotificationHandler
+readonly class NotificationHandler
 {
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private MailerInterface $mailer,
     ) {
     }
 
-    public function __invoke(CreateNotification $command): ?Notification
+    public function __invoke(Notification $command): void
     {
-        if ($command->user->enabled === false) {
-            return null;
+        if ($command->user->preferenceNotification === false) {
+            return;
         }
-        $notification = new Notification(
+        if ($command->user->enabled === false) {
+            return;
+        }
+
+        if ($command->email) {
+            $this->mailer->send(
+                $command->email,
+            );
+        }
+
+        $notification = new NotificationEntity(
             notificationType: $command->notificationType,
             subject: $command->subject,
             body: $command->body,
@@ -30,7 +42,5 @@ readonly class CreateNotificationHandler
 
         $this->entityManager->persist($notification);
         $this->entityManager->flush();
-
-        return $notification;
     }
 }
