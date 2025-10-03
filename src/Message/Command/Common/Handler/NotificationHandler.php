@@ -22,10 +22,10 @@ readonly class NotificationHandler
 
     public function __invoke(Notification $command): void
     {
-        if (false === $command->user->preferenceNotification) {
+        if ($command->user->preferenceNotification === false) {
             return;
         }
-        if (false === $command->user->enabled) {
+        if ($command->user->enabled === false) {
             return;
         }
 

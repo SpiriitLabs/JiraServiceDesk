@@ -17,11 +17,14 @@
         {% trans_default_domain 'app' %}
 
         <twig:block name="filterFormRows">
-            <div class="col-md-2">
-                {{ form_widget(filterForm.logType) }}
+            <div class="col-md-3">
+                {{ form_widget(filterForm.query) }}
             </div>
             <div class="col-md-2">
-                {{ form_widget(filterForm.query) }}
+                {{ form_widget(filterForm.type) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.level) }}
             </div>
         </twig:block>
 
@@ -29,7 +32,12 @@
             {% trans_default_domain 'app' %}
             <th>{{ 'logs.type.label'|trans }}</th>
             <th>{{ 'logs.subject.label'|trans }}</th>
-            <th>{{ 'logs.level.label'|trans }}</th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'logs.level.label'|trans,
+                    'property': 'level',
+                } %}
+            </th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'logs.logAt.label'|trans,
@@ -44,7 +52,7 @@
             <td>
                 <div class="d-flex flex-row align-items-center justify-content-start">
                     <i class="mdi {{ object.type.icon }}"></i>
-                    <span class="badge bg-primary-subtle">{{ object.type.label|trans }}</span>
+                    <span class="badge badge-secondary-lighten rounded-pill">{{ object.type.label|trans }}</span>
                 </div>
             </td>
             <td>{{ object.subject }}</td>
