@@ -80,6 +80,7 @@ class IssueDeletedHandler implements LoggerAwareInterface
             $this->commandBus->dispatch(
                 new Notification(
                     user: $user,
+                    email: null,
                     notificationType: NotificationType::ISSUE_DELETED,
                     subject: $subject,
                     body: $issueSummary,

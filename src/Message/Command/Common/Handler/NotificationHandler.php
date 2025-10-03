@@ -26,9 +26,11 @@ readonly class NotificationHandler
             return;
         }
 
-        $this->mailer->send(
-            $command->email,
-        );
+        if ($command->email) {
+            $this->mailer->send(
+                $command->email,
+            );
+        }
 
         $notification = new NotificationEntity(
             notificationType: $command->notificationType,
