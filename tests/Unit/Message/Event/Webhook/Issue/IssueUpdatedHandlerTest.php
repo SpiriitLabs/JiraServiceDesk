@@ -6,7 +6,7 @@ use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Formatter\Jira\IssueHistoryFormatter;
 use App\Message\Command\App\Notification\CreateNotification;
-use App\Message\Command\Common\EmailNotification;
+use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\Handler\IssueUpdatedHandler;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
@@ -90,8 +90,8 @@ class IssueUpdatedHandlerTest extends TestCase
             ->expects($userHasPreferenceNotificationIssueUpdated ? self::exactly(2) : self::never())
             ->method('dispatch')
             ->willReturnCallback(function ($command) {
-                if ($command instanceof EmailNotification) {
-                    return new Envelope($this->createMock(EmailNotification::class));
+                if ($command instanceof Notification) {
+                    return new Envelope($this->createMock(Notification::class));
                 }
 
                 if ($command instanceof CreateNotification) {

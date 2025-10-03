@@ -4,7 +4,7 @@ namespace App\Message\Event\Webhook\Comment\Handler;
 
 use App\Enum\Notification\NotificationType;
 use App\Message\Command\App\Notification\CreateNotification;
-use App\Message\Command\Common\EmailNotification;
+use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
@@ -112,7 +112,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
                 'user' => $user->email,
             ]);
             $this->commandBus->dispatch(
-                new EmailNotification(
+                new Notification(
                     user: $user,
                     email: $emailToSent,
                 ),

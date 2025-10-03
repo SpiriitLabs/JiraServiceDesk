@@ -4,7 +4,7 @@ namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Enum\Notification\NotificationType;
 use App\Message\Command\App\Notification\CreateNotification;
-use App\Message\Command\Common\EmailNotification;
+use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
@@ -91,7 +91,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 'user' => $user->email,
             ]);
             $this->commandBus->dispatch(
-                new EmailNotification(
+                new Notification(
                     user: $user,
                     email: $emailToSent,
                 ),

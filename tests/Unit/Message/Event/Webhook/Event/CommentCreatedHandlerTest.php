@@ -5,7 +5,7 @@ namespace App\Tests\Unit\Message\Event\Webhook\Event;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\App\Notification\CreateNotification;
-use App\Message\Command\Common\EmailNotification;
+use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Message\Event\Webhook\Comment\Handler\CommentCreatedHandler;
 use App\Repository\Jira\IssueRepository;
@@ -104,9 +104,9 @@ class CommentCreatedHandlerTest extends TestCase
             ->expects(self::never())
             ->method('dispatch')
             ->with(
-                self::isInstanceOf(EmailNotification::class),
+                self::isInstanceOf(Notification::class),
             )
-            ->willReturn(new Envelope($this->createMock(EmailNotification::class)))
+            ->willReturn(new Envelope($this->createMock(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -173,8 +173,8 @@ class CommentCreatedHandlerTest extends TestCase
             ->expects($expectDispatch ? self::exactly(2) : self::never())
             ->method('dispatch')
             ->willReturnCallback(function ($command) {
-                if ($command instanceof EmailNotification) {
-                    return new Envelope($this->createMock(EmailNotification::class));
+                if ($command instanceof Notification) {
+                    return new Envelope($this->createMock(Notification::class));
                 }
 
                 if ($command instanceof CreateNotification) {

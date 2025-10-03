@@ -3,8 +3,8 @@
 namespace App\Tests\Unit\Message\Command\Common;
 
 use App\Factory\UserFactory;
-use App\Message\Command\Common\EmailNotification;
-use App\Message\Command\Common\Handler\EmailNotificationHandler;
+use App\Message\Command\Common\Notification;
+use App\Message\Command\Common\Handler\NotificationHandler;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -59,16 +59,16 @@ class EmailNotificationHandlerTest extends TestCase
 
         $handler = $this->generate();
         $handler(
-            new EmailNotification(
+            new Notification(
                 $user,
                 new TemplatedEmail(),
             ),
         );
     }
 
-    private function generate(): EmailNotificationHandler
+    private function generate(): NotificationHandler
     {
-        return new EmailNotificationHandler(
+        return new NotificationHandler(
             mailer: $this->mailer,
         );
     }
