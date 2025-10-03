@@ -3,7 +3,6 @@
 namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Enum\Notification\NotificationType;
-use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
@@ -90,23 +89,18 @@ class IssueCreatedHandler implements LoggerAwareInterface
             $this->logger->info('WEBHOOK/IssueCreated - Generate mail to user', [
                 'user' => $user->email,
             ]);
-            $this->commandBus->dispatch(
-                new Notification(
-                    user: $user,
-                    email: $emailToSent,
-                ),
-            );
             $link = $this->router->generate('browse_issue', [
                 'keyIssue' => $issueKey,
             ], UrlGeneratorInterface::ABSOLUTE_URL);
             $this->commandBus->dispatch(
-                new CreateNotification(
+                new Notification(
+                    user: $user,
+                    email: $emailToSent,
                     notificationType: NotificationType::ISSUE_CREATED,
                     subject: $subject,
                     body: $issueSummary,
                     link: $link,
-                    user: $user,
-                )
+                ),
             );
         }
     }

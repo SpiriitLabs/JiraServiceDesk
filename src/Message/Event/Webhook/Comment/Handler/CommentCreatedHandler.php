@@ -3,7 +3,6 @@
 namespace App\Message\Event\Webhook\Comment\Handler;
 
 use App\Enum\Notification\NotificationType;
-use App\Message\Command\App\Notification\CreateNotification;
 use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Repository\Jira\IssueRepository;
@@ -111,24 +110,19 @@ class CommentCreatedHandler implements LoggerAwareInterface
             $this->logger->info('WEBHOOK/CommentCreated - Generate mail to user', [
                 'user' => $user->email,
             ]);
-            $this->commandBus->dispatch(
-                new Notification(
-                    user: $user,
-                    email: $emailToSent,
-                ),
-            );
             $link = $this->router->generate('browse_issue', [
                 'keyIssue' => $issueKey,
                 'focusedCommentId' => $comment->id,
             ], UrlGenerator::ABSOLUTE_URL);
             $this->commandBus->dispatch(
-                new CreateNotification(
+                new Notification(
+                    user: $user,
+                    email: $emailToSent,
                     notificationType: NotificationType::COMMENT_CREATED,
                     subject: $subject,
                     body: $commentBody,
                     link: $link,
-                    user: $user,
-                )
+                ),
             );
         }
     }

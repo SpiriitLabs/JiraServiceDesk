@@ -2,7 +2,9 @@
 
 namespace App\Message\Command\Common\Handler;
 
+use App\Entity\Notification as NotificationEntity;
 use App\Message\Command\Common\Notification;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -10,6 +12,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 readonly class NotificationHandler
 {
     public function __construct(
+        private EntityManagerInterface $entityManager,
         private MailerInterface $mailer,
     ) {
     }
@@ -26,5 +29,16 @@ readonly class NotificationHandler
         $this->mailer->send(
             $command->email,
         );
+
+        $notification = new NotificationEntity(
+            notificationType: $command->notificationType,
+            subject: $command->subject,
+            body: $command->body,
+            link: $command->link,
+            user: $command->user,
+        );
+
+        $this->entityManager->persist($notification);
+        $this->entityManager->flush();
     }
 }
