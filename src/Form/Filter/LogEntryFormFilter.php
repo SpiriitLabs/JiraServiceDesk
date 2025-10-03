@@ -2,7 +2,8 @@
 
 namespace App\Form\Filter;
 
-use App\Enum\LogEntry\LogType;
+use App\Enum\LogEntry\Level;
+use App\Enum\LogEntry\Type;
 use App\Form\AbstractFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\TextFilterType;
@@ -15,28 +16,6 @@ class LogEntryFormFilter extends AbstractFilterType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('logType', EnumType::class, [
-                'required' => false,
-                'multiple' => true,
-                'autocomplete' => true,
-                'class' => LogType::class,
-                'choice_label' => fn (LogType $logType) => $logType->label(),
-                'apply_filter' => function (ORMQuery $query, string $field, array $values) {
-                    if (empty($values['value'])) {
-                        return null;
-                    }
-
-                    $alias = $query->getRootAlias();
-                    $filterValues = array_map(function (LogType $logType) {
-                        return $logType->value;
-                    }, $values['value']);
-
-                    $expr = $query->getExpr();
-                    $condition = $expr->in($alias . '.logType', $filterValues);
-
-                    return $query->createCondition((string) $condition);
-                },
-            ])
             ->add('query', TextFilterType::class, [
                 'required' => false,
                 'label' => false,
@@ -56,6 +35,56 @@ class LogEntryFormFilter extends AbstractFilterType
                         $expr->like($alias . '.recipient', $expr->literal($value)),
                         $expr->like($alias . '.subject', $expr->literal($value)),
                     );
+
+                    return $query->createCondition((string) $condition);
+                },
+            ])
+            ->add('type', EnumType::class, [
+                'required' => false,
+                'multiple' => true,
+                'autocomplete' => true,
+                'attr' => [
+                    'placeholder' => 'logs.type.label',
+                ],
+                'class' => Type::class,
+                'choice_label' => fn (Type $type) => $type->label(),
+                'apply_filter' => function (ORMQuery $query, string $field, array $values) {
+                    if (empty($values['value'])) {
+                        return null;
+                    }
+
+                    $alias = $query->getRootAlias();
+                    $filterValues = array_map(function (Type $type) {
+                        return $type->value;
+                    }, $values['value']);
+
+                    $expr = $query->getExpr();
+                    $condition = $expr->in($alias . '.type', $filterValues);
+
+                    return $query->createCondition((string) $condition);
+                },
+            ])
+            ->add('level', EnumType::class, [
+                'required' => false,
+                'multiple' => true,
+                'autocomplete' => true,
+                'attr' => [
+                    'placeholder' => 'logs.level.label',
+                ],
+                'class' => Level::class,
+                'choice_label' => fn (Level $level) => $level->label(),
+                'apply_filter' => function (ORMQuery $query, string $field, array $values) {
+                    if (empty($values['value'])) {
+                        return null;
+                    }
+
+                    $alias = $query->getRootAlias();
+                    $filterValues = array_map(function (Level $level) {
+                        return $level->value;
+                    }, $values['value']);
+
+                    $expr = $query->getExpr();
+                    $condition = $expr->in($alias . '.level', $filterValues);
 
                     return $query->createCondition((string) $condition);
                 },

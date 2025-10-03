@@ -17,21 +17,30 @@
         {% trans_default_domain 'app' %}
 
         <twig:block name="filterFormRows">
-            <div class="col-md-2">
-                {{ form_widget(filterForm.logType) }}
+            <div class="col-md-3">
+                {{ form_widget(filterForm.query) }}
             </div>
             <div class="col-md-2">
-                {{ form_widget(filterForm.query) }}
+                {{ form_widget(filterForm.type) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.level) }}
             </div>
         </twig:block>
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
-            <th>{{ 'logType.label'|trans }}</th>
-            <th>{{ 'logType.subject.label'|trans }}</th>
+            <th>{{ 'logs.type.label'|trans }}</th>
+            <th>{{ 'logs.subject.label'|trans }}</th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'logType.logAt.label'|trans,
+                    'label': 'logs.level.label'|trans,
+                    'property': 'level',
+                } %}
+            </th>
+            <th>
+                {% include 'components/list/sort-list-header.html.twig' with {
+                    'label': 'logs.logAt.label'|trans,
                     'property': 'logAt',
                 } %}
             </th>
@@ -41,10 +50,13 @@
         {% block tableTd %}
             {% trans_default_domain 'app' %}
             <td>
-                <i class="mdi mdi-{{ object.logType.label|trans }}"></i>
-                {{ object.logType.label|trans }}
+                <div class="d-flex flex-row align-items-center justify-content-start">
+                    <i class="mdi {{ object.type.icon }}"></i>
+                    <span class="badge badge-secondary-lighten rounded-pill">{{ object.type.label|trans }}</span>
+                </div>
             </td>
             <td>{{ object.subject }}</td>
+            <td><span class="badge bg-{{ object.level.color }}">{{ object.level.label|trans }}</span></td>
             <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
             <td>
                 <a class="action-icon text-secondary" href="{{ path('admin_log_entry_view', {id: object.id}) }}">
