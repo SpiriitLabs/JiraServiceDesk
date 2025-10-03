@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use App\Enum\LogEntry\LogType;
+use App\Enum\LogEntry\Level;
+use App\Enum\LogEntry\Type;
 use App\Repository\LogEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -14,8 +15,11 @@ class LogEntry
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(nullable: false, enumType: LogType::class)]
-    public ?LogType $logType = null;
+    #[ORM\Column(nullable: false, enumType: Type::class)]
+    private ?Type $type = null;
+
+    #[ORM\Column(nullable: false, enumType: Level::class)]
+    private ?Level $level = null;
 
     #[ORM\Column(length: 255)]
     private ?string $subject;
@@ -28,14 +32,18 @@ class LogEntry
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
-    public ?User $user = null;
+    private ?User $user = null;
 
     public function __construct(
-        LogType $logType,
+        Type $type,
+        Level $level,
         string $subject,
         array $datas,
+        ?User $user = null,
     ) {
-        $this->logType = $logType;
+        $this->type = $type;
+        $this->level = $level;
+        $this->user = $user;
         $this->subject = $subject;
         $this->datas = $datas;
         $this->logAt = new \DateTimeImmutable();
@@ -51,6 +59,16 @@ class LogEntry
         return $this->subject;
     }
 
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
     public function getLogAt(): ?\DateTimeImmutable
     {
         return $this->logAt;
@@ -59,5 +77,10 @@ class LogEntry
     public function getDatas(): ?array
     {
         return $this->datas;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }

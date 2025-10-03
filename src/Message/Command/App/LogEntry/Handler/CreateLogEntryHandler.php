@@ -18,7 +18,8 @@ readonly class CreateLogEntryHandler
     public function __invoke(CreateLogEntry $command): ?LogEntry
     {
         $logEntry = new LogEntry(
-            logType: $command->logType,
+            type: $command->type,
+            level: $command->level,
             subject: $command->subject,
             datas: $command->datas,
         );

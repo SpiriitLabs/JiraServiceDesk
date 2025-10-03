@@ -2,7 +2,7 @@
 
 namespace App\Form\Filter;
 
-use App\Enum\LogEntry\LogType;
+use App\Enum\LogEntry\Type;
 use App\Form\AbstractFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
 use Spiriit\Bundle\FormFilterBundle\Filter\Form\Type\TextFilterType;
@@ -19,15 +19,15 @@ class LogEntryFormFilter extends AbstractFilterType
                 'required' => false,
                 'multiple' => true,
                 'autocomplete' => true,
-                'class' => LogType::class,
-                'choice_label' => fn (LogType $logType) => $logType->label(),
+                'class' => Type::class,
+                'choice_label' => fn (Type $logType) => $logType->label(),
                 'apply_filter' => function (ORMQuery $query, string $field, array $values) {
                     if (empty($values['value'])) {
                         return null;
                     }
 
                     $alias = $query->getRootAlias();
-                    $filterValues = array_map(function (LogType $logType) {
+                    $filterValues = array_map(function (Type $logType) {
                         return $logType->value;
                     }, $values['value']);
 
