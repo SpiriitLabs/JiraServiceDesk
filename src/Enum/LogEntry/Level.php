@@ -14,6 +14,14 @@ enum Level: string implements LabeledValueInterface
 
     public function label(): string
     {
-        return sprintf('log.level.%s.label', mb_strtolower($this->name));
+        return sprintf('logs.level.%s.label', mb_strtolower($this->name));
+    }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::DEBUG => 'secondary',
+            self::INFO => 'primary',
+        };
     }
 }

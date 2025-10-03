@@ -13,6 +13,13 @@ enum Type: string implements LabeledValueInterface
 
     public function label(): string
     {
-        return sprintf('log.type.%s.label', mb_strtolower($this->name));
+        return sprintf('logs.type.%s.label', mb_strtolower($this->name));
+    }
+
+    public function icon(): string
+    {
+        return match ($this) {
+            self::EMAIL => 'mdi-email-outline',
+        };
     }
 }

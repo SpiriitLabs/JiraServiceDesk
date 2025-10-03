@@ -27,9 +27,8 @@
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
-            <th>{{ 'logs.label'|trans }}</th>
-            <th>{{ 'logs.subject.label'|trans }}</th>
             <th>{{ 'logs.type.label'|trans }}</th>
+            <th>{{ 'logs.subject.label'|trans }}</th>
             <th>{{ 'logs.level.label'|trans }}</th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
@@ -43,12 +42,13 @@
         {% block tableTd %}
             {% trans_default_domain 'app' %}
             <td>
-                <i class="mdi mdi-{{ object.logType.label|trans }}"></i>
-                {{ object.logType.label|trans }}
+                <div class="d-flex flex-row align-items-center justify-content-start">
+                    <i class="mdi {{ object.type.icon }}"></i>
+                    <span class="badge bg-primary-subtle">{{ object.type.label|trans }}</span>
+                </div>
             </td>
             <td>{{ object.subject }}</td>
-            <td>{{ object.type.label|trans }}</td>
-            <td>{{ object.level.label|trans }}</td>
+            <td><span class="badge bg-{{ object.level.color }}">{{ object.level.label|trans }}</span></td>
             <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
             <td>
                 <a class="action-icon text-secondary" href="{{ path('admin_log_entry_view', {id: object.id}) }}">
