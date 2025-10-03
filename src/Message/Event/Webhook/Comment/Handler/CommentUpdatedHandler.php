@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -110,10 +110,11 @@ class CommentUpdatedHandler implements LoggerAwareInterface
             $this->logger->info('WEBHOOK/CommentUpdated - Generate mail to user', [
                 'user' => $user->email,
             ]);
+
             $link = $this->router->generate('browse_issue', [
                 'keyIssue' => $issueKey,
                 'focusedCommentId' => $comment->id,
-            ], UrlGenerator::ABSOLUTE_URL);
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
             $this->commandBus->dispatch(
                 new Notification(
                     user: $user,
