@@ -31,7 +31,18 @@ final class LogEntryFactory extends PersistentProxyObjectFactory
                 'float' => self::faker()->randomFloat(2, 0, 1000),
                 'boolean' => self::faker()->boolean(),
             ],
-            'logAt' => self::faker()->dateTime(),
         ];
+    }
+
+    protected function initialize(): static
+    {
+        return $this
+            ->afterInstantiate(function (LogEntry $logEntry): void {
+                $reflection = new \ReflectionClass($logEntry);
+                $property = $reflection->getProperty('logAt');
+                $property->setAccessible(true);
+                $property->setValue($logEntry, \DateTimeImmutable::createFromMutable(self::faker()->dateTime()));
+            })
+        ;
     }
 }
