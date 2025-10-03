@@ -22,6 +22,9 @@ action:
 yes: "Yes"
 no: "No"
 
+copy:
+  sucess: "Link copied successfully"
+
 locale:
   label: "Language"
   fr: "French"
@@ -60,6 +63,7 @@ list:
     empty: "No items found"
     total: "%number% result(s)"
     perPage: "per page"
+
 pwa:
     label: "Your Application"
     description: "Install the app on your device for an optimal experience."
@@ -152,6 +156,7 @@ user:
     label: "Preferred theme"
   preferenceNotification:
     label: "Notifications"
+    notice: "To receive notifications by email and on the website"
   preferenceNotificationIssueCreated:
     label: "Notification on ticket creation"
   preferenceNotificationIssueUpdated:

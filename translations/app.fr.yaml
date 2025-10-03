@@ -156,6 +156,7 @@ user:
     label: "Thème préféré"
   preferenceNotification:
     label: "Activer les notifications"
+    notice: "Pour recevoir une notification par mail et sur le site"
   preferenceNotificationIssueCreated:
     label: "Notification à la création de ticket"
   preferenceNotificationIssueUpdated:
