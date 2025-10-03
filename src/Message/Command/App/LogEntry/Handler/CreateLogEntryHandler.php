@@ -18,9 +18,10 @@ readonly class CreateLogEntryHandler
     public function __invoke(CreateLogEntry $command): ?LogEntry
     {
         $logEntry = new LogEntry(
-            logType: $command->logType,
+            type: $command->type,
             subject: $command->subject,
             datas: $command->datas,
+            level: $command->level,
         );
 
         $this->entityManager->persist($logEntry);
