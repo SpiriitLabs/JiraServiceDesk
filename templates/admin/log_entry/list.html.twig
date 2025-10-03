@@ -27,11 +27,13 @@
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
-            <th>{{ 'logType.label'|trans }}</th>
-            <th>{{ 'logType.subject.label'|trans }}</th>
+            <th>{{ 'logs.label'|trans }}</th>
+            <th>{{ 'logs.subject.label'|trans }}</th>
+            <th>{{ 'logs.type.label'|trans }}</th>
+            <th>{{ 'logs.level.label'|trans }}</th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
-                    'label': 'logType.logAt.label'|trans,
+                    'label': 'logs.logAt.label'|trans,
                     'property': 'logAt',
                 } %}
             </th>
@@ -45,6 +47,8 @@
                 {{ object.logType.label|trans }}
             </td>
             <td>{{ object.subject }}</td>
+            <td>{{ object.type.label|trans }}</td>
+            <td>{{ object.level.label|trans }}</td>
             <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
             <td>
                 <a class="action-icon text-secondary" href="{{ path('admin_log_entry_view', {id: object.id}) }}">

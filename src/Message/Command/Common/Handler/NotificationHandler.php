@@ -4,9 +4,11 @@ namespace App\Message\Command\Common\Handler;
 
 use App\Entity\Notification as NotificationEntity;
 use App\Message\Command\Common\Notification;
+use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsMessageHandler]
 readonly class NotificationHandler
@@ -14,21 +16,35 @@ readonly class NotificationHandler
     public function __construct(
         private EntityManagerInterface $entityManager,
         private MailerInterface $mailer,
+        private EventDispatcherInterface $dispatcher,
     ) {
     }
 
     public function __invoke(Notification $command): void
     {
-        if ($command->user->preferenceNotification === false) {
+        if (false === $command->user->preferenceNotification) {
             return;
         }
-        if ($command->user->enabled === false) {
+        if (false === $command->user->enabled) {
             return;
         }
 
         if ($command->email) {
             $this->mailer->send(
                 $command->email,
+            );
+
+            $this->dispatcher->dispatch(
+                new NotificationEvent(
+                    user: $command->user,
+                    message: sprintf('Notification email sent to %s', $command->user->email),
+                    extraData: [
+                        'subject' => $command->subject,
+                        'body' => $command->body,
+                        'link' => $command->link,
+                    ],
+                ),
+                NotificationEvent::EVENT_NAME,
             );
         }
 

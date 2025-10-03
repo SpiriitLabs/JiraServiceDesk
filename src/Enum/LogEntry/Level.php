@@ -8,6 +8,7 @@ use App\Enum\Trait\ValueCasesTrait;
 enum Level: string implements LabeledValueInterface
 {
     use ValueCasesTrait;
+
     case DEBUG = 'debug';
     case INFO = 'info';
 

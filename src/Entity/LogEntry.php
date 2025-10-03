@@ -19,7 +19,7 @@ class LogEntry
     private ?Type $type = null;
 
     #[ORM\Column(nullable: false, enumType: Level::class)]
-    private ?Level $level = null;
+    private ?Level $level = Level::INFO;
 
     #[ORM\Column(length: 255)]
     private ?string $subject;
@@ -36,9 +36,9 @@ class LogEntry
 
     public function __construct(
         Type $type,
-        Level $level,
         string $subject,
         array $datas,
+        Level $level = Level::INFO,
         ?User $user = null,
     ) {
         $this->type = $type;
@@ -46,7 +46,7 @@ class LogEntry
         $this->user = $user;
         $this->subject = $subject;
         $this->datas = $datas;
-        $this->logAt = new \DateTimeImmutable();
+        $this->logAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int
