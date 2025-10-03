@@ -37,7 +37,7 @@ readonly class NotificationHandler
             $this->dispatcher->dispatch(
                 new NotificationEvent(
                     user: $command->user,
-                    message: sprintf('Notification email sent to %s', $command->user->email),
+                    message: sprintf('Notification email sent to "%s"', $command->user->email),
                     extraData: [
                         'subject' => $command->subject,
                         'body' => $command->body,
