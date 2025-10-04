@@ -13,6 +13,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Zenstruck\Foundry\Test\Factories;
 
 class NotificationHandlerTest extends TestCase
@@ -23,10 +24,13 @@ class NotificationHandlerTest extends TestCase
 
     private MailerInterface|MockObject $mailer;
 
+    protected EventDispatcherInterface|MockObject $eventDispatcher;
+
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
         $this->mailer = $this->createMock(MailerInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -90,6 +94,7 @@ class NotificationHandlerTest extends TestCase
         return new NotificationHandler(
             mailer: $this->mailer,
             entityManager: $this->entityManager,
+            dispatcher: $this->eventDispatcher,
         );
     }
 }
