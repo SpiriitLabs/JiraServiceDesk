@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f7e2ff0351672b7b07e986fd40ffd318",
+    "content-hash": "eca35b8a90a1d4e74227ffea861eca4f",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -11030,16 +11030,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.3.15",
+            "version": "12.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b035ee2cd8ecad4091885b61017ebb1d80eb0e57"
+                "reference": "f62aab5794e36ccd26860db2d1bbf89ac19028d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b035ee2cd8ecad4091885b61017ebb1d80eb0e57",
-                "reference": "b035ee2cd8ecad4091885b61017ebb1d80eb0e57",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f62aab5794e36ccd26860db2d1bbf89ac19028d9",
+                "reference": "f62aab5794e36ccd26860db2d1bbf89ac19028d9",
                 "shasum": ""
             },
             "require": {
@@ -11075,7 +11075,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "12.3-dev"
+                    "dev-main": "12.4-dev"
                 }
             },
             "autoload": {
@@ -11107,7 +11107,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.3.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.4.0"
             },
             "funding": [
                 {
@@ -11131,7 +11131,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-28T12:10:54+00:00"
+            "time": "2025-10-03T04:28:03+00:00"
         },
         {
             "name": "react/cache",
@@ -13605,16 +13605,16 @@
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v2.7.2",
+            "version": "v2.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "2c84cb0c2e09679562cd33e90e66559dae014d7b"
+                "reference": "e5bda6bc3b19fe8eb0ab6341b5e545294ead0098"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/2c84cb0c2e09679562cd33e90e66559dae014d7b",
-                "reference": "2c84cb0c2e09679562cd33e90e66559dae014d7b",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/e5bda6bc3b19fe8eb0ab6341b5e545294ead0098",
+                "reference": "e5bda6bc3b19fe8eb0ab6341b5e545294ead0098",
                 "shasum": ""
             },
             "require": {
@@ -13708,7 +13708,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zenstruck/foundry/issues",
-                "source": "https://github.com/zenstruck/foundry/tree/v2.7.2"
+                "source": "https://github.com/zenstruck/foundry/tree/v2.7.3"
             },
             "funding": [
                 {
@@ -13720,7 +13720,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-25T05:36:26+00:00"
+            "time": "2025-10-05T09:50:04+00:00"
         }
     ],
     "aliases": [],
