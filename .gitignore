@@ -19,6 +19,7 @@
 .DS_Store
 # Ignore pnpm store
 .pnpm-store
+.todo
 ###< spiriitlabs/developer-tools ###
 
 ###> friendsofphp/php-cs-fixer ###

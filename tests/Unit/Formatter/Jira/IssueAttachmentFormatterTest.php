@@ -55,13 +55,13 @@ class IssueAttachmentFormatterTest extends TestCase
 
         $result = $this->formatter->format($issue);
 
-        $this->assertTrue(property_exists($result, 'customAttachments'));
-        $this->assertCount(count($expectedCustomAttachments), $result->customAttachments);
+        $this->assertTrue($result->__isset('customAttachments'));
+        $this->assertCount(count($expectedCustomAttachments), $result->__get('customAttachments'));
 
         foreach ($expectedCustomAttachments as $index => $expectedAttachment) {
             foreach ($expectedAttachment as $key => $value) {
-                $this->assertArrayHasKey($key, $result->customAttachments[$index]);
-                $this->assertEquals($value, $result->customAttachments[$index][$key]);
+                $this->assertArrayHasKey($key, $result->__get('customAttachments')[$index]);
+                $this->assertEquals($value, $result->__get('customAttachments')[$index][$key]);
             }
         }
     }
