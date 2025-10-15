@@ -52,3 +52,5 @@ user:
     export:
         title: "Export des utilisateurs"
         description: "Bonjour, l'export des utilisateurs est disponible en pièce jointe de ce mail"
+    profil:
+        view: "Voir mon profil"

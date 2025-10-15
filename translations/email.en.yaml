@@ -53,3 +53,5 @@ user:
     export:
         title: "Export users"
         description: ""
+    profil:
+        view: "View my profil"
