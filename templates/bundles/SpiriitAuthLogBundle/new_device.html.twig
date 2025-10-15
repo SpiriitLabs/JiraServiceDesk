@@ -1,6 +1,8 @@
 {% extends 'email/layout.html.twig' %}
 {% trans_default_domain 'email' %}
 
+{% block title %}{{ 'security.new_device.title'|trans() }}{% endblock %}
+
 {% block content %}
 
     <twig:email:title

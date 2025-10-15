@@ -1,6 +1,8 @@
 {% extends 'email/layout.html.twig' %}
 {% trans_default_domain 'email' %}
 
+{% block title %}{{ 'comment.created.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
+
 {% block content %}
 
     <twig:email:title
