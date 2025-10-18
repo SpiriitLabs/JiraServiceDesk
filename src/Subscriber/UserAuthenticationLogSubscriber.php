@@ -31,18 +31,16 @@ class UserAuthenticationLogSubscriber implements EventSubscriberInterface
         $userReference = $event->getUserReference();
         $userInfo = $event->getUserInformation();
 
+        $user = $this->entityManager->getRepository(User::class)->findOneBy([
+            'id' => $userReference->id,
+        ]);
         $userAuthenticationLog = new UserAuthenticationLog(
-            user: $this->entityManager->getRepository(User::class)->findOneBy([
-                'id' => $userReference->id,
-            ]),
-            userInformation: $userInfo
+            user: $user,
+            userInformation: $userInfo,
         );
         $this->entityManager->persist($userAuthenticationLog);
         $this->entityManager->flush();
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'id' => $userReference->id,
-        ]);
         $this->dispatcher->dispatch(
             new NotificationEvent(
                 user: $user,
