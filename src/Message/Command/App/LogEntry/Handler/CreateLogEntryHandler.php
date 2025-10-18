@@ -22,6 +22,7 @@ readonly class CreateLogEntryHandler
             subject: $command->subject,
             datas: $command->datas,
             level: $command->level,
+            user: $command->user,
         );
 
         $this->entityManager->persist($logEntry);
