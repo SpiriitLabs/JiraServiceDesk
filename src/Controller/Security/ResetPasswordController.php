@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Enum\User\Locale as AppLocale;
 use App\Form\Security\ChangePasswordFormType;
 use App\Form\Security\ResetPasswordRequestFormType;
+use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
@@ -30,11 +32,12 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     public function __construct(
-        private ResetPasswordHelperInterface $resetPasswordHelper,
-        private EntityManagerInterface $entityManager,
-        private readonly MessageBusInterface $messageBus,
-        private readonly TranslatorInterface $translator,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly EntityManagerInterface $entityManager,
         private readonly MailerInterface $mailer,
+        private readonly MessageBusInterface $messageBus,
+        private readonly ResetPasswordHelperInterface $resetPasswordHelper,
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -181,15 +184,14 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute(RouteCollection::FORGOT_PASSWORD_CHECK_EMAIL->prefixed());
         }
 
+        $subject = $this->translator->trans(
+            id: 'security.reset_password.title',
+            domain: 'email',
+        );
         $email = (new TemplatedEmail())
             ->to(new Address($user->email, $user->getFullName()))
             ->locale($user->preferredLocale->value ?? AppLocale::FR->value)
-            ->subject(
-                $this->translator->trans(
-                    id: 'security.reset_password.title',
-                    domain: 'email',
-                ),
-            )
+            ->subject($subject)
             ->htmlTemplate('email/security/reset_password.html.twig')
             ->context([
                 'resetToken' => $resetToken,
@@ -197,6 +199,16 @@ class ResetPasswordController extends AbstractController
         ;
 
         $this->mailer->send($email);
+        $this->dispatcher->dispatch(
+            new NotificationEvent(
+                user: $user,
+                message: sprintf('Reset password email sent to "%s"', $user->email),
+                extraData: [
+                    'subject' => $subject,
+                ],
+            ),
+            NotificationEvent::EVENT_NAME,
+        );
         $this->setTokenObjectInSession($resetToken);
 
         return $this->redirectToRoute(RouteCollection::FORGOT_PASSWORD_CHECK_EMAIL->prefixed());
