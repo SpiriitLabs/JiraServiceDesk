@@ -16,10 +16,10 @@ class LogEntry
     private ?int $id = null;
 
     #[ORM\Column(nullable: false, enumType: Type::class)]
-    private ?Type $type = null;
+    private ?Type $type;
 
     #[ORM\Column(nullable: false, enumType: Level::class)]
-    private ?Level $level = Level::INFO;
+    private ?Level $level;
 
     #[ORM\Column(length: 255)]
     private ?string $subject;
@@ -32,7 +32,7 @@ class LogEntry
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: true)]
-    private ?User $user = null;
+    private ?User $user;
 
     public function __construct(
         Type $type,

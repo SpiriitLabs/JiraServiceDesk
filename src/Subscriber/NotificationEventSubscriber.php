@@ -26,6 +26,7 @@ class NotificationEventSubscriber implements EventSubscriberInterface
                 type: Type::EMAIL,
                 subject: $event->message,
                 datas: $event->extraData,
+                user: $event->user,
             )
         );
     }
