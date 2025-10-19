@@ -292,6 +292,24 @@ logs:
   label: "Logs"
   title:
     view: "View Log %id%"
+  subject:
+    label: "Subject"
+  user:
+    label: "User"
+  logAt:
+    label: "Log At"
+  datas:
+    label: "Detail"
+  level:
+    label: "Level"
+    debug:
+      label: "Debug"
+    info:
+      label: "Info"
+  type:
+    label: "Type"
+    email:
+      label: "Email"
 
 logType:
   label: "LogType"
