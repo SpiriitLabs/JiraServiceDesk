@@ -293,21 +293,23 @@ logs:
   title:
     view: "Voir Log %id%"
   subject:
-      label: "Sujet"
+    label: "Sujet"
+  user:
+    label: "Utilisateur"
   logAt:
-      label: "Envoyé à"
+    label: "Envoyé à"
   datas:
-      label: "Détail"
+    label: "Détail"
   level:
     label: "Niveau"
     debug:
-        label: "Debug"
+      label: "Debug"
     info:
-        label: "Info"
+      label: "Info"
   type:
     label: "Type"
     email:
-        label: "Email"
+      label: "Email"
 
 notification:
   label: "Notification"

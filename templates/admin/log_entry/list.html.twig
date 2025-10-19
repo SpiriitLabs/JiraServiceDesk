@@ -26,12 +26,16 @@
             <div class="col-md-2">
                 {{ form_widget(filterForm.level) }}
             </div>
+            <div class="col-md-2">
+                {{ form_widget(filterForm.user) }}
+            </div>
         </twig:block>
 
         {% block tableTh %}
             {% trans_default_domain 'app' %}
             <th>{{ 'logs.type.label'|trans }}</th>
             <th>{{ 'logs.subject.label'|trans }}</th>
+            <th>{{ 'logs.user.label'|trans }}</th>
             <th>
                 {% include 'components/list/sort-list-header.html.twig' with {
                     'label': 'logs.level.label'|trans,
@@ -56,6 +60,7 @@
                 </div>
             </td>
             <td>{{ object.subject }}</td>
+            <td>{{ object.user ? object.user.fullName : '' }}</td>
             <td><span class="badge bg-{{ object.level.color }}">{{ object.level.label|trans }}</span></td>
             <td>{{ object.logAt|date('d/m/Y H:i') }}</td>
             <td>
