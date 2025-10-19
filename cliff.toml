@@ -30,7 +30,7 @@ body = """
 """
 # template for the changelog footer
 footer = """
-https://github.com/RomainMILLAN/JiraServiceDesk
+https://github.com/SpiriitLabs/JiraServiceDesk
 """
 # remove the leading and trailing s
 trim = true
