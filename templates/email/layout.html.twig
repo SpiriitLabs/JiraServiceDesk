@@ -12,31 +12,13 @@
             padding: 0;
         }
 
-        .ExternalClass {
-            width: 100%;
-        }
-
-        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+        .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
             line-height: 100%;
         }
 
         table td {
             border-collapse: collapse;
             mso-line-height-rule: exactly;
-        }
-
-        .editable.image {
-            font-size: 0 !important;
-            line-height: 0 !important;
-        }
-
-        .nl2go_preheader {
-            display: none !important;
-            mso-hide: all !important;
-            mso-line-height-rule: exactly;
-            visibility: hidden !important;
-            line-height: 0px !important;
-            font-size: 0px !important;
         }
 
         body {
@@ -70,17 +52,9 @@
 
         *[class="gmail-fix"] {
             display: none !important;
-        } </style>
-    <style type="text/css" emogrify="no"> @media (max-width: 600px) {
-            .gmx-killpill {
-                content: ' \03D1';
-            }
-        } </style>
+        }
+    </style>
     <style type="text/css" emogrify="no">@media (max-width: 600px) {
-            .gmx-killpill {
-                content: ' \03D1';
-            }
-
             .r0-o {
                 border-style: solid !important;
                 margin: 0 auto 0 auto !important;
@@ -138,13 +112,6 @@
             .r9-i {
                 padding-bottom: 15px !important;
                 padding-top: 15px !important
-            }
-
-            .r10-c {
-                box-sizing: border-box !important;
-                text-align: center !important;
-                valign: bottom !important;
-                width: 100% !important
             }
 
             .r11-i {
@@ -321,16 +288,10 @@
         }
 
         .default-heading2 {
+            margin: 0;
             color: #414141;
             font-family: Arial;
             font-size: 32px;
-            word-break: break-word
-        }
-
-        .default-heading3 {
-            color: #1F2D3D;
-            font-family: Arial;
-            font-size: 24px;
             word-break: break-word
         }
 
@@ -349,21 +310,7 @@
             font-weight: inherit !important;
             line-height: inherit !important;
         }
-
-        .no-show-for-you {
-            border: none;
-            display: none;
-            float: none;
-            font-size: 0;
-            height: 0;
-            line-height: 0;
-            max-height: 0;
-            mso-hide: all;
-            overflow: hidden;
-            table-layout: fixed;
-            visibility: hidden;
-            width: 0;
-        } </style>
+    </style>
     <!--[if mso]>
     <xml>
         <o:OfficeDocumentSettings>
@@ -377,6 +324,10 @@
         }</style>
 </head>
 <body bgcolor="#ffffff" text="#414141" link="#666666" yahoo="fix" style="background-color: #ffffff;">
+<div class="preview-text" style="color: #ffffff; display: none; font-size: 0; line-height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden;">
+    {% block preview %}{% endblock %}
+</div>
+
 <table cellspacing="0" cellpadding="0" border="0" role="presentation" class="nl2go-body-table" width="100%"
        style="background-color: #ffffff; width: 100%;">
     <tr>

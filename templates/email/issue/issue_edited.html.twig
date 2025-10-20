@@ -3,6 +3,8 @@
 
 {% block title %}{{ 'issue.edited.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
 
+{% block preview %}{{ 'issue.edited.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
+
 {% block content %}
 
     <twig:email:title

@@ -3,6 +3,8 @@
 
 {% block title %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
 
+{% block preview %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
+
 {% block content %}
 
     <twig:email:title
