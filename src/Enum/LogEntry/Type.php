@@ -13,6 +13,8 @@ enum Type: string implements LabeledValueInterface
 
     case LOGIN = 'login';
 
+    case WEBHOOK = 'webhook';
+
     public function label(): string
     {
         return sprintf('logs.type.%s.label', mb_strtolower($this->name));
@@ -23,6 +25,7 @@ enum Type: string implements LabeledValueInterface
         return match ($this) {
             self::EMAIL => 'mdi-email-outline',
             self::LOGIN => 'mdi-login',
+            self::WEBHOOK => 'mdi-webhook',
         };
     }
 }

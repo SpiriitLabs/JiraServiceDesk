@@ -2,12 +2,14 @@
 
 namespace App\Webhook\Parser;
 
+use App\Enum\LogEntry\Type;
 use App\Message\Event\Webhook\Comment\CommentCreated;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
+use App\Subscriber\Event\NotificationEvent;
 use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -21,12 +23,14 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
 use Symfony\Component\Webhook\Client\AbstractRequestParser;
 use Symfony\Component\Webhook\Exception\RejectWebhookException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class JiraRequestParser extends AbstractRequestParser implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
     public function __construct(
+        private readonly EventDispatcherInterface $dispatcher,
         private readonly MessageBusInterface $commandBus,
         private readonly IssueRepository $issueRepository,
     ) {
@@ -93,6 +97,15 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             'comment_updated' => new CommentUpdated(payload: $payload->all()),
             default => new RejectWebhookException(message: 'Invalid webhook event.'),
         };
+
+        $this->dispatcher->dispatch(
+            new NotificationEvent(
+                user: null,
+                message: sprintf('New webhook successfully for event "%s"', $payload->get('webhookEvent')),
+                type: Type::WEBHOOK,
+            ),
+            NotificationEvent::EVENT_NAME,
+        );
 
         return $event;
     }
