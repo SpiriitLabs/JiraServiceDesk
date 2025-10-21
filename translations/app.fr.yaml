@@ -310,6 +310,8 @@ logs:
     label: "Type"
     email:
       label: "Email"
+    login:
+      label: "Login"
 
 notification:
   label: "Notification"
