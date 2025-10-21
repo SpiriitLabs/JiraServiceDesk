@@ -126,6 +126,6 @@
         "symfony/web-profiler-bundle": "7.3.*",
         "symplify/coding-standard": "^12.4.3",
         "symplify/easy-coding-standard": "^12.6.0",
-        "zenstruck/foundry": "^2.7.5"
+        "zenstruck/foundry": "^2.7.6"
     }
 }
