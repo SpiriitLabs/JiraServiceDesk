@@ -312,6 +312,8 @@ logs:
       label: "Email"
     login:
       label: "Login"
+    webhook:
+      label: "Webhook"
 
 notification:
   label: "Notification"
