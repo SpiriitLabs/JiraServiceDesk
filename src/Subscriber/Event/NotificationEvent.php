@@ -3,6 +3,7 @@
 namespace App\Subscriber\Event;
 
 use App\Entity\User;
+use App\Enum\LogEntry\Type;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class NotificationEvent extends Event
@@ -14,6 +15,7 @@ class NotificationEvent extends Event
     public function __construct(
         public User $user,
         public string $message,
+        public Type $type = Type::EMAIL,
         public array $extraData = [],
     ) {
     }

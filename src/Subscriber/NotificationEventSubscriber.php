@@ -2,7 +2,6 @@
 
 namespace App\Subscriber;
 
-use App\Enum\LogEntry\Type;
 use App\Message\Command\App\LogEntry\CreateLogEntry;
 use App\Subscriber\Event\NotificationEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,7 +22,7 @@ class NotificationEventSubscriber implements EventSubscriberInterface
     {
         $this->handle(
             new CreateLogEntry(
-                type: Type::EMAIL,
+                type: $event->type,
                 subject: $event->message,
                 datas: $event->extraData,
                 user: $event->user,
