@@ -3,15 +3,19 @@
 namespace App\Subscriber;
 
 use App\Entity\User;
+use App\Enum\LogEntry\Type;
+use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class LastLoginEventSubscriber implements EventSubscriberInterface
+readonly class LastLoginEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private EventDispatcherInterface $dispatcher,
+        private EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -25,6 +29,15 @@ class LastLoginEventSubscriber implements EventSubscriberInterface
             $user->setLastLoginAt(new \DateTimeImmutable());
 
             $this->entityManager->flush();
+
+            $this->dispatcher->dispatch(
+                new NotificationEvent(
+                    user: $user,
+                    message: sprintf('New Login successfully for "%s"', $user->getFullName()),
+                    type: Type::LOGIN,
+                ),
+                NotificationEvent::EVENT_NAME,
+            );
         }
     }
 
