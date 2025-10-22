@@ -31,7 +31,7 @@ class ViewedController extends AbstractController
         try {
             $this->handle(
                 new NotificationViewed(
-                    notificationId: $notification->getId(),
+                    notificationId: (string) $notification->getId(),
                 ),
             );
 

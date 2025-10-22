@@ -21,7 +21,7 @@ class Favorite
     public ?string $name = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Assert\Unique()]
+    #[Assert\Unique]
     public ?string $code = null;
 
     #[ORM\Column(type: Types::TEXT)]

@@ -30,7 +30,7 @@ class UniqueEmailValidator extends ConstraintValidator
         }
 
         if (! \is_string($value)) {
-            throw new \UnexpectedValueException($value, 'string');
+            throw new \UnexpectedValueException($value);
         }
 
         if ($this->userRepository->findOneBy([

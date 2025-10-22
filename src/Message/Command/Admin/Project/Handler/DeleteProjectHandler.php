@@ -13,7 +13,7 @@ use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler()]
+#[AsMessageHandler]
 class DeleteProjectHandler extends AbstractController
 {
     use DeleteControllerTrait;
