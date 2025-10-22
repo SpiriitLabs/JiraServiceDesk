@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin\Project;
 
 use App\Controller\Common\EditControllerTrait;

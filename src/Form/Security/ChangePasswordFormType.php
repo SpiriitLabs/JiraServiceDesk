@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form\Security;
 
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;

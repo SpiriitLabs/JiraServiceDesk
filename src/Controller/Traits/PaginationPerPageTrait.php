@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Traits;
 
 use Pagerfanta\Pagerfanta;
@@ -9,7 +11,7 @@ trait PaginationPerPageTrait
 {
     public function setCurrentPage(Pagerfanta $pagination, Request $request): void
     {
-        $page = $request->query->get('page', 1);
+        $page = (int) $request->query->get('page', 1);
         if ($page > $pagination->getNbPages()) {
             $page = $pagination->getNbPages();
         }

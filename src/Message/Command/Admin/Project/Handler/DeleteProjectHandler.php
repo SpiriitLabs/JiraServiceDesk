@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\Admin\Project\Handler;
 
 use App\Controller\App\Project\AbstractController;
@@ -11,7 +13,7 @@ use App\Repository\FavoriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler()]
+#[AsMessageHandler]
 class DeleteProjectHandler extends AbstractController
 {
     use DeleteControllerTrait;

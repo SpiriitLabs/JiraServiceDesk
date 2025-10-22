@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App\Notification;
 
 use App\Controller\App\Project\AbstractController;
@@ -29,7 +31,7 @@ class ViewedController extends AbstractController
         try {
             $this->handle(
                 new NotificationViewed(
-                    notificationId: $notification->getId(),
+                    notificationId: (string) $notification->getId(),
                 ),
             );
 

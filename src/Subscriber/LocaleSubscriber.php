@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Subscriber;
 
 use App\Enum\User\Locale;

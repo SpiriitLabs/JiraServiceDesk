@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\App\Issue\Handler;
 
 use App\Controller\Common\CreateControllerTrait;
@@ -30,7 +32,7 @@ class CreateIssueHandler
     public function __invoke(CreateIssue $command): ?Issue
     {
         $jiraIssueType = new IssueType();
-        $jiraIssueType->id = $command->type->jiraId;
+        $jiraIssueType->id = (string) $command->type->jiraId;
 
         $descriptionData = $this->appendCreator(
             $command->creator,
@@ -41,7 +43,7 @@ class CreateIssueHandler
         $issue = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
-            ->setProjectId($command->project->jiraId)
+            ->setProjectId((string) $command->project->jiraId)
             ->setSummary($command->summary)
             ->setDescription(
                 new AtlassianDocumentFormat($adfDocument)

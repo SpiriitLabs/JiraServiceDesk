@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enum\LogEntry;
 
 use App\Enum\Contracts\LabeledValueInterface;

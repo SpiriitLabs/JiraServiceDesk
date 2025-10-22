@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App\Project\Issue;
 
 use App\Controller\App\Project\AbstractController;
@@ -79,7 +81,7 @@ class EditController extends AbstractController
                 priority: $this->priorityRepository->findOneBy([
                     'jiraId' => $issue->fields->priority->id,
                 ]),
-                transition: $issueTransitionIdCurrentStatusIssue,
+                transition: (string) $issueTransitionIdCurrentStatusIssue,
                 assignee: $issue->fields->assignee->accountId ?? 'null',
             ),
             options: [
