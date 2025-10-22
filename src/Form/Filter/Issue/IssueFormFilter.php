@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Filter\Issue;
 
-use App\Entity\User;
 use App\Enum\User\Role;
 use App\Form\AbstractFilterType;
 use App\Form\Type\SwitchType;
@@ -24,9 +23,6 @@ class IssueFormFilter extends AbstractFilterType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var User $user */
-        $user = $options['current_user'];
-
         $builder
             ->add('query', TextType::class, [
                 'required' => false,
