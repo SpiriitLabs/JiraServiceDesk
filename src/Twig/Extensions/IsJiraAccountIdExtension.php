@@ -5,7 +5,7 @@ namespace App\Twig\Extensions;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Twig\Attribute\AsTwigFunction;
 
-class IsJiraAccountIdExtension
+readonly class IsJiraAccountIdExtension
 {
     public function __construct(
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
