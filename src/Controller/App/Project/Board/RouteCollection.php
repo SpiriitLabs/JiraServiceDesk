@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App\Project\Board;
 
 use App\Controller\Traits\AppRouteCollectionTrait;

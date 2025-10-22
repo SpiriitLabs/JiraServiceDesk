@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App;
 
 use App\Controller\Admin\RouteCollection as AdminRouteCollection;

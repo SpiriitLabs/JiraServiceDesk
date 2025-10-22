@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Query\App\Issue\Handler;
 
 use App\Entity\Project;
@@ -106,7 +108,7 @@ class SearchIssuesHandler
         }
         $jql->addAnyExpression(sprintf('%s %s %s', JqlQuery::KEYWORD_ORDER_BY, $query->sort->by, $query->sort->dir));
 
-        $issues_fields = [
+        $issuesFields = [
             'id',
             'key',
             'summary',
@@ -122,7 +124,7 @@ class SearchIssuesHandler
             jql: $jql->getQuery(),
             nextPageToken: $query->pageToken ?? '',
             maxResults: $query->maxIssuesResults,
-            fields: $issues_fields,
+            fields: $issuesFields,
         );
 
         return new SearchIssuesResult(

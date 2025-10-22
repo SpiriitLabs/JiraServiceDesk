@@ -77,7 +77,7 @@ class IssueAttachmentFormatterTest extends TestCase
         yield 'single attachment with author' => [
             'attachments' => [
                 (object) [
-                    'id' => 123,
+                    'id' => '123',
                     'filename' => 'test.png',
                     'self' => 'https://jira.example.com/attachment/123',
                     'author' => (object) [
@@ -87,7 +87,7 @@ class IssueAttachmentFormatterTest extends TestCase
             ],
             'expectedCustomAttachments' => [
                 [
-                    'id' => 123,
+                    'id' => '123',
                     'name' => 'test.png',
                     'author' => (object) [
                         'displayName' => 'Test User',
@@ -100,7 +100,7 @@ class IssueAttachmentFormatterTest extends TestCase
         yield 'attachment missing author' => [
             'attachments' => [
                 (object) [
-                    'id' => 321,
+                    'id' => '321',
                     'filename' => 'file.pdf',
                     'self' => 'https://jira.example.com/attachment/321',
                     'author' => null,
@@ -108,7 +108,7 @@ class IssueAttachmentFormatterTest extends TestCase
             ],
             'expectedCustomAttachments' => [
                 [
-                    'id' => 321,
+                    'id' => '321',
                     'name' => 'file.pdf',
                     'author' => null,
                 ],
@@ -119,7 +119,7 @@ class IssueAttachmentFormatterTest extends TestCase
         yield 'mixed file existence' => [
             'attachments' => [
                 (object) [
-                    'id' => 101,
+                    'id' => '101',
                     'filename' => 'image1.jpg',
                     'self' => 'https://jira.example.com/attachment/101',
                     'author' => (object) [
@@ -127,7 +127,7 @@ class IssueAttachmentFormatterTest extends TestCase
                     ],
                 ],
                 (object) [
-                    'id' => 202,
+                    'id' => '202',
                     'filename' => 'doc1.pdf',
                     'self' => 'https://jira.example.com/attachment/202',
                     'author' => (object) [
@@ -137,14 +137,14 @@ class IssueAttachmentFormatterTest extends TestCase
             ],
             'expectedCustomAttachments' => [
                 [
-                    'id' => 101,
+                    'id' => '101',
                     'name' => 'image1.jpg',
                     'author' => (object) [
                         'displayName' => 'User One',
                     ],
                 ],
                 [
-                    'id' => 202,
+                    'id' => '202',
                     'name' => 'doc1.pdf',
                     'author' => (object) [
                         'displayName' => 'User Two',
@@ -157,7 +157,7 @@ class IssueAttachmentFormatterTest extends TestCase
         yield 'malformed attachment (missing filename)' => [
             'attachments' => [
                 (object) [
-                    'id' => 404,
+                    'id' => '404',
                     // filename missing
                     'self' => 'https://jira.example.com/attachment/404',
                     'author' => (object) [
@@ -167,7 +167,7 @@ class IssueAttachmentFormatterTest extends TestCase
             ],
             'expectedCustomAttachments' => [
                 [
-                    'id' => 404,
+                    'id' => '404',
                     'name' => null,
                     'author' => (object) [
                         'displayName' => 'No Name User',

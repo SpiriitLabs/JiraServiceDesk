@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
@@ -13,7 +15,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[Gedmo\SoftDeleteable()]
+#[Gedmo\SoftDeleteable]
 class Project
 {
     use TimestampableEntity;

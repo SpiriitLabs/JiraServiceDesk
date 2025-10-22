@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Enum\User\Locale;
@@ -160,6 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     {
         $this->lastName = u($lastName)
             ->upper()
+            ->toString()
         ;
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\Admin\Priority\Handler;
 
 use App\Entity\Priority;
@@ -32,7 +34,7 @@ readonly class GeneratePrioritiesHandler
             $priority = new Priority(
                 name: $jiraPriority->name,
                 description: $jiraPriority->description,
-                jiraId: $jiraPriority->id,
+                jiraId: (int) ($jiraPriority->id),
                 iconUrl: $jiraPriority->iconUrl,
                 statusColor: $jiraPriority->statusColor,
             );

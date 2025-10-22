@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Query\App\Project\Handler;
 
 use App\Formatter\Jira\IssueKanbanFormatter;
