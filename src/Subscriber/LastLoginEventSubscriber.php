@@ -33,7 +33,7 @@ readonly class LastLoginEventSubscriber implements EventSubscriberInterface
             $this->dispatcher->dispatch(
                 new NotificationEvent(
                     user: $user,
-                    message: sprintf('New Login successfully for "%s"', $user->getFullName()),
+                    message: sprintf('New Login successfully for "%s"', $user->email),
                     type: Type::LOGIN,
                 ),
                 NotificationEvent::EVENT_NAME,
