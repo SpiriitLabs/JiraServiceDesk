@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\User;
 
 use App\Controller\Common\GetControllerTrait;
+use App\Controller\Traits\PaginationPerPageTrait;
 use App\Entity\User;
 use App\Form\Filter\UserFormFilter;
 use App\Message\Query\PaginateEntities;
@@ -19,6 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ListController extends AbstractController
 {
     use GetControllerTrait;
+    use PaginationPerPageTrait;
 
     public function __invoke(
         Request $request,
@@ -34,11 +36,7 @@ class ListController extends AbstractController
                 form: $filterForm,
             ),
         );
-        $page = $request->query->get('page', 1);
-        if ($page > $pagination->getNbPages()) {
-            $page = $pagination->getNbPages();
-        }
-        $pagination->setCurrentPage($page);
+        $this->setCurrentPage($pagination, $request);
 
         return $this->render(
             view: 'admin/user/list.html.twig',
