@@ -14,7 +14,7 @@ If you discover a security vulnerability, **please do not open a public issue**.
 
 Instead, report it securely by emailing:
 
-📫 **[contact@romainmillan.fr](mailto:contact@romainmillan.fr)**
+📫 **[hello@spiriit.com](mailto:hello@spiriit.com)**
 
 Please include:
 - A clear and concise description of the issue

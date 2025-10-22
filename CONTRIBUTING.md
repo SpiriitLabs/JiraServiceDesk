@@ -1,4 +1,4 @@
-# Contributing to Jira Service Desk by Romain MILLAN
+# Contributing to Jira Service Desk by Spiriit
 
 First of all, thank you for taking the time to contribute! 🚀  
 Your ideas, code, and feedback help improve the project and are very much appreciated.
@@ -88,6 +88,6 @@ This project is under a [Code of Conduct](CODE_OF_CONDUCT.md). Please review it 
 
 ## Questions?
 
-You can reach out directly at 📫 [contact@romainmillan.fr](mailto:contact@romainmillan.fr)
+You can reach out directly at 📫 [hello@spiriit.com](mailto:hello@spiriit.com)
 
 Thank you for your support and contributions! 💙
