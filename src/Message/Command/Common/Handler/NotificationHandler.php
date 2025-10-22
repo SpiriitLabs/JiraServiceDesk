@@ -29,6 +29,24 @@ readonly class NotificationHandler
             return;
         }
 
+        // Reduce notif creation.
+        $latestsNotifications = $this
+            ->entityManager
+            ->getRepository(NotificationEntity::class)
+            ->findBy([
+                'link' => $command->link,
+                'user' => $command->user,
+            ])
+        ;
+        $latestsNotifications = array_filter($latestsNotifications, function (NotificationEntity $notification): bool {
+            return $notification->getSendAt()
+                ->getTimestamp() > (time() - 300)
+            ;
+        });
+        if (! empty($latestsNotifications)) {
+            return;
+        }
+
         if ($command->email) {
             $this->mailer->send(
                 $command->email,
