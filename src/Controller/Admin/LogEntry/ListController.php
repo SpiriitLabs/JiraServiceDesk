@@ -30,10 +30,15 @@ class ListController extends AbstractController
             new PaginateEntities(
                 class: LogEntry::class,
                 sort: $request->get('_sort', '-id'),
-                page: $request->get('page', 1),
+                perPage: $request->get('perPage', 10),
                 form: $filterForm,
             ),
         );
+        $page = $request->query->get('page', 1);
+        if ($page > $pagination->getNbPages()) {
+            $page = $pagination->getNbPages();
+        }
+        $pagination->setCurrentPage($page);
 
         return $this->render(
             view: 'admin/log_entry/list.html.twig',
