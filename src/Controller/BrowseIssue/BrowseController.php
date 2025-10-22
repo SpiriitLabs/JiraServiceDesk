@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\BrowseIssue;
 
 use App\Controller\App\Project\AbstractController;

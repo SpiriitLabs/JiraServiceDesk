@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App\Project\Issue;
 
 use App\Controller\App\Project\AbstractController;

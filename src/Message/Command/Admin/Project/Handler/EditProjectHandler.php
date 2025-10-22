@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\Admin\Project\Handler;
 
 use App\Entity\Project;
@@ -28,7 +30,7 @@ readonly class EditProjectHandler
         }
 
         $project->name = $jiraProject->name;
-        $project->jiraId = $jiraProject->id;
+        $project->jiraId = (int) $jiraProject->id;
         $project->assignableRolesIds = $command->assignableRolesIds;
         $project->backlogStatusesIds = $command->backlogStatusesIds;
         $project->defaultIssueType = $command->defaultIssueType;

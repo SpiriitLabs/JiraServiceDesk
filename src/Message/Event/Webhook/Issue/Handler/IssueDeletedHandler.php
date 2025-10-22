@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Event\Webhook\Issue\Handler;
 
 use App\Entity\Favorite;

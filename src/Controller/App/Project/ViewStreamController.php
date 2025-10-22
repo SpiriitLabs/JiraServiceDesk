@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\App\Project;
 
 use App\Entity\Project;
@@ -36,7 +38,7 @@ class ViewStreamController extends AbstractController
             view: 'app/project/view.stream.html.twig',
             parameters: [
                 'project' => $project,
-                'jiraProject' => $this->jiraProjectRepository->get($project->jiraId),
+                'jiraProject' => $this->jiraProjectRepository->get((string) $project->jiraId),
             ]
         );
     }

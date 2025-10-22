@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin\LogEntry;
 
 use App\Controller\Common\GetControllerTrait;

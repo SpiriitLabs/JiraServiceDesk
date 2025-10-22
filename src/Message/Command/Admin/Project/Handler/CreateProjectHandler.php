@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\Admin\Project\Handler;
 
 use App\Entity\Project;
@@ -39,7 +41,7 @@ readonly class CreateProjectHandler
 
         $project = new Project(
             name: $jiraProject->name,
-            jiraId: $jiraProject->id,
+            jiraId: (int) $jiraProject->id,
             jiraKey: $jiraProject->key,
             description: $jiraProject->description,
         );

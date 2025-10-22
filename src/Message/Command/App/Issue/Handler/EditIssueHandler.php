@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message\Command\App\Issue\Handler;
 
 use App\Controller\Common\EditControllerTrait;
@@ -25,12 +27,12 @@ class EditIssueHandler
     public function __invoke(EditIssue $command): ?Issue
     {
         $jiraIssueType = new IssueType();
-        $jiraIssueType->id = $command->type->jiraId;
+        $jiraIssueType->id = (string) $command->type->jiraId;
 
         $issueField = (new IssueField())
             ->setIssueType($jiraIssueType)
             ->setProjectKey($command->project->jiraKey)
-            ->setProjectId($command->project->jiraId)
+            ->setProjectId((string) $command->project->jiraId)
             ->setSummary($command->summary)
             ->addLabelAsString('from-client')
         ;
