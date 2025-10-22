@@ -10,7 +10,6 @@ use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
@@ -25,12 +24,10 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
 
     // 5 minutes = 300_000 ms
     // 30 secondes = 30_000 ms
-    private const DELAY_STAMP = 300_000;
+    private const int DELAY_STAMP = 300_000;
 
     public function __construct(
         private readonly MessageBusInterface $commandBus,
-        #[Autowire(env: 'APP_ENV')]
-        private readonly string $APP_ENV,
     ) {
     }
 
