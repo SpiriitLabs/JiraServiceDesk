@@ -67,7 +67,6 @@ readonly class IssueHtmlProcessor
 
             // Match links like https://something.atlassian.net/browse/MMGS-96
             if (preg_match('#https:\/\/([a-zA-Z0-9\-]+)\.atlassian\.net\/browse\/([A-Z]+)-(\d+)#', $href, $matches)) {
-                $domain = $matches[1];               // e.g., spiriit
                 $projectKey = $matches[2];           // e.g., MMGS
                 $issueNumber = $matches[3];          // e.g., 96
                 $issueKey = $projectKey . '-' . $issueNumber;

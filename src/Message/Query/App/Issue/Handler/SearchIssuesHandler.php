@@ -86,7 +86,6 @@ class SearchIssuesHandler
             $jql->addIsNullExpression(JqlQuery::FIELD_RESOLVED);
         }
 
-        $jqlQueryString = $jql->getQuery();
         if ($query->filter !== null && $query->filter->query !== null) {
             $filterJqlQuery = new JqlQuery();
             $filterJqlQuery

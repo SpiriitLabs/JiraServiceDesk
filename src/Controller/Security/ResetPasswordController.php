@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -37,7 +36,6 @@ class ResetPasswordController extends AbstractController
         private readonly EventDispatcherInterface $dispatcher,
         private readonly EntityManagerInterface $entityManager,
         private readonly MailerInterface $mailer,
-        private readonly MessageBusInterface $messageBus,
         private readonly ResetPasswordHelperInterface $resetPasswordHelper,
         private readonly TranslatorInterface $translator,
     ) {
@@ -47,7 +45,7 @@ class ResetPasswordController extends AbstractController
         '/',
         name: RouteCollection::FORGOT_PASSWORD_REQUEST->value,
     )]
-    public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
+    public function request(Request $request): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
