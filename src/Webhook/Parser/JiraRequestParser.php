@@ -105,6 +105,9 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
                 user: null,
                 message: sprintf('New webhook successfully for event "%s"', $payload->get('webhookEvent')),
                 type: Type::WEBHOOK,
+                extraData: [
+                    'issue_key' => $payload->all()['issue']['key'],
+                ],
             ),
             NotificationEvent::EVENT_NAME,
         );
