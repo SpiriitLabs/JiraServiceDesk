@@ -6,6 +6,7 @@ namespace App\Message\Command\User\Handler;
 
 use App\Entity\User;
 use App\Message\Command\User\EditUser;
+use App\Message\Trait\UserHandlerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -13,6 +14,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[AsMessageHandler]
 readonly class EditUserHandler
 {
+    use UserHandlerTrait;
+
     public function __construct(
         private UserPasswordHasherInterface $passwordHasher,
         private EntityManagerInterface $entityManager,
@@ -26,15 +29,9 @@ readonly class EditUserHandler
         $user->setFirstName($command->firstName);
         $user->setLastName($command->lastName);
         $user->company = $command->company;
-        $user->setRoles($command->roles);
-        $user->preferredLocale = $command->preferedLocale;
-        $user->preferredTheme = $command->preferedTheme;
-        $user->preferenceNotification = $command->preferenceNotification;
-        $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
-        $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
-        $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
-        $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
-        $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;
+
+        $this->updateUserFields($user, $command);
+
         $user->enabled = $command->enabled;
         $user->defaultProject = $command->defaultProject;
 
