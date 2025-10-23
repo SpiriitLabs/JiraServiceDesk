@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class NotificationEvent extends Event
 {
-    public const EVENT_NAME = 'notification.event';
+    public const string EVENT_NAME = 'notification.event';
 
     private bool $logHandled = false;
 

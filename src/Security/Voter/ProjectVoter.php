@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class ProjectVoter extends Voter
 {
-    public const PROJECT_ACCESS = 'PROJECT_ACCESS';
+    public const string PROJECT_ACCESS = 'PROJECT_ACCESS';
 
     protected function supports(string $attribute, mixed $subject): bool
     {

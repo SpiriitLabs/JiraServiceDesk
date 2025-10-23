@@ -33,7 +33,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
         private readonly IssueRepository $issueRepository,
         private readonly ReplaceAccountIdByDisplayName $replaceAccountIdByDisplayName,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
-        private string $jiraAPIAccountId,
+        private readonly string $jiraAPIAccountId,
         private readonly RouterInterface $router,
     ) {
     }
