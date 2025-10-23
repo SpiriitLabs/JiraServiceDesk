@@ -68,9 +68,12 @@ readonly class NotificationHandler
             );
         }
 
+        // Fix subject too long.
+        $subject = substr($command->subject, 0, 255);
+
         $notification = new NotificationEntity(
             notificationType: $command->notificationType,
-            subject: $command->subject,
+            subject: $subject,
             body: $command->body,
             link: $command->link,
             user: $command->user,
