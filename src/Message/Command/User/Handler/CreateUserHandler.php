@@ -7,6 +7,7 @@ namespace App\Message\Command\User\Handler;
 use App\Entity\User;
 use App\Enum\User\Locale;
 use App\Message\Command\User\CreateUser;
+use App\Message\Trait\UserHandlerTrait;
 use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -21,6 +22,8 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 #[AsMessageHandler]
 readonly class CreateUserHandler
 {
+    use UserHandlerTrait;
+
     public function __construct(
         private EventDispatcherInterface $dispatcher,
         private EntityManagerInterface $entityManager,
@@ -40,15 +43,7 @@ readonly class CreateUserHandler
             company: $command->company,
             enabled: $command->enabled,
         );
-        $user->setRoles($command->roles);
-        $user->preferredLocale = $command->preferedLocale;
-        $user->preferredTheme = $command->preferedTheme;
-        $user->preferenceNotification = $command->preferenceNotification;
-        $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
-        $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
-        $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
-        $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
-        $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;
+        $this->updateUserFields($user, $command);
 
         if ($command->plainPassword !== null) {
             $password = $this->passwordHasher->hashPassword($user, $command->plainPassword);
