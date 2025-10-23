@@ -11,7 +11,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class IssueAttachmentFormatter
 {
-    public const ISSUE_ATTACHMENT_FOLDER = 'issue_attachments';
+    public const string ISSUE_ATTACHMENT_FOLDER = 'issue_attachments';
 
     private AttachmentService $service;
 

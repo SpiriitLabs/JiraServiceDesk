@@ -15,7 +15,7 @@ abstract class AbstractEntityRepository extends ServiceEntityRepository implemen
 {
     use QueryBuilderSorter;
 
-    protected const ALIAS = 'o';
+    protected const string ALIAS = 'o';
 
     public function getListQueryBuilder(?SortParams $sort = null): QueryBuilder
     {
