@@ -14,7 +14,7 @@ final class ProjectVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::PROJECT_ACCESS])
+        return $attribute == self::PROJECT_ACCESS
             && $subject instanceof \App\Entity\Project;
     }
 
