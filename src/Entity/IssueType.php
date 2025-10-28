@@ -17,7 +17,7 @@ class IssueType
     private ?int $id = null;
 
     #[ORM\Column]
-    public ?int $jiraId = null;
+    public ?string $jiraId = null;
 
     #[ORM\Column(length: 255)]
     public ?string $name = null;
@@ -32,7 +32,7 @@ class IssueType
     #[ORM\JoinColumn(nullable: false)]
     public ?Project $project = null;
 
-    public function __construct(?int $jiraId, ?string $name, ?string $description, ?string $iconUrl)
+    public function __construct(?string $jiraId, ?string $name, ?string $description, ?string $iconUrl)
     {
         $this->jiraId = $jiraId;
         $this->name = $name;
