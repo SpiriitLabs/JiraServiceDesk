@@ -6,17 +6,14 @@ namespace App\Message\Command\Admin\Project\Handler;
 
 use App\Entity\Project;
 use App\Message\Command\Admin\Project\EditProject;
-use App\Message\Command\Admin\Project\GenerateProjectIssueTypes;
 use App\Repository\Jira\ProjectRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
 readonly class EditProjectHandler
 {
     public function __construct(
         private ProjectRepository $projectRepository,
-        private MessageBusInterface $commandBus,
     ) {
     }
 
@@ -41,12 +38,6 @@ readonly class EditProjectHandler
         foreach ($command->users as $user) {
             $project->addUser($user);
         }
-
-        $this->commandBus->dispatch(
-            new GenerateProjectIssueTypes(
-                project: $project,
-            ),
-        );
 
         return $project;
     }
