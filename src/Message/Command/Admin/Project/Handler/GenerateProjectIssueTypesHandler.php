@@ -44,7 +44,7 @@ class GenerateProjectIssueTypesHandler
                     ->toArray(),
             );
             $jiraIssuesTypesJiraIds = array_map(
-                fn (JiraIssueType $jiraIssueType) => (int) $jiraIssueType->id,
+                fn (JiraIssueType $jiraIssueType) => $jiraIssueType->id,
                 $jiraIssueTypes,
             );
 
