@@ -59,7 +59,7 @@ class EditIssueHandlerTest extends TestCase
         ]);
 
         $issueType = $this->createMock(IssueType::class);
-        $issueType->jiraId = 10005;
+        $issueType->jiraId = '10005';
 
         $priority = $this->createMock(Priority::class);
         $priority->jiraId = 10005;
