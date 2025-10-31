@@ -35,6 +35,8 @@ class DeleteProjectHandler extends AbstractController
             $this->entityManager->remove($projectFavorite);
         }
 
+        $project->defaultIssueType = null;
+
         $issuesTypes = $project->getIssuesTypes();
         foreach ($issuesTypes as $issuesType) {
             $this->entityManager->remove($issuesType);
