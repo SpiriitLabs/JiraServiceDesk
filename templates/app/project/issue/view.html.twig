@@ -45,6 +45,13 @@
                 withActions="true"
             />
 
+            {% if childrens|length > 0 %}
+                <twig:app:issue:childrens_issues
+                        issues="{{childrens}}"
+                >
+                </twig:app:issue:childrens_issues>
+            {% endif %}
+
             {% if links|length > 0 %}
                 <twig:app:issue:linked_issues
                     issues="{{links}}"
