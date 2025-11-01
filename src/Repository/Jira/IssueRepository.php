@@ -41,6 +41,21 @@ class IssueRepository
         return $issue;
     }
 
+    public function getByParent(string $issueId): array
+    {
+        $issues = $this->service->search(
+            jql: 'parent = ' . $issueId,
+            expand: 'renderedFields,transitions,changelog',
+        );
+        $issues = $issues->getIssues();
+
+        array_filter($issues, function ($issue) {
+            return in_array('from-client', $issue->fields->labels) == true;
+        });
+
+        return $issues;
+    }
+
     public function getCommentForIssue(string $issueId, SortParams $sort): Comments
     {
         try {

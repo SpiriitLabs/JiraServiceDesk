@@ -268,6 +268,8 @@ issue:
       label: "Mask resolved tickets"
   links:
     label: "Related ticket(s)"
+  childrens:
+    label: "Children ticket(s)"
   environment:
     label: "Environment"
 

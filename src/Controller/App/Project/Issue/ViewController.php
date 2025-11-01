@@ -100,6 +100,8 @@ class ViewController extends AbstractController
             ];
         }
 
+        $childrens = $this->jiraIssueRepository->getByParent($issue->id);
+
         return $this->render(
             view: 'app/project/issue/view.html.twig',
             parameters: [
@@ -110,6 +112,7 @@ class ViewController extends AbstractController
                 'comments' => $comments->comments,
                 'commentForm' => $form->createView(),
                 'focusedCommentId' => $focusedCommentId,
+                'childrens' => $childrens,
             ]
         );
     }
