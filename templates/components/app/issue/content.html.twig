@@ -28,6 +28,16 @@
             <div class="clearfix"></div>
         {% endif %}
 
+        {% if issue.fields.parent %}
+            {% set parent = issue.fields.parent %}
+            <div class="d-flex flex-row align-items-center justify-content-start">
+                <img src="{{ parent.fields.issuetype.iconUrl }}" alt="{{ parent.fields.issuetype.description }}" style="width: 25px;">
+                <a href="{{ path('browse_issue', {'keyIssue': parent.key}) }}">
+                    <span class="ms-2">{{ parent.key }} - {{ parent.fields.summary }}</span>
+                </a>
+            </div>
+        {% endif %}
+
         <div class="d-flex flex-row align-items-center justify-content-start">
             <img src="{{ issue.fields.issuetype.iconUrl }}" alt="{{ issue.fields.issuetype.description }}" style="width: 25px;">
             <h3 class="ms-1">{{ issue.fields.summary }}</h3>
