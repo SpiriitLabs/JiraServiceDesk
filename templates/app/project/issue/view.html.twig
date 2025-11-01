@@ -12,6 +12,12 @@
         label: 'action.view',
     }
 ] %}
+{% if issue.fields.parent %}
+    {% set breadcrumb = [{
+        label: '#' ~ issue.fields.parent.key,
+        href: path('browse_issue', {'keyIssue': issue.fields.parent.key})
+    }] | merge(breadcrumb) %}
+{% endif %}
 
 {% block action %}
     <a href="{{ referer_url() }}" class="btn btn-outline-secondary">
