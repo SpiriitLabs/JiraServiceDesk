@@ -33,7 +33,7 @@
             <div class="d-flex flex-row align-items-center justify-content-start">
                 <img src="{{ parent.fields.issuetype.iconUrl }}" alt="{{ parent.fields.issuetype.description }}" style="width: 25px;">
                 <a href="{{ path('browse_issue', {'keyIssue': parent.key}) }}">
-                    <span class="ms-2">{{ parent.key }} - {{ parent.fields.summary }}</span>
+                    <span class="ms-2 text-muted">{{ parent.key }} - {{ parent.fields.summary }}</span>
                 </a>
             </div>
         {% endif %}
