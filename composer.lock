@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53571b8b23ffe03e93551bdd25d014c8",
+    "content-hash": "f874a4299a2a2cb8d8806794c884eb2a",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -143,16 +143,16 @@
         },
         {
             "name": "damienharper/adf-tools",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DamienHarper/adf-tools.git",
-                "reference": "b7bb3d740005ae32c95843a49dedc2065b27bfff"
+                "reference": "e425346cd167b72b1cc984f1cc4dd7f31d22e70b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DamienHarper/adf-tools/zipball/b7bb3d740005ae32c95843a49dedc2065b27bfff",
-                "reference": "b7bb3d740005ae32c95843a49dedc2065b27bfff",
+                "url": "https://api.github.com/repos/DamienHarper/adf-tools/zipball/e425346cd167b72b1cc984f1cc4dd7f31d22e70b",
+                "reference": "e425346cd167b72b1cc984f1cc4dd7f31d22e70b",
                 "shasum": ""
             },
             "require": {
@@ -191,9 +191,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DamienHarper/adf-tools/issues",
-                "source": "https://github.com/DamienHarper/adf-tools/tree/1.1.0"
+                "source": "https://github.com/DamienHarper/adf-tools/tree/1.2.0"
             },
-            "time": "2024-01-05T21:21:45+00:00"
+            "time": "2025-11-04T23:42:10+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -12619,16 +12619,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.13.4",
+            "version": "3.13.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "ad545ea9c1b7d270ce0fc9cbfb884161cd706119"
+                "reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ad545ea9c1b7d270ce0fc9cbfb884161cd706119",
-                "reference": "ad545ea9c1b7d270ce0fc9cbfb884161cd706119",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
+                "reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
                 "shasum": ""
             },
             "require": {
@@ -12645,11 +12645,6 @@
                 "bin/phpcs"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.x-dev"
-                }
-            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
@@ -12699,7 +12694,7 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-09-05T05:47:09+00:00"
+            "time": "2025-11-04T16:30:35+00:00"
         },
         {
             "name": "staabm/side-effects-detector",
@@ -13542,27 +13537,27 @@
         },
         {
             "name": "zenstruck/assert",
-            "version": "v1.5.1",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/assert.git",
-                "reference": "39554ce3a275fbf8c870b251e620101f644e9277"
+                "reference": "f333d554e9f8e275e221f5b27bdbdc1b0aadbf02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/assert/zipball/39554ce3a275fbf8c870b251e620101f644e9277",
-                "reference": "39554ce3a275fbf8c870b251e620101f644e9277",
+                "url": "https://api.github.com/repos/zenstruck/assert/zipball/f333d554e9f8e275e221f5b27bdbdc1b0aadbf02",
+                "reference": "f333d554e9f8e275e221f5b27bdbdc1b0aadbf02",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0",
                 "symfony/polyfill-php81": "^1.23",
-                "symfony/var-exporter": "^5.4|^6.0|^7.0"
+                "symfony/var-exporter": "^5.4|^6.0|^7.0|^8.0"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.4",
                 "phpunit/phpunit": "^9.5.21",
-                "symfony/phpunit-bridge": "^6.3|^7.0"
+                "symfony/phpunit-bridge": "^6.3|^7.0|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -13589,28 +13584,32 @@
             ],
             "support": {
                 "issues": "https://github.com/zenstruck/assert/issues",
-                "source": "https://github.com/zenstruck/assert/tree/v1.5.1"
+                "source": "https://github.com/zenstruck/assert/tree/v1.6.0"
             },
             "funding": [
                 {
                     "url": "https://github.com/kbond",
                     "type": "github"
+                },
+                {
+                    "url": "https://github.com/nikophil",
+                    "type": "github"
                 }
             ],
-            "time": "2024-10-28T18:08:12+00:00"
+            "time": "2025-11-02T14:41:16+00:00"
         },
         {
             "name": "zenstruck/foundry",
-            "version": "v2.7.7",
+            "version": "v2.7.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zenstruck/foundry.git",
-                "reference": "90ba647ef705757644db81dabfa6ad0152d2f39a"
+                "reference": "acc7d7a290f5efadeeb9ea1fbd61749430f5b23a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/90ba647ef705757644db81dabfa6ad0152d2f39a",
-                "reference": "90ba647ef705757644db81dabfa6ad0152d2f39a",
+                "url": "https://api.github.com/repos/zenstruck/foundry/zipball/acc7d7a290f5efadeeb9ea1fbd61749430f5b23a",
+                "reference": "acc7d7a290f5efadeeb9ea1fbd61749430f5b23a",
                 "shasum": ""
             },
             "require": {
@@ -13629,7 +13628,6 @@
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8",
-                "brianium/paratest": "^6|^7",
                 "dama/doctrine-test-bundle": "^8.0",
                 "doctrine/collections": "^1.7|^2.0",
                 "doctrine/common": "^3.2.2",
@@ -13640,7 +13638,6 @@
                 "doctrine/orm": "^2.16|^3.0",
                 "doctrine/persistence": "^2.0|^3.0|^4.0",
                 "phpunit/phpunit": "^9.5.0 || ^10.0 || ^11.0 || ^12.0",
-                "rector/rector": "^2.2",
                 "symfony/browser-kit": "^6.4|^7.0|^8.0",
                 "symfony/console": "^6.4|^7.0|^8.0",
                 "symfony/dotenv": "^6.4|^7.0|^8.0",
@@ -13705,7 +13702,7 @@
             ],
             "support": {
                 "issues": "https://github.com/zenstruck/foundry/issues",
-                "source": "https://github.com/zenstruck/foundry/tree/v2.7.7"
+                "source": "https://github.com/zenstruck/foundry/tree/v2.7.8"
             },
             "funding": [
                 {
@@ -13717,7 +13714,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-23T06:51:50+00:00"
+            "time": "2025-11-05T09:34:18+00:00"
         }
     ],
     "aliases": [],

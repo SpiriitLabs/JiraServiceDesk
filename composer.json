@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "description": "A jira service desk client application.",
-    "version": "0.54.0",
+    "version": "0.55.0",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -126,6 +126,6 @@
         "symfony/web-profiler-bundle": "7.3.*",
         "symplify/coding-standard": "^12.5.0",
         "symplify/easy-coding-standard": "^12.6.2",
-        "zenstruck/foundry": "^2.7.7"
+        "zenstruck/foundry": "^2.7.8"
     }
 }
