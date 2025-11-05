@@ -33,6 +33,7 @@
             {% trans_default_domain 'app' %}
             <th>{{ 'issueLabel.name.label'|trans }}</th>
             <th>{{ 'issueLabel.jiraLabel.label'|trans }}</th>
+            <th>{{ 'issueLabel.users.label'|trans }}</th>
             <th class="min"></th>
         {% endblock %}
 
@@ -40,6 +41,11 @@
             {% trans_default_domain 'app' %}
             <td>{{ object.name }}</td>
             <td>{{ object.jiraLabel }}</td>
+            <td class="d-none d-md-table-cell">
+                {% for user in object.users %}
+                    {{ user.fullName }} {% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_issue_label_edit', {id: object.id}) }}">
                     <i class="mdi mdi-pencil"></i>

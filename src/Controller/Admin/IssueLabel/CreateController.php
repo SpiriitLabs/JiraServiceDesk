@@ -44,10 +44,7 @@ class CreateController extends AbstractController
                 );
 
                 return $this->redirectToRoute(
-                    route: RouteCollection::EDIT->prefixed(),
-                    parameters: [
-                        'id' => $issueLabelCreated->getId(),
-                    ]
+                    route: RouteCollection::LIST->prefixed(),
                 );
             }
 
