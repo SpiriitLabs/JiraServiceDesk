@@ -48,7 +48,9 @@ class StreamController extends AbstractController
         ?string $name = null,
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+        $link = $request->request->all()['favorite_form']['link'] ?? $link;
         $link = urldecode($link);
+        $name = $request->request->all()['favorite_form']['name'] ?? $name;
         $favoriteEntity = $this->favoriteRepository->findOneBy([
             'code' => $code,
             'user' => $user,
@@ -69,7 +71,7 @@ class StreamController extends AbstractController
                     new DeleteFavorite(
                         code: $form->get('code')
                             ->getData(),
-                        projectId: $form->get('projectId')
+                        projectId: (int) $form->get('projectId')
                             ->getData(),
                         user: $user,
                     ),
@@ -87,7 +89,7 @@ class StreamController extends AbstractController
                 new CreateFavorite(
                     code: $form->get('code')
                         ->getData(),
-                    projectId: $form->get('projectId')
+                    projectId: (int) $form->get('projectId')
                         ->getData(),
                     user: $user,
                     name: $form->get('name')
