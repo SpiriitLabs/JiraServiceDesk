@@ -317,6 +317,13 @@ logs:
     webhook:
       label: "Webhook"
 
+issueLabel:
+  label: "Issue Label"
+  name:
+    label: "Name"
+  jiraLabel:
+    label: "Jira Label"
+
 logType:
   label: "LogType"
   email: "Email"

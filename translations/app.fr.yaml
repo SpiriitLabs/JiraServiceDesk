@@ -317,6 +317,13 @@ logs:
     webhook:
       label: "Webhook"
 
+issueLabel:
+  label: "Issue Label"
+  name:
+    label: "Nom"
+  jiraLabel:
+    label: "Label Jira"
+
 notification:
   label: "Notification"
   title:
