@@ -33,7 +33,7 @@ class ListController extends AbstractController
         $pagination = $this->handle(
             new PaginateEntities(
                 class: Project::class,
-                sort: $request->get('_sort', 'updatedAt'),
+                sort: $request->get('_sort', 'id'),
                 perPage: (int) $request->get('perPage', 10),
                 form: $filterForm,
             ),
