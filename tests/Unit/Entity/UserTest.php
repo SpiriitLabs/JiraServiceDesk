@@ -7,6 +7,7 @@ use App\Entity\Notification;
 use App\Entity\Project;
 use App\Entity\User;
 use App\Factory\FavoriteFactory;
+use App\Factory\IssueLabelFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
@@ -99,5 +100,20 @@ class UserTest extends TestCase
         ]);
 
         self::assertCount(2, $user->getNotViewedNotifications());
+    }
+
+    #[Test]
+    public function testItGetJiraLabel(): void
+    {
+        /** @var User $user */
+        $user = UserFactory::createOne()->_set('id', 1);
+
+        IssueLabelFactory::createOne([
+            'users' => [$user],
+            'jiraLabel' => 'label',
+            'name' => 'label',
+        ]);
+
+        self::assertSame('label', $user->getJiraLabel());
     }
 }
