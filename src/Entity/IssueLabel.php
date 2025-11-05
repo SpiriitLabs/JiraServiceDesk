@@ -58,6 +58,7 @@ class IssueLabel
     {
         if (! $this->users->contains($user)) {
             $this->users->add($user);
+            $user->setIssueLabel($this);
         }
 
         return $this;
@@ -65,7 +66,11 @@ class IssueLabel
 
     public function removeUser(User $user): static
     {
-        $this->users->removeElement($user);
+        if ($this->users->removeElement($user)) {
+            if ($user->getIssueLabel() === $this) {
+                $user->setIssueLabel(null);
+            }
+        }
 
         return $this;
     }

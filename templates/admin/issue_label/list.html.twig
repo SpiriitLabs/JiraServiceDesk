@@ -44,6 +44,11 @@
                 <a class="action-icon text-secondary" href="{{ path('admin_issue_label_edit', {id: object.id}) }}">
                     <i class="mdi mdi-pencil"></i>
                 </a>
+
+                {% include 'components/modal/delete.html.twig' with {
+                    id: object.id,
+                    button_link: path('admin_issue_label_delete', {id: object.id}),
+                } %}
             </td>
         {% endblock %}
 

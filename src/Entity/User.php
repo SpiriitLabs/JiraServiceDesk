@@ -387,6 +387,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
         return $this->getFullName();
     }
 
+    public function getIssueLabel(): ?IssueLabel
+    {
+        return $this->issueLabel;
+    }
+
     public function setIssueLabel(?IssueLabel $issueLabel): self
     {
         $this->issueLabel = $issueLabel;

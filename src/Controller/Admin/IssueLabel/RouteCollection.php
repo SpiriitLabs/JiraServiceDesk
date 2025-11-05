@@ -14,4 +14,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     case LIST = 'issue_label_list';
     case EDIT = 'issue_label_edit';
     case CREATE = 'issue_label_create';
+    case DELETE = 'issue_label_delete';
 }

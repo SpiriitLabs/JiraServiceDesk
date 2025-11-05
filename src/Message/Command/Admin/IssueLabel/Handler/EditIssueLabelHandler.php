@@ -19,20 +19,19 @@ readonly class EditIssueLabelHandler
 
     public function __invoke(EditIssueLabel $command): ?IssueLabel
     {
-        dump($command);
         $issueLabel = $command->issueLabel;
+        foreach ($issueLabel->getUsers() as $issueLabelUser) {
+            $issueLabel->removeUser($issueLabelUser);
+        }
         if ($command->users) {
-            foreach ($issueLabel->getUsers() as $issueLabelUser) {
-                $issueLabel->removeUser($issueLabelUser);
-            }
             foreach ($command->users as $user) {
                 $issueLabel->addUser($user);
             }
         }
         $issueLabel->jiraLabel = $command->jiraLabel;
         $issueLabel->name = $command->name;
-        dump($issueLabel);
         $this->entityManager->persist($issueLabel);
+        $this->entityManager->flush();
 
         return $issueLabel;
     }
