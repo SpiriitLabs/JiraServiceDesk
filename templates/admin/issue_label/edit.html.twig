@@ -1,0 +1,26 @@
+{% extends 'admin/issue_label/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'issueLabel.title.edit'|trans({'%key%': entity.jiraLabel}) %}
+{% set breadcrumb = [
+    {
+        href: path('admin_issue_label_edit', {id: entity.id}),
+        label: '#' ~ entity.id,
+    },
+    {
+        label: 'action.edit',
+    }
+] %}
+
+{% block content %}
+    <twig:form
+        form="{{ form }}"
+        cancelLink="{{ path('admin_issue_label_list') }}"
+    >
+        <twig:block name="content">
+            {% embed 'admin/issue_label/_form_content.html.twig' %}
+            {% endembed %}
+        </twig:block>
+    </twig:form>
+{% endblock %}

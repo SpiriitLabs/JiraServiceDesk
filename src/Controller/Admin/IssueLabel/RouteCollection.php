@@ -12,4 +12,6 @@ enum RouteCollection: string implements RouteCollectionInterface
     use AdminRouteCollectionTrait;
 
     case LIST = 'issue_label_list';
+    case EDIT = 'issue_label_edit';
+    case CREATE = 'issue_label_create';
 }

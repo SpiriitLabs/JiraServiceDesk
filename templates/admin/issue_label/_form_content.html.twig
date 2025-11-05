@@ -1,0 +1,19 @@
+{% trans_default_domain 'app' %}
+{% set editable = false %}
+
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(form.jiraLabel) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(form.name) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        {{ form_row(form.users) }}
+    </div>
+</div>
+
+{% block content '' %}

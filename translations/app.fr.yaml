@@ -319,10 +319,15 @@ logs:
 
 issueLabel:
   label: "Issue Label"
+  title:
+    create: "Créer un issue label"
+    edit: "Modifier issue label « %key% »"
   name:
     label: "Nom"
   jiraLabel:
     label: "Label Jira"
+  users:
+    label: "Utilisateurs associés"
 
 notification:
   label: "Notification"

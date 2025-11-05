@@ -1,0 +1,21 @@
+{% extends 'admin/issue_label/base.html.twig' %}
+
+{% trans_default_domain 'app' %}
+
+{% block pageTitle 'issueLabel.title.create'|trans() %}
+{% set breadcrumb = [
+    {
+        label: 'action.create',
+    }
+] %}
+
+{% block content %}
+    <twig:form
+        form="{{ form }}"
+        cancelLink="{{ path('admin_issue_label_list') }}"
+    >
+        <twig:block name="content">
+            {% include 'admin/issue_label/_form_content.html.twig' %}
+        </twig:block>
+    </twig:form>
+{% endblock %}

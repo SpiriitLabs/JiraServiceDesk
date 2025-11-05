@@ -9,6 +9,13 @@
     }
 ] %}
 
+{% block action %}
+    <a href="{{ path('admin_issue_label_create') }}" class="btn btn-success">
+        <i class="mdi mdi-plus"></i>
+        {{ 'action.create'|trans }}
+    </a>
+{% endblock %}
+
 {% block content %}
     <twig:list:list
         :filterFormResetPath="path('admin_issue_label_list')"
@@ -33,6 +40,11 @@
             {% trans_default_domain 'app' %}
             <td>{{ object.name }}</td>
             <td>{{ object.jiraLabel }}</td>
+            <td class="d-flex flex-row" data-cancel-redirect>
+                <a class="action-icon text-secondary" href="{{ path('admin_issue_label_edit', {id: object.id}) }}">
+                    <i class="mdi mdi-pencil"></i>
+                </a>
+            </td>
         {% endblock %}
 
         <twig:block name="pagination">
