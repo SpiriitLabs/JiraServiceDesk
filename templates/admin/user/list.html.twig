@@ -76,6 +76,7 @@
                 } %}
             </th>
             <th>{{ 'user.projects.label'|trans }}</th>
+            <th>{{ 'user.issueLabel.label'|trans }}</th>
             <th class="min"></th>
         </twig:block>
 
@@ -99,6 +100,9 @@
             </td>
             <td>
                 {{ object.projectKeys }}
+            </td>
+            <td>
+                {{ object.getJiraLabel }}
             </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">

@@ -178,6 +178,8 @@ user:
     never: "Jamais connecté"
   projects:
     label: "Projets"
+  issueLabel:
+    label: "Label"
 
 profile:
   label: "Profil"
