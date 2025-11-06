@@ -16,7 +16,7 @@ class SearchIssues
 
     public function __construct(
         string $sort = 'id',
-        public ?User $user = null,
+        public User $user,
         public bool $onlyUserAssigned = false,
         public ?IssueFilter $filter = null,
         public int $maxIssuesResults = self::MAX_ISSUES_RESULTS,

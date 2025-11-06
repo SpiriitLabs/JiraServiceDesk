@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\Jira;
 
+use App\Entity\User;
 use App\Formatter\Jira\IssueCommentsFormatter;
 use App\Model\SortParams;
 use JiraCloud\Issue\Attachment;
@@ -14,13 +15,15 @@ use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueService;
 use JiraCloud\Issue\Transition;
 use JiraCloud\JiraException;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class IssueRepository
 {
     private IssueService $service;
 
     public function __construct(
-        protected readonly IssueCommentsFormatter $issueCommentsFormatter
+        protected readonly IssueCommentsFormatter $issueCommentsFormatter,
+        private readonly Security $security,
     ) {
         $this->service = new IssueService();
     }
@@ -34,8 +37,11 @@ class IssueRepository
             ]
         );
 
-        if (in_array('from-client', $issue->fields->labels) == false) {
-            throw new JiraException(sprintf("Issue #%d has not 'from-client' label", $issueId));
+        $user = $this->security->getUser();
+        $label = $user instanceof User ? $user->getJiraLabel() : '';
+
+        if (in_array($label, $issue->fields->labels) == false) {
+            throw new JiraException(sprintf('Issue #%d has not %s label', $issueId, $label));
         }
 
         return $issue;
@@ -49,8 +55,11 @@ class IssueRepository
         );
         $issues = $issues->getIssues();
 
-        array_filter($issues, function ($issue) {
-            return in_array('from-client', $issue->fields->labels) == true;
+        $user = $this->security->getUser();
+        $label = $user instanceof User ? $user->getJiraLabel() : '';
+
+        array_filter($issues, function ($issue) use ($label) {
+            return in_array($label, $issue->fields->labels) == true;
         });
 
         return $issues;

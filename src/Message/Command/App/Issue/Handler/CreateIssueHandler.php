@@ -48,7 +48,7 @@ class CreateIssueHandler
             ->setDescription(
                 new AtlassianDocumentFormat($adfDocument)
             )
-            ->addLabelAsString('from-client')
+            ->addLabelAsString($command->creator->getJiraLabel())
         ;
 
         $jiraPriority = new Priority();

@@ -34,7 +34,7 @@ class EditIssueHandler
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId((string) $command->project->jiraId)
             ->setSummary($command->summary)
-            ->addLabelAsString('from-client')
+            ->addLabelAsString($command->creator->getJiraLabel())
         ;
 
         $jiraPriority = new Priority();
