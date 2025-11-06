@@ -332,6 +332,7 @@ issueLabel:
     label: "Utilisateurs associés"
   flashes:
     alreadyExist: "Ce label existe déjà"
+    notValid: "Ce label n'est pas valide"
     created: "Label de ticket créé avec succès"
 
 notification:

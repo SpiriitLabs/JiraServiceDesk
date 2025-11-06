@@ -1,0 +1,144 @@
+From ce1da5fce04d02844ab78ede10772972113855d2 Mon Sep 17 00:00:00 2001
+From: Anthony Delgado <adelgado@spiriit.com>
+Date: Thu, 6 Nov 2025 16:36:09 +0100
+Subject: [PATCH] feat(label): Add service to fetch labels
+
+---
+ src/Label/LabelSearchResult.php | 93 +++++++++++++++++++++++++++++++++
+ src/Label/LabelService.php      | 27 ++++++++++
+ 2 files changed, 120 insertions(+)
+ create mode 100644 src/Label/LabelSearchResult.php
+ create mode 100644 src/Label/LabelService.php
+
+diff --git a/src/Label/LabelSearchResult.php b/src/Label/LabelSearchResult.php
+new file mode 100644
+index 0000000..a1ed716
+--- /dev/null
++++ b/src/Label/LabelSearchResult.php
+@@ -0,0 +1,93 @@
++<?php
++
++namespace JiraCloud\Label;
++
++use JiraCloud\ClassSerialize;
++use JiraCloud\DynamicPropertiesTrait;
++
++class LabelSearchResult implements \JsonSerializable
++{
++    use ClassSerialize;
++    use DynamicPropertiesTrait;
++
++    /**
++     * @var int
++     */
++    public $maxResults;
++
++    /**
++     * @var int
++     */
++    public $startAt;
++
++    /**
++     * @var int
++     */
++    public $total;
++
++    /**
++     * @var bool
++     */
++    public $isLast = false;
++
++    /**
++     * @var array
++     */
++    public $values;
++
++    #[\ReturnTypeWillChange]
++    public function jsonSerialize()
++    {
++        return array_filter(get_object_vars($this));
++    }
++
++    public function getMaxResults(): int
++    {
++        return $this->maxResults;
++    }
++
++    public function setMaxResults(int $maxResults): void
++    {
++        $this->maxResults = $maxResults;
++    }
++
++    public function getStartAt(): int
++    {
++        return $this->startAt;
++    }
++
++    public function setStartAt(int $startAt): void
++    {
++        $this->startAt = $startAt;
++    }
++
++    public function getTotal(): int
++    {
++        return $this->total;
++    }
++
++    public function setTotal(int $total): void
++    {
++        $this->total = $total;
++    }
++
++    public function isLast(): bool
++    {
++        return $this->isLast;
++    }
++
++    public function setIsLast(bool $isLast): void
++    {
++        $this->isLast = $isLast;
++    }
++
++    public function getValues(): array
++    {
++        return $this->values;
++    }
++
++    public function setValues(array $values): void
++    {
++        $this->values = $values;
++    }
++}
+diff --git a/src/Label/LabelService.php b/src/Label/LabelService.php
+new file mode 100644
+index 0000000..e5eec12
+--- /dev/null
++++ b/src/Label/LabelService.php
+@@ -0,0 +1,27 @@
++<?php
++
++namespace JiraCloud\Label;
++
++class LabelService extends \JiraCloud\JiraClient
++{
++    private $uri = '/label';
++
++    /**
++     * get all label list.
++     *
++     * @param array $paramArray
++     *
++     * @throws \JiraCloud\JiraException
++     *
++     * @return LabelSearchResult array of Label class
++     */
++    public function getAllLabels($paramArray = [])
++    {
++        $ret = $this->exec($this->uri.$this->toHttpQueryParameter($paramArray), null);
++
++        return $this->json_mapper->map(
++            json_decode($ret, false),
++            LabelSearchResult::class
++        );
++    }
++}

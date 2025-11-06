@@ -6,8 +6,10 @@ namespace App\Message\Command\Admin\IssueLabel\Handler;
 
 use App\Entity\IssueLabel;
 use App\Exception\Project\IssueLabelAlreadyExistException;
+use App\Exception\Project\IssueLabelNotValidException;
 use App\Message\Command\Admin\IssueLabel\CreateIssueLabel;
 use App\Repository\IssueLabelRepository;
+use App\Repository\Jira\LabelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -17,6 +19,7 @@ readonly class CreateIssueLabelHandler
     public function __construct(
         private EntityManagerInterface $entityManager,
         private IssueLabelRepository $issueLabelRepository,
+        private LabelRepository $labelRepository,
     ) {
     }
 
@@ -26,6 +29,11 @@ readonly class CreateIssueLabelHandler
             'jiraLabel' => $command->jiraLabel,
         ]) !== null) {
             throw new IssueLabelAlreadyExistException();
+        }
+
+        $jiraLabels = $this->labelRepository->getAll();
+        if (! in_array($command->jiraLabel, $jiraLabels->getValues())) {
+            throw new IssueLabelNotValidException();
         }
 
         $issueLabel = new IssueLabel(

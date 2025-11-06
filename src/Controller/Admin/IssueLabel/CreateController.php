@@ -7,6 +7,7 @@ namespace App\Controller\Admin\IssueLabel;
 use App\Controller\Common\CreateControllerTrait;
 use App\Entity\IssueLabel;
 use App\Exception\Project\IssueLabelAlreadyExistException;
+use App\Exception\Project\IssueLabelNotValidException;
 use App\Form\Admin\IssueLabel\IssueLabelFormType;
 use App\Message\Command\Admin\IssueLabel\CreateIssueLabel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,10 @@ class CreateController extends AbstractController
                 /** @var ?IssueLabel $issueLabelCreated */
                 $issueLabelCreated = $this->handle($form->getData());
             } catch (HandlerFailedException $exception) {
-                if ($exception->getPrevious() instanceof IssueLabelAlreadyExistException) {
+                if (
+                    $exception->getPrevious() instanceof IssueLabelAlreadyExistException
+                    || $exception->getPrevious() instanceof IssueLabelNotValidException
+                ) {
                     $this->addFlash(
                         type: 'danger',
                         message: $exception->getPrevious()
