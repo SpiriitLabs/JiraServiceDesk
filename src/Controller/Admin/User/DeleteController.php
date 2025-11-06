@@ -29,6 +29,11 @@ class DeleteController extends AbstractController
         ])]
         User $user,
     ): RedirectResponse {
+        if ($user->getNotifications()) {
+            foreach ($user->getNotifications() as $notification) {
+                $user->removeNotification($notification);
+            }
+        }
         $this->handle(
             new DeleteEntity(
                 class: User::class,
