@@ -320,16 +320,19 @@ logs:
       label: "Webhook"
 
 issueLabel:
-  label: "Issue Label"
+  label: "Label de ticket"
   title:
-    create: "Créer un issue label"
-    edit: "Modifier issue label « %key% »"
+    create: "Créer un label de ticket"
+    edit: "Modifier label de ticket « %key% »"
   name:
     label: "Nom"
   jiraLabel:
     label: "Label Jira"
   users:
     label: "Utilisateurs associés"
+  flashes:
+    alreadyExist: "Ce label existe déjà"
+    created: "Label de ticket créé avec succès"
 
 notification:
   label: "Notification"

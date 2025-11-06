@@ -330,6 +330,9 @@ issueLabel:
     label: "Jira Label"
   users:
     label: "Associated users"
+  flashes:
+    alreadyExist: "This Label key already exists"
+    created: "Issue Label successfully created"
 
 logType:
   label: "LogType"
