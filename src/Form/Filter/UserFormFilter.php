@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Filter;
 
+use App\Entity\IssueLabel;
 use App\Entity\Project;
 use App\Form\AbstractFilterType;
 use Spiriit\Bundle\FormFilterBundle\Filter\Doctrine\ORMQuery;
@@ -55,6 +56,16 @@ class UserFormFilter extends AbstractFilterType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'project.label',
+                ],
+                'choice_label' => 'name',
+            ])
+            ->add('issueLabel', EntityFilterType::class, [
+                'class' => IssueLabel::class,
+                'required' => false,
+                'autocomplete' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'issueLabel.label',
                 ],
                 'choice_label' => 'name',
             ])
