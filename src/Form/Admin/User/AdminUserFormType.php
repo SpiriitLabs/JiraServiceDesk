@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\User;
 
+use App\Entity\IssueLabel;
 use App\Entity\Project;
 use App\Enum\User\Role;
 use App\Form\Type\ChoiceSwitchType;
@@ -43,6 +44,13 @@ class AdminUserFormType extends AbstractUserFormType
                 'multiple' => true,
                 'autocomplete' => true,
                 'label' => 'project.label',
+                'choice_label' => 'name',
+            ])
+            ->add('issueLabel', EntityType::class, [
+                'class' => IssueLabel::class,
+                'required' => false,
+                'autocomplete' => true,
+                'label' => 'issueLabel.label',
                 'choice_label' => 'name',
             ])
             ->add('enabled', SwitchType::class)
