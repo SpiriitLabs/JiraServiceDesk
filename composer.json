@@ -111,6 +111,11 @@
             "allow-contrib": false,
             "require": "7.3.*",
             "docker": true
+        },
+        "patches": {
+            "lesstif/jira-cloud-restapi": {
+                "feat(label): Add service to fetch labels": ".composer/patches/lesstif/jira-cloud-restapi/115.patch"
+            }
         }
     },
     "require-dev": {

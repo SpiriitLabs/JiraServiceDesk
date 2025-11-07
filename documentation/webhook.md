@@ -12,7 +12,7 @@ Generate a secret token and place it in the `JIRA_WEBHOOK_SECRET` variable insid
 
 ### Ticket Filtering
 
-In the ticket filtering section, use the following JQL query to only trigger the webhook for relevant issues: `labels in ('from-client')`
+In the ticket filtering section, use the following JQL query to only trigger the webhook for relevant issues: `labels in user label (ex :'from-client')`
 
 ### Event Subscription
 

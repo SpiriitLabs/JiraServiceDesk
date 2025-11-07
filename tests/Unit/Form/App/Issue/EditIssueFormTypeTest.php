@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Form\App\Issue;
 use App\Entity\IssueType;
 use App\Entity\Priority;
 use App\Factory\ProjectFactory;
+use App\Factory\UserFactory;
 use App\Form\App\Issue\EditIssueFormType;
 use App\Message\Command\App\Issue\EditIssue;
 use App\Repository\IssueTypeRepository;
@@ -128,6 +129,8 @@ class EditIssueFormTypeTest extends TypeTestCase
             'jiraKey' => 'test',
         ]);
 
+        $user = UserFactory::createOne();
+
         $transitionToStatus = (object) [
             'id' => '20001',
             'name' => 'Done',
@@ -151,6 +154,7 @@ class EditIssueFormTypeTest extends TypeTestCase
         $model = new EditIssue(
             project: $project,
             issue: $issue,
+            creator: $user,
             issueType: $issueType,
             priority: $priority,
             transition: $transition->id,
@@ -165,6 +169,7 @@ class EditIssueFormTypeTest extends TypeTestCase
         $expected = new EditIssue(
             project: $project,
             issue: $issue,
+            creator: $user,
             issueType: $issueType,
             priority: $priority,
             transition: $transition->id,

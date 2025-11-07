@@ -1,0 +1,8 @@
+{% trans_default_domain 'app' %}
+{% extends 'admin/layout.html.twig' %}
+{% block title 'issueLabel.label'|trans %}
+
+{% set breadcrumb = [{
+    href: path('admin_issue_label_list'),
+    label: 'issueLabel.label'|trans,
+}]|merge(breadcrumb|default([])) %}

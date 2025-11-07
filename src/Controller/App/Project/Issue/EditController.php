@@ -74,6 +74,7 @@ class EditController extends AbstractController
             data: new EditIssue(
                 project: $project,
                 issue: $issue,
+                creator: $user,
                 issueType: $this->issueTypeRepository->findOneBy([
                     'jiraId' => $issue->fields->issuetype->id,
                     'project' => $project,

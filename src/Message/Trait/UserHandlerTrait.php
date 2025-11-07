@@ -20,5 +20,7 @@ trait UserHandlerTrait
         $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
         $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
         $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;
+
+        $user->setIssueLabel($command->issueLabel);
     }
 }

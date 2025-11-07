@@ -53,6 +53,7 @@ class ShowUserStreamController extends AbstractController
         $searchIssueResult = $this->handle(
             new SearchIssues(
                 sort: $sort,
+                user: $user,
                 onlyUserAssigned: true,
                 filter: $issueFilter,
                 maxIssuesResults: ($sort !== $defaultSort ? 1000 : SearchIssues::MAX_ISSUES_RESULTS),
@@ -90,6 +91,7 @@ class ShowUserStreamController extends AbstractController
 
         $result = $this->handle(
             new SearchIssues(
+                user: $user,
                 onlyUserAssigned: true,
                 filter: new IssueFilter(
                     projects: [$project],

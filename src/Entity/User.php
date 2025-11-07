@@ -110,6 +110,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $notifications;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?IssueLabel $issueLabel = null;
+
     public function __construct(
         ?string $email,
         ?string $firstName,
@@ -381,5 +385,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     public function getAuthenticationLogsToEmailName(): string
     {
         return $this->getFullName();
+    }
+
+    public function getIssueLabel(): ?IssueLabel
+    {
+        return $this->issueLabel;
+    }
+
+    public function setIssueLabel(?IssueLabel $issueLabel): self
+    {
+        $this->issueLabel = $issueLabel;
+
+        return $this;
+    }
+
+    public function getJiraLabel(): string
+    {
+        return $this->issueLabel ? $this->issueLabel->jiraLabel : '';
     }
 }

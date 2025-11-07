@@ -178,6 +178,8 @@ user:
     never: "Jamais connecté"
   projects:
     label: "Projets"
+  issueLabel:
+    label: "Label"
 
 profile:
   label: "Profil"
@@ -316,6 +318,22 @@ logs:
       label: "Login"
     webhook:
       label: "Webhook"
+
+issueLabel:
+  label: "Label de ticket"
+  title:
+    create: "Créer un label de ticket"
+    edit: "Modifier label de ticket « %key% »"
+  name:
+    label: "Nom"
+  jiraLabel:
+    label: "Label Jira"
+  users:
+    label: "Utilisateurs associés"
+  flashes:
+    alreadyExist: "Ce label existe déjà"
+    notValid: "Ce label n'est pas valide"
+    created: "Label de ticket créé avec succès"
 
 notification:
   label: "Notification"

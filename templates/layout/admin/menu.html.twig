@@ -57,6 +57,14 @@
                                 />
 
                                 <twig:nav:item-single
+                                    path="admin_issue_label"
+                                    trans="issueLabel.label"
+                                    icon="mdi mdi-tag"
+                                    href="{{ path('admin_issue_label_list') }}"
+                                    role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"
+                                />
+
+                                <twig:nav:item-single
                                     path="admin_favorite"
                                     trans="favorite.label"
                                     icon="mdi mdi-heart"

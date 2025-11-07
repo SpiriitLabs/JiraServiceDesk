@@ -5,6 +5,7 @@ namespace App\Tests\Unit\Message\Command\App\Issue;
 use App\Entity\IssueType;
 use App\Entity\Priority;
 use App\Factory\ProjectFactory;
+use App\Factory\UserFactory;
 use App\Message\Command\App\Issue\EditIssue;
 use App\Message\Command\App\Issue\Handler\EditIssueHandler;
 use App\Message\Command\App\Issue\TransitionTo;
@@ -58,6 +59,8 @@ class EditIssueHandlerTest extends TestCase
             'jiraKey' => 'test',
         ]);
 
+        $user = UserFactory::createOne();
+
         $issueType = $this->createMock(IssueType::class);
         $issueType->jiraId = '10005';
 
@@ -103,6 +106,7 @@ class EditIssueHandlerTest extends TestCase
             new EditIssue(
                 project: $project,
                 issue: $issue,
+                creator: $user,
                 issueType: $issueType,
                 priority: $priority,
                 transition: '30001',

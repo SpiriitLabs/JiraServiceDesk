@@ -7,6 +7,7 @@ namespace App\Message\Command\App\Issue;
 use App\Entity\IssueType;
 use App\Entity\Priority;
 use App\Entity\Project;
+use App\Entity\User;
 use JiraCloud\Issue\Issue;
 
 class EditIssue extends AbstractIssueDTO
@@ -14,6 +15,7 @@ class EditIssue extends AbstractIssueDTO
     public function __construct(
         Project $project,
         public Issue $issue,
+        public User $creator,
         IssueType $issueType,
         Priority $priority,
         public string $transition,
