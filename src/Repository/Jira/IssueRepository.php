@@ -49,20 +49,18 @@ class IssueRepository
 
     public function getByParent(string $issueId): array
     {
-        $issues = $this->service->search(
+        $result = $this->service->search(
             jql: 'parent = ' . $issueId,
             expand: 'renderedFields,transitions,changelog',
         );
-        $issues = $issues->getIssues();
+        $issues = $result->getIssues();
 
         $user = $this->security->getUser();
         $label = $user instanceof User ? $user->getJiraLabel() : '';
 
-        array_filter($issues, function ($issue) use ($label) {
+        return array_filter($issues, function ($issue) use ($label) {
             return in_array($label, $issue->fields->labels) == true;
         });
-
-        return $issues;
     }
 
     public function getCommentForIssue(string $issueId, SortParams $sort): Comments
