@@ -54,7 +54,7 @@ class CreateIssueFormType extends AbstractIssueFormType
         $options['projectId'] = $project->getId();
         parent::buildForm($builder, $options);
 
-        if ($project !== null && $user->getProjects()->contains($project) == false) {
+        if ($user->getProjects()->contains($project) == false) {
             $project = null;
         }
 

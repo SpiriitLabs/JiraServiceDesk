@@ -19,7 +19,7 @@ class EditUser extends AbstractUserDTO
             projects: $this->user->getProjects()
                 ->toArray(),
             company: $this->user->company,
-            preferedLocale: $this->user->preferredLocale,
+            preferredLocale: $this->user->preferredLocale,
             preferedTheme: $this->user->preferredTheme,
             preferenceNotification: $this->user->preferenceNotification,
             preferenceNotificationIssueCreated: $this->user->preferenceNotificationIssueCreated,
