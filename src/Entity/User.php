@@ -30,20 +30,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     use TimestampableEntity;
     use SoftDeleteableEntity;
 
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
     #[ORM\Column(length: 180)]
     public ?string $email = null;
+
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column(nullable: true)]
+    private ?string $password = null;
 
     #[ORM\Column(length: 255)]
     public ?string $firstName = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    public ?string $company = null;
+    #[ORM\Column(length: 255)]
+    private ?string $lastName = null;
 
     #[ORM\Column(nullable: false, enumType: Locale::class)]
     public Locale $preferredLocale = Locale::FR;
 
     #[ORM\Column(nullable: false, enumType: Theme::class)]
     public Theme $preferredTheme = Theme::AUTO;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $company = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     public bool $preferenceNotification = false;
@@ -68,26 +88,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
 
     #[ORM\ManyToOne]
     public ?Project $defaultProject = null;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column(nullable: true)]
-    private ?string $password = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $lastName = null;
 
     /**
      * @var Collection<int, Project>

@@ -55,7 +55,7 @@ abstract class AbstractUserFormType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('preferedLocale', EnumType::class, [
+            ->add('preferredLocale', EnumType::class, [
                 'required' => true,
                 'class' => Locale::class,
                 'constraints' => [

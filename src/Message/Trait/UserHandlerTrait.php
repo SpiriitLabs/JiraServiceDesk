@@ -12,7 +12,7 @@ trait UserHandlerTrait
     protected function updateUserFields(User $user, AbstractUserDTO $command): void
     {
         $user->setRoles($command->roles);
-        $user->preferredLocale = $command->preferedLocale;
+        $user->preferredLocale = $command->preferredLocale;
         $user->preferredTheme = $command->preferedTheme;
         $user->preferenceNotification = $command->preferenceNotification;
         $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;

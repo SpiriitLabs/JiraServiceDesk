@@ -79,7 +79,7 @@ class UserProfileFormTypeTest extends TypeTestCase
     {
         $formData = [
             'email' => 'test+update@local.lan',
-            'preferedLocale' => Locale::FR->value,
+            'preferredLocale' => Locale::FR->value,
             'preferedTheme' => Theme::AUTO->value,
             'firstName' => 'Pierre',
             'lastName' => 'DUPOND',

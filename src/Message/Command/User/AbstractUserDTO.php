@@ -23,7 +23,7 @@ class AbstractUserDTO
         public array $projects = [],
         public ?string $plainPassword = null,
         public ?string $company = null,
-        public Locale $preferedLocale = Locale::FR,
+        public Locale $preferredLocale = Locale::FR,
         public Theme $preferedTheme = Theme::AUTO,
         public bool $preferenceNotification = true,
         public bool $preferenceNotificationIssueCreated = true,
