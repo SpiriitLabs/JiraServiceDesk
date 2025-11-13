@@ -12,7 +12,6 @@ use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Subscriber\Event\NotificationEvent;
-use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
@@ -74,22 +73,6 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
         $this->logger->info('WEBHOOK', [
             'event' => $payload->get('webhookEvent'),
         ]);
-
-        if (
-            $payload->has('issue')
-            && $payload->get('webhookEvent') !== 'jira:issue_deleted'
-        ) {
-            $this->logger->debug('WEBHOOK', [
-                'payload_check_issue' => $payload->has('issue'),
-                'issue_key' => json_encode($payload->all()['issue']['key']),
-            ]);
-
-            try {
-                $this->issueRepository->getFull($payload->all()['issue']['key'], 'from-client');
-            } catch (JiraException $jiraException) {
-                throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, $jiraException->getMessage());
-            }
-        }
 
         $event = match ($payload->get('webhookEvent')) {
             'jira:issue_created' => new IssueCreated(payload: $payload->all()),
