@@ -152,7 +152,7 @@ user:
     role_app_view_kanban: "Can view kanbans"
   preferredLocale:
     label: "Preferred language"
-  preferedTheme:
+  preferredTheme:
     label: "Preferred theme"
   preferenceNotification:
     label: "Notifications"

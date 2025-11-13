@@ -24,7 +24,7 @@ class AbstractUserDTO
         public ?string $plainPassword = null,
         public ?string $company = null,
         public Locale $preferredLocale = Locale::FR,
-        public Theme $preferedTheme = Theme::AUTO,
+        public Theme $preferredTheme = Theme::AUTO,
         public bool $preferenceNotification = true,
         public bool $preferenceNotificationIssueCreated = true,
         public bool $preferenceNotificationIssueUpdated = true,

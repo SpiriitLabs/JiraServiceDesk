@@ -20,7 +20,7 @@ class EditUser extends AbstractUserDTO
                 ->toArray(),
             company: $this->user->company,
             preferredLocale: $this->user->preferredLocale,
-            preferedTheme: $this->user->preferredTheme,
+            preferredTheme: $this->user->preferredTheme,
             preferenceNotification: $this->user->preferenceNotification,
             preferenceNotificationIssueCreated: $this->user->preferenceNotificationIssueCreated,
             preferenceNotificationIssueUpdated: $this->user->preferenceNotificationIssueUpdated,

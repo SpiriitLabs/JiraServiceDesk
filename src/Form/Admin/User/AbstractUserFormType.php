@@ -63,7 +63,7 @@ abstract class AbstractUserFormType extends AbstractType
                 ],
                 'choice_label' => fn (Locale $locale) => $locale->label(),
             ])
-            ->add('preferedTheme', EnumType::class, [
+            ->add('preferredTheme', EnumType::class, [
                 'required' => true,
                 'class' => Theme::class,
                 'constraints' => [
