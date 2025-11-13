@@ -13,7 +13,7 @@ trait UserHandlerTrait
     {
         $user->setRoles($command->roles);
         $user->preferredLocale = $command->preferredLocale;
-        $user->preferredTheme = $command->preferedTheme;
+        $user->preferredTheme = $command->preferredTheme;
         $user->preferenceNotification = $command->preferenceNotification;
         $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
         $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
