@@ -114,6 +114,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     #[ORM\JoinColumn(nullable: true)]
     private ?IssueLabel $issueLabel = null;
 
+    #[ORM\Column(name: 'password_changed_at', type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $passwordChangedAt;
+
     public function __construct(
         ?string $email,
         ?string $firstName,
@@ -215,6 +218,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     public function setPassword(string $password): static
     {
         $this->password = $password;
+        $this->passwordChangedAt = new \DateTimeImmutable('now');
 
         return $this;
     }
@@ -402,5 +406,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     public function getJiraLabel(): string
     {
         return $this->issueLabel ? $this->issueLabel->jiraLabel : '';
+    }
+
+    public function getPasswordChangedAt(): ?\DateTimeImmutable
+    {
+        return $this->passwordChangedAt;
     }
 }
