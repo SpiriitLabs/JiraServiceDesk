@@ -28,7 +28,7 @@ class IssueRepository
         $this->service = new IssueService();
     }
 
-    public function getFull(string $issueId): Issue
+    public function getFull(string $issueId, string $label = ''): Issue
     {
         $issue = $this->service->get(
             issueIdOrKey: $issueId,
@@ -37,8 +37,10 @@ class IssueRepository
             ]
         );
 
-        $user = $this->security->getUser();
-        $label = $user instanceof User ? $user->getJiraLabel() : '';
+        if (empty($label)) {
+            $user = $this->security->getUser();
+            $label = $user instanceof User ? $user->getJiraLabel() : '';
+        }
 
         if (in_array($label, $issue->fields->labels) == false) {
             throw new JiraException(sprintf('Issue #%d has not %s label', $issueId, $label));

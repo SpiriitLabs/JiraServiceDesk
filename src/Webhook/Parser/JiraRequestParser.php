@@ -85,7 +85,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             ]);
 
             try {
-                $this->issueRepository->getFull($payload->all()['issue']['key']);
+                $this->issueRepository->getFull($payload->all()['issue']['key'], 'from-client');
             } catch (JiraException $jiraException) {
                 throw new RejectWebhookException(Response::HTTP_NOT_ACCEPTABLE, $jiraException->getMessage());
             }

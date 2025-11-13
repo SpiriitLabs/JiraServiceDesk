@@ -46,12 +46,6 @@ class IssueCreatedHandler implements LoggerAwareInterface
             return;
         }
 
-        try {
-            $this->issueRepository->getFull($issueKey);
-        } catch (JiraException $jiraException) {
-            return;
-        }
-
         $this->logger->info('WEBHOOK/IssueCreated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,
@@ -70,6 +64,11 @@ class IssueCreatedHandler implements LoggerAwareInterface
 
         foreach ($project->getUsers() as $user) {
             if ($user->preferenceNotificationIssueCreated === false) {
+                continue;
+            }
+            try {
+                $this->issueRepository->getFull($issueKey, $user->getJiraLabel());
+            } catch (JiraException $jiraException) {
                 continue;
             }
 
