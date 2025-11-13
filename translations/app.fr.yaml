@@ -131,6 +131,7 @@ user:
     label: "Adresse email"
   password:
     label: "Mot de passe"
+    current: "Mot de passe actuel"
     new: "Nouveau mot de passe"
     repeat: "Confirmer le mot de passe"
     notice: "💡 Laissez vide pour conserver l'ancien mot de passe"
@@ -173,6 +174,8 @@ user:
     label: "Projet par défaut"
   flashes:
     exported: "Export réalisé avec succès"
+    currentPasswordWrong: "Le mot de passe actuel n'est pas correct"
+    alreadyUse: "Le nouveau mot de passe doit être différent de l'actuel"
   lastLogin:
     label: "Dernière connexion"
     never: "Jamais connecté"

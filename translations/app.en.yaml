@@ -131,6 +131,7 @@ user:
     label: "Email address"
   password:
     label: "Password"
+    current: "Current password"
     new: "New password"
     repeat: "Confirm password"
     notice: "💡 Leave empty to keep the old password"
@@ -173,6 +174,8 @@ user:
     label: "Default project"
   flashes:
     exported: "Export done successfully"
+    currentPasswordWrong: "Current Password is not correct"
+    alreadyUse: "New Password must be different of actual"
   lastLogin:
     label: "Last login"
     never: "Never login"

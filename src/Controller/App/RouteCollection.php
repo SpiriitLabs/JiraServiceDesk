@@ -20,6 +20,6 @@ enum RouteCollection: string implements RouteCollectionInterface
     case ATTACHMENT_PREVIEW = 'attachment_preview';
     case ATTACHMENT = 'attachment';
     case SEARCH_API = 'search_api';
-
     case PROFIL = 'profil';
+    case CHANGE_PASSWORD = 'change_password';
 }
