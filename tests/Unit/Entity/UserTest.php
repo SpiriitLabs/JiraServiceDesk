@@ -116,4 +116,15 @@ class UserTest extends TestCase
 
         self::assertSame('label', $user->getJiraLabel());
     }
+
+    #[Test]
+    public function testItPasswordChangeAt(): void
+    {
+        /** @var User $user */
+        $user = UserFactory::createOne()->_set('id', 1);
+
+        $user->setPassword('password');
+
+        self::assertNotNull($user->getPasswordChangedAt());
+    }
 }
