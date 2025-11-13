@@ -48,12 +48,6 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             return;
         }
 
-        try {
-            $issue = $this->issueRepository->getFull($issueKey);
-        } catch (JiraException $jiraException) {
-            return;
-        }
-
         $this->logger->info('WEBHOOK/IssueUpdated', [
             'issueKey' => $issueKey,
             'issueSummary' => $issueSummary,
@@ -61,20 +55,26 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $templatedEmail = (new TemplatedEmail())
-            ->htmlTemplate('email/issue/issue_edited.html.twig')
-            ->context([
-                'project' => $project,
-                'issueSummary' => $issueSummary,
-                'issueKey' => $issueKey,
-                'changes' => $this->issueHistoryFormatter->format($issue),
-            ])
-        ;
-
         foreach ($project->getUsers() as $user) {
             if ($user->preferenceNotificationIssueUpdated === false) {
                 continue;
             }
+
+            try {
+                $issue = $this->issueRepository->getFull($issueKey, $user->getJiraLabel());
+            } catch (JiraException $jiraException) {
+                return;
+            }
+
+            $templatedEmail = (new TemplatedEmail())
+                ->htmlTemplate('email/issue/issue_edited.html.twig')
+                ->context([
+                    'project' => $project,
+                    'issueSummary' => $issueSummary,
+                    'issueKey' => $issueKey,
+                    'changes' => $this->issueHistoryFormatter->format($issue),
+                ])
+            ;
 
             $subject = $this->translator->trans(
                 id: 'issue.edited.title',
