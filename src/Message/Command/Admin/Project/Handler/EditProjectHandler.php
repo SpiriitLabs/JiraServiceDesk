@@ -8,6 +8,7 @@ use App\Entity\Project;
 use App\Message\Command\Admin\Project\EditProject;
 use App\Message\Command\Admin\Project\GenerateProjectIssueTypes;
 use App\Repository\Jira\ProjectRepository;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -47,6 +48,9 @@ readonly class EditProjectHandler
                 project: $project,
             ),
         );
+
+        $cache = new FilesystemAdapter();
+        $cache->clear(sprintf('jira.assignable_users_%s', $project->jiraKey));
 
         return $project;
     }
