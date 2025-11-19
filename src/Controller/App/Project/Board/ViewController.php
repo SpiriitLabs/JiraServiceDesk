@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use App\Repository\Jira\UserRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,8 @@ use Symfony\UX\Turbo\TurboBundle;
 class ViewController extends AbstractController
 {
     use GetControllerTrait;
+
+    protected const int CACHE_DURATION = 7200;
 
     public function __construct(
         private readonly UserRepository $userRepository,
@@ -73,16 +76,6 @@ class ViewController extends AbstractController
         Request $request,
     ): Response {
         $this->setCurrentProject($project);
-        $assignees = [];
-        $assigneesIds = $this->userRepository->getAssignableUser($project);
-        foreach ($assigneesIds as $assigneesId) {
-            $assignees[$assigneesId->accountId] = $this->userRepository->getUserById($assigneesId->accountId);
-        }
-        $assignees[$this->jiraAPIAccountId] = [
-            'displayName' => sprintf('%s (Support)', $user->getFullName()),
-            'accountId' => $this->jiraAPIAccountId,
-            'avatarUrls' => null,
-        ];
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $kanbanIssuesFormatted = $this->handle(
             new GetKanbanIssueByBoardId($project, $user, $idBoard, $request->get('assignee', '')),
@@ -94,9 +87,36 @@ class ViewController extends AbstractController
                 'entity' => $project,
                 'boardId' => $idBoard,
                 'kanbanIssues' => $kanbanIssuesFormatted,
-                'assignees' => $assignees,
+                'assignees' => $this->getAssignees($project, $user),
                 'assigneeId' => $request->get('assignee', ''),
             ],
         );
+    }
+
+    protected function getAssignees(Project $project, User $user): array
+    {
+        $cache = new FilesystemAdapter();
+        $cacheAssignableUsers = $cache->getItem(sprintf('jira.kanban_assignable_users_list_%s', $project->jiraKey));
+
+        if ($cacheAssignableUsers->isHit()) {
+            return $cacheAssignableUsers->get();
+        }
+
+        $assignees = [];
+        $assigneesIds = $this->userRepository->getAssignableUser($project);
+        foreach ($assigneesIds as $assigneesId) {
+            $assignees[$assigneesId->accountId] = $this->userRepository->getUserById($assigneesId->accountId);
+        }
+        $assignees[$this->jiraAPIAccountId] = [
+            'displayName' => sprintf('%s (Support)', $user->getFullName()),
+            'accountId' => $this->jiraAPIAccountId,
+            'avatarUrls' => null,
+        ];
+
+        $cacheAssignableUsers->set($assignees);
+        $cacheAssignableUsers->expiresAfter(self::CACHE_DURATION);
+        $cache->save($cacheAssignableUsers);
+
+        return $assignees;
     }
 }
