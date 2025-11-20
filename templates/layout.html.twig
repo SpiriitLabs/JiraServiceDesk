@@ -24,17 +24,16 @@
 </head>
 <body {% block turbo %} data-turbo="false"{% endblock %} {{ stimulus_controller('theme install_pwa marker_io') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }}
     id="body">
-<div class="toast-container position-fixed bottom-0 end-0 p-3" {{ stimulus_controller('flash') }}
-     id="toastsNotifications">
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastsNotifications">
     {% for type, messages in app.flashes %}
         {% for message in messages %}
-            <div id="liveToast" {{ stimulus_target('flash', 'container') }} class="toast show text-bg-{{ type }}"
+            <div id="liveToast" class="toast show text-bg-{{ type }}"
                  role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="{{ asset(logo_favicon_path, 'app') }}" class="rounded me-2" style="width: 25px"
                          alt="{{ project_name }}">
                     <strong class="me-auto">{{ project_name }}</strong>
-                    <button type="button" {{ stimulus_action('flash', 'close') }} class="btn-close"
+                    <button type="button" class="btn-close"
                             data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body">

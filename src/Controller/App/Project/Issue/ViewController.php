@@ -56,7 +56,7 @@ class ViewController extends AbstractController
         $this->setCurrentProject($project);
 
         try {
-            $issue = $this->jiraIssueRepository->getFull($keyIssue);
+            $issue = $this->handle(new GetFullIssue($keyIssue));
         } catch (JiraException $jiraException) {
             throw $this->createNotFoundException();
         }
@@ -90,7 +90,7 @@ class ViewController extends AbstractController
             $linkIssue = $link->inwardIssue ?? $link->outwardIssue;
             $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
             try {
-                $fullLinkIssue = $this->jiraIssueRepository->getFull($linkIssue->id);
+                $fullLinkIssue = $this->handle(new GetFullIssue($linkIssue->id));
             } catch (JiraException $jiraException) {
                 continue;
             }
