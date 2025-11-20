@@ -7,6 +7,7 @@ namespace App\Controller\App\Project\Board;
 use App\Controller\App\Project\AbstractController;
 use App\Entity\Project;
 use App\Repository\Jira\BoardRepository;
+use JiraCloud\Board\Board;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,9 @@ class StreamListController extends AbstractController
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $boards = $this->jiraBoardRepository->getBoardByProject($project);
+        $boards = array_filter($boards, function (Board $board) use ($project) {
+            return $board->location->projectKey === $project->jiraKey;
+        });
 
         return $this->render(
             view: 'app/project/board/list.stream.html.twig',
