@@ -14,7 +14,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 readonly class GetFullIssueHandler
 {
-    protected const int CACHE_DURATION = 7200;
+    protected const int CACHE_DURATION = 1200;
 
     public function __construct(
         private IssueRepository $issueRepository,
