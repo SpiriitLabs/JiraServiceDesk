@@ -11,7 +11,7 @@
             {{ app.user.fullName }} (Support)
         {% else %}
             {% if hasImage %}
-                <img src="{{ reporter.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                <img src="{{ reporter.avatarUrls['24x24'] }}" alt="user-img" class="avatar-xs rounded-circle me-1">
             {% endif %}
             {{ reporter.displayName }}
         {% endif %}

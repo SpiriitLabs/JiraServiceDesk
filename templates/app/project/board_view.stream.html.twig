@@ -14,7 +14,7 @@
             <a href="{{ path('app_project_board_view', query_parameters) }}">
                 <span class="assigne-item{{ assigneeId == assignee.accountId ? ' selected' : '' }}">
                     {% if assignee.avatarUrls is not null  %}
-                        <img title="{{ assignee.displayName }}" src="{{ assignee.avatarUrls|first }}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                        <img title="{{ assignee.displayName }}" src="{{ assignee.avatarUrls['24x24'] }}" alt="user-img" class="avatar-xs rounded-circle me-1">
                     {% else %}
                         <svg class="icon avatar-xs rounded-circle me-1">
                             <use xlink:href="{{ asset('assets/images/icons/user.svg', 'app') }}"></use>
