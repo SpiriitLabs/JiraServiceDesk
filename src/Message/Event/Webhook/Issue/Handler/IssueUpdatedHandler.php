@@ -14,6 +14,7 @@ use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Mime\Address;
@@ -39,6 +40,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
     public function __invoke(IssueUpdated $event): void
     {
         $issueKey = $event->getPayload()['issue']['key'];
+        $issueId = $event->getPayload()['issue']['id'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
         $project = $this->projectRepository->findOneBy([
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
@@ -54,6 +56,8 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             'projectId' => $project->getId(),
             'projectKey' => $project->jiraKey,
         ]);
+        $cache = new FilesystemAdapter();
+        $cache->clear(sprintf('jira.full_issue_%s', $issueId));
 
         foreach ($project->getUsers() as $user) {
             if ($user->preferenceNotificationIssueUpdated === false) {

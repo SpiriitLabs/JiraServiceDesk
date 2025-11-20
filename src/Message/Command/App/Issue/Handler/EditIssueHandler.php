@@ -12,6 +12,7 @@ use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueType;
 use JiraCloud\Issue\Priority;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -48,6 +49,9 @@ class EditIssueHandler
         }
 
         $jiraIssueKey = $this->issueRepository->update($command->issue, $issueField);
+
+        $cache = new FilesystemAdapter();
+        $cache->clear(sprintf('jira.full_issue_%s', $command->issue->id));
 
         if ($jiraIssueKey == null) {
             return null;
