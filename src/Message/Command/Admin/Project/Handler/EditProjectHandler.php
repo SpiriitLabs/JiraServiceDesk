@@ -51,6 +51,7 @@ readonly class EditProjectHandler
 
         $cache = new FilesystemAdapter();
         $cache->clear(sprintf('jira.assignable_users_%s', $project->jiraKey));
+        $cache->clear(sprintf('jira.kanban_assignable_users_list_%s', $project->jiraKey));
 
         return $project;
     }
