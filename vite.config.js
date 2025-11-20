@@ -48,6 +48,7 @@ export default defineConfig({
                 theme: './assets/theme.scss'
             },
         },
+        minify: true,
     },
 
     resolve: {
