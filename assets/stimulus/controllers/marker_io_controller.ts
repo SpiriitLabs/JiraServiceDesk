@@ -15,7 +15,7 @@ export default class extends Controller {
     if (this.projectIdValue !== null && this.projectIdValue !== "") {
       this.initializeMarker(this.projectIdValue);
     } else {
-      console.warn("💥 Project ID is not set.");
+      console.info("💥 Project ID is not set.");
     }
   }
 
