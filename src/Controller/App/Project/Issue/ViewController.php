@@ -31,8 +31,8 @@ class ViewController extends AbstractController
     use GetControllerTrait;
 
     public function __construct(
-        private IssueRepository $jiraIssueRepository,
-        private IssueHtmlProcessor $htmlProcessor,
+        private readonly IssueRepository $jiraIssueRepository,
+        private readonly IssueHtmlProcessor $htmlProcessor,
     ) {
     }
 

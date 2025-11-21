@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Message\Command\App\Issue\Handler;
 
 use App\Controller\Common\CreateControllerTrait;
-use App\Entity\User;
 use App\Formatter\Jira\AdfHardBreakFormatter;
 use App\Message\Command\App\Issue\AddAttachment;
 use App\Message\Command\App\Issue\CreateIssue;
+use App\Message\Trait\AppendCreatorTrait;
 use App\Repository\Jira\IssueRepository;
 use DH\Adf\Node\Block\Document;
 use JiraCloud\ADF\AtlassianDocumentFormat;
@@ -23,6 +23,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class CreateIssueHandler
 {
     use CreateControllerTrait;
+    use AppendCreatorTrait;
 
     public function __construct(
         private readonly IssueRepository $issueRepository,
@@ -68,34 +69,5 @@ class CreateIssueHandler
         }
 
         return $jiraIssue;
-    }
-
-    /**
-     * @param array<int,mixed> $data
-     *
-     * @return array<mixed>
-     */
-    private function appendCreator(User $creator, array $data): array
-    {
-        $data['content'][] = [
-            'type' => 'paragraph',
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => '--------------',
-                ],
-            ],
-        ];
-        $data['content'][] = [
-            'type' => 'paragraph',
-            'content' => [
-                [
-                    'type' => 'text',
-                    'text' => $creator->getFullName(),
-                ],
-            ],
-        ];
-
-        return $data;
     }
 }
