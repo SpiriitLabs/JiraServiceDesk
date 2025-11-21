@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Message\Command\App\Issue\Handler;
 
 use App\Controller\Common\CreateControllerTrait;
+use App\Formatter\Jira\AdfHardBreakFormatter;
 use App\Message\Command\App\Issue\AddAttachment;
 use App\Message\Command\App\Issue\CreateComment;
+use App\Message\Trait\AppendCreatorTrait;
 use App\Repository\Jira\IssueRepository;
 use DH\Adf\Node\Block\Document;
 use JiraCloud\Issue\Attachment;
@@ -18,6 +20,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 class CreateCommentHandler
 {
     use CreateControllerTrait;
+    use AppendCreatorTrait;
 
     public function __construct(
         private readonly IssueRepository $issueRepository,
@@ -44,12 +47,11 @@ class CreateCommentHandler
             );
         }
 
-        $commentDocumentBody = new Document()
-            ->paragraph()
-            ->text($commentBody)
-            ->break()
-            ->break()
-        ;
+        $descriptionData = $this->appendCreator(
+            $command->user,
+            AdfHardBreakFormatter::format((array) json_decode($commentBody, true))
+        );
+        $commentDocumentBody = Document::load($descriptionData);
         foreach ($attachments as $attachment) {
             /** @var Attachment $attachment */
             $commentDocumentBody = $commentDocumentBody
@@ -61,12 +63,6 @@ class CreateCommentHandler
                 ->break()
             ;
         }
-        $commentDocumentBody = $commentDocumentBody
-            ->text('—')
-            ->break()
-            ->text($command->user->getFullName())
-            ->end()
-        ;
 
         $this->issueRepository->createComment(
             id: $issue->id,
