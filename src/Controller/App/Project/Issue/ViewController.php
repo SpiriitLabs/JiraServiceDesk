@@ -14,11 +14,11 @@ use App\Message\Query\App\Issue\GetFullIssue;
 use App\Model\SortParams;
 use App\Repository\Jira\IssueRepository;
 use App\Service\IssueHtmlProcessor;
-use JiraCloud\JiraException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\UX\Turbo\TurboBundle;
@@ -57,7 +57,7 @@ class ViewController extends AbstractController
 
         try {
             $issue = $this->handle(new GetFullIssue($keyIssue));
-        } catch (JiraException $jiraException) {
+        } catch (HandlerFailedException $exception) {
             throw $this->createNotFoundException();
         }
 
@@ -91,7 +91,7 @@ class ViewController extends AbstractController
             $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
             try {
                 $fullLinkIssue = $this->handle(new GetFullIssue($linkIssue->id));
-            } catch (JiraException $jiraException) {
+            } catch (HandlerFailedException $exception) {
                 continue;
             }
             $links[] = [
