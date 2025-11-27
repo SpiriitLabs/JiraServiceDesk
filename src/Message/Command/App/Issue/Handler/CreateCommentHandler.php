@@ -54,13 +54,17 @@ class CreateCommentHandler
         $commentDocumentBody = Document::load($descriptionData);
         foreach ($attachments as $attachment) {
             /** @var Attachment $attachment */
-            $commentDocumentBody = $commentDocumentBody
+            $newParagraph = new Document()
+                ->paragraph()
                 ->link(
                     text: $attachment->filename,
                     href: $attachment->content,
                     title: $attachment->filename,
                 )
                 ->break()
+            ;
+            $commentDocumentBody
+                ->append($newParagraph)
             ;
         }
 
