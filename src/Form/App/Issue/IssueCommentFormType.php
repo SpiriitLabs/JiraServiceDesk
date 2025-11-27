@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class IssueCommentFormType extends AbstractType
 {
@@ -17,7 +18,10 @@ class IssueCommentFormType extends AbstractType
     {
         $builder
             ->add('comment', QuillAdfType::class, [
-                'required' => true,
+                'required' => false,
+                'constraints' => [
+                    new NotBlank(),
+                ],
                 'attr' => [
                     'style' => 'height: 250px',
                 ],
