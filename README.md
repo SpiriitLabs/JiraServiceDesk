@@ -4,7 +4,7 @@ A self-hosted web portal that connects to the Jira Cloud API and simplifies issu
 Built with Symfony 7.2, Docker, and FrankenPHP, this project includes project/user management, ticket interaction, Kanban boards, notifications, and more.
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
-![Symfony 7.2](https://img.shields.io/badge/Symfony-7.2-blue.svg)
+![Symfony 7.4](https://img.shields.io/badge/Symfony-7.4-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.3+-orange.svg)
 ![Latest Release](https://img.shields.io/github/v/release/spiriitlabs/JiraServiceDesk?color=blue)
 
@@ -25,7 +25,7 @@ Built with Symfony 7.2, Docker, and FrankenPHP, this project includes project/us
 
 ## 🛠 Tech Stack
 
-- **Backend:** Symfony 7.2, PHP 8.3+
+- **Backend:** Symfony 7.4, PHP 8.3+
 - **Frontend:** Webpack Encore (_JS & CSS bundling_)
 - **Runtime:** FrankenPHP (_standalone binary_)
 - **Dev Environment:** Docker + Make
