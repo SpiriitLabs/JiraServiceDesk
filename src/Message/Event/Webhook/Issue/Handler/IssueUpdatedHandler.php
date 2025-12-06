@@ -10,7 +10,6 @@ use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
-use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -57,17 +56,25 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
         $cache = new FilesystemAdapter();
+        $cachedIssue = $cache->getItem(sprintf('jira.full_issue_%s', $issueId));
         $cache->clear(sprintf('jira.full_issue_%s', $issueId));
+
+        $issue = $this->issueRepository->getFull(
+            issueId: $issueKey,
+            checkLabel: false
+        );
+
+        $cachedIssue->set($issue);
+        $cachedIssue->expiresAfter(1200);
+        $cache->save($cachedIssue);
 
         foreach ($project->getUsers() as $user) {
             if ($user->preferenceNotificationIssueUpdated === false) {
                 continue;
             }
 
-            try {
-                $issue = $this->issueRepository->getFull($issueKey, $user->getJiraLabel());
-            } catch (JiraException $jiraException) {
-                return;
+            if (in_array($user->getJiraLabel(), $issue->fields->labels) == false) {
+                continue;
             }
 
             $templatedEmail = (new TemplatedEmail())

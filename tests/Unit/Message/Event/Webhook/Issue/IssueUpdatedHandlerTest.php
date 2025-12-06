@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 
+use App\Entity\IssueLabel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Formatter\Jira\IssueHistoryFormatter;
@@ -11,6 +12,7 @@ use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
 use JiraCloud\Issue\Issue;
+use JiraCloud\Issue\IssueField;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -67,6 +69,8 @@ class IssueUpdatedHandlerTest extends TestCase
             'email' => 'test@local.lan',
             'preferenceNotificationIssueUpdated' => $userHasPreferenceNotificationIssueUpdated,
         ]);
+        $label = new IssueLabel('from-client', 'from-client');
+        $user->setIssueLabel($label);
 
         $project = ProjectFactory::createOne([
             'jiraKey' => 'test',
@@ -79,6 +83,8 @@ class IssueUpdatedHandlerTest extends TestCase
         ;
 
         $issue = $this->createMock(Issue::class);
+        $issue->fields = new IssueField();
+        $issue->fields->labels = ['from-client'];
         $this->issueRepository
             ->method('getFull')
             ->with('issueKey')
