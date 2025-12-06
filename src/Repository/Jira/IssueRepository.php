@@ -28,7 +28,7 @@ class IssueRepository
         $this->service = new IssueService();
     }
 
-    public function getFull(string $issueId, string $label = ''): Issue
+    public function getFull(string $issueId, string $label = '', bool $checkLabel = true): Issue
     {
         $issue = $this->service->get(
             issueIdOrKey: $issueId,
@@ -36,6 +36,10 @@ class IssueRepository
                 'expand' => 'renderedFields,transitions,changelog',
             ]
         );
+
+        if ($checkLabel === false) {
+            return $issue;
+        }
 
         if (empty($label)) {
             $user = $this->security->getUser();
