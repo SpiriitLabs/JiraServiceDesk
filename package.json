@@ -20,7 +20,7 @@
         "file-loader": "^6.2.0",
         "postinstall-postinstall": "^2.1.0",
         "regenerator-runtime": "^0.14.1",
-        "sass": "^1.90.0",
+        "sass": "^1.95.0",
         "sass-loader": "^16.0.5",
         "ts-loader": "^9.5.4",
         "typescript": "^5.9.2"
@@ -46,7 +46,7 @@
         "quill": "^2.0.3",
         "simplebar": "^6.3.2",
         "stimulus-use": "^0.52.3",
-        "sweetalert2": "^11.24.1",
+        "sweetalert2": "^11.26.4",
         "tom-select": "^2.4.3",
         "vite": "^6.3.5",
         "vite-plugin-static-copy": "^3.1.2",
