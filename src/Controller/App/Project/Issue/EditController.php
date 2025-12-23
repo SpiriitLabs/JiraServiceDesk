@@ -17,6 +17,7 @@ use App\Repository\PriorityRepository;
 use App\Repository\ProjectRepository;
 use JiraCloud\Issue\Issue;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -35,6 +36,8 @@ class EditController extends AbstractController
         private readonly IssueTypeRepository $issueTypeRepository,
         private readonly PriorityRepository $priorityRepository,
         private readonly ProjectRepository $projectRepository,
+        #[Autowire(env: 'JIRA_ACCOUNT_ID')]
+        public string $jiraAccountId,
     ) {
     }
 
@@ -65,7 +68,10 @@ class EditController extends AbstractController
             }
         }
         $assigneesOptions = $assignableUsers;
-        if ($issue->fields->assignee !== null) {
+        if (
+            $issue->fields->assignee !== null
+            && ! in_array($issue->fields->assignee->accountId, $assigneesOptions)
+        ) {
             $assigneesOptions[$issue->fields->assignee->displayName] = $issue->fields->assignee->accountId;
         }
 
@@ -88,7 +94,7 @@ class EditController extends AbstractController
             options: [
                 'projectId' => $project->getId(),
                 'transitions' => $issueTransitions,
-                'assignee_editable' => $assignableUsers === $assigneesOptions,
+                'assignee_editable' => $issue->fields->assignee->accountId == $this->jiraAccountId,
                 'assignees' => $assigneesOptions,
             ]
         );
