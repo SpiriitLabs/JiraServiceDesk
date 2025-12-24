@@ -5,25 +5,16 @@ declare(strict_types=1);
 namespace App\Twig\Extensions;
 
 use App\Service\IssueHtmlProcessor;
-use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\Attribute\AsTwigFilter;
 
-class JiraIssueExtension extends AbstractExtension
+class JiraIssueExtension
 {
     public function __construct(
         private readonly IssueHtmlProcessor $htmlProcessor,
     ) {
     }
 
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('preview_description', $this->previewAttachmentFormat(...)),
-            new TwigFilter('parse_comment_author', $this->parseCommentAuthor(...)),
-            new TwigFilter('issue_time_estimate_in_hour', $this->timeEstimateInHour(...)),
-        ];
-    }
-
+    #[AsTwigFilter('preview_description')]
     public function previewAttachmentFormat($renderedDescription): string
     {
         $result = $this->htmlProcessor->updateImageSources($renderedDescription);
@@ -32,9 +23,20 @@ class JiraIssueExtension extends AbstractExtension
         return $result;
     }
 
+    #[AsTwigFilter('parse_comment_author')]
     public function parseCommentAuthor($comment): ?string
     {
-        $parts = explode('—', html_entity_decode($comment->renderedBody));
+        $body = html_entity_decode($comment->renderedBody);
+
+        $parts = explode('—', $body);
+        if (count($parts) > 1) {
+            $author = trim(array_pop($parts));
+            $author = strip_tags(str_ireplace(['<br>', '<br/>', '<br />'], '', $author));
+
+            return $author;
+        }
+
+        $parts = preg_split('/-{4,}/', $body);
         if (count($parts) > 1) {
             $author = trim(array_pop($parts));
             $author = strip_tags(str_ireplace(['<br>', '<br/>', '<br />'], '', $author));
@@ -45,6 +47,7 @@ class JiraIssueExtension extends AbstractExtension
         return null;
     }
 
+    #[AsTwigFilter('issue_time_estimate_in_hour')]
     public function timeEstimateInHour($timeEstimate): ?string
     {
         return sprintf(
