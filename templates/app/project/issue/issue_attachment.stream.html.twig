@@ -9,11 +9,13 @@
                 <h5 class="card-title mb-3">{{ 'issue.attachment.label'|trans }}</h5>
 
                 {% for attachment in issue.customAttachments %}
-                    <div class="card my-1 shadow-none border">
+                    <div class="card my-1 shadow-none border" data-bs-toggle="modal" data-bs-target="#issue-{{ issue.id }}-attachment-{{ attachment.id }}">
                         <div class="p-2">
                             <div class="col align-items-center">
                                 <img src="{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}" alt="">
+
                                 <div class="row align-items-center justify-content-center">
+
                                     <div class="col ps-2">
                                         <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
                                         <p class="mb-0 text-muted">
@@ -23,38 +25,40 @@
                                             />
                                         </p>
                                     </div>
+
                                     <div class="col-auto">
-
-
-                                        <button  type="button" class="btn btn-link btn-lg text-muted" data-bs-toggle="modal" data-bs-target="#issue-{{ issue.id }}-attachment-{{ attachment.id }}">
+                                        <button type="button" class="btn btn-link btn-lg text-muted">
                                             <i class="mdi mdi-eye"></i>
                                         </button>
-                                        <div id="issue-{{ issue.id }}-attachment-{{ attachment.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-full-width">
-                                                <div class="modal-content">
-
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="fullWidthModalLabel">{{ 'issue.attachment.preview'|trans }}</h4>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                    </div>
-
-                                                    <div class="modal-body d-flex">
-                                                        <img src="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" alt="Not Found" onerror="this.src='{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}'" style="margin: auto; width: 80%;">
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.exit'|trans }}</button>
-                                                        <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" download="{{ attachment.name }}" class="btn btn-primary">
-                                                            <i class="ri-download-2-line"></i>
-                                                            {{ 'action.download'|trans }}
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
+
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="issue-{{ issue.id }}-attachment-{{ attachment.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="fullWidthModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-full-width">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="fullWidthModalLabel">{{ 'issue.attachment.preview'|trans }}</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                                </div>
+
+                                <div class="modal-body d-flex" style="height: 75vh;">
+                                    <img src="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" alt="Not Found" onerror="this.src='{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}'" style="margin: auto; max-width: 80%; max-height: 100% !important;">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.exit'|trans }}</button>
+                                    <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" download="{{ attachment.name }}" class="btn btn-primary">
+                                        <i class="ri-download-2-line"></i>
+                                        {{ 'action.download'|trans }}
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
