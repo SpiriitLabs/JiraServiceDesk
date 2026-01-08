@@ -72,7 +72,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             );
         }
 
-        $issueLabels = $payload->all()['issue']['fields']['labels'] ?? [];
+        $issueLabels = $this->getIssueLabels($payload->all());
         if ($this->webhookLabelFilter->hasMatchingLabel($issueLabels) === false) {
             throw new RejectWebhookException(Response::HTTP_OK, 'Issue does not have any matching labels.');
         }
@@ -103,5 +103,33 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
         );
 
         return $event;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getIssueLabels(array $payload): array
+    {
+        if (isset($payload['issue']['fields']['labels'])) {
+            return $payload['issue']['fields']['labels'];
+        }
+
+        $issueKey = $payload['issue']['key'] ?? null;
+        if ($issueKey === null) {
+            return [];
+        }
+
+        try {
+            $issue = $this->issueRepository->getFull($issueKey, checkLabel: false);
+
+            return $issue->fields->labels ?? [];
+        } catch (\Exception $e) {
+            $this->logger?->warning('Failed to fetch issue labels from Jira API', [
+                'issue_key' => $issueKey,
+                'error' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
     }
 }

@@ -9,7 +9,7 @@ Jira Service Desk is a self-hosted web portal that connects to the Jira Cloud AP
 ## Tech Stack
 
 - **Backend**: Symfony 7.4 (PHP 8.4+), Doctrine ORM 3.5, FrankenPHP
-- **Frontend**: TypeScript, Stimulus.js 3.2, Turbo, Bootstrap 5.3, Vite 6.3, Quill editor
+- **Frontend**: TypeScript, Stimulus.js, Turbo, Bootstrap 5.3, Vite (Pentatrion Vite Bundle), Quill editor
 - **Database**: MariaDB/MySQL
 - **Jira Integration**: lesstif/jira-cloud-restapi library, webhook receiver at `/webhook/jira`
 
@@ -46,6 +46,9 @@ make quality            # Run Easy Coding Standard
 make ecs                # Run and fix code style
 make lint               # Lint container, translations, Twig, YAML
 make infection          # Mutation testing
+
+# Async Processing
+make consume            # Run messenger consumer (QUEUE_NAME=async, LIMIT=1 by default)
 ```
 
 ## Architecture
@@ -64,7 +67,11 @@ HTTP Request → `/public/index.php` → Symfony Kernel → Router → Controlle
 ├── Message/            # Async processing (Command/, Event/, Query/)
 ├── Form/               # Symfony form types
 ├── Security/           # Auth & authorization (UserChecker, ProjectVoter)
-└── Enum/               # PHP enums for LogEntry and Notification types
+├── Enum/               # PHP enums for LogEntry and Notification types
+├── Webhook/            # Jira webhook handlers and filters
+├── RemoteEvent/        # Remote event consumers for webhooks
+├── Subscriber/         # Event subscribers
+└── Validator/          # Custom validation constraints
 
 /assets
 ├── stimulus/           # Stimulus.js controllers (TypeScript)
@@ -73,7 +80,7 @@ HTTP Request → `/public/index.php` → Symfony Kernel → Router → Controlle
 /templates              # Twig templates with components
 /config                 # Symfony bundle configurations
 /migrations             # Doctrine database migrations
-/tests/Unit             # PHPUnit unit tests
+/tests/Unit             # PHPUnit unit tests (uses Foundry for factories)
 ```
 
 ### Async Message Processing
@@ -95,7 +102,7 @@ The application uses Symfony Messenger with Doctrine transport for async jobs:
 
 ## CI/CD
 
-GitHub Actions runs on PRs and pushes:
+GitHub Actions runs on PRs and pushes to main/develop:
 - PHP 8.4, Node 22
 - PHPUnit tests
 - Symfony linting (container, translations, Twig, YAML)
@@ -105,4 +112,6 @@ GitHub Actions runs on PRs and pushes:
 
 - `.env`: Default environment variables
 - `.env.local`: Local overrides (git-ignored)
-- Key variables: `DATABASE_URL`, `JIRA_HOST`, `JIRA_USER`, `JIRA_PASS`, `MAILER_DSN`
+- `.env.docker`: Docker-specific overrides (copy from `.env.docker.dist`)
+- Key Jira variables: `JIRAAPI_V3_USER`, `JIRAAPI_V3_PERSONAL_ACCESS_TOKEN`, `JIRAAPI_V3_HOST`
+- Other key variables: `DATABASE_URL`, `MAILER_DSN`, `FROM_EMAIL`

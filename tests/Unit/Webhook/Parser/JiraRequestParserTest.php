@@ -12,6 +12,9 @@ use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Webhook\Parser\JiraRequestParser;
 use App\Webhook\WebhookLabelFilter;
+use JiraCloud\Issue\Issue;
+use JiraCloud\Issue\IssueField;
+use JiraCloud\JiraException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -108,15 +111,74 @@ class JiraRequestParserTest extends TestCase
     }
 
     #[Test]
-    public function testWebhookWithMissingLabelsFieldThrowsRejectException(): void
+    public function testWebhookWithMissingLabelsFieldFetchesFromApi(): void
     {
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = ['from-api'];
+
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('getFull')
+            ->with('TEST-123', checkLabel: false)
+            ->willReturn($issue);
+
+        $this->webhookLabelFilter
+            ->method('hasMatchingLabel')
+            ->with(['from-api'])
+            ->willReturn(true);
+
+        $parser = $this->createParser();
+        $request = $this->createValidRequestWithoutLabels('comment_created');
+
+        $result = $parser->parse($request, self::WEBHOOK_SECRET);
+
+        self::assertInstanceOf(CommentCreated::class, $result);
+    }
+
+    #[Test]
+    public function testWebhookWithMissingLabelsAndApiReturnsNoMatchingLabelsThrowsRejectException(): void
+    {
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = ['other-label'];
+
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('getFull')
+            ->with('TEST-123', checkLabel: false)
+            ->willReturn($issue);
+
+        $this->webhookLabelFilter
+            ->method('hasMatchingLabel')
+            ->with(['other-label'])
+            ->willReturn(false);
+
+        $parser = $this->createParser();
+        $request = $this->createValidRequestWithoutLabels('comment_created');
+
+        $this->expectException(RejectWebhookException::class);
+        $this->expectExceptionMessage('Issue does not have any matching labels.');
+
+        $parser->parse($request, self::WEBHOOK_SECRET);
+    }
+
+    #[Test]
+    public function testWebhookWithMissingLabelsAndApiFetchFailsThrowsRejectException(): void
+    {
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('getFull')
+            ->with('TEST-123', checkLabel: false)
+            ->willThrowException(new JiraException('API error'));
+
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with([])
             ->willReturn(false);
 
         $parser = $this->createParser();
-        $request = $this->createValidRequestWithoutLabels('jira:issue_created');
+        $request = $this->createValidRequestWithoutLabels('comment_created');
 
         $this->expectException(RejectWebhookException::class);
         $this->expectExceptionMessage('Issue does not have any matching labels.');
