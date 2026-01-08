@@ -12,6 +12,7 @@ use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Subscriber\Event\NotificationEvent;
+use App\Webhook\WebhookLabelFilter;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
@@ -34,6 +35,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
         private readonly EventDispatcherInterface $dispatcher,
         private readonly MessageBusInterface $commandBus,
         private readonly IssueRepository $issueRepository,
+        private readonly WebhookLabelFilter $webhookLabelFilter,
     ) {
     }
 
@@ -70,6 +72,11 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
             );
         }
 
+        $issueLabels = $this->getIssueLabels($payload->all());
+        if ($this->webhookLabelFilter->hasMatchingLabel($issueLabels) === false) {
+            throw new RejectWebhookException(Response::HTTP_OK, 'Issue does not have any matching labels.');
+        }
+
         $this->logger->info('WEBHOOK', [
             'event' => $payload->get('webhookEvent'),
         ]);
@@ -96,5 +103,33 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
         );
 
         return $event;
+    }
+
+    /**
+     * @return array<string>
+     */
+    private function getIssueLabels(array $payload): array
+    {
+        if (isset($payload['issue']['fields']['labels'])) {
+            return $payload['issue']['fields']['labels'];
+        }
+
+        $issueKey = $payload['issue']['key'] ?? null;
+        if ($issueKey === null) {
+            return [];
+        }
+
+        try {
+            $issue = $this->issueRepository->getFull($issueKey, checkLabel: false);
+
+            return $issue->fields->labels ?? [];
+        } catch (\Exception $e) {
+            $this->logger?->warning('Failed to fetch issue labels from Jira API', [
+                'issue_key' => $issueKey,
+                'error' => $e->getMessage(),
+            ]);
+
+            return [];
+        }
     }
 }
