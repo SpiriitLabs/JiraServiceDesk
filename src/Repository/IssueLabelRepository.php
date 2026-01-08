@@ -17,4 +17,16 @@ class IssueLabelRepository extends AbstractEntityRepository
     {
         parent::__construct($registry, IssueLabel::class);
     }
+
+    /**
+     * @return string[]
+     */
+    public function getAllJiraLabels(): array
+    {
+        return $this->createQueryBuilder('il')
+            ->select('il.jiraLabel')
+            ->getQuery()
+            ->getSingleColumnResult()
+        ;
+    }
 }

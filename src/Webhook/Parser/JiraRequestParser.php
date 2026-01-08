@@ -12,6 +12,7 @@ use App\Message\Event\Webhook\Issue\IssueDeleted;
 use App\Message\Event\Webhook\Issue\IssueUpdated;
 use App\Repository\Jira\IssueRepository;
 use App\Subscriber\Event\NotificationEvent;
+use App\Webhook\WebhookLabelFilter;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
@@ -34,6 +35,7 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
         private readonly EventDispatcherInterface $dispatcher,
         private readonly MessageBusInterface $commandBus,
         private readonly IssueRepository $issueRepository,
+        private readonly WebhookLabelFilter $webhookLabelFilter,
     ) {
     }
 
@@ -68,6 +70,11 @@ final class JiraRequestParser extends AbstractRequestParser implements LoggerAwa
                 Response::HTTP_BAD_REQUEST,
                 'Request payload does not contain required fields.'
             );
+        }
+
+        $issueLabels = $payload->all()['issue']['fields']['labels'] ?? [];
+        if ($this->webhookLabelFilter->hasMatchingLabel($issueLabels) === false) {
+            throw new RejectWebhookException(Response::HTTP_OK, 'Issue does not have any matching labels.');
         }
 
         $this->logger->info('WEBHOOK', [
