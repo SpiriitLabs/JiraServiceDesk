@@ -94,7 +94,7 @@ class EditController extends AbstractController
             options: [
                 'projectId' => $project->getId(),
                 'transitions' => $issueTransitions,
-                'assignee_editable' => $issue->fields->assignee->accountId == $this->jiraAccountId,
+                'assignee_editable' => $issue->fields->assignee?->accountId == $this->jiraAccountId,
                 'assignees' => $assigneesOptions,
             ]
         );
