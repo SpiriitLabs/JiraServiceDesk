@@ -35,8 +35,17 @@ class EditIssueHandler
             ->setProjectKey($command->project->jiraKey)
             ->setProjectId((string) $command->project->jiraId)
             ->setSummary($command->summary)
-            ->addLabelAsString($command->creator->getJiraLabel())
         ;
+
+        // Preserve existing labels and add creator's label if not present
+        $labels = $command->issue->fields->labels ?? [];
+        $creatorLabel = $command->creator->getJiraLabel();
+        if (! in_array($creatorLabel, $labels, true)) {
+            $labels[] = $creatorLabel;
+        }
+        foreach ($labels as $label) {
+            $issueField->addLabelAsString($label);
+        }
 
         $jiraPriority = new Priority();
         $jiraPriority->id = (string) $command->priority->jiraId;

@@ -4,6 +4,7 @@ namespace App\Tests\Unit\Message\Command\App\Issue;
 
 use App\Entity\IssueType;
 use App\Entity\Priority;
+use App\Factory\IssueLabelFactory;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\App\Issue\EditIssue;
@@ -113,6 +114,180 @@ class EditIssueHandlerTest extends TestCase
                 assignee: 'null',
             ),
         );
+    }
+
+    #[Test]
+    public function testUpdateIssuePreservesExistingLabelsAndAddsCreatorLabel(): void
+    {
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+
+        $user = UserFactory::createOne();
+        IssueLabelFactory::createOne([
+            'users' => [$user],
+            'jiraLabel' => 'blootips',
+            'name' => 'Blootips',
+        ]);
+
+        $issueType = $this->createMock(IssueType::class);
+        $issueType->jiraId = '10005';
+
+        $priority = $this->createMock(Priority::class);
+        $priority->jiraId = 10005;
+
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
+
+        $issue = $this->createMock(Issue::class);
+        $issue->key = 'issueKey';
+        $issue->id = 'issueId';
+        $issue->fields = new IssueField();
+        $issue->fields->status = new IssueStatus();
+        $issue->fields->status->id = '20001';
+        $issue->fields->summary = 'Issue summary';
+        $issue->fields->labels = ['from-client', 'example', 'outil-support'];
+        $issue->transitions = [$transition];
+
+        $capturedIssueField = null;
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('update')
+            ->with(
+                self::identicalTo($issue),
+                self::callback(function (IssueField $issueField) use (&$capturedIssueField): bool {
+                    $capturedIssueField = $issueField;
+
+                    return true;
+                }),
+            )
+            ->willReturn('issueKey')
+        ;
+
+        $enveloppe = new Envelope(
+            message: $this->createMock(TransitionTo::class),
+            stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
+        );
+        $this->commandBus
+            ->expects(self::never())
+            ->method('dispatch')
+            ->willReturn($enveloppe)
+        ;
+
+        $handler = $this->generate();
+        $handler(
+            new EditIssue(
+                project: $project,
+                issue: $issue,
+                creator: $user,
+                issueType: $issueType,
+                priority: $priority,
+                transition: '30001',
+                assignee: 'null',
+            ),
+        );
+
+        // Verify that all existing labels are preserved and creator's label is added
+        self::assertNotNull($capturedIssueField);
+        $labels = $capturedIssueField->labels;
+        self::assertContains('from-client', $labels);
+        self::assertContains('example', $labels);
+        self::assertContains('outil-support', $labels);
+        self::assertContains('blootips', $labels);
+        self::assertCount(4, $labels);
+    }
+
+    #[Test]
+    public function testUpdateIssueDoesNotDuplicateCreatorLabelWhenAlreadyPresent(): void
+    {
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+
+        $user = UserFactory::createOne();
+        IssueLabelFactory::createOne([
+            'users' => [$user],
+            'jiraLabel' => 'blootips',
+            'name' => 'Blootips',
+        ]);
+
+        $issueType = $this->createMock(IssueType::class);
+        $issueType->jiraId = '10005';
+
+        $priority = $this->createMock(Priority::class);
+        $priority->jiraId = 10005;
+
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
+
+        $issue = $this->createMock(Issue::class);
+        $issue->key = 'issueKey';
+        $issue->id = 'issueId';
+        $issue->fields = new IssueField();
+        $issue->fields->status = new IssueStatus();
+        $issue->fields->status->id = '20001';
+        $issue->fields->summary = 'Issue summary';
+        // Creator's label 'blootips' is already in the existing labels
+        $issue->fields->labels = ['from-client', 'example', 'blootips'];
+        $issue->transitions = [$transition];
+
+        $capturedIssueField = null;
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('update')
+            ->with(
+                self::identicalTo($issue),
+                self::callback(function (IssueField $issueField) use (&$capturedIssueField): bool {
+                    $capturedIssueField = $issueField;
+
+                    return true;
+                }),
+            )
+            ->willReturn('issueKey')
+        ;
+
+        $enveloppe = new Envelope(
+            message: $this->createMock(TransitionTo::class),
+            stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
+        );
+        $this->commandBus
+            ->expects(self::never())
+            ->method('dispatch')
+            ->willReturn($enveloppe)
+        ;
+
+        $handler = $this->generate();
+        $handler(
+            new EditIssue(
+                project: $project,
+                issue: $issue,
+                creator: $user,
+                issueType: $issueType,
+                priority: $priority,
+                transition: '30001',
+                assignee: 'null',
+            ),
+        );
+
+        // Verify that labels are preserved and creator's label is not duplicated
+        self::assertNotNull($capturedIssueField);
+        $labels = $capturedIssueField->labels;
+        self::assertContains('from-client', $labels);
+        self::assertContains('example', $labels);
+        self::assertContains('blootips', $labels);
+        self::assertCount(3, $labels); // No duplicate 'blootips'
     }
 
     private function generate(): EditIssueHandler
