@@ -64,7 +64,8 @@ class IssueDeletedHandler implements LoggerAwareInterface
         $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
 
         foreach ($project->getUsers() as $user) {
-            if ($user->preferenceNotificationIssueUpdated === false) {
+            $channels = $user->preferenceNotificationIssueUpdated;
+            if ($channels === []) {
                 continue;
             }
 
@@ -93,6 +94,7 @@ class IssueDeletedHandler implements LoggerAwareInterface
                     subject: $subject,
                     body: $issueSummary,
                     link: $link,
+                    channels: $channels,
                 )
             );
         }

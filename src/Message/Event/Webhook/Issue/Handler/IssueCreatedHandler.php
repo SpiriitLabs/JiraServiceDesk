@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\Notification\NotificationType;
 use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
@@ -38,6 +39,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
     {
         $issueKey = $event->getPayload()['issue']['key'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
+        $assignee = $event->getPayload()['issue']['fields']['assignee']['displayName'] ?? null;
         $project = $this->projectRepository->findOneBy([
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
@@ -65,7 +67,8 @@ class IssueCreatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
-            if ($user->preferenceNotificationIssueCreated === false) {
+            $channels = $user->preferenceNotificationIssueCreated;
+            if ($channels === []) {
                 continue;
             }
 
@@ -88,11 +91,14 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 locale: $user->preferredLocale->value,
             );
 
-            $emailToSent = clone $templatedEmail
-                ->subject($subject)
-                ->to(new Address($user->email, $user->getFullName()))
-                ->locale($user->preferredLocale->value)
-            ;
+            $emailToSent = null;
+            if (in_array(NotificationChannel::EMAIL, $channels, true)) {
+                $emailToSent = clone $templatedEmail
+                    ->subject($subject)
+                    ->to(new Address($user->email, $user->getFullName()))
+                    ->locale($user->preferredLocale->value)
+                ;
+            }
 
             $this->logger->info('WEBHOOK/IssueCreated - Generate mail to user', [
                 'user' => $user->email,
@@ -100,6 +106,16 @@ class IssueCreatedHandler implements LoggerAwareInterface
             $link = $this->router->generate('browse_issue', [
                 'keyIssue' => $issueKey,
             ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $slackExtraContext = [];
+            if ($assignee !== null) {
+                $assigneeLabel = $this->translator->trans(
+                    id: 'issue.assignee.label',
+                    domain: 'app',
+                    locale: $user->preferredLocale->value,
+                );
+                $slackExtraContext[$assigneeLabel] = $assignee;
+            }
+
             $this->commandBus->dispatch(
                 new Notification(
                     user: $user,
@@ -108,6 +124,8 @@ class IssueCreatedHandler implements LoggerAwareInterface
                     subject: $subject,
                     body: $issueSummary,
                     link: $link,
+                    channels: $channels,
+                    slackExtraContext: $slackExtraContext,
                 ),
             );
         }

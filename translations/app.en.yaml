@@ -154,19 +154,25 @@ user:
     label: "Preferred language"
   preferredTheme:
     label: "Preferred theme"
-  preferenceNotification:
-    label: "Notifications"
-    notice: "To receive notifications by email and on the website"
+  notificationSettings:
+    title: "Notification Settings"
+    event: "Event"
   preferenceNotificationIssueCreated:
-    label: "Notification on ticket creation"
+    label: "Issue Created"
   preferenceNotificationIssueUpdated:
-    label: "Notification on ticket update"
+    label: "Issue Updated"
   preferenceNotificationCommentCreated:
-    label: "Notification on comment creation"
+    label: "Comment Created"
   preferenceNotificationCommentUpdated:
-    label: "Notification on comment update"
+    label: "Comment Updated"
   preferenceNotificationCommentOnlyOnTag:
-      label: "Notification only when a tag is added to comments"
+    label: "Mentioned in comment (@tag)"
+  slack:
+    section_title: "Slack Integration"
+  slackBotToken:
+    label: "Slack Bot Token"
+  slackMemberId:
+    label: "Slack Member ID"
   enabled:
     label: "Active account"
   defaultProject:
@@ -318,6 +324,19 @@ logs:
       label: "Login"
     webhook:
       label: "Webhook"
+    slack:
+      label: "Slack"
+
+slack:
+  button:
+    view: "View in %project_name%"
+  context:
+    author: "Author"
+
+notificationChannel:
+  in_app: "In the product"
+  email: "Email"
+  slack: "Slack"
 
 issueLabel:
   label: "Issue Label"

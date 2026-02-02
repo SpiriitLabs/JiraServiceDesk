@@ -2,6 +2,7 @@
 
 namespace App\Tests\Unit\Form\Admin\User;
 
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Factory\UserFactory;
@@ -83,11 +84,11 @@ class UserProfileFormTypeTest extends TypeTestCase
             'preferredTheme' => Theme::AUTO->value,
             'firstName' => 'Pierre',
             'lastName' => 'DUPOND',
-            'preferenceNotification' => true,
-            'preferenceNotificationIssueCreated' => true,
-            'preferenceNotificationIssueUpdated' => true,
-            'preferenceNotificationCommentUpdated' => false,
-            'preferenceNotificationCommentCreated' => true,
+            'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
+            'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
+            'preferenceNotificationCommentUpdated' => [],
+            'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
+            'preferenceNotificationCommentOnlyOnTag' => [],
         ];
 
         $user = UserFactory::createOne([
@@ -96,17 +97,16 @@ class UserProfileFormTypeTest extends TypeTestCase
             'lastName' => 'DUPONT',
             'preferredLocale' => Locale::FR,
             'preferredTheme' => Theme::AUTO,
-            'preferenceNotification' => true,
-            'preferenceNotificationIssueCreated' => true,
-            'preferenceNotificationIssueUpdated' => true,
-            'preferenceNotificationCommentUpdated' => true,
-            'preferenceNotificationCommentCreated' => true,
+            'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         ]);
         $updateUser = (clone $user);
         $updateUser->setLastName('DUPOND');
         $updateUser->setFirstName('Pierre');
         $updateUser->email = 'test+update@local.lan';
-        $updateUser->preferenceNotificationCommentUpdated = false;
+        $updateUser->preferenceNotificationCommentUpdated = [];
 
         $model = new EditUser(
             user: $user,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Event\Webhook\Comment\Handler;
 
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\Notification\NotificationType;
 use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Comment\CommentUpdated;
@@ -66,13 +67,14 @@ class CommentUpdatedHandler implements LoggerAwareInterface
 
         $commentBody = $event->getPayload()['comment']['body'];
         $commentBody = $this->replaceAccountIdByDisplayName->replaceInCommentBody($commentBody);
+        $commentAuthorName = $event->getPayload()['comment']['updateAuthor']['displayName'];
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/comment/updated.html.twig')
             ->context([
                 'project' => $project,
                 'issueSummary' => $issueSummary,
                 'issueKey' => $issueKey,
-                'commentAuthorName' => $event->getPayload()['comment']['updateAuthor']['displayName'],
+                'commentAuthorName' => $commentAuthorName,
                 'commentAuthorAvatarUrl' => array_shift($event->getPayload()['comment']['updateAuthor']['avatarUrls']),
                 'commentBody' => $commentBody,
             ])
@@ -83,19 +85,28 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                 continue;
             }
 
-            if (
-                $user->preferenceNotificationCommentUpdated === false
-                && (
-                    $user->preferenceNotificationCommentOnlyOnTag == false
-                    || ! str_contains(
-                        haystack: mb_strtolower($event->getPayload()['comment']['body']),
-                        needle: sprintf(
-                            '[~accountid:%s]',
-                            $this->jiraAPIAccountId,
-                        ),
-                    )
-                )
-            ) {
+            $isTagged = str_contains(
+                haystack: mb_strtolower($event->getPayload()['comment']['body']),
+                needle: sprintf(
+                    '[~accountid:%s]',
+                    $this->jiraAPIAccountId,
+                ),
+            );
+
+            $channels = $user->preferenceNotificationCommentUpdated;
+            $tagChannels = $user->preferenceNotificationCommentOnlyOnTag;
+
+            // Merge channels: use commentUpdated channels, or if tagged use commentOnlyOnTag channels
+            $effectiveChannels = $channels;
+            if ($effectiveChannels === [] && $isTagged && $tagChannels !== []) {
+                $effectiveChannels = $tagChannels;
+            } elseif ($isTagged && $tagChannels !== []) {
+                $effectiveChannels = array_values(
+                    array_unique(array_merge($effectiveChannels, $tagChannels), \SORT_REGULAR)
+                );
+            }
+
+            if ($effectiveChannels === []) {
                 continue;
             }
 
@@ -109,11 +120,14 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                 locale: $user->preferredLocale->value,
             );
 
-            $emailToSent = clone $templatedEmail
-                ->subject($subject)
-                ->to(new Address($user->email, $user->getFullName()))
-                ->locale($user->preferredLocale->value)
-            ;
+            $emailToSent = null;
+            if (in_array(NotificationChannel::EMAIL, $effectiveChannels, true)) {
+                $emailToSent = clone $templatedEmail
+                    ->subject($subject)
+                    ->to(new Address($user->email, $user->getFullName()))
+                    ->locale($user->preferredLocale->value)
+                ;
+            }
 
             $this->logger->info('WEBHOOK/CommentUpdated - Generate mail to user', [
                 'user' => $user->email,
@@ -131,6 +145,14 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                     subject: $subject,
                     body: $commentBody,
                     link: $link,
+                    channels: $effectiveChannels,
+                    slackExtraContext: [
+                        $this->translator->trans(
+                            'slack.context.author',
+                            domain: 'app',
+                            locale: $user->preferredLocale->value
+                        ) => $commentAuthorName,
+                    ],
                 ),
             );
         }

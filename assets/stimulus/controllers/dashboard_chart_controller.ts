@@ -5,7 +5,6 @@ import ApexCharts from 'apexcharts'
 export default class extends Controller {
   static values = {
     usersCountTotal: Number,
-    usersCountPreferenceNotification: Number,
     usersCountPreferenceNotificationIssueCreated: Number,
     usersCountPreferenceNotificationIssueUpdated: Number,
     usersCountPreferenceNotificationCommentCreated: Number,
@@ -15,7 +14,6 @@ export default class extends Controller {
   static targets = ["notificationPreferenceChart"];
 
   declare readonly usersCountTotalValue: number;
-  declare readonly usersCountPreferenceNotificationValue: number;
   declare readonly usersCountPreferenceNotificationIssueCreatedValue: number;
   declare readonly usersCountPreferenceNotificationIssueUpdatedValue: number;
   declare readonly usersCountPreferenceNotificationCommentCreatedValue: number;
@@ -23,7 +21,7 @@ export default class extends Controller {
   declare readonly notificationPreferenceChartTarget: HTMLDivElement;
 
   connect(): void {
-    console.log("🎨 Dashboard Preference Notification controller connected.");
+    console.log("Dashboard Preference Notification controller connected.");
     this.generateNotificationPreferenceChart();
   }
 
@@ -34,7 +32,6 @@ export default class extends Controller {
 				type: "radialBar"
 			},
 			series: [
-				Math.round((this.usersCountPreferenceNotificationValue / this.usersCountTotalValue) * 100),
 				Math.round((this.usersCountPreferenceNotificationIssueCreatedValue / this.usersCountTotalValue) * 100),
 				Math.round((this.usersCountPreferenceNotificationIssueUpdatedValue / this.usersCountTotalValue) * 100),
 				Math.round((this.usersCountPreferenceNotificationCommentCreatedValue / this.usersCountTotalValue) * 100),
@@ -54,7 +51,6 @@ export default class extends Controller {
 				}
 			},
 			labels: [
-        'Notifications',
         'Issue Created',
         'Issue Updated',
         'Comment Created',
@@ -67,4 +63,3 @@ export default class extends Controller {
   }
 
 }
-

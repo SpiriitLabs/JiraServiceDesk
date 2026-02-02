@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 
 use App\Entity\IssueLabel;
+use App\Enum\Notification\NotificationChannel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\Notification;
@@ -48,21 +49,23 @@ class IssueCreatedHandlerTest extends TestCase
     public static function emailNotificationDataProvider(): \Generator
     {
         yield 'can send notification' => [
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             true,
         ];
 
         yield 'can\'t send notification' => [
+            [],
             false,
         ];
     }
 
     #[Test]
     #[DataProvider('emailNotificationDataProvider')]
-    public function testDoSendEmailNotification(bool $userHasPreferenceNotificationIssueCreated): void
+    public function testDoSendEmailNotification(array $channels, bool $expectDispatch): void
     {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationIssueCreated' => $userHasPreferenceNotificationIssueCreated,
+            'preferenceNotificationIssueCreated' => $channels,
         ]);
         $label = new IssueLabel('from-client', 'from-client');
         $user->addIssueLabel($label);
@@ -85,7 +88,7 @@ class IssueCreatedHandlerTest extends TestCase
         ;
 
         $this->commandBus
-            ->expects($userHasPreferenceNotificationIssueCreated ? self::once() : self::never())
+            ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
             ->willReturn(new Envelope($this->createMock(Notification::class)))
         ;

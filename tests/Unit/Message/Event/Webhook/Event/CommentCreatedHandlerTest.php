@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Message\Event\Webhook\Event;
 
 use App\Entity\IssueLabel;
+use App\Enum\Notification\NotificationChannel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\Notification;
@@ -53,29 +54,29 @@ class CommentCreatedHandlerTest extends TestCase
     public static function emailNotificationDataProvider(): \Generator
     {
         yield 'notif CommentCreated and CommentOnlyOnTag none false ' => [
-            false,
-            false,
+            [],
+            [],
             'test',
             false,
         ];
 
         yield 'notif CommentCreated true and notif CommentOnlyOnTag false ' => [
-            true,
-            false,
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            [],
             'test',
             true,
         ];
 
         yield 'notif CommentCreated false and notif CommentOnlyOnTag true and no tag in comment' => [
-            false,
-            true,
+            [],
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'test',
             false,
         ];
 
         yield 'notif CommentCreated false and notif CommentOnlyOnTag true and tag in comment' => [
-            false,
-            true,
+            [],
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             '[~accountid:1234-5678]',
             true,
         ];
@@ -139,15 +140,15 @@ class CommentCreatedHandlerTest extends TestCase
     #[Test]
     #[DataProvider('emailNotificationDataProvider')]
     public function testDoSendEmailNotification(
-        bool $userHasPreferenceNotificationCommentCreated,
-        bool $userHasPreferenceNotificationCommentOnlyOnTag,
+        array $commentCreatedChannels,
+        array $commentOnlyOnTagChannels,
         string $commentBody,
         bool $expectDispatch,
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationCommentCreated' => $userHasPreferenceNotificationCommentCreated,
-            'preferenceNotificationCommentOnlyOnTag' => $userHasPreferenceNotificationCommentOnlyOnTag,
+            'preferenceNotificationCommentCreated' => $commentCreatedChannels,
+            'preferenceNotificationCommentOnlyOnTag' => $commentOnlyOnTagChannels,
         ]);
         $label = new IssueLabel('from-client', 'from-client');
         $user->addIssueLabel($label);

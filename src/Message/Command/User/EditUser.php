@@ -21,7 +21,6 @@ class EditUser extends AbstractUserDTO
             company: $this->user->company,
             preferredLocale: $this->user->preferredLocale,
             preferredTheme: $this->user->preferredTheme,
-            preferenceNotification: $this->user->preferenceNotification,
             preferenceNotificationIssueCreated: $this->user->preferenceNotificationIssueCreated,
             preferenceNotificationIssueUpdated: $this->user->preferenceNotificationIssueUpdated,
             preferenceNotificationCommentCreated: $this->user->preferenceNotificationCommentCreated,
@@ -31,6 +30,8 @@ class EditUser extends AbstractUserDTO
             defaultProject: $this->user->defaultProject,
             issueLabels: $this->user->getIssueLabels()
                 ->toArray(),
+            slackBotToken: $this->user->slackBotToken,
+            slackMemberId: $this->user->slackMemberId,
         );
     }
 }
