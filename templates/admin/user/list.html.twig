@@ -35,7 +35,7 @@
                 {{ form_widget(filterForm.projects) }}
             </div>
             <div class="col-md-2">
-                {{ form_widget(filterForm.issueLabel) }}
+                {{ form_widget(filterForm.issueLabels) }}
             </div>
         </twig:block>
 
@@ -105,7 +105,7 @@
                 {{ object.projectKeys }}
             </td>
             <td>
-                {{ object.getJiraLabel }}
+                {{ object.getJiraLabels|join(', ') }}
             </td>
             <td class="d-flex flex-row" data-cancel-redirect>
                 <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">

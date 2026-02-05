@@ -37,11 +37,12 @@ class EditIssueHandler
             ->setSummary($command->summary)
         ;
 
-        // Preserve existing labels and add creator's label if not present
+        // Preserve existing labels and add creator's labels if not present
         $labels = $command->issue->fields->labels ?? [];
-        $creatorLabel = $command->creator->getJiraLabel();
-        if (! in_array($creatorLabel, $labels, true)) {
-            $labels[] = $creatorLabel;
+        foreach ($command->creator->getJiraLabels() as $creatorLabel) {
+            if (! in_array($creatorLabel, $labels, true)) {
+                $labels[] = $creatorLabel;
+            }
         }
         foreach ($labels as $label) {
             $issueField->addLabelAsString($label);

@@ -46,9 +46,10 @@ class AdminUserFormType extends AbstractUserFormType
                 'label' => 'project.label',
                 'choice_label' => 'name',
             ])
-            ->add('issueLabel', EntityType::class, [
+            ->add('issueLabels', EntityType::class, [
                 'class' => IssueLabel::class,
                 'required' => false,
+                'multiple' => true,
                 'autocomplete' => true,
                 'label' => 'issueLabel.label',
                 'choice_label' => 'name',

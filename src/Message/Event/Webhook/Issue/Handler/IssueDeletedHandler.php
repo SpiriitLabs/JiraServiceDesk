@@ -68,7 +68,7 @@ class IssueDeletedHandler implements LoggerAwareInterface
                 continue;
             }
 
-            if (in_array($user->getJiraLabel(), $issueLabels) == false) {
+            if ($user->hasAnyJiraLabel($issueLabels) === false) {
                 continue;
             }
 

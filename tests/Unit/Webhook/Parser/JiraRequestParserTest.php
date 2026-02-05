@@ -120,7 +120,7 @@ class JiraRequestParserTest extends TestCase
         $this->issueRepository
             ->expects(self::once())
             ->method('getFull')
-            ->with('TEST-123', checkLabel: false)
+            ->with('TEST-123', [], false)
             ->willReturn($issue);
 
         $this->webhookLabelFilter
@@ -146,7 +146,7 @@ class JiraRequestParserTest extends TestCase
         $this->issueRepository
             ->expects(self::once())
             ->method('getFull')
-            ->with('TEST-123', checkLabel: false)
+            ->with('TEST-123', [], false)
             ->willReturn($issue);
 
         $this->webhookLabelFilter
@@ -169,7 +169,7 @@ class JiraRequestParserTest extends TestCase
         $this->issueRepository
             ->expects(self::once())
             ->method('getFull')
-            ->with('TEST-123', checkLabel: false)
+            ->with('TEST-123', [], false)
             ->willThrowException(new JiraException('API error'));
 
         $this->webhookLabelFilter

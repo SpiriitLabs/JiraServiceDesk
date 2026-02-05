@@ -79,7 +79,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
-            if (in_array($user->getJiraLabel(), $issueLabels) == false) {
+            if ($user->hasAnyJiraLabel($issueLabels) === false) {
                 continue;
             }
 

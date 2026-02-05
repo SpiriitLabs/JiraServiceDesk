@@ -28,7 +28,10 @@ class IssueRepository
         $this->service = new IssueService();
     }
 
-    public function getFull(string $issueId, string $label = '', bool $checkLabel = true): Issue
+    /**
+     * @param list<string> $labels
+     */
+    public function getFull(string $issueId, array $labels = [], bool $checkLabel = true): Issue
     {
         $issue = $this->service->get(
             issueIdOrKey: $issueId,
@@ -41,13 +44,13 @@ class IssueRepository
             return $issue;
         }
 
-        if (empty($label)) {
+        if (empty($labels)) {
             $user = $this->security->getUser();
-            $label = $user instanceof User ? $user->getJiraLabel() : '';
+            $labels = $user instanceof User ? $user->getJiraLabels() : [];
         }
 
-        if (in_array($label, $issue->fields->labels) == false) {
-            throw new JiraException(sprintf('Issue #%d has not %s label', $issueId, $label));
+        if (count(array_intersect($labels, $issue->fields->labels)) === 0) {
+            throw new JiraException(sprintf('Issue #%d has not %s label', $issueId, implode(', ', $labels)));
         }
 
         return $issue;
@@ -62,10 +65,10 @@ class IssueRepository
         $issues = $result->getIssues();
 
         $user = $this->security->getUser();
-        $label = $user instanceof User ? $user->getJiraLabel() : '';
+        $labels = $user instanceof User ? $user->getJiraLabels() : [];
 
-        return array_filter($issues, function ($issue) use ($label) {
-            return in_array($label, $issue->fields->labels) == true;
+        return array_filter($issues, function ($issue) use ($labels) {
+            return count(array_intersect($labels, $issue->fields->labels)) > 0;
         });
     }
 

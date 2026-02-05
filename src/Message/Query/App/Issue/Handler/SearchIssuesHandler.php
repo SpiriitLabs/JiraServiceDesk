@@ -27,7 +27,7 @@ class SearchIssuesHandler
     public function __invoke(SearchIssues $query): SearchIssuesResult
     {
         $jql = new JqlQuery()
-            ->addInExpression('labels', [$query->user->getJiraLabel()])
+            ->addInExpression('labels', $query->user->getJiraLabels())
         ;
 
         if (count($query->filter->projects) === 0 && $query->user !== null) {

@@ -29,7 +29,7 @@ class IssueLabel
     /**
      * @var Collection<int, User>
      */
-    #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'issueLabel')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'issueLabels')]
     private Collection $users;
 
     public function __construct(
@@ -58,7 +58,7 @@ class IssueLabel
     {
         if (! $this->users->contains($user)) {
             $this->users->add($user);
-            $user->setIssueLabel($this);
+            $user->addIssueLabel($this);
         }
 
         return $this;
@@ -67,9 +67,7 @@ class IssueLabel
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            if ($user->getIssueLabel() === $this) {
-                $user->setIssueLabel(null);
-            }
+            $user->removeIssueLabel($this);
         }
 
         return $this;

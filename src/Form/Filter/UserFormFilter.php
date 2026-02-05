@@ -59,9 +59,10 @@ class UserFormFilter extends AbstractFilterType
                 ],
                 'choice_label' => 'name',
             ])
-            ->add('issueLabel', EntityFilterType::class, [
+            ->add('issueLabels', EntityFilterType::class, [
                 'class' => IssueLabel::class,
                 'required' => false,
+                'multiple' => true,
                 'autocomplete' => true,
                 'label' => false,
                 'attr' => [

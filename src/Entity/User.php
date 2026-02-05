@@ -110,9 +110,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $notifications;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?IssueLabel $issueLabel = null;
+    /**
+     * @var Collection<int, IssueLabel>
+     */
+    #[ORM\ManyToMany(targetEntity: IssueLabel::class, inversedBy: 'users')]
+    #[ORM\JoinTable(name: 'user_issue_label')]
+    private Collection $issueLabels;
 
     #[ORM\Column(name: 'password_changed_at', type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $passwordChangedAt;
@@ -129,6 +132,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
         $this->projects = new ArrayCollection();
         $this->favorites = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->issueLabels = new ArrayCollection();
         $this->enabled = $enabled;
 
         $this->setFirstName($firstName);
@@ -391,21 +395,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
         return $this->getFullName();
     }
 
-    public function getIssueLabel(): ?IssueLabel
+    /**
+     * @return Collection<int, IssueLabel>
+     */
+    public function getIssueLabels(): Collection
     {
-        return $this->issueLabel;
+        return $this->issueLabels;
     }
 
-    public function setIssueLabel(?IssueLabel $issueLabel): self
+    public function addIssueLabel(IssueLabel $issueLabel): static
     {
-        $this->issueLabel = $issueLabel;
+        if (! $this->issueLabels->contains($issueLabel)) {
+            $this->issueLabels->add($issueLabel);
+        }
 
         return $this;
     }
 
-    public function getJiraLabel(): string
+    public function removeIssueLabel(IssueLabel $issueLabel): static
     {
-        return $this->issueLabel ? $this->issueLabel->jiraLabel : '';
+        $this->issueLabels->removeElement($issueLabel);
+
+        return $this;
+    }
+
+    public function clearIssueLabels(): static
+    {
+        $this->issueLabels->clear();
+
+        return $this;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getJiraLabels(): array
+    {
+        return $this->issueLabels->map(fn (IssueLabel $label) => $label->jiraLabel)
+            ->getValues()
+        ;
+    }
+
+    /**
+     * @param list<string> $issueLabels
+     */
+    public function hasAnyJiraLabel(array $issueLabels): bool
+    {
+        return count(array_intersect($this->getJiraLabels(), $issueLabels)) > 0;
     }
 
     public function getPasswordChangedAt(): ?\DateTimeImmutable
