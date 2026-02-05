@@ -53,6 +53,8 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
+        $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
+
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/issue/issue_created.html.twig')
             ->context([
@@ -66,6 +68,11 @@ class IssueCreatedHandler implements LoggerAwareInterface
             if ($user->preferenceNotificationIssueCreated === false) {
                 continue;
             }
+
+            if (in_array($user->getJiraLabel(), $issueLabels) == false) {
+                continue;
+            }
+
             try {
                 $this->issueRepository->getFull($issueKey, $user->getJiraLabel());
             } catch (JiraException $jiraException) {

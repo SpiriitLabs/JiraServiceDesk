@@ -6,11 +6,12 @@ use App\Entity\IssueLabel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\Notification;
-use App\Message\Event\Webhook\Issue\Handler\IssueCreatedHandler;
-use App\Message\Event\Webhook\Issue\IssueCreated;
-use App\Repository\Jira\IssueRepository;
+use App\Message\Event\Webhook\Issue\Handler\IssueDeletedHandler;
+use App\Message\Event\Webhook\Issue\IssueDeleted;
+use App\Repository\FavoriteRepository;
 use App\Repository\ProjectRepository;
-use JiraCloud\Issue\Issue;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,7 +23,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zenstruck\Foundry\Test\Factories;
 
-class IssueCreatedHandlerTest extends TestCase
+class IssueDeletedHandlerTest extends TestCase
 {
     use Factories;
 
@@ -32,7 +33,7 @@ class IssueCreatedHandlerTest extends TestCase
 
     private readonly TranslatorInterface|MockObject $translator;
 
-    private readonly IssueRepository|MockObject $issueRepository;
+    private readonly FavoriteRepository|MockObject $favoriteRepository;
 
     private readonly RouterInterface|MockObject $router;
 
@@ -41,73 +42,21 @@ class IssueCreatedHandlerTest extends TestCase
         $this->commandBus = $this->createMock(MessageBusInterface::class);
         $this->projectRepository = $this->createMock(ProjectRepository::class);
         $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->issueRepository = $this->createMock(IssueRepository::class);
+        $this->favoriteRepository = $this->createMock(FavoriteRepository::class);
         $this->router = $this->createMock(RouterInterface::class);
-    }
 
-    public static function emailNotificationDataProvider(): \Generator
-    {
-        yield 'can send notification' => [
-            true,
-        ];
+        $query = $this->createMock(Query::class);
+        $query->method('getResult')->willReturn([]);
 
-        yield 'can\'t send notification' => [
-            false,
-        ];
-    }
+        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder->method('where')->willReturn($queryBuilder);
+        $queryBuilder->method('setParameter')->willReturn($queryBuilder);
+        $queryBuilder->method('getQuery')->willReturn($query);
 
-    #[Test]
-    #[DataProvider('emailNotificationDataProvider')]
-    public function testDoSendEmailNotification(bool $userHasPreferenceNotificationIssueCreated): void
-    {
-        $user = UserFactory::createOne([
-            'email' => 'test@local.lan',
-            'preferenceNotificationIssueCreated' => $userHasPreferenceNotificationIssueCreated,
-        ]);
-        $label = new IssueLabel('from-client', 'from-client');
-        $user->setIssueLabel($label);
-
-        $project = ProjectFactory::createOne([
-            'jiraKey' => 'test',
-        ]);
-        $user->addProject($project);
-
-        $this->projectRepository
-            ->method('findOneBy')
-            ->willReturn($project)
+        $this->favoriteRepository
+            ->method('createQueryBuilder')
+            ->willReturn($queryBuilder)
         ;
-
-        $issue = $this->createMock(Issue::class);
-        $this->issueRepository
-            ->method('getFull')
-            ->with('issueKey')
-            ->willReturn($issue)
-        ;
-
-        $this->commandBus
-            ->expects($userHasPreferenceNotificationIssueCreated ? self::once() : self::never())
-            ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
-        ;
-
-        $handler = $this->generate();
-        $handler(
-            new IssueCreated(
-                payload: [
-                    'issue' => [
-                        'key' => 'issueKey',
-                        'fields' => [
-                            'summary' => 'summary',
-                            'labels' => ['from-client'],
-                            'project' => [
-                                'id' => 'test',
-                                'key' => 'test',
-                            ],
-                        ],
-                    ],
-                ],
-            ),
-        );
     }
 
     public static function labelAndProjectFilteringDataProvider(): \Generator
@@ -158,7 +107,7 @@ class IssueCreatedHandlerTest extends TestCase
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationIssueCreated' => true,
+            'preferenceNotificationIssueUpdated' => true,
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
@@ -177,12 +126,6 @@ class IssueCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createMock(Issue::class);
-        $this->issueRepository
-            ->method('getFull')
-            ->willReturn($issue)
-        ;
-
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
@@ -191,7 +134,7 @@ class IssueCreatedHandlerTest extends TestCase
 
         $handler = $this->generate();
         $handler(
-            new IssueCreated(
+            new IssueDeleted(
                 payload: [
                     'issue' => [
                         'key' => 'issueKey',
@@ -209,13 +152,13 @@ class IssueCreatedHandlerTest extends TestCase
         );
     }
 
-    private function generate(): IssueCreatedHandler
+    private function generate(): IssueDeletedHandler
     {
-        $handler = new IssueCreatedHandler(
+        $handler = new IssueDeletedHandler(
             commandBus: $this->commandBus,
             projectRepository: $this->projectRepository,
             translator: $this->translator,
-            issueRepository: $this->issueRepository,
+            favoriteRepository: $this->favoriteRepository,
             router: $this->router,
         );
         $logger = $this->createMock(LoggerInterface::class);

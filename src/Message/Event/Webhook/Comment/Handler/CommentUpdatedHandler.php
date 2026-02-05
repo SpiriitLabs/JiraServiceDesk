@@ -62,6 +62,8 @@ class CommentUpdatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
+        $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
+
         $commentBody = $event->getPayload()['comment']['body'];
         $commentBody = $this->replaceAccountIdByDisplayName->replaceInCommentBody($commentBody);
         $templatedEmail = (new TemplatedEmail())
@@ -77,6 +79,10 @@ class CommentUpdatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
+            if (in_array($user->getJiraLabel(), $issueLabels) == false) {
+                continue;
+            }
+
             if (
                 $user->preferenceNotificationCommentUpdated === false
                 && (

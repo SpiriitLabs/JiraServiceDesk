@@ -116,6 +116,106 @@ class IssueUpdatedHandlerTest extends TestCase
         );
     }
 
+    public static function labelAndProjectFilteringDataProvider(): \Generator
+    {
+        yield 'user with matching label' => [
+            'from-client',
+            ['from-client'],
+            true,
+            true,
+        ];
+
+        yield 'user with matching label among multiple' => [
+            'from-client',
+            ['from-client', 'urgent'],
+            true,
+            true,
+        ];
+
+        yield 'user without label, issue with labels' => [
+            null,
+            ['from-client'],
+            true,
+            false,
+        ];
+
+        yield 'user with label, issue without labels' => [
+            'from-client',
+            [],
+            true,
+            false,
+        ];
+
+        yield 'user with matching label but not in project' => [
+            'from-client',
+            ['from-client'],
+            false,
+            false,
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('labelAndProjectFilteringDataProvider')]
+    public function testLabelAndProjectFiltering(
+        ?string $userLabel,
+        array $issueLabels,
+        bool $userInProject,
+        bool $expectDispatch,
+    ): void {
+        $user = UserFactory::createOne([
+            'email' => 'test@local.lan',
+            'preferenceNotificationIssueUpdated' => true,
+        ]);
+        if ($userLabel !== null) {
+            $label = new IssueLabel($userLabel, $userLabel);
+            $user->setIssueLabel($label);
+        }
+
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+        if ($userInProject) {
+            $user->addProject($project);
+        }
+
+        $this->projectRepository
+            ->method('findOneBy')
+            ->willReturn($project)
+        ;
+
+        $issue = $this->createMock(Issue::class);
+        $issue->fields = new IssueField();
+        $issue->fields->labels = $issueLabels;
+        $this->issueRepository
+            ->method('getFull')
+            ->willReturn($issue)
+        ;
+
+        $this->commandBus
+            ->expects($expectDispatch ? self::once() : self::never())
+            ->method('dispatch')
+            ->willReturn(new Envelope($this->createMock(Notification::class)))
+        ;
+
+        $handler = $this->generate();
+        $handler(
+            new IssueUpdated(
+                payload: [
+                    'issue' => [
+                        'key' => 'issueKey',
+                        'fields' => [
+                            'summary' => 'summary',
+                            'project' => [
+                                'id' => 'test',
+                                'key' => 'test',
+                            ],
+                        ],
+                    ],
+                ],
+            ),
+        );
+    }
+
     private function generate(): IssueUpdatedHandler
     {
         $handler = new IssueUpdatedHandler(
