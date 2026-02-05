@@ -37,7 +37,7 @@ final class IssueLabelFactory extends PersistentProxyObjectFactory
         return $this
             ->afterInstantiate(function (IssueLabel $issueLabel): void {
                 foreach ($issueLabel->getUsers() as $user) {
-                    $user->setIssueLabel($issueLabel);
+                    $user->addIssueLabel($issueLabel);
                 }
             })
         ;

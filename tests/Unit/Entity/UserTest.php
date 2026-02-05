@@ -103,18 +103,27 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function testItGetJiraLabel(): void
+    public function testItGetJiraLabels(): void
     {
         /** @var User $user */
         $user = UserFactory::createOne()->_set('id', 1);
 
         IssueLabelFactory::createOne([
             'users' => [$user],
-            'jiraLabel' => 'label',
-            'name' => 'label',
+            'jiraLabel' => 'label-one',
+            'name' => 'label-one',
+        ]);
+        IssueLabelFactory::createOne([
+            'users' => [$user],
+            'jiraLabel' => 'label-two',
+            'name' => 'label-two',
         ]);
 
-        self::assertSame('label', $user->getJiraLabel());
+        self::assertCount(2, $user->getJiraLabels());
+        self::assertContains('label-one', $user->getJiraLabels());
+        self::assertContains('label-two', $user->getJiraLabels());
+        self::assertTrue($user->hasAnyJiraLabel(['label-one', 'other']));
+        self::assertFalse($user->hasAnyJiraLabel(['other']));
     }
 
     #[Test]

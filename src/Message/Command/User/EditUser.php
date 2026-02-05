@@ -29,7 +29,8 @@ class EditUser extends AbstractUserDTO
             preferenceNotificationCommentOnlyOnTag: $this->user->preferenceNotificationCommentOnlyOnTag,
             enabled: $this->user->enabled,
             defaultProject: $this->user->defaultProject,
-            issueLabel: $this->user->getIssueLabel(),
+            issueLabels: $this->user->getIssueLabels()
+                ->toArray(),
         );
     }
 }

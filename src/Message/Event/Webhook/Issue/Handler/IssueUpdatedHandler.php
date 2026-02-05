@@ -73,7 +73,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 continue;
             }
 
-            if (in_array($user->getJiraLabel(), $issue->fields->labels) == false) {
+            if ($user->hasAnyJiraLabel($issue->fields->labels) === false) {
                 continue;
             }
 

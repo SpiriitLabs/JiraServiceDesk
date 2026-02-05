@@ -69,12 +69,12 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 continue;
             }
 
-            if (in_array($user->getJiraLabel(), $issueLabels) == false) {
+            if ($user->hasAnyJiraLabel($issueLabels) === false) {
                 continue;
             }
 
             try {
-                $this->issueRepository->getFull($issueKey, $user->getJiraLabel());
+                $this->issueRepository->getFull($issueKey, $user->getJiraLabels());
             } catch (JiraException $jiraException) {
                 continue;
             }

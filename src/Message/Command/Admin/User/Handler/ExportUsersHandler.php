@@ -35,7 +35,7 @@ readonly class ExportUsersHandler
                 'dernière connexion' => $user->getLastLoginAt()?->setTimezone(new \DateTimeZone('CEST'))
                     ->format('d/m/Y H:i'),
                 'projets' => $user->getProjectKeys(),
-                'label' => $user->getJiraLabel(),
+                'label' => implode(', ', $user->getJiraLabels()),
                 'is_admin' => in_array(Role::ROLE_ADMIN, $user->getRoles()),
             ];
         }

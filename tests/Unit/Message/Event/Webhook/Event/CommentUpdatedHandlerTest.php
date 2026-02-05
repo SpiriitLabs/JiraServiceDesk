@@ -95,7 +95,7 @@ class CommentUpdatedHandlerTest extends TestCase
             'preferenceNotificationCommentOnlyOnTag' => $userHasPreferenceNotificationCommentOnlyOnTag,
         ]);
         $label = new IssueLabel('from-client', 'from-client');
-        $user->setIssueLabel($label);
+        $user->addIssueLabel($label);
 
         $project = ProjectFactory::createOne([
             'jiraKey' => 'test',
@@ -211,7 +211,7 @@ class CommentUpdatedHandlerTest extends TestCase
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
-            $user->setIssueLabel($label);
+            $user->addIssueLabel($label);
         }
 
         $project = ProjectFactory::createOne([

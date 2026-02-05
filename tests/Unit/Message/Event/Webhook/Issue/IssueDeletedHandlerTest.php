@@ -111,7 +111,7 @@ class IssueDeletedHandlerTest extends TestCase
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
-            $user->setIssueLabel($label);
+            $user->addIssueLabel($label);
         }
 
         $project = ProjectFactory::createOne([

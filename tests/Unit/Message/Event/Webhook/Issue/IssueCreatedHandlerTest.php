@@ -65,7 +65,7 @@ class IssueCreatedHandlerTest extends TestCase
             'preferenceNotificationIssueCreated' => $userHasPreferenceNotificationIssueCreated,
         ]);
         $label = new IssueLabel('from-client', 'from-client');
-        $user->setIssueLabel($label);
+        $user->addIssueLabel($label);
 
         $project = ProjectFactory::createOne([
             'jiraKey' => 'test',
@@ -162,7 +162,7 @@ class IssueCreatedHandlerTest extends TestCase
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
-            $user->setIssueLabel($label);
+            $user->addIssueLabel($label);
         }
 
         $project = ProjectFactory::createOne([

@@ -39,7 +39,7 @@ readonly class GetKanbanIssueByBoardIdHandler
         ;
 
         $jql = new JqlQuery()
-            ->addInExpression(JqlQuery::FIELD_LABELS, [$query->user->getJiraLabel()])
+            ->addInExpression(JqlQuery::FIELD_LABELS, $query->user->getJiraLabels())
             ->addAnyExpression('and (' . $subQuery->getQuery() . ')')
         ;
 
