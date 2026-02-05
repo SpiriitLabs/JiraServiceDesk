@@ -15,7 +15,7 @@ class SlackNotificationServiceTest extends TestCase
     #[Test]
     public function testSendDirectMessageCallsSlackApi(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('toArray')->willReturn(['ok' => true]);
 
         $httpClient = $this->createMock(HttpClientInterface::class);
@@ -82,10 +82,10 @@ class SlackNotificationServiceTest extends TestCase
     #[Test]
     public function testSendDirectMessageLogsApiError(): void
     {
-        $response = $this->createMock(ResponseInterface::class);
+        $response = $this->createStub(ResponseInterface::class);
         $response->method('toArray')->willReturn(['ok' => false, 'error' => 'channel_not_found']);
 
-        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient = $this->createStub(HttpClientInterface::class);
         $httpClient->method('request')->willReturn($response);
 
         $logger = $this->createMock(LoggerInterface::class);

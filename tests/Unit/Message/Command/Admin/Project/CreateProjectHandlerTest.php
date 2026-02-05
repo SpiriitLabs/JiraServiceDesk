@@ -13,7 +13,7 @@ use App\Repository\ProjectRepository as AppProjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JiraCloud\Project\Project;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -23,20 +23,20 @@ class CreateProjectHandlerTest extends TestCase
 {
     use Factories;
 
-    private AppProjectRepository|MockObject $appProjectRepository;
+    private AppProjectRepository|Stub $appProjectRepository;
 
-    private ProjectRepository|MockObject $jiraProjectRepository;
+    private ProjectRepository|Stub $jiraProjectRepository;
 
-    private EntityManagerInterface|MockObject $entityManager;
+    private EntityManagerInterface|Stub $entityManager;
 
-    private MessageBusInterface|MockObject $commandBus;
+    private MessageBusInterface|Stub $commandBus;
 
     protected function setUp(): void
     {
-        $this->appProjectRepository = $this->createMock(AppProjectRepository::class);
-        $this->jiraProjectRepository = $this->createMock(ProjectRepository::class);
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        $this->commandBus = $this->createMock(MessageBusInterface::class);
+        $this->appProjectRepository = $this->createStub(AppProjectRepository::class);
+        $this->jiraProjectRepository = $this->createStub(ProjectRepository::class);
+        $this->entityManager = $this->createStub(EntityManagerInterface::class);
+        $this->commandBus = $this->createStub(MessageBusInterface::class);
     }
 
     #[Test]
@@ -47,7 +47,6 @@ class CreateProjectHandlerTest extends TestCase
         ]);
 
         $this->appProjectRepository
-            ->expects($this->any())
             ->method('findOneBy')
             ->willReturnMap([
                 [
@@ -73,7 +72,6 @@ class CreateProjectHandlerTest extends TestCase
     public function testItReturnNullIfNoProject(): void
     {
         $this->jiraProjectRepository
-            ->expects($this->any())
             ->method('get')
             ->willReturn(null)
         ;
@@ -91,25 +89,26 @@ class CreateProjectHandlerTest extends TestCase
     #[Test]
     public function testItMustReturnProject(): void
     {
-        $jiraProject = $this->createMock(Project::class);
+        $jiraProject = $this->createStub(Project::class);
         $jiraProject->name = 'test';
         $jiraProject->id = 12;
         $jiraProject->key = 'test';
         $jiraProject->description = 'test';
 
         $this->jiraProjectRepository
-            ->expects($this->any())
             ->method('get')
             ->willReturn($jiraProject)
         ;
 
-        $this->commandBus->expects(self::once())
+        $commandBus = $this->createMock(MessageBusInterface::class);
+        $commandBus->expects(self::once())
             ->method('dispatch')
             ->with(
                 self::isInstanceOf(GenerateProjectIssueTypes::class),
             )
-            ->willReturn(new Envelope($this->createMock(GenerateProjectIssueTypes::class)))
+            ->willReturn(new Envelope($this->createStub(GenerateProjectIssueTypes::class)))
         ;
+        $this->commandBus = $commandBus;
 
 
         $handler = $this->generate();

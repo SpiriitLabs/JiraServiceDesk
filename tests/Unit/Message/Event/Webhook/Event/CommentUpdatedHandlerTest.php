@@ -17,6 +17,7 @@ use JiraCloud\Issue\Issue;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
@@ -31,24 +32,24 @@ class CommentUpdatedHandlerTest extends TestCase
 
     private readonly MessageBusInterface|MockObject $commandBus;
 
-    private readonly ProjectRepository|MockObject $projectRepository;
+    private readonly ProjectRepository|Stub $projectRepository;
 
-    private readonly TranslatorInterface|MockObject $translator;
+    private readonly TranslatorInterface|Stub $translator;
 
-    private readonly IssueRepository|MockObject $issueRepository;
+    private readonly IssueRepository|Stub $issueRepository;
 
-    private readonly ReplaceAccountIdByDisplayName|MockObject $replaceAccountIdByDisplayName;
+    private readonly ReplaceAccountIdByDisplayName|Stub $replaceAccountIdByDisplayName;
 
-    private readonly RouterInterface|MockObject $router;
+    private readonly RouterInterface|Stub $router;
 
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->issueRepository = $this->createMock(IssueRepository::class);
-        $this->replaceAccountIdByDisplayName = $this->createMock(ReplaceAccountIdByDisplayName::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->projectRepository = $this->createStub(ProjectRepository::class);
+        $this->translator = $this->createStub(TranslatorInterface::class);
+        $this->issueRepository = $this->createStub(IssueRepository::class);
+        $this->replaceAccountIdByDisplayName = $this->createStub(ReplaceAccountIdByDisplayName::class);
+        $this->router = $this->createStub(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -108,7 +109,7 @@ class CommentUpdatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $this->issueRepository
             ->method('getFull')
             ->with('issueKey')
@@ -127,7 +128,7 @@ class CommentUpdatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -207,8 +208,8 @@ class CommentUpdatedHandlerTest extends TestCase
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationCommentUpdated' => true,
-            'preferenceNotificationCommentOnlyOnTag' => false,
+            'preferenceNotificationCommentUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentOnlyOnTag' => [],
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
@@ -238,7 +239,7 @@ class CommentUpdatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -281,7 +282,7 @@ class CommentUpdatedHandlerTest extends TestCase
             jiraAPIAccountId: '1234-5678',
             router: $this->router,
         );
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $handler->setLogger($logger);
 
         return $handler;

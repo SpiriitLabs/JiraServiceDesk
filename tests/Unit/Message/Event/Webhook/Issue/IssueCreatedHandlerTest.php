@@ -15,6 +15,7 @@ use JiraCloud\Issue\Issue;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
@@ -29,21 +30,21 @@ class IssueCreatedHandlerTest extends TestCase
 
     private readonly MessageBusInterface|MockObject $commandBus;
 
-    private readonly ProjectRepository|MockObject $projectRepository;
+    private readonly ProjectRepository|Stub $projectRepository;
 
-    private readonly TranslatorInterface|MockObject $translator;
+    private readonly TranslatorInterface|Stub $translator;
 
-    private readonly IssueRepository|MockObject $issueRepository;
+    private readonly IssueRepository|Stub $issueRepository;
 
-    private readonly RouterInterface|MockObject $router;
+    private readonly RouterInterface|Stub $router;
 
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->issueRepository = $this->createMock(IssueRepository::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->projectRepository = $this->createStub(ProjectRepository::class);
+        $this->translator = $this->createStub(TranslatorInterface::class);
+        $this->issueRepository = $this->createStub(IssueRepository::class);
+        $this->router = $this->createStub(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -80,7 +81,7 @@ class IssueCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $this->issueRepository
             ->method('getFull')
             ->with('issueKey')
@@ -90,7 +91,7 @@ class IssueCreatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -161,7 +162,7 @@ class IssueCreatedHandlerTest extends TestCase
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationIssueCreated' => true,
+            'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
@@ -180,7 +181,7 @@ class IssueCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $this->issueRepository
             ->method('getFull')
             ->willReturn($issue)
@@ -189,7 +190,7 @@ class IssueCreatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -221,7 +222,7 @@ class IssueCreatedHandlerTest extends TestCase
             issueRepository: $this->issueRepository,
             router: $this->router,
         );
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $handler->setLogger($logger);
 
         return $handler;

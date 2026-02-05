@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
@@ -27,19 +28,19 @@ class NotificationHandlerTest extends TestCase
 
     private MailerInterface|MockObject $mailer;
 
-    protected EventDispatcherInterface|MockObject $eventDispatcher;
+    protected EventDispatcherInterface|Stub $eventDispatcher;
 
-    private SlackNotificationService|MockObject $slackNotificationService;
+    private SlackNotificationService|Stub $slackNotificationService;
 
-    private SlackBlockKitBuilder|MockObject $slackBlockKitBuilder;
+    private SlackBlockKitBuilder|Stub $slackBlockKitBuilder;
 
     protected function setUp(): void
     {
         $this->entityManager = $this->createMock(EntityManagerInterface::class);
         $this->mailer = $this->createMock(MailerInterface::class);
-        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->slackNotificationService = $this->createMock(SlackNotificationService::class);
-        $this->slackBlockKitBuilder = $this->createMock(SlackBlockKitBuilder::class);
+        $this->eventDispatcher = $this->createStub(EventDispatcherInterface::class);
+        $this->slackNotificationService = $this->createStub(SlackNotificationService::class);
+        $this->slackBlockKitBuilder = $this->createStub(SlackBlockKitBuilder::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
@@ -131,16 +132,20 @@ class NotificationHandlerTest extends TestCase
             'slackMemberId' => 'U12345',
         ]);
 
-        $this->slackBlockKitBuilder
+        $slackBlockKitBuilder = $this->createMock(SlackBlockKitBuilder::class);
+        $slackBlockKitBuilder
             ->expects(self::once())
             ->method('build')
             ->willReturn([['type' => 'header']])
         ;
+        $this->slackBlockKitBuilder = $slackBlockKitBuilder;
 
-        $this->slackNotificationService
+        $slackNotificationService = $this->createMock(SlackNotificationService::class);
+        $slackNotificationService
             ->expects(self::once())
             ->method('sendDirectMessage')
         ;
+        $this->slackNotificationService = $slackNotificationService;
 
         $this->mailer
             ->expects(self::never())
@@ -175,16 +180,20 @@ class NotificationHandlerTest extends TestCase
             'slackMemberId' => 'U12345',
         ]);
 
-        $this->slackBlockKitBuilder
+        $slackBlockKitBuilder = $this->createMock(SlackBlockKitBuilder::class);
+        $slackBlockKitBuilder
             ->expects(self::once())
             ->method('build')
             ->willReturn([])
         ;
+        $this->slackBlockKitBuilder = $slackBlockKitBuilder;
 
-        $this->slackNotificationService
+        $slackNotificationService = $this->createMock(SlackNotificationService::class);
+        $slackNotificationService
             ->expects(self::once())
             ->method('sendDirectMessage')
         ;
+        $this->slackNotificationService = $slackNotificationService;
 
         $this->mailer
             ->expects(self::once())

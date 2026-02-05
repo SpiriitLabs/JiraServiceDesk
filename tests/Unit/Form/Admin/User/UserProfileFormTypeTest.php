@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -22,6 +23,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Zenstruck\Foundry\Test\Factories;
 
+#[AllowMockObjectsWithoutExpectations]
 class UserProfileFormTypeTest extends TypeTestCase
 {
     use Factories;
@@ -31,12 +33,12 @@ class UserProfileFormTypeTest extends TypeTestCase
         $validator = Validation::createValidator();
 
         // Mock ProjectRepository
-        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder = $this->createStub(QueryBuilder::class);
         $queryBuilder
             ->method('getParameters')
             ->willReturn(new ArrayCollection([]))
         ;
-        $query = $this->createMock(Query::class);
+        $query = $this->createStub(Query::class);
         $query
             ->method('execute')
             ->willReturn([])
@@ -46,19 +48,19 @@ class UserProfileFormTypeTest extends TypeTestCase
             ->willReturn($query)
         ;
 
-        $projectRepository = $this->createMock(ProjectRepository::class);
+        $projectRepository = $this->createStub(ProjectRepository::class);
         $projectRepository->method('getByUser')
             ->willReturn($queryBuilder)
         ;
 
         // Mock EntityManager
-        $em = $this->createMock(EntityManagerInterface::class);
+        $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getRepository')
             ->willReturn($projectRepository)
         ;
 
         // Mock ManagerRegistry
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
+        $managerRegistry = $this->createStub(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')
             ->willReturn($em)
         ;

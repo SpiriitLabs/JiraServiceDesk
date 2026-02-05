@@ -14,7 +14,7 @@ class SlackBlockKitBuilderTest extends TestCase
 
     protected function setUp(): void
     {
-        $translator = $this->createMock(TranslatorInterface::class);
+        $translator = $this->createStub(TranslatorInterface::class);
         $translator->method('trans')->willReturn('View in Test App');
 
         $this->builder = new SlackBlockKitBuilder($translator, 'Test App');

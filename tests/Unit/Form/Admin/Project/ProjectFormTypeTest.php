@@ -6,6 +6,7 @@ use App\Form\Admin\Project\ProjectFormType;
 use App\Message\Command\Admin\Project\CreateProject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,6 +19,7 @@ use Symfony\UX\Autocomplete\Checksum\ChecksumCalculator;
 use Symfony\UX\Autocomplete\Form\AutocompleteChoiceTypeExtension;
 use Zenstruck\Foundry\Test\Factories;
 
+#[AllowMockObjectsWithoutExpectations]
 class ProjectFormTypeTest extends TypeTestCase
 {
     use Factories;
@@ -25,14 +27,14 @@ class ProjectFormTypeTest extends TypeTestCase
     protected function getExtensions(): array
     {
         $validator = Validation::createValidator();
-        $checksumCalculator = $this->createMock(ChecksumCalculator::class);
-        $translator = $this->createMock(TranslatorInterface::class);
+        $checksumCalculator = $this->createStub(ChecksumCalculator::class);
+        $translator = $this->createStub(TranslatorInterface::class);
 
         // Mock EntityManager
-        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager = $this->createStub(EntityManagerInterface::class);
 
         // Mock ManagerRegistry
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
+        $managerRegistry = $this->createStub(ManagerRegistry::class);
         $managerRegistry->method('getManagerForClass')
             ->willReturn($entityManager)
         ;

@@ -19,12 +19,12 @@ class IssueAttachmentFormatterTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->filesystem = $this->createMock(Filesystem::class);
+        $this->filesystem = $this->createStub(Filesystem::class);
         $uploadDir = '/var/www/uploads';
 
         $this->formatter = new IssueAttachmentFormatter($this->filesystem, $uploadDir);
 
-        $mockService = $this->createMock(AttachmentService::class);
+        $mockService = $this->createStub(AttachmentService::class);
         $reflection = new \ReflectionClass($this->formatter);
         $property = $reflection->getProperty('service');
         $property->setAccessible(true);
