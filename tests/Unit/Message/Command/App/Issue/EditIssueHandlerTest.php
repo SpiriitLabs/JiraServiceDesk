@@ -17,6 +17,7 @@ use JiraCloud\Issue\IssueStatus;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -62,10 +63,10 @@ class EditIssueHandlerTest extends TestCase
 
         $user = UserFactory::createOne();
 
-        $issueType = $this->createMock(IssueType::class);
+        $issueType = $this->createStub(IssueType::class);
         $issueType->jiraId = '10005';
 
-        $priority = $this->createMock(Priority::class);
+        $priority = $this->createStub(Priority::class);
         $priority->jiraId = 10005;
 
         $transitionToStatus = (object) [
@@ -77,7 +78,7 @@ class EditIssueHandlerTest extends TestCase
             'to' => $transitionToStatus,
         ];
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->key = 'issueKey';
         $issue->id = 'issueId';
         $issue->fields = new IssueField();
@@ -93,7 +94,7 @@ class EditIssueHandlerTest extends TestCase
         ;
 
         $enveloppe = new Envelope(
-            message: $this->createMock(TransitionTo::class),
+            message: $this->createStub(TransitionTo::class),
             stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
         );
         $this->commandBus
@@ -130,10 +131,10 @@ class EditIssueHandlerTest extends TestCase
             'name' => 'Blootips',
         ]);
 
-        $issueType = $this->createMock(IssueType::class);
+        $issueType = $this->createStub(IssueType::class);
         $issueType->jiraId = '10005';
 
-        $priority = $this->createMock(Priority::class);
+        $priority = $this->createStub(Priority::class);
         $priority->jiraId = 10005;
 
         $transitionToStatus = (object) [
@@ -145,7 +146,7 @@ class EditIssueHandlerTest extends TestCase
             'to' => $transitionToStatus,
         ];
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->key = 'issueKey';
         $issue->id = 'issueId';
         $issue->fields = new IssueField();
@@ -171,7 +172,7 @@ class EditIssueHandlerTest extends TestCase
         ;
 
         $enveloppe = new Envelope(
-            message: $this->createMock(TransitionTo::class),
+            message: $this->createStub(TransitionTo::class),
             stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
         );
         $this->commandBus
@@ -217,10 +218,10 @@ class EditIssueHandlerTest extends TestCase
             'name' => 'Blootips',
         ]);
 
-        $issueType = $this->createMock(IssueType::class);
+        $issueType = $this->createStub(IssueType::class);
         $issueType->jiraId = '10005';
 
-        $priority = $this->createMock(Priority::class);
+        $priority = $this->createStub(Priority::class);
         $priority->jiraId = 10005;
 
         $transitionToStatus = (object) [
@@ -232,7 +233,7 @@ class EditIssueHandlerTest extends TestCase
             'to' => $transitionToStatus,
         ];
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->key = 'issueKey';
         $issue->id = 'issueId';
         $issue->fields = new IssueField();
@@ -259,7 +260,7 @@ class EditIssueHandlerTest extends TestCase
         ;
 
         $enveloppe = new Envelope(
-            message: $this->createMock(TransitionTo::class),
+            message: $this->createStub(TransitionTo::class),
             stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
         );
         $this->commandBus

@@ -34,31 +34,29 @@ class DashboardController extends AbstractController
                 'projects_count' => $this->projectRepository->count(),
                 'priorities_count' => $this->priorityRepository->count(),
                 'users_count' => $this->userRepository->count(),
-                'users_count_preference_notification' => $this->countUserByPreference('preferenceNotification'),
-                'users_count_preference_notification_issue_created' => $this->countUserByPreference(
+                'users_count_preference_notification_issue_created' => $this->countUserByJsonPreference(
                     'preferenceNotificationIssueCreated'
                 ),
-                'users_count_preference_notification_issue_updated' => $this->countUserByPreference(
+                'users_count_preference_notification_issue_updated' => $this->countUserByJsonPreference(
                     'preferenceNotificationIssueUpdated'
                 ),
-                'users_count_preference_notification_comment_created' => $this->countUserByPreference(
+                'users_count_preference_notification_comment_created' => $this->countUserByJsonPreference(
                     'preferenceNotificationCommentCreated'
                 ),
-                'users_count_preference_notification_comment_updated' => $this->countUserByPreference(
+                'users_count_preference_notification_comment_updated' => $this->countUserByJsonPreference(
                     'preferenceNotificationCommentUpdated'
                 ),
             ],
         );
     }
 
-    private function countUserByPreference(string $preferenceProperty = 'preferenceNotification'): int
+    private function countUserByJsonPreference(string $preferenceProperty): int
     {
-        return $this->userRepository->createQueryBuilder('u')
+        return (int) $this->userRepository->createQueryBuilder('u')
             ->select('COUNT(u.id)')
-            ->where('u.' . $preferenceProperty . ' = :active')->setParameter(
-                'active',
-                true
-            )->getQuery()
+            ->where('u.' . $preferenceProperty . ' != :empty')
+            ->setParameter('empty', '[]')
+            ->getQuery()
             ->getSingleScalarResult()
         ;
     }

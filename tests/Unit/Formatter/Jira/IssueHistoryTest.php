@@ -7,12 +7,11 @@ use JiraCloud\Issue\ChangeLog;
 use JiraCloud\Issue\History;
 use JiraCloud\Issue\Issue;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class IssueHistoryTest extends TestCase
 {
-    private IssueHistoryFormatter|MockObject $formatter;
+    private IssueHistoryFormatter $formatter;
 
     protected function setUp(): void
     {
@@ -35,7 +34,7 @@ class IssueHistoryTest extends TestCase
             $histories[] = $history;
         }
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->changelog = new ChangeLog();
         $issue->changelog->histories = $histories;
 

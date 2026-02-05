@@ -7,24 +7,23 @@ use App\Message\Command\Admin\Project\ExportProjects;
 use App\Message\Command\Admin\Project\Handler\ExportProjectsHandler;
 use App\Repository\ProjectRepository;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Zenstruck\Foundry\Test\Factories;
 
 class ExportProjectsHandlerTest extends TestCase
 {
     use Factories;
 
-    private EncoderInterface|MockObject $csvEncoder;
+    private CsvEncoder $csvEncoder;
 
-    private ProjectRepository|MockObject $projectRepository;
+    private ProjectRepository|Stub $projectRepository;
 
     protected function setUp(): void
     {
         $this->csvEncoder = new CsvEncoder();
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
+        $this->projectRepository = $this->createStub(ProjectRepository::class);
     }
 
     #[Test]
@@ -33,7 +32,6 @@ class ExportProjectsHandlerTest extends TestCase
         $project = ProjectFactory::createOne();
 
         $this->projectRepository
-            ->expects($this->any())
             ->method('findAll')
             ->willReturn([
                 $project,

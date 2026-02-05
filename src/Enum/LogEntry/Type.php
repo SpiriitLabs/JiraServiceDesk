@@ -17,6 +17,8 @@ enum Type: string implements LabeledValueInterface
 
     case WEBHOOK = 'webhook';
 
+    case SLACK = 'slack';
+
     public function label(): string
     {
         return sprintf('logs.type.%s.label', mb_strtolower($this->name));
@@ -28,6 +30,7 @@ enum Type: string implements LabeledValueInterface
             self::EMAIL => 'mdi-email-outline',
             self::LOGIN => 'mdi-login',
             self::WEBHOOK => 'mdi-webhook',
+            self::SLACK => 'mdi-slack',
         };
     }
 }

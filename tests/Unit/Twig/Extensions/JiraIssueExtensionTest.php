@@ -6,16 +6,16 @@ use App\Service\IssueHtmlProcessor;
 use App\Twig\Extensions\JiraIssueExtension;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 class JiraIssueExtensionTest extends TestCase
 {
-    private IssueHtmlProcessor|MockObject $htmlProcessor;
+    private IssueHtmlProcessor|Stub $htmlProcessor;
 
     protected function setUp(): void
     {
-        $this->htmlProcessor = $this->createMock(IssueHtmlProcessor::class);
+        $this->htmlProcessor = $this->createStub(IssueHtmlProcessor::class);
     }
 
     #[Test]

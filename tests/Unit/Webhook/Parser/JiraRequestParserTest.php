@@ -17,7 +17,7 @@ use JiraCloud\Issue\IssueField;
 use JiraCloud\JiraException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,22 +27,22 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class JiraRequestParserTest extends TestCase
 {
-    private EventDispatcherInterface|MockObject $dispatcher;
+    private EventDispatcherInterface|Stub $dispatcher;
 
-    private MessageBusInterface|MockObject $commandBus;
+    private MessageBusInterface|Stub $commandBus;
 
-    private IssueRepository|MockObject $issueRepository;
+    private IssueRepository|Stub $issueRepository;
 
-    private WebhookLabelFilter|MockObject $webhookLabelFilter;
+    private WebhookLabelFilter|Stub $webhookLabelFilter;
 
     private const string WEBHOOK_SECRET = 'test-secret';
 
     protected function setUp(): void
     {
-        $this->dispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->commandBus = $this->createMock(MessageBusInterface::class);
-        $this->issueRepository = $this->createMock(IssueRepository::class);
-        $this->webhookLabelFilter = $this->createMock(WebhookLabelFilter::class);
+        $this->dispatcher = $this->createStub(EventDispatcherInterface::class);
+        $this->commandBus = $this->createStub(MessageBusInterface::class);
+        $this->issueRepository = $this->createStub(IssueRepository::class);
+        $this->webhookLabelFilter = $this->createStub(WebhookLabelFilter::class);
     }
 
     /**
@@ -83,7 +83,8 @@ class JiraRequestParserTest extends TestCase
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with(['from-client'])
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequest($webhookEvent, ['from-client']);
@@ -99,7 +100,8 @@ class JiraRequestParserTest extends TestCase
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with(['bug', 'feature'])
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequest('jira:issue_created', ['bug', 'feature']);
@@ -117,16 +119,20 @@ class JiraRequestParserTest extends TestCase
         $issue->fields = new IssueField();
         $issue->fields->labels = ['from-api'];
 
-        $this->issueRepository
+        $issueRepository = $this->createMock(IssueRepository::class);
+        $issueRepository
             ->expects(self::once())
             ->method('getFull')
             ->with('TEST-123', [], false)
-            ->willReturn($issue);
+            ->willReturn($issue)
+        ;
+        $this->issueRepository = $issueRepository;
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with(['from-api'])
-            ->willReturn(true);
+            ->willReturn(true)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequestWithoutLabels('comment_created');
@@ -143,16 +149,20 @@ class JiraRequestParserTest extends TestCase
         $issue->fields = new IssueField();
         $issue->fields->labels = ['other-label'];
 
-        $this->issueRepository
+        $issueRepository = $this->createMock(IssueRepository::class);
+        $issueRepository
             ->expects(self::once())
             ->method('getFull')
             ->with('TEST-123', [], false)
-            ->willReturn($issue);
+            ->willReturn($issue)
+        ;
+        $this->issueRepository = $issueRepository;
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with(['other-label'])
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequestWithoutLabels('comment_created');
@@ -166,16 +176,20 @@ class JiraRequestParserTest extends TestCase
     #[Test]
     public function testWebhookWithMissingLabelsAndApiFetchFailsThrowsRejectException(): void
     {
-        $this->issueRepository
+        $issueRepository = $this->createMock(IssueRepository::class);
+        $issueRepository
             ->expects(self::once())
             ->method('getFull')
             ->with('TEST-123', [], false)
-            ->willThrowException(new JiraException('API error'));
+            ->willThrowException(new JiraException('API error'))
+        ;
+        $this->issueRepository = $issueRepository;
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with([])
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequestWithoutLabels('comment_created');
@@ -192,7 +206,8 @@ class JiraRequestParserTest extends TestCase
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
             ->with([])
-            ->willReturn(false);
+            ->willReturn(false)
+        ;
 
         $parser = $this->createParser();
         $request = $this->createValidRequest('jira:issue_updated', []);
@@ -223,7 +238,7 @@ class JiraRequestParserTest extends TestCase
             issueRepository: $this->issueRepository,
             webhookLabelFilter: $this->webhookLabelFilter,
         );
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $parser->setLogger($logger);
 
         return $parser;

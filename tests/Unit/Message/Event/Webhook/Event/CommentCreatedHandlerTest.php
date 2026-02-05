@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Message\Event\Webhook\Event;
 
 use App\Entity\IssueLabel;
+use App\Enum\Notification\NotificationChannel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\Notification;
@@ -16,6 +17,7 @@ use JiraCloud\Issue\Visibility;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
@@ -30,52 +32,52 @@ class CommentCreatedHandlerTest extends TestCase
 
     private readonly MessageBusInterface|MockObject $commandBus;
 
-    private readonly ProjectRepository|MockObject $projectRepository;
+    private readonly ProjectRepository|Stub $projectRepository;
 
-    private readonly TranslatorInterface|MockObject $translator;
+    private readonly TranslatorInterface|Stub $translator;
 
-    private readonly IssueRepository|MockObject $issueRepository;
+    private readonly IssueRepository|Stub $issueRepository;
 
-    private readonly ReplaceAccountIdByDisplayName|MockObject $replaceAccountIdByDisplayName;
+    private readonly ReplaceAccountIdByDisplayName|Stub $replaceAccountIdByDisplayName;
 
-    private readonly RouterInterface|MockObject $router;
+    private readonly RouterInterface|Stub $router;
 
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->issueRepository = $this->createMock(IssueRepository::class);
-        $this->replaceAccountIdByDisplayName = $this->createMock(ReplaceAccountIdByDisplayName::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->projectRepository = $this->createStub(ProjectRepository::class);
+        $this->translator = $this->createStub(TranslatorInterface::class);
+        $this->issueRepository = $this->createStub(IssueRepository::class);
+        $this->replaceAccountIdByDisplayName = $this->createStub(ReplaceAccountIdByDisplayName::class);
+        $this->router = $this->createStub(RouterInterface::class);
     }
 
     public static function emailNotificationDataProvider(): \Generator
     {
         yield 'notif CommentCreated and CommentOnlyOnTag none false ' => [
-            false,
-            false,
+            [],
+            [],
             'test',
             false,
         ];
 
         yield 'notif CommentCreated true and notif CommentOnlyOnTag false ' => [
-            true,
-            false,
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            [],
             'test',
             true,
         ];
 
         yield 'notif CommentCreated false and notif CommentOnlyOnTag true and no tag in comment' => [
-            false,
-            true,
+            [],
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'test',
             false,
         ];
 
         yield 'notif CommentCreated false and notif CommentOnlyOnTag true and tag in comment' => [
-            false,
-            true,
+            [],
+            [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             '[~accountid:1234-5678]',
             true,
         ];
@@ -93,7 +95,7 @@ class CommentCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $comment = $this->createMock(Comment::class);
+        $comment = $this->createStub(Comment::class);
         $comment->visibility = new Visibility();
         $this->issueRepository
             ->method('getComment')
@@ -106,7 +108,7 @@ class CommentCreatedHandlerTest extends TestCase
             ->with(
                 self::isInstanceOf(Notification::class),
             )
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -139,15 +141,15 @@ class CommentCreatedHandlerTest extends TestCase
     #[Test]
     #[DataProvider('emailNotificationDataProvider')]
     public function testDoSendEmailNotification(
-        bool $userHasPreferenceNotificationCommentCreated,
-        bool $userHasPreferenceNotificationCommentOnlyOnTag,
+        array $commentCreatedChannels,
+        array $commentOnlyOnTagChannels,
         string $commentBody,
         bool $expectDispatch,
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationCommentCreated' => $userHasPreferenceNotificationCommentCreated,
-            'preferenceNotificationCommentOnlyOnTag' => $userHasPreferenceNotificationCommentOnlyOnTag,
+            'preferenceNotificationCommentCreated' => $commentCreatedChannels,
+            'preferenceNotificationCommentOnlyOnTag' => $commentOnlyOnTagChannels,
         ]);
         $label = new IssueLabel('from-client', 'from-client');
         $user->addIssueLabel($label);
@@ -174,7 +176,7 @@ class CommentCreatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -254,8 +256,8 @@ class CommentCreatedHandlerTest extends TestCase
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationCommentCreated' => true,
-            'preferenceNotificationCommentOnlyOnTag' => false,
+            'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentOnlyOnTag' => [],
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
@@ -285,7 +287,7 @@ class CommentCreatedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -328,7 +330,7 @@ class CommentCreatedHandlerTest extends TestCase
             jiraAPIAccountId: '1234-5678',
             router: $this->router,
         );
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $handler->setLogger($logger);
 
         return $handler;

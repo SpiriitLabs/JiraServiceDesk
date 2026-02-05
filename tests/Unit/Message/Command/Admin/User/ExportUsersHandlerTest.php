@@ -7,24 +7,23 @@ use App\Message\Command\Admin\User\ExportUsers;
 use App\Message\Command\Admin\User\Handler\ExportUsersHandler;
 use App\Repository\UserRepository;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
-use Symfony\Component\Serializer\Encoder\EncoderInterface;
 use Zenstruck\Foundry\Test\Factories;
 
 class ExportUsersHandlerTest extends TestCase
 {
     use Factories;
 
-    private EncoderInterface|MockObject $csvEncoder;
+    private CsvEncoder $csvEncoder;
 
-    private UserRepository|MockObject $userRepository;
+    private UserRepository|Stub $userRepository;
 
     protected function setUp(): void
     {
         $this->csvEncoder = new CsvEncoder();
-        $this->userRepository = $this->createMock(UserRepository::class);
+        $this->userRepository = $this->createStub(UserRepository::class);
     }
 
     #[Test]
@@ -33,7 +32,6 @@ class ExportUsersHandlerTest extends TestCase
         $user = UserFactory::createOne();
 
         $this->userRepository
-            ->expects($this->any())
             ->method('findAll')
             ->willReturn([
                 $user,

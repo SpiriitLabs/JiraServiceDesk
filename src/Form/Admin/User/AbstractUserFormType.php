@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Form\Admin\User;
 
 use App\Entity\Project;
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
-use App\Form\Type\SwitchType;
 use App\Message\Command\User\AbstractUserDTO;
 use App\Message\Command\User\EditUser;
 use App\Repository\ProjectRepository;
@@ -71,47 +71,40 @@ abstract class AbstractUserFormType extends AbstractType
                 ],
                 'choice_label' => fn (Theme $theme) => $theme->label(),
             ])
-            ->add('preferenceNotification', SwitchType::class, [
+            ->add('preferenceNotificationIssueCreated', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'all',
-                    'data-action' => 'notification-profil#toggleAll',
-                ],
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
-            ->add('preferenceNotificationIssueCreated', SwitchType::class, [
+            ->add('preferenceNotificationIssueUpdated', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'issueCreated',
-                    'data-action' => 'notification-profil#notification',
-                ],
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
-            ->add('preferenceNotificationIssueUpdated', SwitchType::class, [
+            ->add('preferenceNotificationCommentCreated', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'issueUpdated',
-                    'data-action' => 'notification-profil#notification',
-                ],
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
-            ->add('preferenceNotificationCommentCreated', SwitchType::class, [
+            ->add('preferenceNotificationCommentUpdated', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentCreated',
-                    'data-action' => 'notification-profil#notification notification-profil#commentCreatedOrUpdated',
-                ],
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
-            ->add('preferenceNotificationCommentUpdated', SwitchType::class, [
+            ->add('preferenceNotificationCommentOnlyOnTag', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
                 'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentUpdated',
-                    'data-action' => 'notification-profil#notification notification-profil#commentCreatedOrUpdated',
-                ],
-            ])
-            ->add('preferenceNotificationCommentOnlyOnTag', SwitchType::class, [
-                'required' => false,
-                'attr' => [
-                    'data-notification-profil-target' => 'commentTagOnly',
-                    'data-action' => 'notification-profil#notification notification-profil#commentTagOnly',
-                ],
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
         ;
 

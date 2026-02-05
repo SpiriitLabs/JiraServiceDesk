@@ -5,51 +5,54 @@ declare(strict_types=1);
 namespace App\Message\Command\Common\Handler;
 
 use App\Entity\Notification as NotificationEntity;
+use App\Enum\LogEntry\Type;
+use App\Enum\Notification\NotificationChannel;
 use App\Message\Command\Common\Notification;
+use App\Service\SlackBlockKitBuilder;
+use App\Service\SlackNotificationService;
 use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[AsMessageHandler]
-readonly class NotificationHandler
+class NotificationHandler implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private MailerInterface $mailer,
-        private EventDispatcherInterface $dispatcher,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MailerInterface $mailer,
+        private readonly EventDispatcherInterface $dispatcher,
+        private readonly SlackNotificationService $slackNotificationService,
+        private readonly SlackBlockKitBuilder $slackBlockKitBuilder,
     ) {
     }
 
     public function __invoke(Notification $command): void
     {
-        if ($command->user->preferenceNotification === false) {
-            return;
-        }
         if ($command->user->enabled === false) {
             return;
         }
 
-        // Reduce notif creation.
-        $latestsNotifications = $this
-            ->entityManager
-            ->getRepository(NotificationEntity::class)
-            ->findBy([
-                'link' => $command->link,
-                'user' => $command->user,
-            ])
-        ;
-        $latestsNotifications = array_filter($latestsNotifications, function (NotificationEntity $notification): bool {
-            return $notification->getSendAt()
-                ->getTimestamp() > (time() - 300)
-            ;
-        });
-        if (! empty($latestsNotifications)) {
+        if ($command->channels === []) {
             return;
         }
 
-        if ($command->email) {
+        $channelValues = array_map(
+            static fn (NotificationChannel $c): string => $c->value,
+            $command->channels,
+        );
+        $this->logger?->info('NotificationHandler - Processing notification', [
+            'user' => $command->user->email,
+            'channels' => $channelValues,
+            'link' => $command->link,
+        ]);
+
+        if (in_array(NotificationChannel::EMAIL, $command->channels, true) && $command->email) {
             $this->mailer->send(
                 $command->email,
             );
@@ -58,6 +61,7 @@ readonly class NotificationHandler
                 new NotificationEvent(
                     user: $command->user,
                     message: sprintf('Notification email sent to "%s"', $command->user->email),
+                    type: Type::EMAIL,
                     extraData: [
                         'subject' => $command->subject,
                         'body' => $command->body,
@@ -68,18 +72,51 @@ readonly class NotificationHandler
             );
         }
 
-        // Fix subject too long.
-        $subject = substr($command->subject, 0, 255);
+        if (in_array(NotificationChannel::SLACK, $command->channels, true)) {
+            $blocks = $this->slackBlockKitBuilder->build(
+                notificationType: $command->notificationType,
+                subject: $command->subject,
+                body: $command->body,
+                link: $command->link,
+                locale: $command->user->preferredLocale->value,
+                extraContext: $command->slackExtraContext,
+            );
 
-        $notification = new NotificationEntity(
-            notificationType: $command->notificationType,
-            subject: $subject,
-            body: $command->body,
-            link: $command->link,
-            user: $command->user,
-        );
+            $this->slackNotificationService->sendDirectMessage(
+                user: $command->user,
+                text: $command->subject,
+                blocks: $blocks,
+            );
 
-        $this->entityManager->persist($notification);
-        $this->entityManager->flush();
+            $this->dispatcher->dispatch(
+                new NotificationEvent(
+                    user: $command->user,
+                    message: sprintf('Slack notification sent to "%s"', $command->user->email),
+                    type: Type::SLACK,
+                    extraData: [
+                        'subject' => $command->subject,
+                        'body' => $command->body,
+                        'link' => $command->link,
+                    ],
+                ),
+                NotificationEvent::EVENT_NAME,
+            );
+        }
+
+        if (in_array(NotificationChannel::IN_APP, $command->channels, true)) {
+            // Fix subject too long.
+            $subject = substr($command->subject, 0, 255);
+
+            $notification = new NotificationEntity(
+                notificationType: $command->notificationType,
+                subject: $subject,
+                body: $command->body,
+                link: $command->link,
+                user: $command->user,
+            );
+
+            $this->entityManager->persist($notification);
+            $this->entityManager->flush();
+        }
     }
 }

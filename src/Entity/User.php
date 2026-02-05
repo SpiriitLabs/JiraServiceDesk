@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use App\Repository\UserRepository;
@@ -65,23 +66,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     #[ORM\Column(length: 255, nullable: true)]
     public ?string $company = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotification = false;
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $slackBotToken = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationIssueCreated = false;
+    #[ORM\Column(length: 255, nullable: true)]
+    public ?string $slackMemberId = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationIssueUpdated = false;
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationIssueCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentCreated = false;
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationIssueUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentUpdated = false;
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationCommentCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    public bool $preferenceNotificationCommentOnlyOnTag = false;
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationCommentUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
+
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationCommentOnlyOnTag = [];
 
     #[ORM\Column(type: Types::BOOLEAN)]
     public bool $enabled = true;
@@ -447,5 +466,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     public function getPasswordChangedAt(): ?\DateTimeImmutable
     {
         return $this->passwordChangedAt;
+    }
+
+    #[ORM\PostLoad]
+    public function hydrateNotificationChannels(): void
+    {
+        $this->preferenceNotificationIssueCreated = $this->mapToEnumArray($this->preferenceNotificationIssueCreated);
+        $this->preferenceNotificationIssueUpdated = $this->mapToEnumArray($this->preferenceNotificationIssueUpdated);
+        $this->preferenceNotificationCommentCreated = $this->mapToEnumArray(
+            $this->preferenceNotificationCommentCreated
+        );
+        $this->preferenceNotificationCommentUpdated = $this->mapToEnumArray(
+            $this->preferenceNotificationCommentUpdated
+        );
+        $this->preferenceNotificationCommentOnlyOnTag = $this->mapToEnumArray(
+            $this->preferenceNotificationCommentOnlyOnTag
+        );
+    }
+
+    /**
+     * @param NotificationChannel[] $channels
+     */
+    public function hasNotificationChannel(array $channels, NotificationChannel $channel): bool
+    {
+        return in_array($channel, $channels, true);
+    }
+
+    public function hasSlackCredentials(): bool
+    {
+        return $this->slackBotToken !== null && $this->slackMemberId !== null;
+    }
+
+    /**
+     * @param array<string|NotificationChannel> $values
+     *
+     * @return NotificationChannel[]
+     */
+    private function mapToEnumArray(array $values): array
+    {
+        return array_map(
+            static fn (string|NotificationChannel $v): NotificationChannel => $v instanceof NotificationChannel ? $v : NotificationChannel::from(
+                $v
+            ),
+            $values,
+        );
     }
 }

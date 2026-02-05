@@ -10,26 +10,25 @@ use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\IssueStatus;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class IssueKanbanFormatterTest extends TestCase
 {
-    private IssueKanbanFormatter|MockObject $formatter;
+    private IssueKanbanFormatter $formatter;
 
     private Project $project;
 
     protected function setUp(): void
     {
         $this->formatter = new IssueKanbanFormatter();
-        $this->project = $this->createMock(Project::class);
+        $this->project = $this->createStub(Project::class);
         $this->project->backlogStatusesIds = ['10000'];
     }
 
     #[Test]
     public function testFormatReturnsEmptyArrayWhenNoColumnsConfiguration(): void
     {
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->transitions = [];
         $issue->fields = new IssueField();
         $issue->fields->status = new IssueStatus();
@@ -62,7 +61,7 @@ class IssueKanbanFormatterTest extends TestCase
             'to' => $transitionToStatus,
         ];
 
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->transitions = [$transition];
         $issue->fields = new IssueField();
         $issue->fields->status = new IssueStatus();
@@ -72,13 +71,13 @@ class IssueKanbanFormatterTest extends TestCase
         $status = (object) [
             'id' => '20001',
         ];
-        $columnConfig = $this->createMock(BoardColumn::class);
+        $columnConfig = $this->createStub(BoardColumn::class);
         $columnConfig->statuses = [$status];
         $columnConfig->min = 1;
         $columnConfig->max = 5;
         $columnConfig->name = 'Done';
 
-        $columnsConfig = $this->createMock(BoardColumnConfig::class);
+        $columnsConfig = $this->createStub(BoardColumnConfig::class);
         $columnsConfig->columns = [$columnConfig];
 
         $result = $this->formatter->format([$issue], $this->project, $columnsConfig);
@@ -94,7 +93,7 @@ class IssueKanbanFormatterTest extends TestCase
     #[Test]
     public function testFormatSkipsBacklogStatusIssues(): void
     {
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->fields = new IssueField();
         $issue->fields->status = new IssueStatus();
         $issue->fields->status->id = '10000';

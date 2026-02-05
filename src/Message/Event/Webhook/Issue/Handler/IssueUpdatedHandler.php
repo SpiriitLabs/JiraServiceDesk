@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Event\Webhook\Issue\Handler;
 
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\Notification\NotificationType;
 use App\Formatter\Jira\IssueHistoryFormatter;
 use App\Message\Command\Common\Notification;
@@ -41,6 +42,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         $issueKey = $event->getPayload()['issue']['key'];
         $issueId = $event->getPayload()['issue']['id'];
         $issueSummary = $event->getPayload()['issue']['fields']['summary'];
+        $assignee = $event->getPayload()['issue']['fields']['assignee']['displayName'] ?? null;
         $project = $this->projectRepository->findOneBy([
             'jiraId' => $event->getPayload()['issue']['fields']['project']['id'],
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
@@ -69,23 +71,14 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         $cache->save($cachedIssue);
 
         foreach ($project->getUsers() as $user) {
-            if ($user->preferenceNotificationIssueUpdated === false) {
+            $channels = $user->preferenceNotificationIssueUpdated;
+            if ($channels === []) {
                 continue;
             }
 
             if ($user->hasAnyJiraLabel($issue->fields->labels) === false) {
                 continue;
             }
-
-            $templatedEmail = (new TemplatedEmail())
-                ->htmlTemplate('email/issue/issue_edited.html.twig')
-                ->context([
-                    'project' => $project,
-                    'issueSummary' => $issueSummary,
-                    'issueKey' => $issueKey,
-                    'changes' => $this->issueHistoryFormatter->format($issue),
-                ])
-            ;
 
             $subject = $this->translator->trans(
                 id: 'issue.edited.title',
@@ -97,11 +90,24 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                 locale: $user->preferredLocale->value,
             );
 
-            $emailToSent = clone $templatedEmail
-                ->subject($subject)
-                ->to(new Address($user->email, $user->getFullName()))
-                ->locale($user->preferredLocale->value)
-            ;
+            $emailToSent = null;
+            if (in_array(NotificationChannel::EMAIL, $channels, true)) {
+                $templatedEmail = (new TemplatedEmail())
+                    ->htmlTemplate('email/issue/issue_edited.html.twig')
+                    ->context([
+                        'project' => $project,
+                        'issueSummary' => $issueSummary,
+                        'issueKey' => $issueKey,
+                        'changes' => $this->issueHistoryFormatter->format($issue),
+                    ])
+                ;
+
+                $emailToSent = clone $templatedEmail
+                    ->subject($subject)
+                    ->to(new Address($user->email, $user->getFullName()))
+                    ->locale($user->preferredLocale->value)
+                ;
+            }
 
             $this->logger->info('WEBHOOK/IssueUpdated - Generate mail to user', [
                 'user' => $user->email,
@@ -109,6 +115,16 @@ class IssueUpdatedHandler implements LoggerAwareInterface
             $link = $this->router->generate('browse_issue', [
                 'keyIssue' => $issueKey,
             ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $slackExtraContext = [];
+            if ($assignee !== null) {
+                $assigneeLabel = $this->translator->trans(
+                    id: 'issue.assignee.label',
+                    domain: 'app',
+                    locale: $user->preferredLocale->value,
+                );
+                $slackExtraContext[$assigneeLabel] = $assignee;
+            }
+
             $this->commandBus->dispatch(
                 new Notification(
                     user: $user,
@@ -117,6 +133,8 @@ class IssueUpdatedHandler implements LoggerAwareInterface
                     subject: $subject,
                     body: $issueSummary,
                     link: $link,
+                    channels: $channels,
+                    slackExtraContext: $slackExtraContext,
                 ),
             );
         }

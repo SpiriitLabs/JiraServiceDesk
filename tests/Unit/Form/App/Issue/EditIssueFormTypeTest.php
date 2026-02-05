@@ -17,8 +17,9 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\IssueField;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Symfony\Bridge\Doctrine\Form\DoctrineOrmExtension;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
@@ -27,18 +28,19 @@ use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Zenstruck\Foundry\Test\Factories;
 
+#[AllowMockObjectsWithoutExpectations]
 class EditIssueFormTypeTest extends TypeTestCase
 {
     use Factories;
 
-    private Security|MockObject $security;
+    private Security|Stub $security;
 
-    private IssueTypeRepository|MockObject $issueTypeRepository;
+    private IssueTypeRepository|Stub $issueTypeRepository;
 
     protected function setUp(): void
     {
-        $this->security = $this->createMock(Security::class);
-        $this->issueTypeRepository = $this->createMock(IssueTypeRepository::class);
+        $this->security = $this->createStub(Security::class);
+        $this->issueTypeRepository = $this->createStub(IssueTypeRepository::class);
 
         parent::setUp();
     }
@@ -48,13 +50,13 @@ class EditIssueFormTypeTest extends TypeTestCase
         $type = new EditIssueFormType($this->security);
 
         // Mock entity.
-        $issueType = $this->createMock(IssueType::class);
+        $issueType = $this->createStub(IssueType::class);
         $issueType->method('getId')
             ->willReturn(25)
         ;
 
         // Mock repository
-        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder = $this->createStub(QueryBuilder::class);
         $queryBuilder
             ->method('getParameters')
             ->willReturn(new ArrayCollection([]))
@@ -67,7 +69,7 @@ class EditIssueFormTypeTest extends TypeTestCase
             ->method('setParameter')
             ->willReturn($queryBuilder)
         ;
-        $query = $this->createMock(Query::class);
+        $query = $this->createStub(Query::class);
         $query
             ->method('getResult')
             ->willReturn([])
@@ -91,16 +93,16 @@ class EditIssueFormTypeTest extends TypeTestCase
         ;
 
         // Mock EntityManager
-        $em = $this->createMock(EntityManagerInterface::class);
+        $em = $this->createStub(EntityManagerInterface::class);
         $em->method('getRepository')
             ->willReturn($this->issueTypeRepository)
         ;
         $em->method('getClassMetadata')
-            ->willReturn($this->createMock(ClassMetadata::class))
+            ->willReturn($this->createStub(ClassMetadata::class))
         ;
 
         // Mock ManagerRegistry
-        $managerRegistry = $this->createMock(ManagerRegistry::class);
+        $managerRegistry = $this->createStub(ManagerRegistry::class);
         $managerRegistry
             ->method('getManagerForClass')
             ->willReturn($em)
@@ -139,7 +141,7 @@ class EditIssueFormTypeTest extends TypeTestCase
             'id' => '30001',
             'to' => $transitionToStatus,
         ];
-        $issue = $this->createMock(Issue::class);
+        $issue = $this->createStub(Issue::class);
         $issue->key = 'issueKey';
         $issue->id = 'issueId';
         $issue->fields = new IssueField();
@@ -149,7 +151,7 @@ class EditIssueFormTypeTest extends TypeTestCase
         $issueTypes = $this->issueTypeRepository->findBy([]);
         $issueType = reset($issueTypes);
 
-        $priority = $this->createMock(Priority::class);
+        $priority = $this->createStub(Priority::class);
 
         $model = new EditIssue(
             project: $project,

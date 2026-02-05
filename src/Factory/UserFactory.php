@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Entity\User;
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\User\Locale;
 use App\Enum\User\Theme;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
@@ -33,11 +34,11 @@ final class UserFactory extends PersistentProxyObjectFactory
             'firstName' => self::faker()->text(255),
             'lastName' => self::faker()->text(255),
             'password' => self::faker()->text(),
-            'preferenceNotification' => self::faker()->boolean(),
-            'preferenceNotificationCommentCreated' => self::faker()->boolean(),
-            'preferenceNotificationCommentUpdated' => self::faker()->boolean(),
-            'preferenceNotificationIssueCreated' => self::faker()->boolean(),
-            'preferenceNotificationIssueUpdated' => self::faker()->boolean(),
+            'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationCommentOnlyOnTag' => [],
             'preferredLocale' => self::faker()->randomElement(Locale::cases()),
             'preferredTheme' => self::faker()->randomElement(Theme::cases()),
             'roles' => [],

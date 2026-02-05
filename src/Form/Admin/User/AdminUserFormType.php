@@ -55,6 +55,14 @@ class AdminUserFormType extends AbstractUserFormType
                 'choice_label' => 'name',
             ])
             ->add('enabled', SwitchType::class)
+            ->add('slackBotToken', TextType::class, [
+                'required' => false,
+                'label' => 'user.slackBotToken.label',
+            ])
+            ->add('slackMemberId', TextType::class, [
+                'required' => false,
+                'label' => 'user.slackMemberId.label',
+            ])
         ;
     }
 }

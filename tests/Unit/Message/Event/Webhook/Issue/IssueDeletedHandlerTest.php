@@ -3,6 +3,7 @@
 namespace App\Tests\Unit\Message\Event\Webhook\Issue;
 
 use App\Entity\IssueLabel;
+use App\Enum\Notification\NotificationChannel;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Message\Command\Common\Notification;
@@ -15,6 +16,7 @@ use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
@@ -29,26 +31,26 @@ class IssueDeletedHandlerTest extends TestCase
 
     private readonly MessageBusInterface|MockObject $commandBus;
 
-    private readonly ProjectRepository|MockObject $projectRepository;
+    private readonly ProjectRepository|Stub $projectRepository;
 
-    private readonly TranslatorInterface|MockObject $translator;
+    private readonly TranslatorInterface|Stub $translator;
 
-    private readonly FavoriteRepository|MockObject $favoriteRepository;
+    private readonly FavoriteRepository|Stub $favoriteRepository;
 
-    private readonly RouterInterface|MockObject $router;
+    private readonly RouterInterface|Stub $router;
 
     protected function setUp(): void
     {
         $this->commandBus = $this->createMock(MessageBusInterface::class);
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
-        $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->favoriteRepository = $this->createMock(FavoriteRepository::class);
-        $this->router = $this->createMock(RouterInterface::class);
+        $this->projectRepository = $this->createStub(ProjectRepository::class);
+        $this->translator = $this->createStub(TranslatorInterface::class);
+        $this->favoriteRepository = $this->createStub(FavoriteRepository::class);
+        $this->router = $this->createStub(RouterInterface::class);
 
-        $query = $this->createMock(Query::class);
+        $query = $this->createStub(Query::class);
         $query->method('getResult')->willReturn([]);
 
-        $queryBuilder = $this->createMock(QueryBuilder::class);
+        $queryBuilder = $this->createStub(QueryBuilder::class);
         $queryBuilder->method('where')->willReturn($queryBuilder);
         $queryBuilder->method('setParameter')->willReturn($queryBuilder);
         $queryBuilder->method('getQuery')->willReturn($query);
@@ -107,7 +109,7 @@ class IssueDeletedHandlerTest extends TestCase
     ): void {
         $user = UserFactory::createOne([
             'email' => 'test@local.lan',
-            'preferenceNotificationIssueUpdated' => true,
+            'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         ]);
         if ($userLabel !== null) {
             $label = new IssueLabel($userLabel, $userLabel);
@@ -129,7 +131,7 @@ class IssueDeletedHandlerTest extends TestCase
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
-            ->willReturn(new Envelope($this->createMock(Notification::class)))
+            ->willReturn(new Envelope($this->createStub(Notification::class)))
         ;
 
         $handler = $this->generate();
@@ -161,7 +163,7 @@ class IssueDeletedHandlerTest extends TestCase
             favoriteRepository: $this->favoriteRepository,
             router: $this->router,
         );
-        $logger = $this->createMock(LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $handler->setLogger($logger);
 
         return $handler;

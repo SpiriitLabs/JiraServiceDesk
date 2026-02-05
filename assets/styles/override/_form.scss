@@ -79,6 +79,14 @@ select[readonly] {
    color: unset;
 }
 
+.notification-settings .form-check {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .table-action {
     width: 150px !important;
 }

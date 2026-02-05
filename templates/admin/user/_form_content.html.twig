@@ -65,27 +65,52 @@
     </div>
 {% endif %}
 
-<div class="row">
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotification) }}
-        <small class="text-muted">{{ 'user.preferenceNotification.notice'|trans }}</small>
-    </div>
+<h5 class="mt-4 mb-3">{{ 'user.notificationSettings.title'|trans }}</h5>
+
+{% set show_slack = form.vars.data.slackBotToken is defined and form.vars.data.slackBotToken is not null and form.vars.data.slackMemberId is not null %}
+
+<div class="table-responsive">
+    <table class="table table-bordered notification-settings">
+        <thead>
+            <tr>
+                <th class="text-center">{{ 'user.notificationSettings.event'|trans }}</th>
+                <th class="text-center">{{ 'notificationChannel.in_app'|trans }}</th>
+                <th class="text-center">{{ 'notificationChannel.email'|trans }}</th>
+                {% if show_slack %}
+                    <th class="text-center">{{ 'notificationChannel.slack'|trans }}</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for field_name, label_key in {
+                'preferenceNotificationIssueCreated': 'user.preferenceNotificationIssueCreated.label',
+                'preferenceNotificationIssueUpdated': 'user.preferenceNotificationIssueUpdated.label',
+                'preferenceNotificationCommentCreated': 'user.preferenceNotificationCommentCreated.label',
+                'preferenceNotificationCommentUpdated': 'user.preferenceNotificationCommentUpdated.label',
+                'preferenceNotificationCommentOnlyOnTag': 'user.preferenceNotificationCommentOnlyOnTag.label'
+            } %}
+                <tr>
+                    <td>{{ label_key|trans }}</td>
+                    <td class="text-center">{{ form_widget(form[field_name][0], {label: false}) }}</td>
+                    <td class="text-center">{{ form_widget(form[field_name][1], {label: false}) }}</td>
+                    {% if show_slack %}
+                        <td class="text-center">{{ form_widget(form[field_name][2], {label: false}) }}</td>
+                    {% endif %}
+                </tr>
+                {% do form[field_name].setRendered() %}
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-<div class="row">
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationIssueCreated) }}
+{% if form.slackBotToken is defined %}
+    <h5 class="mt-4 mb-3">{{ 'user.slack.section_title'|trans }}</h5>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.slackBotToken) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.slackMemberId) }}
+        </div>
     </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationIssueUpdated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentCreated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentUpdated) }}
-    </div>
-    <div class="col-md-2">
-        {{ form_row(form.preferenceNotificationCommentOnlyOnTag) }}
-    </div>
-</div>
+{% endif %}

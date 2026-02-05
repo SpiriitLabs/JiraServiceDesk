@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Enum\Notification\NotificationChannel;
 use App\Enum\User\Role;
 use App\Enum\User\Theme;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -58,11 +59,10 @@ class UserFixtures extends Fixture
         );
         $user->setRoles($roles);
         $user->preferredTheme = Theme::DARK;
-        $user->preferenceNotification = true;
-        $user->preferenceNotificationIssueCreated = true;
-        $user->preferenceNotificationIssueUpdated = true;
-        $user->preferenceNotificationCommentCreated = true;
-        $user->preferenceNotificationCommentUpdated = true;
+        $user->preferenceNotificationIssueCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
+        $user->preferenceNotificationIssueUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
+        $user->preferenceNotificationCommentCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
+        $user->preferenceNotificationCommentUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
 
         $password = $this->passwordHasher->hashPassword($user, 'password');
         $user->setPassword($password);

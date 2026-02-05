@@ -8,16 +8,16 @@ use App\Repository\IssueLabelRepository;
 use App\Webhook\WebhookLabelFilter;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 class WebhookLabelFilterTest extends TestCase
 {
-    private IssueLabelRepository|MockObject $issueLabelRepository;
+    private IssueLabelRepository|Stub $issueLabelRepository;
 
     protected function setUp(): void
     {
-        $this->issueLabelRepository = $this->createMock(IssueLabelRepository::class);
+        $this->issueLabelRepository = $this->createStub(IssueLabelRepository::class);
     }
 
     public static function labelMatchingDataProvider(): \Generator
@@ -69,7 +69,8 @@ class WebhookLabelFilterTest extends TestCase
     {
         $this->issueLabelRepository
             ->method('getAllJiraLabels')
-            ->willReturn($databaseLabels);
+            ->willReturn($databaseLabels)
+        ;
 
         $filter = new WebhookLabelFilter($this->issueLabelRepository);
 
