@@ -107,19 +107,21 @@
             <td>
                 {{ object.getJiraLabels|join(', ') }}
             </td>
-            <td class="d-flex flex-row" data-cancel-redirect>
-                <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">
-                    <i class="mdi mdi-pencil"></i>
-                </a>
+            <td data-cancel-redirect>
+                <div class="d-flex flex-row">
+                    <a class="action-icon text-secondary" href="{{ path('admin_user_edit', {id: object.id}) }}">
+                        <i class="mdi mdi-pencil"></i>
+                    </a>
 
-                <a class="action-icon text-secondary" href="{{ path('app_profil', {_switch_user: object.email}) }}">
-                    <i class="ri-shield-user-fill"></i>
-                </a>
+                    <a class="action-icon text-secondary" href="{{ path('app_profil', {_switch_user: object.email}) }}">
+                        <i class="ri-shield-user-fill"></i>
+                    </a>
 
-                {% include 'components/modal/delete.html.twig' with {
-                    id: object.id,
-                    button_link: path('admin_user_delete', {id: object.id}),
-                } %}
+                    {% include 'components/modal/delete.html.twig' with {
+                        id: object.id,
+                        button_link: path('admin_user_delete', {id: object.id}),
+                    } %}
+                </div>
             </td>
         </twig:block>
 
