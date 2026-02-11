@@ -82,7 +82,6 @@ class JiraRequestParserTest extends TestCase
     {
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with(['from-client'])
             ->willReturn(true)
         ;
 
@@ -99,7 +98,6 @@ class JiraRequestParserTest extends TestCase
     {
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with(['bug', 'feature'])
             ->willReturn(false)
         ;
 
@@ -130,7 +128,6 @@ class JiraRequestParserTest extends TestCase
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with(['from-api'])
             ->willReturn(true)
         ;
 
@@ -160,7 +157,6 @@ class JiraRequestParserTest extends TestCase
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with(['other-label'])
             ->willReturn(false)
         ;
 
@@ -187,7 +183,6 @@ class JiraRequestParserTest extends TestCase
 
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with([])
             ->willReturn(false)
         ;
 
@@ -205,7 +200,6 @@ class JiraRequestParserTest extends TestCase
     {
         $this->webhookLabelFilter
             ->method('hasMatchingLabel')
-            ->with([])
             ->willReturn(false)
         ;
 

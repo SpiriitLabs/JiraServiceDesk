@@ -112,7 +112,6 @@ class CommentUpdatedHandlerTest extends TestCase
         $issue = $this->createStub(Issue::class);
         $this->issueRepository
             ->method('getFull')
-            ->with('issueKey')
             ->willReturn($issue)
         ;
 
@@ -121,7 +120,6 @@ class CommentUpdatedHandlerTest extends TestCase
         $comment->visibility = null;
         $this->issueRepository
             ->method('getComment')
-            ->with('issueKey', 'commentId')
             ->willReturn($comment)
         ;
 

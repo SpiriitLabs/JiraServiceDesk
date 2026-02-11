@@ -27,8 +27,8 @@ class ListController extends AbstractController
         $pagination = $this->handle(
             new PaginateEntities(
                 Priority::class,
-                $request->get('_sort', 'id'),
-                $request->get('page', 1),
+                $request->query->get('_sort', 'id'),
+                $request->query->getInt('page', 1),
             ),
         );
 

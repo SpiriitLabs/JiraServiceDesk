@@ -50,7 +50,7 @@ class ListController extends AbstractController
         $this->setCurrentProject($project);
         $filter->projects = [$this->getCurrentProject()];
 
-        $page = $request->get('page');
+        $page = $request->query->get('page');
         $form = $this->createForm(
             type: IssueFormFilter::class,
             data: $filter,
@@ -72,7 +72,7 @@ class ListController extends AbstractController
         /** @var SearchIssuesResult $searchIssueResult */
         $searchIssueResult = $this->handle(
             new SearchIssues(
-                sort: $request->get('_sort', '-updated'),
+                sort: $request->query->get('_sort', '-updated'),
                 user: $user,
                 filter: $filter,
                 pageToken: $page,

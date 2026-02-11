@@ -91,7 +91,6 @@ class IssueUpdatedHandlerTest extends TestCase
         $issue->fields->labels = ['from-client'];
         $this->issueRepository
             ->method('getFull')
-            ->with('issueKey')
             ->willReturn($issue)
         ;
 

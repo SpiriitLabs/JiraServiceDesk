@@ -169,7 +169,6 @@ class CommentCreatedHandlerTest extends TestCase
         $comment->visibility = null;
         $this->issueRepository
             ->method('getComment')
-            ->with('issueKey', 'commentId')
             ->willReturn($comment)
         ;
 

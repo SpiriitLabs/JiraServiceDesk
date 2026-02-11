@@ -84,7 +84,6 @@ class IssueCreatedHandlerTest extends TestCase
         $issue = $this->createStub(Issue::class);
         $this->issueRepository
             ->method('getFull')
-            ->with('issueKey')
             ->willReturn($issue)
         ;
 

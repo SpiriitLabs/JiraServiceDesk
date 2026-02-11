@@ -41,9 +41,9 @@ class ShowUserStreamController extends AbstractController
     ): Response {
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-        $page = $request->get('page', null);
+        $page = $request->query->get('page');
         $defaultSort = '-updated';
-        $sort = $request->get('_sort', $defaultSort);
+        $sort = $request->query->get('_sort', $defaultSort);
 
         $issueFilter = new IssueFilter(
             projects: [$project],
@@ -87,7 +87,7 @@ class ShowUserStreamController extends AbstractController
         Request $request
     ): Response {
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
-        $page = $request->get('page', null);
+        $page = $request->query->get('page');
 
         $result = $this->handle(
             new SearchIssues(

@@ -78,7 +78,7 @@ class ViewController extends AbstractController
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $kanbanIssuesFormatted = $this->handle(
-            new GetKanbanIssueByBoardId($project, $user, $idBoard, $request->get('assignee', '')),
+            new GetKanbanIssueByBoardId($project, $user, $idBoard, $request->query->get('assignee', '')),
         );
 
         return $this->render(
@@ -88,7 +88,7 @@ class ViewController extends AbstractController
                 'boardId' => $idBoard,
                 'kanbanIssues' => $kanbanIssuesFormatted,
                 'assignees' => $this->getAssignees($project, $user),
-                'assigneeId' => $request->get('assignee', ''),
+                'assigneeId' => $request->query->get('assignee', ''),
             ],
         );
     }

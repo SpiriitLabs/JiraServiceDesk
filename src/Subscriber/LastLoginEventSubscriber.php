@@ -9,8 +9,7 @@ use App\Enum\LogEntry\Type;
 use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 readonly class LastLoginEventSubscriber implements EventSubscriberInterface
@@ -21,11 +20,9 @@ readonly class LastLoginEventSubscriber implements EventSubscriberInterface
     ) {
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
+    public function onLoginSuccess(LoginSuccessEvent $event): void
     {
-        $user = $event->getAuthenticationToken()
-            ->getUser()
-        ;
+        $user = $event->getUser();
 
         if ($user instanceof User) {
             $user->setLastLoginAt(new \DateTimeImmutable());
@@ -46,7 +43,7 @@ readonly class LastLoginEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
+            LoginSuccessEvent::class => 'onLoginSuccess',
         ];
     }
 }

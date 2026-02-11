@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "585da6a0ebb0b94b61c3fd085a8131a8",
+    "content-hash": "4f5b335c49b51eed94b0d206a69c9be9",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
