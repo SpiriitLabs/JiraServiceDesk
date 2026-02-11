@@ -32,6 +32,10 @@
                             <!--- Sidemenu -->
                             <ul class="side-nav">
 
+                                {% if is_granted('IS_IMPERSONATOR') %}
+                                    <li class="bg-danger py-2 fw-bold text-center text-uppercase"><a class="text-white" href="{{ impersonation_exit_path(path('admin_user_list')) }}">{{ 'currentImpersonation'|trans }}</a></li>
+                                {% endif %}
+
                                 <twig:nav:section-title
                                     trans="sidebar.categories.administration"
                                     role="{{ constant('App\\Enum\\User\\Role::ROLE_ADMIN') }}"

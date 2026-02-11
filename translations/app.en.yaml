@@ -22,6 +22,8 @@ action:
 yes: "Yes"
 no: "No"
 
+currentImpersonation: "In the process of identity theft"
+
 copy:
   sucess: "Link copied successfully"
 

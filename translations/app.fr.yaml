@@ -22,6 +22,8 @@ action:
 yes: "Oui"
 no: "Non"
 
+currentImpersonation: "En cours d'usurpation d'identité"
+
 copy:
   sucess: "Lien copié"
 

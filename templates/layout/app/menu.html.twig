@@ -40,6 +40,10 @@
                             <!--- Sidemenu -->
                             <ul class="side-nav mt-1">
 
+                                {% if is_granted('IS_IMPERSONATOR') %}
+                                    <li class="bg-danger py-2 fw-bold text-center text-uppercase"><a class="text-white" href="{{ impersonation_exit_path(path('admin_user_list')) }}">{{ 'currentImpersonation'|trans }}</a></li>
+                                {% endif %}
+
                                 {% if current_project is defined %}
 
                                     <twig:nav:section-title
