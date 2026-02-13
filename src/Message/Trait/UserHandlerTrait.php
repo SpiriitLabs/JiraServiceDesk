@@ -16,6 +16,7 @@ trait UserHandlerTrait
         $user->preferredTheme = $command->preferredTheme;
         $user->preferenceNotificationIssueCreated = $command->preferenceNotificationIssueCreated;
         $user->preferenceNotificationIssueUpdated = $command->preferenceNotificationIssueUpdated;
+        $user->preferenceNotificationIssueDeleted = $command->preferenceNotificationIssueDeleted;
         $user->preferenceNotificationCommentCreated = $command->preferenceNotificationCommentCreated;
         $user->preferenceNotificationCommentUpdated = $command->preferenceNotificationCommentUpdated;
         $user->preferenceNotificationCommentOnlyOnTag = $command->preferenceNotificationCommentOnlyOnTag;

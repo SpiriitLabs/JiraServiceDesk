@@ -163,6 +163,8 @@ user:
     label: "Issue Created"
   preferenceNotificationIssueUpdated:
     label: "Issue Updated"
+  preferenceNotificationIssueDeleted:
+    label: "Issue Deleted"
   preferenceNotificationCommentCreated:
     label: "Comment Created"
   preferenceNotificationCommentUpdated:

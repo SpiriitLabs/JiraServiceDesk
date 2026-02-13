@@ -36,6 +36,7 @@ final class UserFactory extends PersistentProxyObjectFactory
             'password' => self::faker()->text(),
             'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+            'preferenceNotificationIssueDeleted' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'preferenceNotificationCommentUpdated' => [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
             'preferenceNotificationCommentOnlyOnTag' => [],

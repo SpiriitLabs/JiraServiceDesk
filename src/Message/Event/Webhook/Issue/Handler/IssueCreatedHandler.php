@@ -10,7 +10,6 @@ use App\Message\Command\Common\Notification;
 use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
-use JiraCloud\JiraException;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -47,6 +46,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
         if ($project == null) {
             return;
         }
+        $issue = $this->issueRepository->getFull($issueKey, checkLabel: false);
 
         $this->logger->info('WEBHOOK/IssueCreated', [
             'issueKey' => $issueKey,
@@ -55,7 +55,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
+        $issueLabels = $issue->fields->labels;
 
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/issue/issue_created.html.twig')
@@ -67,18 +67,12 @@ class IssueCreatedHandler implements LoggerAwareInterface
         ;
 
         foreach ($project->getUsers() as $user) {
-            $channels = $user->preferenceNotificationIssueCreated;
-            if ($channels === []) {
-                continue;
-            }
-
             if ($user->hasAnyJiraLabel($issueLabels) === false) {
                 continue;
             }
 
-            try {
-                $this->issueRepository->getFull($issueKey, $user->getJiraLabels());
-            } catch (JiraException $jiraException) {
+            $channels = $user->preferenceNotificationIssueCreated;
+            if ($channels === []) {
                 continue;
             }
 

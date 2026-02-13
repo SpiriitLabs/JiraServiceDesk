@@ -34,7 +34,7 @@ class SlackNotificationServiceTest extends TestCase
             ->willReturn($response)
         ;
 
-        $service = new SlackNotificationService($httpClient);
+        $service = new SlackNotificationService($httpClient, 'Test Project');
 
         $user = new User('test@example.com', 'John', 'Doe');
         $user->slackBotToken = 'xoxb-test-token';
@@ -52,7 +52,7 @@ class SlackNotificationServiceTest extends TestCase
             ->method('request')
         ;
 
-        $service = new SlackNotificationService($httpClient);
+        $service = new SlackNotificationService($httpClient, 'Test Project');
 
         $user = new User('test@example.com', 'John', 'Doe');
         $user->slackBotToken = null;
@@ -70,7 +70,7 @@ class SlackNotificationServiceTest extends TestCase
             ->method('request')
         ;
 
-        $service = new SlackNotificationService($httpClient);
+        $service = new SlackNotificationService($httpClient, 'Test Project');
 
         $user = new User('test@example.com', 'John', 'Doe');
         $user->slackBotToken = 'xoxb-test-token';
@@ -97,7 +97,7 @@ class SlackNotificationServiceTest extends TestCase
             }))
         ;
 
-        $service = new SlackNotificationService($httpClient);
+        $service = new SlackNotificationService($httpClient, 'Test Project');
         $service->setLogger($logger);
 
         $user = new User('test@example.com', 'John', 'Doe');

@@ -16,6 +16,7 @@ class AbstractUserDTO
      * @param array<int,mixed>      $projects
      * @param NotificationChannel[] $preferenceNotificationIssueCreated
      * @param NotificationChannel[] $preferenceNotificationIssueUpdated
+     * @param NotificationChannel[] $preferenceNotificationIssueDeleted
      * @param NotificationChannel[] $preferenceNotificationCommentCreated
      * @param NotificationChannel[] $preferenceNotificationCommentUpdated
      * @param NotificationChannel[] $preferenceNotificationCommentOnlyOnTag
@@ -32,6 +33,7 @@ class AbstractUserDTO
         public Theme $preferredTheme = Theme::AUTO,
         public array $preferenceNotificationIssueCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         public array $preferenceNotificationIssueUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
+        public array $preferenceNotificationIssueDeleted = [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         public array $preferenceNotificationCommentCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         public array $preferenceNotificationCommentUpdated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL],
         public array $preferenceNotificationCommentOnlyOnTag = [],

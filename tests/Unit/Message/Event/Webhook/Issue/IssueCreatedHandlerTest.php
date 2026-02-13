@@ -12,6 +12,7 @@ use App\Message\Event\Webhook\Issue\IssueCreated;
 use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
 use JiraCloud\Issue\Issue;
+use JiraCloud\Issue\IssueField;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -81,7 +82,9 @@ class IssueCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createStub(Issue::class);
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = ['from-client'];
         $this->issueRepository
             ->method('getFull')
             ->willReturn($issue)
@@ -180,7 +183,9 @@ class IssueCreatedHandlerTest extends TestCase
             ->willReturn($project)
         ;
 
-        $issue = $this->createStub(Issue::class);
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = $issueLabels;
         $this->issueRepository
             ->method('getFull')
             ->willReturn($issue)

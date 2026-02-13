@@ -23,6 +23,7 @@ class EditUser extends AbstractUserDTO
             preferredTheme: $this->user->preferredTheme,
             preferenceNotificationIssueCreated: $this->user->preferenceNotificationIssueCreated,
             preferenceNotificationIssueUpdated: $this->user->preferenceNotificationIssueUpdated,
+            preferenceNotificationIssueDeleted: $this->user->preferenceNotificationIssueDeleted,
             preferenceNotificationCommentCreated: $this->user->preferenceNotificationCommentCreated,
             preferenceNotificationCommentUpdated: $this->user->preferenceNotificationCommentUpdated,
             preferenceNotificationCommentOnlyOnTag: $this->user->preferenceNotificationCommentOnlyOnTag,

@@ -64,12 +64,12 @@ class IssueDeletedHandler implements LoggerAwareInterface
         $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
 
         foreach ($project->getUsers() as $user) {
-            $channels = $user->preferenceNotificationIssueUpdated;
-            if ($channels === []) {
+            if ($user->hasAnyJiraLabel($issueLabels) === false) {
                 continue;
             }
 
-            if ($user->hasAnyJiraLabel($issueLabels) === false) {
+            $channels = $user->preferenceNotificationIssueDeleted;
+            if ($channels === []) {
                 continue;
             }
 

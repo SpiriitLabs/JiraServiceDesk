@@ -13,6 +13,8 @@ use App\Repository\Jira\IssueRepository;
 use App\Repository\ProjectRepository;
 use App\Service\ReplaceAccountIdByDisplayName;
 use JiraCloud\Issue\Comment;
+use JiraCloud\Issue\Issue;
+use JiraCloud\Issue\IssueField;
 use JiraCloud\Issue\Visibility;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -172,6 +174,14 @@ class CommentCreatedHandlerTest extends TestCase
             ->willReturn($comment)
         ;
 
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = ['from-client'];
+        $this->issueRepository
+            ->method('getFull')
+            ->willReturn($issue)
+        ;
+
         $this->commandBus
             ->expects($expectDispatch ? self::once() : self::never())
             ->method('dispatch')
@@ -281,6 +291,14 @@ class CommentCreatedHandlerTest extends TestCase
         $this->issueRepository
             ->method('getComment')
             ->willReturn($comment)
+        ;
+
+        $issue = new Issue();
+        $issue->fields = new IssueField();
+        $issue->fields->labels = $issueLabels;
+        $this->issueRepository
+            ->method('getFull')
+            ->willReturn($issue)
         ;
 
         $this->commandBus

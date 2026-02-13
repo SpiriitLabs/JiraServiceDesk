@@ -163,6 +163,8 @@ user:
     label: "Ticket créé"
   preferenceNotificationIssueUpdated:
     label: "Ticket mis à jour"
+  preferenceNotificationIssueDeleted:
+    label: "Ticket supprimé"
   preferenceNotificationCommentCreated:
     label: "Commentaire créé"
   preferenceNotificationCommentUpdated:

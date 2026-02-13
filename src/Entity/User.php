@@ -88,6 +88,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
      * @var NotificationChannel[]
      */
     #[ORM\Column(type: Types::JSON)]
+    public array $preferenceNotificationIssueDeleted = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
+
+    /**
+     * @var NotificationChannel[]
+     */
+    #[ORM\Column(type: Types::JSON)]
     public array $preferenceNotificationCommentCreated = [NotificationChannel::IN_APP, NotificationChannel::EMAIL];
 
     /**
@@ -473,6 +479,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Authent
     {
         $this->preferenceNotificationIssueCreated = $this->mapToEnumArray($this->preferenceNotificationIssueCreated);
         $this->preferenceNotificationIssueUpdated = $this->mapToEnumArray($this->preferenceNotificationIssueUpdated);
+        $this->preferenceNotificationIssueDeleted = $this->mapToEnumArray($this->preferenceNotificationIssueDeleted);
         $this->preferenceNotificationCommentCreated = $this->mapToEnumArray(
             $this->preferenceNotificationCommentCreated
         );

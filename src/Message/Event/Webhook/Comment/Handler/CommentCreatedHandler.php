@@ -48,6 +48,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
             'jiraKey' => $event->getPayload()['issue']['fields']['project']['key'],
         ]);
         $comment = $this->issueRepository->getComment($issueKey, $event->getPayload()['comment']['id']);
+        $issue = $this->issueRepository->getFull($issueKey, checkLabel: false);
         if ($project == null) {
             return;
         }
@@ -63,7 +64,7 @@ class CommentCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $issueLabels = $event->getPayload()['issue']['fields']['labels'] ?? [];
+        $issueLabels = $issue->fields->labels;
 
         $commentBody = $event->getPayload()['comment']['body'];
         $commentBody = $this->replaceAccountIdByDisplayName->replaceInCommentBody($commentBody);

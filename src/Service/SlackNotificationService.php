@@ -21,7 +21,8 @@ class SlackNotificationService implements LoggerAwareInterface
     ) {
     }
 
-    public function testConnection(User $user): true|string {
+    public function testConnection(User $user): true|string
+    {
         if ($user->slackBotToken === null || $user->slackMemberId === null) {
             return 'Missing Slack credentials';
         }
@@ -34,7 +35,10 @@ class SlackNotificationService implements LoggerAwareInterface
                 ],
                 'json' => [
                     'channel' => $user->slackMemberId,
-                    'text' => \sprintf('Test message from %s - Your Slack integration is working !', $this->projectName),
+                    'text' => \sprintf(
+                        'Test message from %s - Your Slack integration is working !',
+                        $this->projectName
+                    ),
                 ],
             ]);
 

@@ -85,6 +85,13 @@ abstract class AbstractUserFormType extends AbstractType
                 'required' => false,
                 'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
             ])
+            ->add('preferenceNotificationIssueDeleted', EnumType::class, [
+                'class' => NotificationChannel::class,
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
+                'choice_label' => fn (NotificationChannel $channel) => $channel->label(),
+            ])
             ->add('preferenceNotificationCommentCreated', EnumType::class, [
                 'class' => NotificationChannel::class,
                 'multiple' => true,

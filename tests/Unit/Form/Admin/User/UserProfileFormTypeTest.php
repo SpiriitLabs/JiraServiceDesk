@@ -88,6 +88,7 @@ class UserProfileFormTypeTest extends TypeTestCase
             'lastName' => 'DUPOND',
             'preferenceNotificationIssueCreated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
             'preferenceNotificationIssueUpdated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
+            'preferenceNotificationIssueDeleted' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
             'preferenceNotificationCommentUpdated' => [],
             'preferenceNotificationCommentCreated' => [NotificationChannel::IN_APP->value, NotificationChannel::EMAIL->value],
             'preferenceNotificationCommentOnlyOnTag' => [],

@@ -26,7 +26,7 @@ class JiraRequestConsumer implements ConsumerInterface, LoggerAwareInterface
 
     // 5 minutes = 300_000 ms
     // 30 secondes = 30_000 ms
-    private const int DELAY_STAMP = 300_000;
+    private const int DELAY_STAMP = 30;
 
     public function __construct(
         private readonly MessageBusInterface $commandBus,

@@ -71,12 +71,12 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         $cache->save($cachedIssue);
 
         foreach ($project->getUsers() as $user) {
-            $channels = $user->preferenceNotificationIssueUpdated;
-            if ($channels === []) {
+            if ($user->hasAnyJiraLabel($issue->fields->labels) === false) {
                 continue;
             }
 
-            if ($user->hasAnyJiraLabel($issue->fields->labels) === false) {
+            $channels = $user->preferenceNotificationIssueUpdated;
+            if ($channels === []) {
                 continue;
             }
 

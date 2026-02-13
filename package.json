@@ -1,7 +1,7 @@
 {
     "name": "jiraservicedesk",
     "description": "A jira service desk client application.",
-    "version": "0.67.1",
+    "version": "0.67.2",
     "devDependencies": {
         "@babel/core": "^7.28.3",
         "@babel/preset-env": "^7.28.3",
