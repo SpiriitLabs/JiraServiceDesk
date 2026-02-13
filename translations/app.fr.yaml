@@ -171,6 +171,30 @@ user:
     label: "Mentionné dans un commentaire (@tag)"
   slack:
     section_title: "Intégration Slack"
+    howto:
+      title: "Guide de configuration du bot Slack"
+      step1:
+        title: "Étape 1 : Créer une application Slack"
+        description: 'Rendez-vous sur <a href="https://api.slack.com/apps" target="_blank">api.slack.com/apps</a> et cliquez sur <strong>Create New App</strong>. Choisissez <strong>From scratch</strong>, donnez-lui un nom (ex: "Jira Service Desk") et sélectionnez votre espace de travail.'
+      step2:
+        title: "Étape 2 : Configurer les permissions du bot"
+        description: 'Dans les paramètres de votre application, allez dans <strong>OAuth & Permissions</strong>. Sous <strong>Bot Token Scopes</strong>, ajoutez les scopes suivants :<br><code>chat:write</code>, <code>im:write</code>'
+      step3:
+        title: "Étape 3 : Installer l'application dans votre Workspace"
+        description: "Allez dans <strong>Install App</strong> dans la barre latérale et cliquez sur <strong>Install to Workspace</strong>. Autorisez les permissions demandées."
+      step4:
+        title: "Étape 4 : Copier le token du bot"
+        description: "Après l'installation, vous verrez un <strong>Bot User OAuth Token</strong> commençant par <code>xoxb-</code>. Copiez cette valeur et collez-la dans le champ <strong>Token du bot Slack</strong>."
+      step5:
+        title: "Étape 5 : Trouver l'identifiant membre Slack"
+        description: "Dans Slack, cliquez sur la photo de profil de l'utilisateur, puis sur <strong>Afficher le profil complet</strong>. Cliquez sur le bouton <strong>plus (trois points)</strong> et sélectionnez <strong>Copier l'identifiant du membre</strong>. Collez cette valeur dans le champ <strong>Identifiant membre Slack</strong>."
+      step6:
+        title: "Étape 6 : Installer le bot dans votre Workspace"
+        description: "Dans les paramètres de votre application, allez dans <strong>Install App</strong> dans la barre latérale. Cliquez sur le bouton <strong>Install to Workspace</strong> (ou <strong>Reinstall to Workspace</strong> si vous avez modifié les scopes). Cela ajoutera le bot à votre espace de travail Slack et lui permettra d'envoyer des messages directs."
+    test:
+      button: "Tester la connexion Slack"
+      success: "Message de test Slack envoyé avec succès ! Vérifiez vos messages directs Slack."
+      error: "Échec de l'envoi du message de test Slack. Veuillez vérifier vos identifiants."
   slackBotToken:
     label: "Token du bot Slack"
   slackMemberId:

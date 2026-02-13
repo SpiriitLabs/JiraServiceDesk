@@ -118,7 +118,7 @@ db-reload: db-reset db-fixtures
 .PHONY: db-import
 db-import: ## Reset database with given DUMP variable
 	@:$(call check_defined, DUMP, sql file)
-	@docker cp ./var/$(DUMP) $(shell $(DC) ps -q database):/$(DUMP)
+	@docker cp ./$(DUMP) $(shell $(DC) ps -q database):/$(DUMP)
 	@echo '🗃️ Reseting and import database.'
 	@$(DCE) database reset $(DUMP) > /dev/null
 	@echo '✅ Your dump ($(DUMP)) is been imported.'
@@ -129,7 +129,7 @@ db-dump: ## Save database to a sql file
 	@echo '🗃️ Saving database.'
 	@$(DCE) database save $(DUMP) > /dev/null
 	@echo '🗃️ Copy to local.'
-	@docker cp $(shell $(DC) ps -q database):/$(DUMP) ./var/$(DUMP)
+	@docker cp $(shell $(DC) ps -q database):/$(DUMP) ./$(DUMP)
 
 ##
 ## —— Tests 📊 & Code Quality ✅————————————————

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mariadb-dump -uroot -p${MARIADB_ROOT_PASSWORD} ${MARIADB_DATABASE} > $1
+
+exit 0

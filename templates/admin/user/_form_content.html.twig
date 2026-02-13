@@ -104,13 +104,42 @@
 </div>
 
 {% if form.slackBotToken is defined %}
-    <h5 class="mt-4 mb-3">{{ 'user.slack.section_title'|trans }}</h5>
+    <div class="d-flex align-items-center mt-4 mb-3">
+        <h5 class="mb-0">{{ 'user.slack.section_title'|trans }}</h5>
+
+        <button class="btn action-icon btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#slackHelpOffcanvas">
+            <i class="ri-question-line"></i>
+        </button>
+    </div>
+
     <div class="row">
         <div class="col-md-6">
             {{ form_row(form.slackBotToken) }}
         </div>
         <div class="col-md-6">
             {{ form_row(form.slackMemberId) }}
+        </div>
+    </div>
+
+    {% if form.vars.data.slackBotToken is not null and form.vars.data.slackMemberId is not null %}
+        <button type="submit" formaction="{{ path('admin_user_test_slack', {id: entity.id}) }}" formmethod="post" class="btn btn-outline-info btn-sm float-end">
+            <i class="ri-send-plane-line"></i> {{ 'user.slack.test.button'|trans }}
+        </button>
+    {% endif %}
+
+    {# Offcanvas - How to setup Slack #}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="slackHelpOffcanvas" aria-labelledby="slackHelpOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 id="slackHelpOffcanvasLabel">{{ 'user.slack.howto.title'|trans }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            {% for i in 1..6 %}
+                <div class="mt-3">
+                    <h6>{{ ('user.slack.howto.step' ~ i ~ '.title')|trans }}</h6>
+                    <p>{{ ('user.slack.howto.step' ~ i ~ '.description')|trans|raw }}</p>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endif %}

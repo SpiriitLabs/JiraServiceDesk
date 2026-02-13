@@ -171,6 +171,30 @@ user:
     label: "Mentioned in comment (@tag)"
   slack:
     section_title: "Slack Integration"
+    howto:
+      title: "Slack Bot Setup Guide"
+      step1:
+        title: "Step 1: Create a Slack App"
+        description: 'Go to <a href="https://api.slack.com/apps" target="_blank">api.slack.com/apps</a> and click <strong>Create New App</strong>. Choose <strong>From scratch</strong>, give it a name (e.g. "Jira Service Desk"), and select your workspace.'
+      step2:
+        title: "Step 2: Configure Bot Permissions"
+        description: 'In your app settings, go to <strong>OAuth & Permissions</strong>. Under <strong>Bot Token Scopes</strong>, add the following scopes:<br><code>chat:write</code>, <code>im:write</code>'
+      step3:
+        title: "Step 3: Install the App to your Workspace"
+        description: 'Go to <strong>Install App</strong> in the sidebar and click <strong>Install to Workspace</strong>. Authorize the requested permissions.'
+      step4:
+        title: "Step 4: Copy the Bot Token"
+        description: 'After installation, you will see a <strong>Bot User OAuth Token</strong> starting with <code>xoxb-</code>. Copy this value and paste it into the <strong>Slack Bot Token</strong> field.'
+      step5:
+        title: "Step 5: Find your Slack Member ID"
+        description: 'In Slack, click on the user profile picture, then click <strong>View full profile</strong>. Click the <strong>more (three dots)</strong> button and select <strong>Copy member ID</strong>. Paste this value into the <strong>Slack Member ID</strong> field.'
+      step6:
+        title: "Step 6: Install the Bot to your Workspace"
+        description: 'In your app settings, go to <strong>Install App</strong> in the sidebar. Click the <strong>Install to Workspace</strong> button (or <strong>Reinstall to Workspace</strong> if you changed the scopes). This will add the bot to your Slack workspace and allow it to send direct messages.'
+    test:
+      button: "Test Slack Connection"
+      success: "Slack test message sent successfully! Check your Slack direct messages."
+      error: "Failed to send Slack test message. Please verify your credentials."
   slackBotToken:
     label: "Slack Bot Token"
   slackMemberId:

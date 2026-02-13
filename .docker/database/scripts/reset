@@ -1,0 +1,6 @@
+#!/bin/bash
+
+mariadb -uroot -p${MARIADB_ROOT_PASSWORD} -e"DROP DATABASE ${MARIADB_DATABASE};CREATE DATABASE ${MARIADB_DATABASE}" && \
+    mariadb -uroot -p${MARIADB_ROOT_PASSWORD} ${MARIADB_DATABASE} < $1
+
+exit 0
