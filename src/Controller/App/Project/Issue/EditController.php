@@ -58,7 +58,7 @@ class EditController extends AbstractController
 
         $issueTransitions = [];
         foreach ($issue->transitions as $issueTransition) {
-            $issueTransitions[$issueTransition->name] = $issueTransition->id;
+            $issueTransitions[$issueTransition->to->name] = $issueTransition->id;
         }
         $issueTransitionIdCurrentStatusIssue = null;
         foreach ($issue->transitions as $issueTransition) {
