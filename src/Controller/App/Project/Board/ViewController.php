@@ -10,6 +10,7 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
 use App\Repository\Jira\UserRepository;
+use App\Repository\PriorityRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -32,6 +33,7 @@ class ViewController extends AbstractController
 
     public function __construct(
         private readonly UserRepository $userRepository,
+        private readonly PriorityRepository $priorityRepository,
         #[Autowire(env: 'JIRA_ACCOUNT_ID')]
         private readonly string $jiraAPIAccountId,
     ) {
@@ -77,8 +79,19 @@ class ViewController extends AbstractController
     ): Response {
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
+
+        $priorityJiraIds = $request->query->all('priority');
+        $currentSort = $request->query->get('_sort', '');
+
         $kanbanIssuesFormatted = $this->handle(
-            new GetKanbanIssueByBoardId($project, $user, $idBoard, $request->query->get('assignee', '')),
+            new GetKanbanIssueByBoardId(
+                $project,
+                $user,
+                $idBoard,
+                $request->query->get('assignee', ''),
+                $priorityJiraIds,
+                $currentSort !== '' ? $currentSort : null,
+            ),
         );
 
         return $this->render(
@@ -89,6 +102,9 @@ class ViewController extends AbstractController
                 'kanbanIssues' => $kanbanIssuesFormatted,
                 'assignees' => $this->getAssignees($project, $user),
                 'assigneeId' => $request->query->get('assignee', ''),
+                'priorities' => $this->priorityRepository->findAll(),
+                'selectedPriorities' => $priorityJiraIds,
+                'currentSort' => $currentSort,
             ],
         );
     }
