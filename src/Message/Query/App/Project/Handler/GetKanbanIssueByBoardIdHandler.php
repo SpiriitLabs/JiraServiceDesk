@@ -6,6 +6,7 @@ namespace App\Message\Query\App\Project\Handler;
 
 use App\Formatter\Jira\IssueKanbanFormatter;
 use App\Message\Query\App\Project\GetKanbanIssueByBoardId;
+use App\Model\SortParams;
 use App\Repository\Jira\BoardRepository;
 use JiraCloud\Issue\Issue;
 use JiraCloud\Issue\JqlQuery;
@@ -47,6 +48,16 @@ readonly class GetKanbanIssueByBoardIdHandler
             $jql->addInExpression('assignee', [$query->assigneeId]);
         }
 
+        if (count($query->priorityJiraIds) > 0) {
+            $jql->addInExpression('priority', $query->priorityJiraIds, needQuote: false);
+        }
+
+        if ($query->sort !== null && $query->sort !== '') {
+            $sort = SortParams::createSort($query->sort);
+            $jql->addAnyExpression(sprintf('%s %s %s', JqlQuery::KEYWORD_ORDER_BY, $sort->by, $sort->dir));
+        }
+
+        // dd($jql->getQuery());
         $boardIssues = $this->boardRepository->getBoardIssuesById(
             id: $query->boardId,
             parameters: [

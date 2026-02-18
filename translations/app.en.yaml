@@ -259,6 +259,13 @@ project:
   kanban:
     selectTransition:
       title: "Select status"
+    filter:
+      priority:
+        label: "Priority"
+      reset: "Reset filters"
+    sort:
+      priority:
+        label: "Sort by priority"
 
 issue:
   label: "Ticket(s)"

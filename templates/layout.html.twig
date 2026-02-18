@@ -19,7 +19,7 @@
     {% endblock %}
 </head>
 
-<body {% block turbo %} data-turbo="false"{% endblock %} {{ stimulus_controller('theme install_pwa marker_io') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }}
+<body {% block turbo %} data-turbo="false"{% endblock %} {{ stimulus_controller('theme install_pwa marker_io turbo_stream_link') }} {{ stimulus_controller('marker_io', {projectId: marker_io_project_id}) }}
     id="body">
 <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastsNotifications">
     {% for type, messages in app.flashes %}

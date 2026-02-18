@@ -3,7 +3,8 @@
     "allow": [
       "Bash(make phpunit:*)",
       "Bash(make quality:*)",
-      "Bash(APP_ENV=test php vendor/bin/phpunit:*)"
+      "Bash(APP_ENV=test php vendor/bin/phpunit:*)",
+      "Bash(php vendor/bin/phpunit:*)"
     ]
   }
 }
