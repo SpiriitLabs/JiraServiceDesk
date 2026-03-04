@@ -20,6 +20,7 @@ class EditIssue extends AbstractIssueDTO
         Priority $priority,
         public string $transition,
         public string $assignee,
+        public ?string $description = null,
     ) {
         parent::__construct(
             summary: $this->issue->fields->summary,

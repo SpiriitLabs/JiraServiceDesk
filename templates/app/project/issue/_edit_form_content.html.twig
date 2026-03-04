@@ -23,3 +23,11 @@
         </div>
     </div>
 {% endif %}
+
+{% if form.description is defined %}
+    <div class="row">
+        <div class="col-12">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+{% endif %}

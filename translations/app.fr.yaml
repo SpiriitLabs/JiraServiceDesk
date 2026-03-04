@@ -152,6 +152,7 @@ user:
     role_app_can_view_backlog: "Accès au backlog des projets"
     role_app_kanban: "Peut utiliser les kanbans"
     role_app_view_kanban: "Peut visualiser les kanbans"
+    role_app_can_edit_description: "Peut modifier la description des tickets"
   preferredLocale:
     label: "Langue préférée"
   preferredTheme:

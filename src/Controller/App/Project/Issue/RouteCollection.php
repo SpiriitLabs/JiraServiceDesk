@@ -21,4 +21,5 @@ enum RouteCollection: string implements RouteCollectionInterface
     case SHOW_USER_LIST_NEXT = 'project_issue_show_user_list_next';
     case TRANSITION_TO = 'project_issue_transition_to';
     case API_TRANSITION_TO = 'project_issue_api_transition_to';
+    case UPLOAD_IMAGE = 'project_issue_upload_image';
 }

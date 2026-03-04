@@ -41,6 +41,7 @@ security:
         ROLE_APP_VIEW_KANBAN:
         ROLE_APP_CAN_ASSIGNEE:
         ROLE_APP_CAN_VIEW_BACKLOG:
+        ROLE_APP_CAN_EDIT_DESCRIPTION:
     
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

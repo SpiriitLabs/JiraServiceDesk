@@ -291,6 +291,159 @@ class EditIssueHandlerTest extends TestCase
         self::assertCount(3, $labels); // No duplicate 'blootips'
     }
 
+    #[Test]
+    public function testUpdateIssueWithDescription(): void
+    {
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+
+        $user = UserFactory::createOne();
+
+        $issueType = $this->createStub(IssueType::class);
+        $issueType->jiraId = '10005';
+
+        $priority = $this->createStub(Priority::class);
+        $priority->jiraId = 10005;
+
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
+
+        $issue = $this->createStub(Issue::class);
+        $issue->key = 'issueKey';
+        $issue->id = 'issueId';
+        $issue->fields = new IssueField();
+        $issue->fields->status = new IssueStatus();
+        $issue->fields->status->id = '20001';
+        $issue->fields->summary = 'Issue summary';
+        $issue->transitions = [$transition];
+
+        $capturedIssueField = null;
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('update')
+            ->with(
+                self::identicalTo($issue),
+                self::callback(function (IssueField $issueField) use (&$capturedIssueField): bool {
+                    $capturedIssueField = $issueField;
+
+                    return true;
+                }),
+            )
+            ->willReturn('issueKey')
+        ;
+
+        $enveloppe = new Envelope(
+            message: $this->createStub(TransitionTo::class),
+            stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
+        );
+        $this->commandBus
+            ->expects(self::never())
+            ->method('dispatch')
+            ->willReturn($enveloppe)
+        ;
+
+        $descriptionJson = '{"version":1,"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Updated description"}]}]}';
+
+        $handler = $this->generate();
+        $handler(
+            new EditIssue(
+                project: $project,
+                issue: $issue,
+                creator: $user,
+                issueType: $issueType,
+                priority: $priority,
+                transition: '30001',
+                assignee: 'null',
+                description: $descriptionJson,
+            ),
+        );
+
+        self::assertNotNull($capturedIssueField);
+        self::assertNotNull($capturedIssueField->description);
+    }
+
+    #[Test]
+    public function testUpdateIssueWithoutDescriptionDoesNotSetDescription(): void
+    {
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+
+        $user = UserFactory::createOne();
+
+        $issueType = $this->createStub(IssueType::class);
+        $issueType->jiraId = '10005';
+
+        $priority = $this->createStub(Priority::class);
+        $priority->jiraId = 10005;
+
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
+
+        $issue = $this->createStub(Issue::class);
+        $issue->key = 'issueKey';
+        $issue->id = 'issueId';
+        $issue->fields = new IssueField();
+        $issue->fields->status = new IssueStatus();
+        $issue->fields->status->id = '20001';
+        $issue->fields->summary = 'Issue summary';
+        $issue->transitions = [$transition];
+
+        $capturedIssueField = null;
+        $this->issueRepository
+            ->expects(self::once())
+            ->method('update')
+            ->with(
+                self::identicalTo($issue),
+                self::callback(function (IssueField $issueField) use (&$capturedIssueField): bool {
+                    $capturedIssueField = $issueField;
+
+                    return true;
+                }),
+            )
+            ->willReturn('issueKey')
+        ;
+
+        $enveloppe = new Envelope(
+            message: $this->createStub(TransitionTo::class),
+            stamps: [new HandledStamp(result: $issue, handlerName: EditIssueHandler::class)],
+        );
+        $this->commandBus
+            ->expects(self::never())
+            ->method('dispatch')
+            ->willReturn($enveloppe)
+        ;
+
+        $handler = $this->generate();
+        $handler(
+            new EditIssue(
+                project: $project,
+                issue: $issue,
+                creator: $user,
+                issueType: $issueType,
+                priority: $priority,
+                transition: '30001',
+                assignee: 'null',
+            ),
+        );
+
+        self::assertNotNull($capturedIssueField);
+        self::assertNull($capturedIssueField->description);
+    }
+
     private function generate(): EditIssueHandler
     {
         $handler = new EditIssueHandler(

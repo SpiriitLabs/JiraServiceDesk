@@ -27,9 +27,9 @@ readonly class GetFullIssueHandler
         $cache = new FilesystemAdapter();
         $cachedIssue = $cache->getItem(sprintf('jira.full_issue_%s', $query->issueId));
 
-        if ($cachedIssue->isHit()) {
-            return $cachedIssue->get();
-        }
+        //        if ($cachedIssue->isHit()) {
+        //            return $cachedIssue->get();
+        //        }
 
         $issue = $this->issueRepository->getFull($query->issueId);
         $issue = $this->issueAttachmentFormatter->format($issue);

@@ -7,6 +7,7 @@ use App\Entity\Priority;
 use App\Factory\ProjectFactory;
 use App\Factory\UserFactory;
 use App\Form\App\Issue\EditIssueFormType;
+use App\Form\Type\TiptapAdfType;
 use App\Message\Command\App\Issue\EditIssue;
 use App\Repository\IssueTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -111,7 +112,7 @@ class EditIssueFormTypeTest extends TypeTestCase
         $validator = Validation::createValidator();
 
         return [
-            new PreloadedExtension([$type], []),
+            new PreloadedExtension([$type, new TiptapAdfType()], []),
             new ValidatorExtension($validator),
             new DoctrineOrmExtension($managerRegistry),
         ];
@@ -181,5 +182,75 @@ class EditIssueFormTypeTest extends TypeTestCase
         $form->submit($formData);
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($expected, $model);
+    }
+
+    #[Test]
+    public function testSubmitWithDescription(): void
+    {
+        $this->security
+            ->method('isGranted')
+            ->willReturn(true)
+        ;
+
+        $formData = [
+            'summary' => 'Issue summary - updated',
+            'priority' => 'test',
+            'transition' => '2001',
+            'type' => 25,
+            'assignee' => 'null',
+            'description' => '{"version":1,"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Updated description"}]}]}',
+        ];
+
+        $project = ProjectFactory::createOne([
+            'jiraKey' => 'test',
+        ]);
+
+        $user = UserFactory::createOne();
+
+        $transitionToStatus = (object) [
+            'id' => '20001',
+            'name' => 'Done',
+        ];
+        $transition = (object) [
+            'id' => '30001',
+            'to' => $transitionToStatus,
+        ];
+        $issue = $this->createStub(Issue::class);
+        $issue->key = 'TEST-1';
+        $issue->id = 'issueId';
+        $issue->fields = new IssueField();
+        $issue->fields->summary = 'Issue summary';
+        $issue->transitions = [$transition];
+
+        $issueTypes = $this->issueTypeRepository->findBy([]);
+        $issueType = reset($issueTypes);
+
+        $priority = $this->createStub(Priority::class);
+
+        $model = new EditIssue(
+            project: $project,
+            issue: $issue,
+            creator: $user,
+            issueType: $issueType,
+            priority: $priority,
+            transition: $transition->id,
+            assignee: 'null',
+        );
+        $form = $this->factory->create(
+            type: EditIssueFormType::class,
+            data: $model,
+            options: [
+                'initial_adf' => null,
+                'issue_key' => 'TEST-1',
+                'attachment_map' => '{}',
+            ],
+        );
+
+        $form->submit($formData);
+        $this->assertTrue($form->isSynchronized());
+        $this->assertSame(
+            '{"version":1,"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Updated description"}]}]}',
+            $model->description,
+        );
     }
 }

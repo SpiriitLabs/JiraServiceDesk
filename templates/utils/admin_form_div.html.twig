@@ -1,15 +1,21 @@
 {% extends 'bootstrap_5_layout.html.twig' %}
 
-{% block quill_adf_widget %}
+{% block tiptap_adf_widget %}
   {% apply spaceless %}
-    <div {{ stimulus_controller('quill_adf', {toolbar: toolbarOptions}) }} data-id="{{ id }}">
-      <div {{ stimulus_target('quill_adf', 'editor') }}>
-        {{ value|raw }}
-      </div>
-      <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" {{ stimulus_target('quill_adf', 'input') }}/>
+    <div class="tiptap-editor-container"
+      {{ stimulus_controller('tiptap_adf', {
+        issueKey: issue_key|default(''),
+        uploadUrl: issue_key is not empty ? path('app_project_issue_upload_image', {key: issue_key|split('-')[0], issueKey: issue_key}) : '',
+        initialAdf: initial_adf|default(''),
+        attachmentMap: attachment_map|default('{}'),
+      }) }}
+      data-id="{{ id }}"
+    >
+      <div {{ stimulus_target('tiptap_adf', 'editor') }}></div>
+      <input type="hidden" {{ block('widget_attributes') }} value="{{ value }}" {{ stimulus_target('tiptap_adf', 'input') }}/>
     </div>
   {% endapply %}
-{% endblock quill_adf_widget %}
+{% endblock tiptap_adf_widget %}
 
 {% block _query_widget %}
   <div class="input-group" {{ stimulus_controller('search-query', {

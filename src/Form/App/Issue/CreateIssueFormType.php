@@ -6,7 +6,7 @@ namespace App\Form\App\Issue;
 
 use App\Entity\Project;
 use App\Entity\User;
-use App\Form\Type\QuillAdfType;
+use App\Form\Type\TiptapAdfType;
 use App\Message\Command\App\Issue\CreateIssue;
 use App\Repository\PriorityRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -59,13 +59,10 @@ class CreateIssueFormType extends AbstractIssueFormType
         }
 
         $builder
-            ->add('description', QuillAdfType::class, [
+            ->add('description', TiptapAdfType::class, [
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
-                ],
-                'attr' => [
-                    'style' => 'height: 250px',
                 ],
             ])
             ->add('attachments', FileType::class, [

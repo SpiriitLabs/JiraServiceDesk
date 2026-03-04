@@ -75,6 +75,32 @@ class EditController extends AbstractController
             $assigneesOptions[$issue->fields->assignee->displayName] = $issue->fields->assignee->accountId;
         }
 
+        $rawAdf = null;
+        if ($issue->fields->description !== null) {
+            // AtlassianDocumentFormat::jsonSerialize() fails when deserialized from API
+            // (internal $document is null). Build ADF manually with correct types because
+            // json_mapper coerces "type" (string→array) and "version" (int→string) incorrectly.
+            $rawAdf = json_encode([
+                'version' => 1,
+                'type' => 'doc',
+                'content' => $issue->fields->description->content,
+            ]);
+        }
+
+        $attachmentMap = [];
+        if (isset($issue->fields->attachment) && is_array($issue->fields->attachment)) {
+            foreach ($issue->fields->attachment as $attachment) {
+                if (isset($attachment->id, $attachment->content)) {
+                    $attachmentMap[$attachment->id] = $this->generateUrl(
+                        'app_attachment',
+                        [
+                            'attachmentId' => $attachment->id,
+                        ],
+                    );
+                }
+            }
+        }
+
         $form = $this->createForm(
             type: EditIssueFormType::class,
             data: new EditIssue(
@@ -96,6 +122,9 @@ class EditController extends AbstractController
                 'transitions' => $issueTransitions,
                 'assignee_editable' => $issue->fields->assignee?->accountId == $this->jiraAccountId,
                 'assignees' => $assigneesOptions,
+                'initial_adf' => $rawAdf,
+                'issue_key' => $issue->key,
+                'attachment_map' => json_encode($attachmentMap),
             ]
         );
         $form->handleRequest($request);

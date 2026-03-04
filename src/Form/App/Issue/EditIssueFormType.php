@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\App\Issue;
 
 use App\Enum\User\Role;
+use App\Form\Type\TiptapAdfType;
 use App\Message\Command\App\Issue\EditIssue;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -38,6 +39,17 @@ class EditIssueFormType extends AbstractIssueFormType
                 ])
             ;
         }
+
+        if ($this->security->isGranted(Role::ROLE_APP_CAN_EDIT_DESCRIPTION)) {
+            $builder
+                ->add('description', TiptapAdfType::class, [
+                    'required' => false,
+                    'initial_adf' => $options['initial_adf'],
+                    'issue_key' => $options['issue_key'],
+                    'attachment_map' => $options['attachment_map'],
+                ])
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -51,6 +63,9 @@ class EditIssueFormType extends AbstractIssueFormType
             'transitions' => [],
             'assignee_editable' => true,
             'assignees' => [],
+            'initial_adf' => null,
+            'issue_key' => '',
+            'attachment_map' => '{}',
         ]);
     }
 }

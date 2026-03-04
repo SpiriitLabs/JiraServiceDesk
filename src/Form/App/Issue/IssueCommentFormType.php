@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\App\Issue;
 
-use App\Form\Type\QuillAdfType;
+use App\Form\Type\TiptapAdfType;
 use App\Message\Command\App\Issue\CreateComment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -17,13 +17,10 @@ class IssueCommentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('comment', QuillAdfType::class, [
+            ->add('comment', TiptapAdfType::class, [
                 'required' => false,
                 'constraints' => [
                     new NotBlank(),
-                ],
-                'attr' => [
-                    'style' => 'height: 250px',
                 ],
             ])
             ->add('attachments', FileType::class, [
