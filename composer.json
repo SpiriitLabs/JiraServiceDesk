@@ -3,7 +3,7 @@
     "type": "project",
     "license": "MIT",
     "description": "A jira service desk client application.",
-    "version": "0.67.2",
+    "version": "0.68.0",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -13,7 +13,7 @@
         "ext-iconv": "*",
         "babdev/pagerfanta-bundle": "^4.6",
         "cweagans/composer-patches": "^1.7.3",
-        "doctrine/dbal": "^4.4.1",
+        "doctrine/dbal": "^4.4.2",
         "doctrine/doctrine-bundle": "^2.18.2",
         "doctrine/doctrine-migrations-bundle": "^3.7.0",
         "doctrine/orm": "^3.6.2",
@@ -24,9 +24,9 @@
         "pagerfanta/pagerfanta": "^2.0.1",
         "pagerfanta/twig": "^4.8.0",
         "pentatrion/vite-bundle": "^8.2.3",
-        "rollerworks/password-strength-bundle": "^3.0.1",
+        "rollerworks/password-strength-bundle": "^3.1.0",
         "runtime/frankenphp-symfony": "^0.2.0",
-        "sentry/sentry-symfony": "^5.8.3",
+        "sentry/sentry-symfony": "^5.9.0",
         "spiriitlabs/auth-log-bundle": "^1.0.1",
         "spiriitlabs/form-filter-bundle": "^12.1.0",
         "stof/doctrine-extensions-bundle": "^1.15.3",
@@ -120,17 +120,17 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7.3",
-        "phpunit/phpunit": "^12.5.11",
+        "phpunit/phpunit": "^12.5.14",
         "slevomat/coding-standard": "^8.22.1",
         "symfony/browser-kit": "7.4.*",
         "symfony/css-selector": "7.4.*",
         "symfony/debug-bundle": "7.4.*",
         "symfony/maker-bundle": "^1.66.0",
-        "symfony/phpunit-bridge": "^7.4.3",
+        "symfony/phpunit-bridge": "^7.4.7",
         "symfony/stopwatch": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*",
         "symplify/coding-standard": "^12.5.0",
         "symplify/easy-coding-standard": "^12.6.2",
-        "zenstruck/foundry": "^2.9.1"
+        "zenstruck/foundry": "^2.9.2"
     }
 }
