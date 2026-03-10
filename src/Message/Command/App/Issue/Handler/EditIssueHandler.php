@@ -61,7 +61,7 @@ class EditIssueHandler
         $jiraIssueKey = $this->issueRepository->update($command->issue, $issueField);
 
         $cache = new FilesystemAdapter();
-        $cache->clear(sprintf('jira.full_issue_%s', $command->issue->id));
+        $cache->deleteItem(sprintf('jira.full_issue_%s', $command->issue->id));
 
         if ($jiraIssueKey == null) {
             return null;

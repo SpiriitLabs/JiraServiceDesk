@@ -6,6 +6,7 @@ namespace App\Message\Command\App\Issue\Handler;
 
 use App\Message\Command\App\Issue\TransitionTo;
 use App\Repository\Jira\IssueRepository;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -22,5 +23,8 @@ readonly class TransitionToHandler
             id: $command->issueId,
             transitionId: $command->transitionId,
         );
+
+        $cache = new FilesystemAdapter();
+        $cache->deleteItem(sprintf('jira.full_issue_%s', $command->issueId));
     }
 }
