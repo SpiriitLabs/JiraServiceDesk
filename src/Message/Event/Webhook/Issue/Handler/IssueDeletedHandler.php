@@ -78,6 +78,7 @@ class IssueDeletedHandler implements LoggerAwareInterface
                 parameters: [
                     '%project_name%' => $project->name,
                     '%ticket_name%' => $issueSummary,
+                    '%issue_key%' => $issueKey,
                 ],
                 domain: 'email',
                 locale: $user->preferredLocale->value,
@@ -86,6 +87,11 @@ class IssueDeletedHandler implements LoggerAwareInterface
             $link = $this->router->generate('app_project_view', [
                 'key' => $project->jiraKey,
             ], UrlGeneratorInterface::ABSOLUTE_URL);
+            $ticketLabel = $this->translator->trans(
+                'slack.context.ticket',
+                domain: 'app',
+                locale: $user->preferredLocale->value
+            );
             $this->commandBus->dispatch(
                 new Notification(
                     user: $user,
@@ -95,6 +101,9 @@ class IssueDeletedHandler implements LoggerAwareInterface
                     body: $issueSummary,
                     link: $link,
                     channels: $channels,
+                    slackExtraContext: [
+                        $ticketLabel => $issueKey,
+                    ],
                 )
             );
         }

@@ -367,6 +367,7 @@ slack:
     view: "Voir dans %project_name%"
   context:
     author: "Auteur"
+    ticket: "Ticket"
 
 notificationChannel:
   in_app: "Dans le produit"

@@ -1,14 +1,14 @@
 {% extends 'email/layout.html.twig' %}
 {% trans_default_domain 'email' %}
 
-{% block title %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
+{% block title %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary, '%issue_key%': issueKey}) }}{% endblock %}
 
-{% block preview %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}{% endblock %}
+{% block preview %}{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary, '%issue_key%': issueKey}) }}{% endblock %}
 
 {% block content %}
 
     <twig:email:title
-        text="{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary}) }}"
+        text="{{ 'comment.updated.title'|trans({'%project_name%': project.name, '%ticket_name%': issueSummary, '%issue_key%': issueKey}) }}"
     />
 
     <twig:email:text>

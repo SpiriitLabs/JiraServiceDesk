@@ -80,6 +80,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 id: 'issue.created.title',
                 parameters: [
                     '%project_name%' => $project->name,
+                    '%issue_key%' => $issueKey,
                 ],
                 domain: 'email',
                 locale: $user->preferredLocale->value,
@@ -101,6 +102,12 @@ class IssueCreatedHandler implements LoggerAwareInterface
                 'keyIssue' => $issueKey,
             ], UrlGeneratorInterface::ABSOLUTE_URL);
             $slackExtraContext = [];
+            $ticketLabel = $this->translator->trans(
+                'slack.context.ticket',
+                domain: 'app',
+                locale: $user->preferredLocale->value
+            );
+            $slackExtraContext[$ticketLabel] = $issueKey;
             if ($assignee !== null) {
                 $assigneeLabel = $this->translator->trans(
                     id: 'issue.assignee.label',

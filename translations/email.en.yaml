@@ -1,14 +1,14 @@
 issue:
     created:
-        title: "[%project_name%] New ticket available!"
-        description: "A new ticket \"%ticket_name%\" has been created in your project \"%project_name%\".<br/>You can view it directly from your client portal."
+        title: "[%project_name%] %issue_key% - New ticket available!"
+        description: "A new ticket %issue_key% \"%ticket_name%\" has been created in your project \"%project_name%\".<br/>You can view it directly from your client portal."
         action: "View ticket"
     edited:
-        title: "[%project_name%] '%ticket_name%' ticket updated!"
-        description: "Your ticket \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
+        title: "[%project_name%] %issue_key% - '%ticket_name%' ticket updated!"
+        description: "Your ticket %issue_key% \"%ticket_name%\" in the project \"%project_name%\" has been updated.<br/>You can view it directly from your client portal."
         action: "View ticket"
     deleted:
-        title: "[%project_name%] '%ticket_name%' ticket deleted!"
+        title: "[%project_name%] %issue_key% - '%ticket_name%' ticket deleted!"
     history:
         title: 'Recent changes'
     status:
@@ -22,10 +22,10 @@ issue:
 
 comment:
     created:
-        title: "[%project_name%] New comment added on '%ticket_name%' !"
+        title: "[%project_name%] %issue_key% - New comment added on '%ticket_name%'!"
         action: "View comment"
     updated:
-        title: "[%project_name%] Comment updated on '%ticket_name%'!"
+        title: "[%project_name%] %issue_key% - Comment updated on '%ticket_name%'!"
         action: "View comment"
 
 security:

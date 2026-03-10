@@ -1,14 +1,14 @@
 issue:
     created:
-        title: "[%project_name%] Nouveau ticket disponible !"
-        description: "Un nouveau ticket « %ticket_name% » a été créé dans votre projet « %project_name% ».<br/>Consultez-le directement depuis votre espace client."
+        title: "[%project_name%] %issue_key% - Nouveau ticket disponible !"
+        description: "Un nouveau ticket %issue_key% « %ticket_name% » a été créé dans votre projet « %project_name% ».<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
     edited:
-        title: "[%project_name%] Ticket '%ticket_name%' mis à jour !"
-        description: "Votre ticket « %ticket_name% » dans le projet « %project_name% » a été mis à jour.<br/>Consultez-le directement depuis votre espace client."
+        title: "[%project_name%] %issue_key% - Ticket '%ticket_name%' mis à jour !"
+        description: "Votre ticket %issue_key% « %ticket_name% » dans le projet « %project_name% » a été mis à jour.<br/>Consultez-le directement depuis votre espace client."
         action: "Voir le ticket"
     deleted:
-        title: "[%project_name%] Ticket '%ticket_name%' supprimé !"
+        title: "[%project_name%] %issue_key% - Ticket '%ticket_name%' supprimé !"
     history:
         title: 'Changements récents'
     status:
@@ -22,10 +22,10 @@ issue:
 
 comment:
     created:
-        title: "[%project_name%] Nouveau commentaire ajouté sur le ticket '%ticket_name%' !"
+        title: "[%project_name%] %issue_key% - Nouveau commentaire ajouté sur le ticket '%ticket_name%' !"
         action: "Voir le commentaire"
     updated:
-        title: "[%project_name%] Commentaire modifié sur le ticket '%ticket_name%' !"
+        title: "[%project_name%] %issue_key% - Commentaire modifié sur le ticket '%ticket_name%' !"
         action: "Voir le commentaire"
 
 security:

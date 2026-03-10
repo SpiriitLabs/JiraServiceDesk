@@ -116,6 +116,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                 parameters: [
                     '%project_name%' => $project->name,
                     '%ticket_name%' => $issueSummary,
+                    '%issue_key%' => $issueKey,
                 ],
                 domain: 'email',
                 locale: $user->preferredLocale->value,
@@ -148,6 +149,11 @@ class CommentUpdatedHandler implements LoggerAwareInterface
                     link: $link,
                     channels: $effectiveChannels,
                     slackExtraContext: [
+                        $this->translator->trans(
+                            'slack.context.ticket',
+                            domain: 'app',
+                            locale: $user->preferredLocale->value
+                        ) => $issueKey,
                         $this->translator->trans(
                             'slack.context.author',
                             domain: 'app',
