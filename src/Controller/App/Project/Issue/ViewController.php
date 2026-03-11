@@ -134,7 +134,7 @@ class ViewController extends AbstractController
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $issue = $this->handle(new GetFullIssue($keyIssue));
 
-        if (count($issue->customAttachments) == 0) {
+        if (null !== $issue->customAttachments && count($issue->customAttachments) == 0) {
             return $this->renderBlock(
                 view: 'app/project/issue/issue_attachment.stream.html.twig',
                 block: 'empty',
