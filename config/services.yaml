@@ -28,5 +28,11 @@ services:
             - '../src/DataFixtures/'
             - '../src/Factory/'
 
+    messenger.middleware.nestable_doctrine_transaction:
+        class: App\Messenger\Middleware\NestableDoctrineTransactionMiddleware
+        abstract: true
+        arguments:
+            - '@doctrine'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -14,8 +14,10 @@
             {% endblock %}
 
             {% block header %}
-                {% trans_default_domain 'app' %}
-                <h4>{{ 'project.title.userIssues'|trans }}</h4>
+                <div class="card-header">
+                    {% trans_default_domain 'app' %}
+                    <h4>{{ 'project.title.userIssues'|trans }}</h4>
+                </div>
             {% endblock %}
 
             {% block tableTh %}

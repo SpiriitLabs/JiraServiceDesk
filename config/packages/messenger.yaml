@@ -40,7 +40,7 @@ framework:
                     - doctrine_ping_connection
                     - doctrine_close_connection
                     - doctrine_open_transaction_logger
-                    - doctrine_transaction
+                    - nestable_doctrine_transaction
             
             query.bus: ~
 
@@ -48,5 +48,5 @@ framework:
                 default_middleware: allow_no_handlers
                 middleware:
                     - doctrine_ping_connection
-                    - doctrine_transaction
+                    - nestable_doctrine_transaction
 
