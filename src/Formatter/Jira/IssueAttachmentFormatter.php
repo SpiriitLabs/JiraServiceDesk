@@ -31,6 +31,12 @@ class IssueAttachmentFormatter
      */
     public function format(Issue $issue): Issue
     {
+        if ($issue->fields->attachment === null || count($issue->fields->attachment) === 0) {
+            $issue->customAttachments = [];
+
+            return $issue;
+        }
+
         $issueAttachment = [];
         foreach ($issue->fields->attachment as $attachment) {
             $attachmentPath = sprintf('%s/%s', $this->issueAttachmentDirectory, $attachment->id);
