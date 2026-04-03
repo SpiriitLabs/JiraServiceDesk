@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Repository\UserAuthenticationLogRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Spiriit\Bundle\AuthLogBundle\Entity\AbstractAuthenticationLog;
-use Spiriit\Bundle\AuthLogBundle\Entity\AuthenticableLogInterface;
+use Spiriit\Bundle\AuthLogBundle\Entity\AuthLogUserInterface;
 use Spiriit\Bundle\AuthLogBundle\FetchUserInformation\UserInformation;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UserAuthenticationLogRepository::class)]
 #[ORM\Table(name: 'user_authentication_logs')]
 class UserAuthenticationLog extends AbstractAuthenticationLog
 {
@@ -37,7 +38,7 @@ class UserAuthenticationLog extends AbstractAuthenticationLog
         return $this->id;
     }
 
-    public function getUser(): AuthenticableLogInterface
+    public function getUser(): AuthLogUserInterface
     {
         return $this->user;
     }

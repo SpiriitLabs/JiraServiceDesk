@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Subscriber;
 
 use App\Entity\User;
-use App\Entity\UserAuthenticationLog;
 use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Spiriit\Bundle\AuthLogBundle\Listener\AuthenticationLogEvent;
@@ -30,18 +29,11 @@ class UserAuthenticationLogSubscriber implements EventSubscriberInterface
 
     public function onLogin(AuthenticationLogEvent $event): void
     {
-        $userReference = $event->getUserReference();
-        $userInfo = $event->getUserInformation();
+        $userIdentifier = $event->userIdentifier();
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'id' => $userReference->id,
+            'email' => $userIdentifier,
         ]);
-        $userAuthenticationLog = new UserAuthenticationLog(
-            user: $user,
-            userInformation: $userInfo,
-        );
-        $this->entityManager->persist($userAuthenticationLog);
-        $this->entityManager->flush();
 
         $this->dispatcher->dispatch(
             new NotificationEvent(
@@ -50,7 +42,5 @@ class UserAuthenticationLogSubscriber implements EventSubscriberInterface
             ),
             NotificationEvent::EVENT_NAME,
         );
-
-        $event->markAsHandled();
     }
 }

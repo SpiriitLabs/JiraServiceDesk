@@ -34,5 +34,14 @@ services:
         arguments:
             - '@doctrine'
 
+    # spiriitlabs/auth-log-bundle: aliases required because the bundle references
+    # interfaces via new Reference(FQCN) without creating autowiring aliases.
+    # See: https://github.com/SpiriitLabs/auth-log-bundle (missing from README)
+    Spiriit\Bundle\AuthLogBundle\Repository\AuthenticationLogRepositoryInterface:
+        alias: App\Repository\UserAuthenticationLogRepository
+
+    Spiriit\Bundle\AuthLogBundle\AuthenticationLog\AuthenticationLogCreatorInterface:
+        alias: App\Repository\UserAuthenticationLogRepository
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
