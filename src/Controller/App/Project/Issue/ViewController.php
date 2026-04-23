@@ -86,7 +86,7 @@ class ViewController extends AbstractController
             );
         }
         $links = [];
-        foreach ($issue->fields->issuelinks as $link) {
+        foreach ($issue->fields->issuelinks ?? [] as $link) {
             $linkIssue = $link->inwardIssue ?? $link->outwardIssue;
             $type = isset($link->inwardIssue) ? $link->type->inward : $link->type->outward;
             try {

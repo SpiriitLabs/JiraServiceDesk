@@ -49,7 +49,7 @@ class IssueRepository
             $labels = $user instanceof User ? $user->getJiraLabels() : [];
         }
 
-        if (count(array_intersect($labels, $issue->fields->labels)) === 0) {
+        if (count(array_intersect($labels, $issue->fields->labels ?? [])) === 0) {
             throw new JiraException(sprintf('Issue #%d has not %s label', $issueId, implode(', ', $labels)));
         }
 
@@ -62,13 +62,13 @@ class IssueRepository
             jql: 'parent = ' . $issueId,
             expand: 'renderedFields,transitions,changelog',
         );
-        $issues = $result->getIssues();
+        $issues = $result->getIssues() ?? [];
 
         $user = $this->security->getUser();
         $labels = $user instanceof User ? $user->getJiraLabels() : [];
 
         return array_filter($issues, function ($issue) use ($labels) {
-            return count(array_intersect($labels, $issue->fields->labels)) > 0;
+            return count(array_intersect($labels, $issue->fields->labels ?? [])) > 0;
         });
     }
 

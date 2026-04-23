@@ -11,7 +11,7 @@ class IssueCommentsFormatter
     public function format(Comments $comments): Comments
     {
         $comments->comments = array_filter(
-            $comments->comments,
+            $comments->comments ?? [],
             function ($comment) {
                 if ($comment->visibility == null) {
                     return true;

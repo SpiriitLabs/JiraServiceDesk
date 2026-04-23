@@ -71,7 +71,7 @@ class IssueUpdatedHandler implements LoggerAwareInterface
         $cache->save($cachedIssue);
 
         foreach ($project->getUsers() as $user) {
-            if ($user->hasAnyJiraLabel($issue->fields->labels) === false) {
+            if ($user->hasAnyJiraLabel($issue->fields->labels ?? []) === false) {
                 continue;
             }
 

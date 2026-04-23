@@ -64,7 +64,7 @@ class CommentUpdatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $issueLabels = $issue->fields->labels;
+        $issueLabels = $issue->fields->labels ?? [];
 
         $commentBody = $event->getPayload()['comment']['body'];
         $commentBody = $this->replaceAccountIdByDisplayName->replaceInCommentBody($commentBody);

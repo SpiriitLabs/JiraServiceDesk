@@ -55,7 +55,7 @@ class IssueCreatedHandler implements LoggerAwareInterface
             'projectKey' => $project->jiraKey,
         ]);
 
-        $issueLabels = $issue->fields->labels;
+        $issueLabels = $issue->fields->labels ?? [];
 
         $templatedEmail = (new TemplatedEmail())
             ->htmlTemplate('email/issue/issue_created.html.twig')

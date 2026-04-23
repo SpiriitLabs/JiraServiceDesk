@@ -127,8 +127,8 @@ class SearchIssuesHandler
         );
 
         return new SearchIssuesResult(
-            total: count($issues->issues),
-            issues: $issues->getIssues(),
+            total: count($issues->issues ?? []),
+            issues: $issues->getIssues() ?? [],
             nextPageToken: $issues->nextPageToken,
         );
     }
