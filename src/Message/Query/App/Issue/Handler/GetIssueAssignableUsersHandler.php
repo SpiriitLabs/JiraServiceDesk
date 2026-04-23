@@ -27,7 +27,11 @@ readonly class GetIssueAssignableUsersHandler
         GetIssueAssignableUsers $query,
     ): array {
         $cache = new FilesystemAdapter();
-        $cacheAssignableUsers = $cache->getItem(sprintf('jira.assignable_users_%s', $query->project->jiraKey));
+        $cacheAssignableUsers = $cache->getItem(sprintf(
+            'jira.assignable_users_%s_%s',
+            $query->project->jiraKey,
+            $query->user->getId(),
+        ));
 
         if ($cacheAssignableUsers->isHit()) {
             return $cacheAssignableUsers->get();
