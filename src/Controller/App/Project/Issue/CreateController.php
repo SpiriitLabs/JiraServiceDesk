@@ -11,9 +11,11 @@ use App\Entity\Project;
 use App\Entity\User;
 use App\Form\App\Issue\CreateIssueFormType;
 use App\Message\Command\App\Issue\CreateIssue;
+use JiraCloud\JiraException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
@@ -56,7 +58,38 @@ class CreateController extends AbstractController
                     ->getData()
                 ;
             }
-            $issue = $this->handle($form->getData());
+
+            try {
+                $issue = $this->handle($form->getData());
+            } catch (HandlerFailedException $exception) {
+                $jiraExceptions = $exception->getWrappedExceptions(JiraException::class);
+                if ($jiraExceptions !== []) {
+                    $jiraException = current($jiraExceptions);
+                    $response = json_decode((string) $jiraException->getResponse(), true);
+                    $jiraErrors = array_merge(
+                        $response['errorMessages'] ?? [],
+                        array_values($response['errors'] ?? [])
+                    );
+
+                    foreach ($jiraErrors as $errorMessage) {
+                        $this->addFlash(type: 'danger', message: $errorMessage);
+                    }
+
+                    if ($jiraErrors === []) {
+                        $this->addFlash(type: 'danger', message: 'flash.error');
+                    }
+                } else {
+                    $this->addFlash(type: 'danger', message: 'flash.error');
+                }
+
+                return $this->render(
+                    view: 'app/project/issue/create.html.twig',
+                    parameters: [
+                        'project' => $project,
+                        'form' => $form->createView(),
+                    ],
+                );
+            }
 
             if ($issue !== null) {
                 $this->addFlash(
