@@ -133,6 +133,11 @@ class Project
         return $this;
     }
 
+    public function isClosed(): bool
+    {
+        return str_contains(strtolower((string) $this->name), '[close]');
+    }
+
     public function __toString(): string
     {
         return sprintf('%s_%s_%s', $this->id, $this->jiraId, $this->jiraKey);
