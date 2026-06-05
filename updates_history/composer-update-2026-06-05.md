@@ -1,8 +1,8 @@
-# Récapitulatif de la mise à jour du 05/06/2026
+# Composer update summary (2026-06-05)
 
-Basé sur le diff de `composer.lock`, voici le résumé de tous les paquets mis à jour.
+Based on the `composer.lock` diff, this is a summary of all updated packages.
 
-### 🚀 Mises à jour majeures et mineures
+### 🚀 Major and minor updates
 
 #### 🎵 Symfony
 
