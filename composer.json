@@ -16,7 +16,7 @@
         "doctrine/dbal": "^4.4.3",
         "doctrine/doctrine-bundle": "^2.18.2",
         "doctrine/doctrine-migrations-bundle": "^3.7.0",
-        "doctrine/orm": "^3.6.3",
+        "doctrine/orm": "^3.6.7",
         "gedmo/doctrine-extensions": "^3.22.0",
         "lesstif/jira-cloud-restapi": "^1.11.1",
         "pagerfanta/doctrine-dbal-adapter": "^4.8.0",
@@ -33,7 +33,7 @@
         "symfony/console": "7.4.*",
         "symfony/doctrine-messenger": "7.4.*",
         "symfony/dotenv": "7.4.*",
-        "symfony/flex": "^2.10.0",
+        "symfony/flex": "^2.11.0",
         "symfony/form": "7.4.*",
         "symfony/framework-bundle": "7.4.*",
         "symfony/http-client": "7.4.*",
@@ -44,12 +44,12 @@
         "symfony/runtime": "7.4.*",
         "symfony/security-bundle": "7.4.*",
         "symfony/serializer": "7.4.*",
-        "symfony/stimulus-bundle": "^2.34.0",
+        "symfony/stimulus-bundle": "^2.36.0",
         "symfony/translation": "7.4.*",
         "symfony/twig-bundle": "7.4.*",
-        "symfony/ux-autocomplete": "^2.34.0",
-        "symfony/ux-turbo": "^2.34.0",
-        "symfony/ux-twig-component": "^2.34.0",
+        "symfony/ux-autocomplete": "^2.36.0",
+        "symfony/ux-turbo": "^2.36.0",
+        "symfony/ux-twig-component": "^2.36.0",
         "symfony/validator": "7.4.*",
         "symfony/web-link": "7.4.*",
         "symfony/webhook": "7.4.*",
@@ -57,7 +57,7 @@
         "symfonycasts/reset-password-bundle": "^1.25.0",
         "twig/extra-bundle": "^2.12|^3.24.0",
         "twig/string-extra": "^3.24.0",
-        "twig/twig": "^2.12|^3.24.0",
+        "twig/twig": "^2.12|^3.27.1",
         "vlucas/phpdotenv": "^5.6.3"
     },
     "config": {
@@ -65,6 +65,7 @@
             "cweagans/composer-patches": true,
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "php-http/discovery": true,
+            "spiriitlabs/composer-update-report": true,
             "symfony/flex": true,
             "symfony/runtime": true
         },
@@ -116,12 +117,16 @@
             "lesstif/jira-cloud-restapi": {
                 "feat(label): Add service to fetch labels": ".composer/patches/lesstif/jira-cloud-restapi/115.patch"
             }
+        },
+        "composer-update-report": {
+            "output-dir": "updates_history"
         }
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7.3",
-        "phpunit/phpunit": "^12.5.16",
+        "phpunit/phpunit": "^12.5.29",
         "slevomat/coding-standard": "^8.22.1",
+        "spiriitlabs/composer-update-report": "^1.0.4",
         "symfony/browser-kit": "7.4.*",
         "symfony/css-selector": "7.4.*",
         "symfony/debug-bundle": "7.4.*",
@@ -131,6 +136,6 @@
         "symfony/web-profiler-bundle": "7.4.*",
         "symplify/coding-standard": "^12.5.0",
         "symplify/easy-coding-standard": "^12.6.2",
-        "zenstruck/foundry": "^2.9.2"
+        "zenstruck/foundry": "^2.10.1"
     }
 }
