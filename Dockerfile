@@ -60,6 +60,11 @@ FROM frankenphp_base AS frankenphp_dev
 
 ENV APP_ENV=dev XDEBUG_MODE=off
 
+# The repo is bind-mounted from the host while Composer runs as root inside the
+# container. Git refuses such a repo ("dubious ownership"), which makes
+# spiriitlabs/composer-update-report fail to read composer.lock from git HEAD.
+RUN git config --global --add safe.directory /app
+
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN set -eux; \
