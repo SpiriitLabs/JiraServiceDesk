@@ -42,7 +42,6 @@ services:
           MARIADB_ROOT_PASSWORD: root
           MARIADB_DATABASE: app
       volumes:
-          - database_data:/var/lib/mysql/
           - ./database_data:/var/lib/mysql
           - ./.docker/database/scripts/reset:/usr/local/bin/reset
           - ./.docker/database/scripts/save:/usr/local/bin/save
@@ -50,6 +49,5 @@ services:
           - "3306:3306"
 
 volumes:
-  database_data:
   caddy_data:
   caddy_config:
