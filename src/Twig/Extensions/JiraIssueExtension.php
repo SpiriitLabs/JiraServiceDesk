@@ -15,9 +15,9 @@ class JiraIssueExtension
     }
 
     #[AsTwigFilter('preview_description')]
-    public function previewAttachmentFormat($renderedDescription): string
+    public function previewAttachmentFormat($renderedDescription, string $issueKey = ''): string
     {
-        $result = $this->htmlProcessor->updateImageSources($renderedDescription);
+        $result = $this->htmlProcessor->updateImageSources($renderedDescription, $issueKey);
         $result = $this->htmlProcessor->updateJiraLinks($result);
 
         return $result;

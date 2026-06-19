@@ -13,8 +13,16 @@ readonly class IssueHtmlProcessor
     ) {
     }
 
-    public function updateImageSources(string $html): string
+    public function updateImageSources(string $html, string $issueKey = ''): string
     {
+        // Without an issue key we cannot build the (project-scoped) secured
+        // attachment URL, so leave the markup untouched.
+        if ($issueKey === '') {
+            return $html;
+        }
+
+        $projectKey = explode('-', $issueKey)[0];
+
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
         $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
@@ -26,6 +34,8 @@ readonly class IssueHtmlProcessor
             if (preg_match('#/rest/api/3/attachment/content/(\d+)#', $href, $matches)) {
                 $attachmentId = $matches[1];
                 $newUrl = $this->router->generate('app_attachment', [
+                    'key' => $projectKey,
+                    'keyIssue' => $issueKey,
                     'attachmentId' => $attachmentId,
                 ]);
                 $link->setAttribute('href', $newUrl);
@@ -38,6 +48,8 @@ readonly class IssueHtmlProcessor
             if (preg_match('#/rest/api/3/attachment/content/(\d+)#', $src, $matches)) {
                 $attachmentId = $matches[1];
                 $newUrl = $this->router->generate('app_attachment', [
+                    'key' => $projectKey,
+                    'keyIssue' => $issueKey,
                     'attachmentId' => $attachmentId,
                 ]);
                 $img->setAttribute('src', $newUrl);

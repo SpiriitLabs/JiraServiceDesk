@@ -41,5 +41,6 @@
         <div class="mb-3 mb-0 text-center">
             <button class="btn btn-primary" type="submit">{{ 'security.login.action'|trans }}</button>
         </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     </form>
 {% endblock %}

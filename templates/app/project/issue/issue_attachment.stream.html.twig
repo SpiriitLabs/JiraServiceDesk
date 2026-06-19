@@ -12,12 +12,12 @@
                     <div class="card my-1 shadow-none border" data-bs-toggle="modal" data-bs-target="#issue-{{ issue.id }}-attachment-{{ attachment.id }}">
                         <div class="p-2">
                             <div class="col align-items-center">
-                                <img src="{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}" alt="">
+                                <img src="{{ path('app_attachment_preview', {'key': current_project.jiraKey, 'keyIssue': issue.key, 'attachmentId': attachment.id}) }}" alt="">
 
                                 <div class="row align-items-center justify-content-center">
 
                                     <div class="col ps-2">
-                                        <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
+                                        <a href="{{ path('app_attachment', {'key': current_project.jiraKey, 'keyIssue': issue.key, 'attachmentId': attachment.id}) }}" target="_blank" class="text-muted fw-bold">{{ attachment.name }}</a>
                                         <p class="mb-0 text-muted">
                                             <twig:app:issue:assignee
                                                 reporter="{{ attachment.author }}"
@@ -48,12 +48,12 @@
                                 </div>
 
                                 <div class="modal-body d-flex" style="height: 75vh;">
-                                    <img src="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" alt="Not Found" onerror="this.src='{{ path('app_attachment_preview', {'attachmentId': attachment.id}) }}'" style="margin: auto; max-width: 80%; max-height: 100% !important;">
+                                    <img src="{{ path('app_attachment', {'key': current_project.jiraKey, 'keyIssue': issue.key, 'attachmentId': attachment.id}) }}" alt="Not Found" onerror="this.src='{{ path('app_attachment_preview', {'key': current_project.jiraKey, 'keyIssue': issue.key, 'attachmentId': attachment.id}) }}'" style="margin: auto; max-width: 80%; max-height: 100% !important;">
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'action.exit'|trans }}</button>
-                                    <a href="{{ path('app_attachment', {'attachmentId': attachment.id}) }}" download="{{ attachment.name }}" class="btn btn-primary">
+                                    <a href="{{ path('app_attachment', {'key': current_project.jiraKey, 'keyIssue': issue.key, 'attachmentId': attachment.id}) }}" download="{{ attachment.name }}" class="btn btn-primary">
                                         <i class="ri-download-2-line"></i>
                                         {{ 'action.download'|trans }}
                                     </a>

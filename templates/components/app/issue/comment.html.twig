@@ -29,7 +29,7 @@
                 {% endif %}
             </small>
         </h5>
-        {{ comment.renderedBody|preview_description|raw }}
+        {{ comment.renderedBody|preview_description(issueKey)|raw }}
 
         <br>
     </div>
