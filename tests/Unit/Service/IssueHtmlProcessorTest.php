@@ -93,6 +93,52 @@ class IssueHtmlProcessorTest extends TestCase
         $this->assertStringContainsString('href="/browse/PROJECT-123?focusedCommentId=2003"', $updatedBody);
     }
 
+    #[Test]
+    public function testUpdateMediaEmbedsReplacesLegacyPluginWithVideo(): void
+    {
+        $body = '<p><div class="embeddedObject">'
+            . '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" '
+            . 'data="/rest/api/3/attachment/content/72510?stream=true" type="video/quicktime" height="380" width="954">'
+            . '<param name="src" value="/rest/api/3/attachment/content/72510?stream=true"/>'
+            . '<embed src="/rest/api/3/attachment/content/72510?stream=true" type="video/quicktime"/>'
+            . '</object></div></p>';
+
+        $this->router
+            ->expects(self::once())
+            ->method('generate')
+            ->with('app_attachment', [
+                'key' => 'PROJECT',
+                'keyIssue' => 'PROJECT-123',
+                'attachmentId' => '72510',
+            ])
+            ->willReturn('/app/attachment/PROJECT/PROJECT-123/72510')
+        ;
+
+        $service = $this->generate();
+        $updatedBody = $service->updateMediaEmbeds($body, 'PROJECT-123');
+
+        $this->assertStringContainsString('<video', $updatedBody);
+        $this->assertStringContainsString('src="/app/attachment/PROJECT/PROJECT-123/72510"', $updatedBody);
+        $this->assertStringContainsString('controls', $updatedBody);
+        $this->assertStringNotContainsString('<object', $updatedBody);
+        $this->assertStringNotContainsString('clsid', $updatedBody);
+    }
+
+    #[Test]
+    public function testUpdateMediaEmbedsWithoutIssueKeyLeavesHtmlUntouched(): void
+    {
+        $body = '<object data="/rest/api/3/attachment/content/72510" type="video/quicktime"></object>';
+
+        $this->router
+            ->expects(self::never())
+            ->method('generate')
+        ;
+
+        $service = $this->generate();
+
+        self::assertSame($body, $service->updateMediaEmbeds($body));
+    }
+
     private function generate(): IssueHtmlProcessor
     {
         return new IssueHtmlProcessor(

@@ -18,6 +18,7 @@ class JiraIssueExtension
     public function previewAttachmentFormat($renderedDescription, string $issueKey = ''): string
     {
         $result = $this->htmlProcessor->updateImageSources($renderedDescription, $issueKey);
+        $result = $this->htmlProcessor->updateMediaEmbeds($result, $issueKey);
         $result = $this->htmlProcessor->updateJiraLinks($result);
 
         return $result;
