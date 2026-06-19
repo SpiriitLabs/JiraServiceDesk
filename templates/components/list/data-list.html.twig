@@ -52,7 +52,7 @@
                             <tbody {% block tbody_attributes '' %}>
                                 {% block tableTb %}
                                     {% for object in datas %}
-                                        <tr>
+                                        <tr {% block tableTrAttributes '' %}>
                                             {% block tableTd '' %}
                                         </tr>
                                     {% endfor %}

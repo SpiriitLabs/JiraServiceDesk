@@ -30,27 +30,46 @@ class IssueHtmlProcessorTest extends TestCase
                 [
                     'app_attachment',
                     [
+                        'key' => 'PROJECT',
+                        'keyIssue' => 'PROJECT-123',
                         'attachmentId' => '1234',
                     ],
-                    '/app/attachment/1234',
+                    '/app/attachment/PROJECT/PROJECT-123/1234',
                 ],
                 [
                     'app_attachment',
                     [
+                        'key' => 'PROJECT',
+                        'keyIssue' => 'PROJECT-123',
                         'attachmentId' => '2003',
                     ],
-                    '/app/attachment/2003',
+                    '/app/attachment/PROJECT/PROJECT-123/2003',
                 ],
             ])
         ;
 
         $service = $this->generate();
-        $updatedBody = $service->updateImageSources($body);
+        $updatedBody = $service->updateImageSources($body, 'PROJECT-123');
 
-        $this->assertStringContainsString('app/attachment/1234', $updatedBody);
-        $this->assertStringContainsString('app/attachment/2003', $updatedBody);
+        $this->assertStringContainsString('app/attachment/PROJECT/PROJECT-123/1234', $updatedBody);
+        $this->assertStringContainsString('app/attachment/PROJECT/PROJECT-123/2003', $updatedBody);
         $this->assertStringContainsString('max-width: 100%;', $updatedBody);
         $this->assertStringNotContainsString('height', $updatedBody);
+    }
+
+    #[Test]
+    public function testUpdateImageSourcesWithoutIssueKeyLeavesHtmlUntouched(): void
+    {
+        $body = '<div>Some text and image <img src="/rest/api/3/attachment/content/1234" height="12"></div>';
+
+        $this->router
+            ->expects(self::never())
+            ->method('generate')
+        ;
+
+        $service = $this->generate();
+
+        self::assertSame($body, $service->updateImageSources($body));
     }
 
     #[Test]
