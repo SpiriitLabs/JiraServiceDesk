@@ -35,7 +35,7 @@ services:
         - database
     depends_on:
         - database
-  
+
   database:
       image: mariadb
       environment:
@@ -49,5 +49,6 @@ services:
           - "3306:3306"
 
 volumes:
+  database_data:
   caddy_data:
   caddy_config:
