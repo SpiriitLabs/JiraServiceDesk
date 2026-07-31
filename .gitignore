@@ -14,6 +14,8 @@
 ./database_data
 ./database_data/*
 /.docker/caddy/
+# Local seed dump imported at startup when the database is empty (contains real data)
+/.docker/database/dumps/*.sql
 /uploads/line-attachments/
 /.idea/
 .phpactor.json

@@ -8,6 +8,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 readonly class IssueHtmlProcessor
 {
+    /**
+     * Matches links like https://something.atlassian.net/browse/MMGS-96, query
+     * string included so smart link labels get fully replaced.
+     */
+    private const string JIRA_BROWSE_URL_PATTERN = '#https:\/\/[a-zA-Z0-9\-]+\.atlassian\.net\/browse\/(?P<project>[A-Z][A-Z0-9]*)-(?P<number>\d+)(?:\?[^\s"\'<>]*)?#';
+
     public function __construct(
         private RouterInterface $router,
     ) {
@@ -164,31 +170,52 @@ readonly class IssueHtmlProcessor
         $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
         libxml_clear_errors();
 
+        $xpath = new \DOMXPath($dom);
+
         $links = $dom->getElementsByTagName('a');
         foreach ($links as $link) {
-            $href = $link->getAttribute('href');
+            $newUrl = $this->resolveInternalIssueUrl($link->getAttribute('href'));
+            if ($newUrl === null) {
+                continue;
+            }
 
-            // Match links like https://something.atlassian.net/browse/MMGS-96
-            if (preg_match('#https:\/\/([a-zA-Z0-9\-]+)\.atlassian\.net\/browse\/([A-Z]+)-(\d+)#', $href, $matches)) {
-                $projectKey = $matches[2];           // e.g., MMGS
-                $issueNumber = $matches[3];          // e.g., 96
-                $issueKey = $projectKey . '-' . $issueNumber;
+            $link->setAttribute('href', $newUrl);
 
-                $focusedCommentId = null;
-                if (preg_match('#focusedCommentId=(\d+)#', $href, $commentIds)) {
-                    $focusedCommentId = $commentIds[1];
-                }
-
-                // Generate custom route like /jira/issue/MMGS/MMGS-96
-                $newUrl = $this->router->generate('browse_issue', [
-                    'keyIssue' => $issueKey,
-                    'focusedCommentId' => $focusedCommentId,
-                ]);
-
-                $link->setAttribute('href', $newUrl);
+            // Jira smart links use the raw Jira URL as the visible label, which
+            // would otherwise still point (visually) to the Jira site: rewrite
+            // the text the same way as the href.
+            foreach ($xpath->query('.//text()', $link) as $textNode) {
+                $textNode->nodeValue = preg_replace_callback(
+                    self::JIRA_BROWSE_URL_PATTERN,
+                    fn (array $matches): string => $matches['project'] . '-' . $matches['number'],
+                    $textNode->nodeValue,
+                );
             }
         }
 
         return $dom->saveHTML();
+    }
+
+    /**
+     * Turn a Jira browse URL (e.g. https://something.atlassian.net/browse/MMGS-96)
+     * into its portal counterpart, or null when the URL is not a Jira issue link.
+     */
+    private function resolveInternalIssueUrl(string $url): ?string
+    {
+        if (! preg_match(self::JIRA_BROWSE_URL_PATTERN, $url, $matches)) {
+            return null;
+        }
+
+        $issueKey = $matches['project'] . '-' . $matches['number'];
+
+        $focusedCommentId = null;
+        if (preg_match('#focusedCommentId=(\d+)#', $url, $commentIds)) {
+            $focusedCommentId = $commentIds[1];
+        }
+
+        return $this->router->generate('browse_issue', [
+            'keyIssue' => $issueKey,
+            'focusedCommentId' => $focusedCommentId,
+        ]);
     }
 }

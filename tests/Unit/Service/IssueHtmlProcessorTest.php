@@ -91,6 +91,31 @@ class IssueHtmlProcessorTest extends TestCase
         $updatedBody = $service->updateJiraLinks($body);
 
         $this->assertStringContainsString('href="/browse/PROJECT-123?focusedCommentId=2003"', $updatedBody);
+        // The smart link label (the raw Jira URL) is replaced by the issue key alone.
+        $this->assertStringContainsString('>PROJECT-123</a>', $updatedBody);
+        $this->assertStringNotContainsString('roro.atlassian.net', $updatedBody);
+    }
+
+    #[Test]
+    public function testUpdateJiraLinksKeepsCustomLabel(): void
+    {
+        $body = '<p><a href="https://roro.atlassian.net/browse/OS2025-106">le ticket de test</a></p>';
+
+        $this->router
+            ->expects(self::once())
+            ->method('generate')
+            ->with('browse_issue', [
+                'keyIssue' => 'OS2025-106',
+                'focusedCommentId' => null,
+            ])
+            ->willReturn('/browse/OS2025-106')
+        ;
+
+        $service = $this->generate();
+        $updatedBody = $service->updateJiraLinks($body);
+
+        $this->assertStringContainsString('href="/browse/OS2025-106"', $updatedBody);
+        $this->assertStringContainsString('>le ticket de test</a>', $updatedBody);
     }
 
     #[Test]

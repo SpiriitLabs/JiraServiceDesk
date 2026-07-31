@@ -123,6 +123,18 @@ db-import: ## Reset database with given DUMP variable
 	@$(DCE) database reset $(DUMP) > /dev/null
 	@echo '✅ Your dump ($(DUMP)) is been imported.'
 
+SEED_FILE ?= .docker/database/dumps/seed.sql
+.PHONY: db-seed
+db-seed: ## Import the seed dump ($(SEED_FILE)) if the database is empty
+	@$(DC) run --rm db-seed
+
+.PHONY: db-seed-save
+db-seed-save: ## Save the current database as the seed dump ($(SEED_FILE))
+	@echo '🗃️ Saving database to $(SEED_FILE).'
+	@mkdir -p $(dir $(SEED_FILE))
+	@$(DCE) -T database sh -c 'mariadb-dump -uroot -p"$$MARIADB_ROOT_PASSWORD" "$$MARIADB_DATABASE"' > $(SEED_FILE)
+	@echo '✅ Seed dump saved to $(SEED_FILE).'
+
 .PHONY: db-dump
 db-dump: ## Save database to a sql file
 	@:$(call check_defined, DUMP, sql file)

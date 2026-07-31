@@ -27,6 +27,12 @@ services:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
     tty: true
+    depends_on:
+      database:
+        condition: service_healthy
+      # Restore the local seed dump before the entrypoint runs the migrations
+      db-seed:
+        condition: service_completed_successfully
 
   phpmyadmin:
     image: phpmyadmin
@@ -57,6 +63,30 @@ services:
   database:
     ports:
       - "5432"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  # One-shot: imports .docker/database/dumps/seed.sql when the database is
+  # empty (fresh datadir, dropped database...), no-op otherwise.
+  db-seed:
+    image: mariadb
+    restart: "no"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      MARIADB_HOST: database
+      MARIADB_DATABASE: app
+      MARIADB_ROOT_PASSWORD: root
+      SEED_FILE: /dumps/seed.sql
+    volumes:
+      - ./.docker/database/dumps:/dumps:ro
+      - ./.docker/database/scripts/seed-if-empty:/usr/local/bin/seed-if-empty:ro
+    entrypoint: ["seed-if-empty"]
 
   # Node
   node:
