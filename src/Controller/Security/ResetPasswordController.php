@@ -12,6 +12,7 @@ use App\Subscriber\Event\NotificationEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,7 @@ class ResetPasswordController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly MailerInterface $mailer,
         private readonly ResetPasswordHelperInterface $resetPasswordHelper,
+        private readonly Security $security,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -146,6 +148,7 @@ class ResetPasswordController extends AbstractController
             $this->entityManager->flush();
 
             $this->cleanSessionAfterReset();
+            $this->invalidateActiveSessions($request);
 
             return $this->redirectToRoute(RouteCollection::LOGIN->prefixed());
         }
@@ -156,6 +159,33 @@ class ResetPasswordController extends AbstractController
                 'resetForm' => $form,
             ]
         );
+    }
+
+    /**
+     * Invalide les sessions actives après un changement de mot de passe.
+     *
+     * Les autres sessions et les cookies « remember me » embarquent le hash du mot de passe
+     * (token sérialisé en session, `signature_properties` du remember-me) : le firewall les
+     * déauthentifie donc automatiquement dès la requête suivante. Il reste à traiter le
+     * navigateur ayant effectué la réinitialisation, que l'on déconnecte immédiatement —
+     * ou, s'il n'était pas authentifié, dont on renouvelle l'identifiant de session pour
+     * éviter toute fixation de session sur le tunnel de reset.
+     */
+    private function invalidateActiveSessions(Request $request): void
+    {
+        $token = $this->security->getToken();
+
+        if ($token?->getUser() !== null) {
+            // Déclenche le LogoutEvent : invalidation de la session, suppression du cookie
+            // « remember me » et vidage du token storage.
+            $this->security->logout(validateCsrfToken: false);
+
+            return;
+        }
+
+        $request->getSession()
+            ->migrate(destroy: true)
+        ;
     }
 
     private function processSendingPasswordResetEmail(string $emailFormData): RedirectResponse

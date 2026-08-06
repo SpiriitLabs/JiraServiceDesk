@@ -23,6 +23,8 @@
 # Ignore pnpm store
 .pnpm-store
 .todo
+.claude/audit/
+*.sql
 ###< spiriitlabs/developer-tools ###
 
 ###> friendsofphp/php-cs-fixer ###

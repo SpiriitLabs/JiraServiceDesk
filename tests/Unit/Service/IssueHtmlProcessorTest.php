@@ -6,6 +6,7 @@ use App\Service\IssueHtmlProcessor;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class IssueHtmlProcessorTest extends TestCase
@@ -168,6 +169,9 @@ class IssueHtmlProcessorTest extends TestCase
     {
         return new IssueHtmlProcessor(
             $this->router,
+            // La sanitisation est vérifiée sur la vraie configuration par
+            // IssueHtmlSanitizerTest : ici on isole les réécritures.
+            $this->createStub(HtmlSanitizerInterface::class),
         );
     }
 }

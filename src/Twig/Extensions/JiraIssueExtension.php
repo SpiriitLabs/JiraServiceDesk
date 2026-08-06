@@ -21,7 +21,9 @@ class JiraIssueExtension
         $result = $this->htmlProcessor->updateMediaEmbeds($result, $issueKey);
         $result = $this->htmlProcessor->updateJiraLinks($result);
 
-        return $result;
+        // En dernier : les étapes précédentes convertissent les <object>/<embed> Jira en
+        // <video>, que le sanitizer conserve, alors qu'il supprimerait les originaux.
+        return $this->htmlProcessor->sanitize($result);
     }
 
     #[AsTwigFilter('parse_comment_author')]

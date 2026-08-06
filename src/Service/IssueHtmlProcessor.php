@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 readonly class IssueHtmlProcessor
@@ -16,7 +18,23 @@ readonly class IssueHtmlProcessor
 
     public function __construct(
         private RouterInterface $router,
+        #[Autowire(service: 'html_sanitizer.sanitizer.jira_description')]
+        private HtmlSanitizerInterface $htmlSanitizer,
     ) {
+    }
+
+    /**
+     * Le HTML rendu par Jira est affiché tel quel (`|raw`) : on ne se repose pas sur
+     * le seul nettoyage effectué côté Atlassian et on le repasse par une liste blanche
+     * (`config/packages/html_sanitizer.yaml`) qui retire scripts, gestionnaires
+     * d'évènements `on*` et URLs `javascript:`.
+     *
+     * À appeler en DERNIER dans le pipeline : les réécritures ci-dessous s'appuient sur
+     * des balises `<object>`/`<embed>` que le sanitizer supprime.
+     */
+    public function sanitize(string $html): string
+    {
+        return $this->htmlSanitizer->sanitize($html);
     }
 
     public function updateImageSources(string $html, string $issueKey = ''): string

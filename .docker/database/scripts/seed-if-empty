@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Import the local seed dump when the database has no data yet.
+#
+# Runs on every `make up` (dev only, see the db-seed service in
+# compose.override.yaml) and is a no-op as soon as the database holds data,
+# so an existing local database is never overwritten.
+#
+set -e
+
+: "${MARIADB_HOST:=database}"
+: "${MARIADB_DATABASE:=app}"
+: "${MARIADB_ROOT_PASSWORD:=root}"
+: "${SEED_FILE:=/dumps/seed.sql}"
+
+db() {
+    mariadb -h "$MARIADB_HOST" -uroot -p"$MARIADB_ROOT_PASSWORD" "$@"
+}
+
+if [ ! -f "$SEED_FILE" ]; then
+    echo "ℹ️  No seed dump found at $SEED_FILE, skipping (create it with: make db-dump DUMP=.docker/database/dumps/seed.sql)."
+    exit 0
+fi
+
+db -e "CREATE DATABASE IF NOT EXISTS \`$MARIADB_DATABASE\`"
+
+has_schema=$(db -N -B -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '$MARIADB_DATABASE' AND table_name = 'user'")
+
+rows=0
+if [ "$has_schema" != "0" ]; then
+    rows=$(db -N -B "$MARIADB_DATABASE" -e "SELECT COUNT(*) FROM \`user\`")
+fi
+
+if [ "$has_schema" = "0" ] || [ "$rows" = "0" ]; then
+    echo "🌱 Database '$MARIADB_DATABASE' is empty, importing $SEED_FILE..."
+    db "$MARIADB_DATABASE" < "$SEED_FILE"
+    echo "✅ Seed dump imported."
+else
+    echo "✅ Database '$MARIADB_DATABASE' already holds data ($rows users), nothing to import."
+fi
+
+exit 0
