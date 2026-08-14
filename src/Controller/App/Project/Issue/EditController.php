@@ -54,6 +54,11 @@ class EditController extends AbstractController
         $this->setCurrentProject($project);
         /** @var Issue $issue */
         $issue = $this->handle(new GetFullIssue($keyIssue));
+
+        if ($issue->fields->project->key !== $project->jiraKey) {
+            throw $this->createNotFoundException();
+        }
+
         $assignableUsers = $this->handle(new GetIssueAssignableUsers(user: $user, project: $project));
 
         $issueTransitions = [];

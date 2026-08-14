@@ -21,6 +21,10 @@ readonly class NotificationViewedHandler
     {
         $entity = $this->entityManager->find(Notification::class, $command->notificationId);
 
+        if ($entity === null) {
+            return;
+        }
+
         $entity->isViewed = true;
         $this->entityManager->flush();
     }

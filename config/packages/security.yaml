@@ -23,6 +23,9 @@ security:
                 check_path: security_login
                 default_target_path: app_redirect_after_login
                 enable_csrf: true
+            login_throttling:
+                max_attempts: 5
+                interval: '1 minute'
             logout:
                 path: security_logout
             remember_me:

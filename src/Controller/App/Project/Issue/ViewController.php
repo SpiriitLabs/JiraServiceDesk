@@ -61,6 +61,10 @@ class ViewController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        if ($issue->fields->project->key !== $project->jiraKey) {
+            throw $this->createNotFoundException();
+        }
+
         $comments = $this->jiraIssueRepository->getCommentForIssue(
             issueId: $keyIssue,
             sort: new SortParams('created', '-')
@@ -133,6 +137,10 @@ class ViewController extends AbstractController
         $this->setCurrentProject($project);
         $request->setRequestFormat(TurboBundle::STREAM_FORMAT);
         $issue = $this->handle(new GetFullIssue($keyIssue));
+
+        if ($issue->fields->project->key !== $project->jiraKey) {
+            throw $this->createNotFoundException();
+        }
 
         if (count($issue->customAttachments ?? []) === 0) {
             return $this->renderBlock(
